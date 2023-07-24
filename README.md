@@ -1,2 +1,3 @@
 # TrIdent
-Automatic Transduction Identification based on Virome Read Coverage Patterns when Mapped on Bacterial Contigs from the Same Metagenome
+TrIdent- Transduction Identification
+Automatic detection, classification and characterization of active transduction events in microbiomes. 
