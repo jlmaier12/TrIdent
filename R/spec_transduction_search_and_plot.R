@@ -86,6 +86,6 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
              geom_vline(xintercept=transduction_start_right, color="red", alpha=alpha_r, size=1)+
              theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                    panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))+
-             labs(title=paste(ref_name,classification, active_prophage), subtitle=paste0("Specialized transduction on left: ", transduction_left,", ", "on right: ", transduction_right), x=NULL))
+             labs(title=paste(ref_name,classification, active_prophage), subtitle=paste0("Specialized transduction on left: ", transduction_left,", ", "on right: ", transduction_right), x="Contig Position (bp)", y="VLP-fraction \n log10 read coverage"))
   return(list(specialized_transduction_summary, plot))
 }
