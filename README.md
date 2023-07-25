@@ -56,13 +56,13 @@ TrIdent is entirely reference-indepedent meaning that classifications made do no
 
 ## Using TrIdent
 
-Import your pileup files:
+**Import your pileup files:**
 ```{r}
 VLP_fraction_pileup100 <- read.delim("Q:/VLP_fraction_pileup.bincov100", header=FALSE, comment.char="#")
 WholeCommunity_pileup100 <- read.delim("Q:/WholeCommunity_pileup.bincov100", header=FALSE, comment.char="#")
 ```
 
-Run the TrIdent Classifier to classify contigs as Prophage-like, Gen/Lat/GTA, HighVLPWCRC, or None: 
+**Run the TrIdent Classifier to classify contigs as Prophage-like, Gen/Lat/GTA, HighVLPWCRC, or None:** 
 ```{r}
 Trident_results <- TrIdent_Classifier(VLP_fraction_pileup100, WholeCommunity_pileup100, windowsize=1000)
 
@@ -78,7 +78,7 @@ The output from TrIdent_Classifier is a list that contains four objects-
 4. FilteredOut_contig_table: A table containing all contigs that were filtered out and the respective reason. 
 
 
-Plot the results of the TrIdent_Classifier pattern-matching:
+**Plot the results of the TrIdent_Classifier pattern-matching:**
 ```{r}
 Trident_plots <- Plot_TrIdentPatternMatches(VLP_fraction_pileup100, WholeCommunity_pileup100, Trident_results, windowsize=1000)
 
@@ -89,7 +89,7 @@ Trident_plots
 Trident_plots$NODE_12
 ```
 
-Identify potential specialized transduction events on contigs classified as Prophage-like:
+**Identify potential specialized transduction events on contigs classified as Prophage-like:**
 ```{r}
 #Search all contigs classified as Prophage-like for specialized transduction
 Spec_transduction <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, windowsize=1000, noreadcov=500, spectranslength=2000)
