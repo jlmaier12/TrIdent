@@ -32,10 +32,10 @@ To obtain the data needed for transductomics, two sample types must be prepared 
     - The VLP-fraction must be obtained via concentration of the viruses within your sample, then ultrapurification to remove bacterial cells and contaminating free bacterial DNA
  
 After shotgun metagenomic sequencing of both samples, assemble a metagenome from the whole-community reads. Map the reads from both the VLP-fraction and whole-community to the metagenome contigs. Create pileup files using BBMap pileup.sh with 100bp windowsizes:
-`{bash}
+```{bash}
 $ pileup.sh in=VLP_fraction_ReadMapping.bam out=VLP_Fraction.pileupcovstats bincov=VLP_fraction_pileup.bincov100 binsive=100 stdev=t
 $ pileup.sh in=WholeCommunity_ReadMapping.bam out=WholeCommunity.pileupcovstats bincov=WholeCommunity_pileup.bincov100 binsive=100 stdev=t
-`
+```
 
 Import the VLP_fraction_pileup.bincov100 and WholeCommunity_pileup.bincov100 files to R and run TrIdent to automatically detect, classify and characterize potential transduction events present on your contigs! 
 
@@ -46,7 +46,7 @@ TrIdent first classifies contigs as 'Prophage-like', 'Gen/Lat/GTA', 'HighVLPWCRC
 - Prophage-like classifications include potential prophages or phage-inducible chromosomal islands (PICIs)
     - In addition to identifying prophages and PICIs on contigs, TrIdent also determines if they are highly active/abundant by assessing the associated read coverage in the whole-community fraction. If the read coverage of a prophage/PICI region is elevated above the non-prophage/PICI region of a contig, it is an indicator that the prophage/PICI is actively replicating or is highly abundant as its genome is represented in a higher frequency than its host bacteria.   
 - Gen/Lat/GTA classifications include potential generalized, lateral or gene transfer agent (GTA) transduction events
-- HighVLPWCRC classifications stand for 'High VLP-fraction:Whole-Community Read Coverage ratio' which means the contig does not have a pattern match but has an unusually high amount of bacterial DNA in the VLP-fraction and may represent the 'tail' of a sloping pattern formed by a Gen/Lat/GTA event.
+- HighVLPWCRC classifications stand for 'High VLP-fraction:Whole-Community Read Coverage ratio' which means the contig has no pattern match but has an unusually high amount of bacterial DNA in the VLP-fraction and may represent the 'tail' of a sloping pattern formed by a Gen/Lat/GTA event.
 - None classifications includes contigs with no pattern matches and low/no read coverage in the VLP-fraction.
 
 
@@ -56,9 +56,50 @@ TrIdent is entirely reference-indepedent meaning that classifications made do no
 
 ## Using TrIdent
 
-Run the TrIdent Classifier to classify contigs as prophage-like
-`{R}
+Import your pileup files:
+```{r}
+VLP_fraction_pileup100 <- read.delim("Q:/VLP_fraction_pileup.bincov100", header=FALSE, comment.char="#")
+WholeCommunity_pileup100 <- read.delim("Q:/WholeCommunity_pileup.bincov100", header=FALSE, comment.char="#")
+```
 
-`
+Run the TrIdent Classifier to classify contigs as Prophage-like, Gen/Lat/GTA, HighVLPWCRC, or None: 
+```{r}
+Trident_results <- TrIdent_Classifier(VLP_fraction_pileup100, WholeCommunity_pileup100, windowsize=1000)
+
+Summary_table <- Trident_results$Full_summary_table
+Cleaned_table <- Trident_results$Cleaned_summary_table
+Unused_contigs <- Trident_results$FilteredOut_contig_table
+```
+
+The output from TrIdent_Classifier is a list that contains four objects- 
+1. Full_summary_table: A table containing the classifications and characterizations of all contigs that were not filtered out, **including** contigs that were classified as 'None'
+2. Cleaned_summary_table: A table containing the classifications and characterizations of all contigs that were not filtered out, **excluding** contigs that were classified as 'None'
+3. Pattern_MatchInfo: A list of information for each contig's pattern-match. This information is used by other functions in TrIdent. 
+4. FilteredOut_contig_table: A table containing all contigs that were filtered out and the respective reason. 
 
 
+Plot the results of the TrIdent_Classifier pattern-matching:
+```{r}
+Trident_plots <- Plot_TrIdentPatternMatches(VLP_fraction_pileup100, WholeCommunity_pileup100, Trident_results, windowsize=1000)
+
+#View all pattern matches to contigs classified as  Prophage-like, Gen/Lat/GTA, or HighVLPWCRC:
+Trident_plots
+
+#View/save specific plot:
+Trident_plots$NODE_12
+```
+
+Identify potential specialized transduction events on contigs classified as Prophage-like:
+```{r}
+#Search all contigs classified as Prophage-like for specialized transduction
+Spec_transduction <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, windowsize=1000, noreadcov=500, spectranslength=2000)
+
+Spec_transduction_summary <- Spec_transduction[[1]]
+Spec_transduction_plots <- Spec_transduction[[2]]
+Spec_transduction_Contig10 <- Spec_transduction_plots$NODE_10
+
+#Search a specific contig classified as Prophage-like for specialized transduction
+Spec_transduction_Contig1 <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, specificcontig="NODE_1", windowsize=1000, noreadcov=500, spectranslength=2000)
+```
+
+SpecializedTransduction_ID can be used in two ways- it can search for specialized transduction in all contigs classified as Prophage-like or in a specific contig classified as Prophage-like. 
