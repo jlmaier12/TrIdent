@@ -15,7 +15,11 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
   position <- logcoverage <- NULL
   specialized_transduction_summary <- c(ref_name, rep(NA, 3))
   active_prophage <- transductionclassificationsummary[which(transductionclassificationsummary[,1]== ref_name),4]
-  active_prophage <- ifelse ((active_prophage == "YES"), "Highly active/abundant", NULL)
+  if (active_prophage == "YES") {
+    active_prophage <- "Highly active/abundant"
+  } else {
+    active_prophage <- NULL
+  }
   viral_subset <- phageread_dataset[which(phageread_dataset[,1] == ref_name),]
   classification <- transductionclassifications[[i]][[7]]
   viral_zoom_pos <- viral_subset_zoom(viral_subset, transductionclassifications, i, 500, windowsize)

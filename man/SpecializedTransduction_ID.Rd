@@ -7,10 +7,10 @@
 SpecializedTransduction_ID(
   phageread_dataset,
   transductionclassification,
+  specificcontig,
   windowsize = 1000,
   noreadcov = 500,
-  spectranslength = 2000,
-  specificcontig
+  spectranslength = 2000
 )
 }
 \arguments{
@@ -18,23 +18,23 @@ SpecializedTransduction_ID(
 
 \item{transductionclassification}{Output from TrIdent_Classifier}
 
+\item{specificcontig}{Provide the name of a specific contig if you would like to search only that contig.i.e. "NODE_1"}
+
 \item{windowsize}{The window size used to re-average read coverage datasets. Default is 1000}
 
 \item{noreadcov}{How many bp of no read coverage are encountered before specialized transduction searching stops? Default is 500.}
 
 \item{spectranslength}{How many bp of read coverage are needed for specialized transduction to be considered? Default is 2000.}
-
-\item{specificcontig}{Provide the name of a specific contig if you would like to search only that contig.i.e. "NODE_1"}
 }
 \description{
 Search contigs classified as prophage-like for potential specialized transduction. Returns a list with the first object containing a summary table and the second object containing a list of plots of prophage-like patterns with associated specialzied transduction search results. If the plot is green, it has been identified as having potential specialized transduction.
 }
 \examples{
 \dontrun{
-Spec_Transduction <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results, windowsize=1000)
+Spec_Transduction <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results)
 Summary_Table <- spec_transduction[[1]]
 NODE_8_plot <- spec_transduction[[2]]$NODE_8
 
-Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results, windowsize=1000, noreadcov=1000, spectranslength=4000, specificcontig="NODE_1")
+Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results, specificcontig="NODE_1", windowsize=1000, noreadcov=1000, spectranslength=4000)
 }
 }

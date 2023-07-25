@@ -13,13 +13,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' Spec_Transduction <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results, windowsize=1000)
+#' Spec_Transduction <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results)
 #' Summary_Table <- spec_transduction[[1]]
 #' NODE_8_plot <- spec_transduction[[2]]$NODE_8
 #'
-#' Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results, windowsize=1000, noreadcov=1000, spectranslength=4000, specificcontig="NODE_1")
+#' Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results, specificcontig="NODE_1", windowsize=1000, noreadcov=1000, spectranslength=4000)
 #' }
- SpecializedTransduction_ID <- function(phageread_dataset, transductionclassification, windowsize=1000, noreadcov=500, spectranslength=2000, specificcontig){
+ SpecializedTransduction_ID <- function(phageread_dataset, transductionclassification, specificcontig, windowsize=1000, noreadcov=500, spectranslength=2000){
   transductionclassificationpatterns <- transductionclassification[[3]]
   transductionclassificationsummary <- transductionclassification[[1]]
   phageread_dataset <- readcovdf_formatter(phageread_dataset)

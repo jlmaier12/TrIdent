@@ -46,14 +46,14 @@ Plot_TrIdentPatternMatches <- function(phageread_dataset, microbialread_dataset,
     }
     wholecomm_plot <- ggplot(data=microbial_subset, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
-      labs(title=paste(ref_name, "Classification", classification ),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ") +
+      labs(title=paste(ref_name, "Classification", classification ),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ", y="Whole-community \n read coverage") +
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))
 
     Overlay_plot <- ggplot(data=pattern_match, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
       geom_line(aes(y=pattern), color="black", size=1)+
-      labs(x=NULL)+
+      labs(x="Contig position (bp)", y="VLP-fraction \n read coverage")+
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))
 
