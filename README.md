@@ -5,6 +5,8 @@ Automatic detection, classification and characterization of active transduction 
 ## Background on Transductomics
 TrIdent is a bioinformatics tool that automates the transductomics data analyis by automatically detecting, classifying and characterizing potential transducing events in a fraction of the time that it would take a manual-labeler. Transductomics is a DNA-sequencing based method for the detection and characterization of transduction events. Developed by Dr. Manuel Kleiner, the method relies on the mapping reads from a virome(VLP_fracion) of a sample to contigs assembled from the metagenome(whole-community) of the same sample. Reads from bacterial DNA carried by viruses or VLPs (Viral-Like Particles) will map back to their bacterial contigs of origin creating read coverage patterns indicative of active transduction. 
 
+Reference: Kleiner, M., Bushnell, B., Sanderson, K.E. et al. Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities. Microbiome 8, 158 (2020). https://doi.org/10.1186/s40168-020-00935-5
+
 VLP-fraction reads mapped to contigs from the whole-community will create the following read coverage patterns:
 - Sloping pattern
   - Forms due to decreasing frequency of large DNA transfer startin from a transduction initiation site.
@@ -102,4 +104,10 @@ Spec_transduction_Contig10 <- Spec_transduction_plots$NODE_10
 Spec_transduction_Contig1 <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, specificcontig="NODE_1", windowsize=1000, noreadcov=500, spectranslength=2000)
 ```
 
-SpecializedTransduction_ID can be used in two ways- it can search for specialized transduction in all contigs classified as Prophage-like or in a specific contig classified as Prophage-like. 
+SpecializedTransduction_ID can be used in two ways- it can search for specialized transduction in all contigs classified as Prophage-like or in a specific contig classified as Prophage-like. If you would like to search a specific contig for specialized transduction, include the contig name in quotes in the arguments (see example above). If you search a specific contig, the function will return the read coverage plot object for that contig. If you search all prophage-like contigs (aka you do not provide a specific contig's name), the function will return a list with the first object being a table summarizing the results of specialized transduction searching for each prophage-like contig. The second object is a list of read coverage plots for all prophage-like contigs. Each plot in the list is named by its reference name, i.e 'NODE_9'
+
+
+If you would like to combine the output tables from TrIdent_Classifier and SpecializedTransduction_ID, try running this code:
+```{r}
+complete_trident_summary <- merge(Cleaned_table, Spec_transduction_summary, by="ref_name", all.x=TRUE)
+```
