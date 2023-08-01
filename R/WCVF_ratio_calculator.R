@@ -7,8 +7,6 @@
 #' @param phageread_dataset  A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs
 #' @keywords internal
 WCVF_ratio_calculator <- function(classificationsummary, microbialread_dataset, phageread_dataset){
-  phageread_dataset <- readcovdf_formatter(phageread_dataset)
-  microbialread_dataset <- readcovdf_formatter(microbialread_dataset)
   None_indexes <- which(classificationsummary[,2]=="None")
   for (i in None_indexes) {
     ref_name <- classificationsummary[i,1]

@@ -9,9 +9,14 @@ readcovdf_formatter <- function(read_dataset) {
   for (i in c(1:ncol(read_dataset))) {
     column_classes <- c(column_classes, class(read_dataset[1,i]))
   }
-  reformatted_readdataset <- cbind.data.frame(read_dataset[,which(column_classes == "character")],read_dataset[,which(column_classes == "numeric")], read_dataset[,which(column_classes == "integer")[1]])
+  for (i in c(which(column_classes=="integer"))){
+    if (length(which(read_dataset[,i]==100))>1){
+      position_colindex <- i
+    }
+  }
+  reformatted_readdataset <- cbind.data.frame(read_dataset[,which(column_classes == "character")],read_dataset[,which(column_classes == "numeric")], read_dataset[,position_colindex])
   colnames(reformatted_readdataset) <- c("ref_name", "coverage", "position")
-  reformatted_readdataset$ref_name <- gsub(" ", "", reformatted_readdataset$ref_name)
-  reformatted_readdataset$ref_name <- gsub("length_.*", "", as.factor(reformatted_readdataset$ref_name))
+  reformatted_readdataset$ref_name <- gsub("\\s.*", "", reformatted_readdataset$ref_name)
   return(reformatted_readdataset)
 }
+

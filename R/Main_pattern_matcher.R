@@ -7,9 +7,6 @@
 #' @param windowsize The window size used to re-average read coverage datasets
 #' @keywords internal
 pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsize) {
-  windowsize <- windowsize
-  phageread_dataset <- readcovdf_formatter(phageread_dataset)
-  microbialread_dataset <- readcovdf_formatter(microbialread_dataset)
   refnames <- unique(phageread_dataset[,1])
   best_match_list <- list()
   filteredout_contigs <- rep(NA, length(refnames))
@@ -20,23 +17,23 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   for (i in refnames) {
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == i),]
     if(B == floor(length(refnames)/4)){
-      print("A quarter of the way done with pattern_matching")
+      cat("A quarter of the way done with pattern_matching \n")
     }
     if(B == floor(length(refnames)/2)){
-      print("Half of the way done with pattern_matching")
+      cat("Half of the way done with pattern_matching \n")
     }
     if(B == floor((length(refnames)*3)/4)){
-      print("Almost done with pattern_matching!")
+      cat("Almost done with pattern_matching! \n")
     }
     B <- B+1
-    if (viral_subset[(order(viral_subset[,2], decreasing=TRUE))[50],2] <= 10) {
-      filteredout_contigs[C] <-  i
-      reason[C] <-  "Low VLP-fraction read cov"
-      C <- C+1
-      next
-    } else if (viral_subset[nrow(viral_subset),3]< 30000) {
+    if (viral_subset[nrow(viral_subset),3]< 30000) {
       filteredout_contigs[C] <- i
       reason[C] <- "Contig length too small"
+      C <- C+1
+      next
+      } else if (viral_subset[(order(viral_subset[,2], decreasing=TRUE))[50],2] <= 10) {
+      filteredout_contigs[C] <-  i
+      reason[C] <-  "Low VLP-fraction read cov"
       C <- C+1
       next
     }
@@ -79,7 +76,7 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   }
   filteredout_contigs <- filteredout_contigs[!is.na(filteredout_contigs)]
   reason <- reason[!is.na(reason)]
-  filteredout_summary_df <- cbind(filteredout_contigs, reason)
+  filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)
   pattern_matching_summary <- list(best_match_list, filteredout_summary_df)
   return(pattern_matching_summary)
 }

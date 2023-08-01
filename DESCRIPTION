@@ -10,3 +10,9 @@ Encoding: UTF-8
 LazyData: true
 Imports: stats, dplyr, ggplot2, patchwork, stringr, tidyr
 RoxygenNote: 7.2.3
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)

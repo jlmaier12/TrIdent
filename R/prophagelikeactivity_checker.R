@@ -9,9 +9,7 @@
 #' @param windowsize The window size used to re-average read coverage datasets
 #' @keywords internal
 prophagelikeactivity_checker <- function(classificationsummary, prophageclassifications, phageread_dataset, microbialread_dataset, windowsize){
-  classificationsummary$active_prophage <- rep(NA, length(classificationsummary))
-  phageread_dataset <- readcovdf_formatter(phageread_dataset)
-  microbialread_dataset <- readcovdf_formatter(microbialread_dataset)
+  classificationsummary$active_prophage <- rep(NA, nrow(classificationsummary))
   for (i in seq(1,length(prophageclassifications),1)) {
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == prophageclassifications[[i]][[8]]),]
     viral_subset <- windowsize_func(viral_subset,windowsize)
