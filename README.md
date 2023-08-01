@@ -73,16 +73,17 @@ Cleaned_table <- Trident_results$Cleaned_summary_table
 Unused_contigs <- Trident_results$FilteredOut_contig_table
 ```
 
-The output from TrIdent_Classifier is a list that contains four objects- 
+The output from TrIdent_Classifier is a list that contains five objects- 
 1. Full_summary_table: A table containing the classifications and characterizations of all contigs that were not filtered out, **including** contigs that were classified as 'None'
 2. Cleaned_summary_table: A table containing the classifications and characterizations of all contigs that were not filtered out, **excluding** contigs that were classified as 'None'
 3. Pattern_MatchInfo: A list of information for each contig's pattern-match. This information is used by other functions in TrIdent. 
-4. FilteredOut_contig_table: A table containing all contigs that were filtered out and the respective reason. 
+4. FilteredOut_contig_table: A table containing all contigs that were filtered out and the respective reason.
+5. Windowsize: The winsowsize used.
 
 
 **Plot the results of the TrIdent_Classifier pattern-matching:**
 ```{r}
-Trident_plots <- Plot_TrIdentPatternMatches(VLP_fraction_pileup100, WholeCommunity_pileup100, Trident_results, windowsize=1000)
+Trident_plots <- Plot_TrIdentPatternMatches(VLP_fraction_pileup100, WholeCommunity_pileup100, Trident_results)
 
 #View all pattern matches to contigs classified as  Prophage-like, Gen/Lat/GTA, or HighVLPWCRC:
 Trident_plots
@@ -94,14 +95,14 @@ Trident_plots$NODE_12
 **Identify potential specialized transduction events on contigs classified as Prophage-like:**
 ```{r}
 #Search all contigs classified as Prophage-like for specialized transduction
-Spec_transduction <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, windowsize=1000, noreadcov=500, spectranslength=2000)
+Spec_transduction <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, noreadcov=500, spectranslength=2000)
 
 Spec_transduction_summary <- Spec_transduction[[1]]
 Spec_transduction_plots <- Spec_transduction[[2]]
 Spec_transduction_Contig10 <- Spec_transduction_plots$NODE_10
 
 #Search a specific contig classified as Prophage-like for specialized transduction
-Spec_transduction_Contig1 <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, specificcontig="NODE_1", windowsize=1000, noreadcov=500, spectranslength=2000)
+Spec_transduction_Contig1 <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, specificcontig="NODE_1", noreadcov=500, spectranslength=2000)
 ```
 
 SpecializedTransduction_ID can be used in two ways- it can search for specialized transduction in all contigs classified as Prophage-like or in a specific contig classified as Prophage-like. If you would like to search a specific contig for specialized transduction, include the contig name in quotes in the arguments (see example above). If you search a specific contig, the function will return the read coverage plot object for that contig. If you search all prophage-like contigs (aka you do not provide a specific contig's name), the function will return a list with the first object being a table summarizing the results of specialized transduction searching for each prophage-like contig. The second object is a list of read coverage plots for all prophage-like contigs. Each plot in the list is named by its reference name, i.e 'NODE_9'
