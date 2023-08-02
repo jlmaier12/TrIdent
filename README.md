@@ -1,5 +1,5 @@
-# TrIdent
-**TrIdent-** **Tr**ansduction **Ident**ification: 
+**![TrIDentLogo](https://github.com/jlmaier12/TrIdent/assets/45083046/4284ff2e-fb02-4e67-9882-e3b634d2292a)
+TrIdent-** **Tr**ansduction **Ident**ification: 
 Automatic detection, classification and characterization of active transduction events in microbiomes. 
 
 ## Background on Transductomics
