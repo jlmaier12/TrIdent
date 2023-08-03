@@ -4,7 +4,7 @@
 #' Report...
 #'
 #' @format ## 'VLPFraction_sampledata'
-#' A data frame with 106,167 rows and 4 columns:
+#' A data frame with 25,668 rows and 4 columns:
 #' \describe{
 #'  \item{V1}{Contig accession}
 #'  \item{V2}{Read coverage binned over binsize used by pileup.sh}

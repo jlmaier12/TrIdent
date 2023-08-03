@@ -25,8 +25,8 @@ gene_annotation_search_and_plot <- function(subset_gene_annots, keywords, viral_
   viral_subset[viral_subset == Inf] <- 0
   plot <- ggplot(data=viral_subset, aes(x=position, y=logcoverage))+
     geom_area(fill="deepskyblue3") +
-    geom_vline(xintercept=gene_start_pos, size=1)+
-    geom_vline(xintercept=c(start_bprange, end_bprange), color="red", size=0.5)+
+    geom_vline(xintercept=gene_start_pos, linewidth=1)+
+    geom_vline(xintercept=c(start_bprange, end_bprange), color="red", linewidth=0.5)+
     geom_label(data=gene_annot_subset, aes(x=V4,y=(max(viral_subset$logcoverage)/2),label=paste0("#", c(1:nrow(gene_annot_subset)))), size=2.5)+
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))+

@@ -38,24 +38,24 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
   viral_zoom$logcoverage <- abs(log10(viral_zoom[,2]))
   viral_zoom[viral_zoom == Inf] <- 0
   X <- 1
-  zero_count <- 0
+  zero_countX <- 0
   repeat{
     if((start_pos_row - X) <= 1) break
-    zero_count <- ifelse((viral_zoom[start_pos_row-X,4] == 0), (zero_count+1), 0)
-    if(zero_count == noreadcov/100) break
+    zero_countX <- ifelse((viral_zoom[start_pos_row-X,4] == 0), (zero_countX+1), 0)
+    if(zero_countX == noreadcov/100) break
     X <- X+1
   }
   Y <- 1
-  zero_count <- 0
+  zero_countY <- 0
   repeat{
     if(end_pos_row +Y >= nrow(viral_zoom)) break
-    zero_count <- ifelse((viral_zoom[(end_pos_row+Y),4] == 0), (zero_count+1), 0)
-    if(zero_count == noreadcov/100) break
+    zero_countY <- ifelse((viral_zoom[(end_pos_row+Y),4] == 0), (zero_countY+1), 0)
+    if(zero_countY == noreadcov/100) break
     Y <- Y+1
   }
   fill <- "deepskyblue3"
   if (X >= spectranslength/100) {
-    transduction_start_left <- viral_zoom[start_pos_row-X,3]
+    transduction_start_left <- viral_zoom[start_pos_row-(X-zero_countX),3]
     transduction_left <- "Yes"
     alpha_l <- 1
     fill <- "seagreen"
@@ -67,7 +67,7 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
     specialized_transduction_summary[3] <- "no"
   }
   if (Y >= spectranslength/100) {
-    transduction_start_right <- viral_zoom[end_pos_row+Y,3]
+    transduction_start_right <- viral_zoom[end_pos_row+(Y-zero_countY),3]
     transduction_right <- "Yes"
     alpha_r <- 1
     fill <- "seagreen"
@@ -81,9 +81,9 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
   specialized_transduction_summary[2] <- ifelse((X >=spectranslength/100 | Y >=spectranslength/100), "yes", "no")
   plot <- (ggplot(data=viral_zoom, aes(x=position, y=logcoverage))+
              geom_area(fill=fill) +
-             geom_vline(xintercept=c(start_pos_bp, end_pos_bp), size=1)+
-             geom_vline(xintercept=transduction_start_left, color="red", alpha=alpha_l, size=1)+
-             geom_vline(xintercept=transduction_start_right, color="red", alpha=alpha_r, size=1)+
+             geom_vline(xintercept=c(start_pos_bp, end_pos_bp), linewidth=1)+
+             geom_vline(xintercept=transduction_start_left, color="red", alpha=alpha_l, linewidth=1)+
+             geom_vline(xintercept=transduction_start_right, color="red", alpha=alpha_r, linewidth=1)+
              theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                    panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))+
              labs(title=paste(ref_name,classification, active_prophage), subtitle=paste0("Specialized transduction on left: ", transduction_left,", ", "on right: ", transduction_right), x="Contig Position (bp)", y="VLP-fraction \n log10 read coverage"))

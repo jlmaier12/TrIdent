@@ -6,7 +6,7 @@
 \title{Cleaned VLP-Fraction of Sample Dataset}
 \format{
 ## 'CleanVLPFraction_sampledata'
-A data frame with 106,167 rows and 3 columns:
+A data frame with 25,668 rows and 3 columns:
 \describe{
  \item{V1}{Contig accession}
  \item{V2}{Read coverage binned over binsize used by pileup.sh}
