@@ -7,7 +7,7 @@ Automatic detection, classification and characterization of active transduction 
 >**Some things to know:**
 >
 >- This page contains basic background information and usage of TrIdent. If you are interested in a more in-depth description and tutorial of TrIdent, visit [**this page**](./TrIdent-vignette.html) .
->- Find installation instructions **here**.
+>- Find installation instructions [**here**](./TrIdentBeta_installation.html).
 >- Please email me at jlmaier@ncsu.edu if you have any questions or issues.
 >- If you try TrIdent, please let me know your thoughts either at my email, jlmaier@ncsu.edu, or with this **form**. 
 
