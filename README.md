@@ -2,7 +2,7 @@
 **TrIdent-** **Tr**ansduction **Ident**ification: 
 Automatic detection, classification and characterization of active transduction events in microbiomes. 
 
-Find the [tutorial here](./TrIdent-tutorial.html)
+Find a more detailed decription of TrIdent and a [**tutorial** here!](./TrIdent-tutorial.html)
 
 ## Background on Transductomics
 TrIdent is a bioinformatics tool that automates the transductomics data analyis by automatically detecting, classifying and characterizing potential transducing events in a fraction of the time that it would take a manual-labeler. Transductomics is a DNA-sequencing based method for the detection and characterization of transduction events. Developed by Dr. Manuel Kleiner, the method relies on the mapping reads from a virome(VLP_fracion) of a sample to contigs assembled from the metagenome(whole-community) of the same sample. Reads from bacterial DNA carried by viruses or VLPs (Viral-Like Particles) will map back to their bacterial contigs of origin creating read coverage patterns indicative of active transduction. 
