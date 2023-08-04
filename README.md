@@ -6,9 +6,9 @@ Automatic detection, classification and characterization of active transduction 
 ## Thank you for being a beta-tester!
 >**Some things to know:**
 >
->- This page contains basic background information and usage of TrIdent. If you are interested in a more in-depth description and tutorial of TrIdent, visit the [**tutorial here**](./TrIdent-vignette.html) .
->- Find installation instructions [**here**](./TrIdentBeta_installation.html).
->- Make sure you have the correct input data! You need an ultrapurified virome and a metagenome from the same sample. Find details [data requirements here](./TrIdent-vignette.html#Input-Data).
+>- This page contains basic background information and usage of TrIdent. If you are interested in a more in-depth description and tutorial of TrIdent, visit the [tutorial here](./TrIdent-vignette.html) .
+>- Find [installation instructions here](./TrIdentBeta_installation.html).
+>- Make sure you have the correct input data! You need an ultrapurified virome and a metagenome from the same sample. Find detailed [input data requirements here](./TrIdent-vignette.html#Input-Data).
 >- Please email me at jlmaier@ncsu.edu if you have any questions or issues.
 >- If you try TrIdent, please let me know your thoughts either at my email, jlmaier@ncsu.edu, or with this **form**. 
 
