@@ -7,7 +7,7 @@ Automatic detection, classification and characterization of active transduction 
 >**Some things to know:**
 >
 >- This page contains basic background information and basic usage of TrIdent. For more detailed information, visit the [tutorial here](./TrIdent-vignette.html).
->- TrIdent comes preloaded with a small sample dataset so users can follow along with the tutorial in their own R console.
+>- TrIdent comes preloaded with a small sample dataset so users can follow along with the tutorial in their own R console. The tutorial takes ~5-10 minutes. 
 >- Find TrIdent [installation instructions here](./TrIdentBeta_installation.html).
 >- If you are using your own data, make sure it's correct! You need an ultrapurified virome and a metagenome from the same sample. Find detailed [input data requirements here](./TrIdent-vignette.html#input-data).
 >- Please email me at jlmaier@ncsu.edu if you have any questions or issues.
