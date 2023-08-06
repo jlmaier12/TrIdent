@@ -15,13 +15,13 @@ Automatic detection, classification and characterization of active transduction 
 
 
 ## Background on Transductomics
-TrIdent is a bioinformatics tool that automates the transductomics data analyis by automatically detecting, classifying and characterizing potential transducing events in a fraction of the time that it would take a manual-labeler. Transductomics is a DNA-sequencing based method for the detection and characterization of transduction events. Developed by Dr. Manuel Kleiner, the method relies on the mapping reads from a virome(VLP_fracion) of a sample to contigs assembled from the metagenome(whole-community) of the same sample. Reads from bacterial DNA carried by viruses or VLPs (Viral-Like Particles) will map back to their bacterial contigs of origin creating read coverage patterns indicative of active transduction. 
+TrIdent is a bioinformatics tool that automates the transductomics data analysis by automatically detecting, classifying and characterizing potential transducing events in a fraction of the time that it would take a manual-labeler. Transductomics is a DNA-sequencing based method for the detection and characterization of transduction events. Developed by Dr. Manuel Kleiner, transductomics relies on mapping reads from a virome (VLP-fraction) of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by viruses or VLPs (Viral-Like Particles) will map back to their bacterial contigs of origin creating read coverage patterns indicative of active transduction. 
 
 Reference: Kleiner, M., Bushnell, B., Sanderson, K.E. et al. Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities. Microbiome 8, 158 (2020). https://doi.org/10.1186/s40168-020-00935-5
 
-VLP-fraction reads mapped to contigs from the whole-community will create the following read coverage patterns:
+VLP-fraction reads mapped to contigs from the whole-community may create the following read coverage patterns:
 - Sloping pattern
-  - Forms due to decreasing frequency of large DNA transfer startin from a transduction initiation site.
+  - Forms due to decreasing frequency of large DNA transfer moving away from a transduction initiation site.
   - May represent:
       - Generalized transduction
       - Lateral transduction
@@ -45,7 +45,7 @@ To obtain the data needed for transductomics, two sample types must be prepared 
 - VLP-fraction: Represents only the virus and 'viral-like particles' associated with the microbiome of interest
     - The VLP-fraction must be obtained via concentration of the viruses within your sample, then ultrapurification to remove bacterial cells and contaminating free bacterial DNA
  
-After shotgun metagenomic sequencing of both samples, assemble a metagenome from the whole-community reads. Map the reads from both the VLP-fraction and whole-community to the metagenome contigs. Create pileup files using BBMap pileup.sh with 100bp windowsizes:
+After shotgun metagenomic sequencing of both samples (long-read, paired-end, deep coverage), assemble a metagenome from the whole-community reads. Map the reads from both the VLP-fraction and whole-community to the metagenome contigs. Create pileup files using BBMap pileup.sh with 100bp windowsizes:
 ```{bash}
 $ pileup.sh in=VLP_fraction_ReadMapping.bam out=VLP_Fraction.pileupcovstats bincov=VLP_fraction_pileup.bincov100 binsive=100 stdev=t
 $ pileup.sh in=WholeCommunity_ReadMapping.bam out=WholeCommunity.pileupcovstats bincov=WholeCommunity_pileup.bincov100 binsive=100 stdev=t
@@ -58,13 +58,13 @@ Import the VLP_fraction_pileup.bincov100 and WholeCommunity_pileup.bincov100 fil
 TrIdent first classifies contigs as 'Prophage-like', 'Gen/Lat/GTA', 'HighVLPWCRC', or 'None' using pattern-matching to detect patterns in read coverages.
 
 - Prophage-like classifications include potential prophages or phage-inducible chromosomal islands (PICIs)
-    - In addition to identifying prophages and PICIs on contigs, TrIdent also determines if they are highly active/abundant by assessing the associated read coverage in the whole-community fraction. If the read coverage of a prophage/PICI region is elevated above the non-prophage/PICI region of a contig, it is an indicator that the prophage/PICI is actively replicating or is highly abundant as its genome is represented in a higher frequency than its host bacteria.   
+    - In addition to identifying prophages and PICIs on contigs, TrIdent also determines if they are highly active/abundant by assessing the associated read coverage in the whole-community fraction. If the read coverage of a prophage/PICI region is elevated above the non-prophage/PICI region of a contig, it is an indicator that the prophage/PICI is actively replicating or is highly abundant as its genome is represented in a higher ratio than its host bacteria.   
 - Gen/Lat/GTA classifications include potential generalized, lateral or gene transfer agent (GTA) transduction events
 - HighVLPWCRC classifications stand for 'High VLP-fraction:Whole-Community Read Coverage ratio' which means the contig has no pattern match but has an unusually high amount of bacterial DNA in the VLP-fraction and may represent the 'tail' of a sloping pattern formed by a Gen/Lat/GTA event.
 - None classifications includes contigs with no pattern matches and low/no read coverage in the VLP-fraction.
 
 
-Next, TrIdent can search contigs predicted as 'Prophage-like' for potential specialized transduction events to provide the user with a holistic view of the transduction actively occuring in their microbiome of interest. 
+Next, TrIdent can search contigs predicted as 'Prophage-like' for specialized transduction events to provide the user with a holistic view of the transduction actively occuring in their microbiome of interest. 
 
 TrIdent is entirely reference-indepedent meaning that classifications made do not rely on the accuracy or availability of gene annotations. Prophage and PICIs that are not yet known or annotated can still be identified with TrIdent!
 
@@ -90,7 +90,7 @@ The output from TrIdent_Classifier is a list that contains five objects-
 2. Cleaned_summary_table: A table containing the classifications and characterizations of all contigs that were not filtered out, **excluding** contigs that were classified as 'None'
 3. Pattern_MatchInfo: A list of information for each contig's pattern-match. This information is used by other functions in TrIdent. 
 4. FilteredOut_contig_table: A table containing all contigs that were filtered out and the respective reason.
-5. Windowsize: The winsowsize used.
+5. Windowsize: The windowsize used.
 
 
 **Plot the results of the TrIdent_Classifier pattern-matching:**
@@ -109,8 +109,8 @@ Trident_plots$NODE_12
 #Search all contigs classified as Prophage-like for specialized transduction
 Spec_transduction <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, noreadcov=500, spectranslength=2000)
 
-Spec_transduction_summary <- Spec_transduction[[1]]
-Spec_transduction_plots <- Spec_transduction[[2]]
+Spec_transduction_summary <- Spec_transduction$Summary_table
+Spec_transduction_plots <- Spec_transduction$Plots
 Spec_transduction_Contig10 <- Spec_transduction_plots$NODE_10
 
 #Search a specific contig classified as Prophage-like for specialized transduction
