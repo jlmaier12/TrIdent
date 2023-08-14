@@ -45,7 +45,7 @@ To obtain the data needed for transductomics, two sample types must be prepared 
 - VLP-fraction: Represents only the virus and 'viral-like particles' associated with the microbiome of interest
     - The VLP-fraction must be obtained via concentration of the viruses within your sample, then ultrapurification to remove bacterial cells and contaminating free bacterial DNA
  
-After shotgun metagenomic sequencing of both samples (long-read, paired-end, deep coverage), assemble a metagenome from the whole-community reads. Map the reads from both the VLP-fraction and whole-community to the metagenome contigs. Create pileup files using BBMap pileup.sh with 100bp windowsizes:
+After shotgun metagenomic sequencing of both samples (150bp short-read, paired-end, deep coverage), assemble a metagenome from the whole-community reads. Map the reads from both the VLP-fraction and whole-community to the metagenome contigs. Create pileup files using BBMap pileup.sh with 100bp windowsizes:
 ```{bash}
 $ pileup.sh in=VLP_fraction_ReadMapping.bam out=VLP_Fraction.pileupcovstats bincov=VLP_fraction_pileup.bincov100 binsive=100 stdev=t
 $ pileup.sh in=WholeCommunity_ReadMapping.bam out=WholeCommunity.pileupcovstats bincov=WholeCommunity_pileup.bincov100 binsive=100 stdev=t
