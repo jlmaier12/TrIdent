@@ -10,6 +10,9 @@
 #' @keywords internal
 prophagelikeactivity_checker <- function(classificationsummary, prophageclassifications, phageread_dataset, microbialread_dataset, windowsize){
   classificationsummary$active_prophage <- rep(NA, nrow(classificationsummary))
+  if(length(prophageclassifications)==0) {
+    return(classificationsummary)
+  }
   for (i in seq(1,length(prophageclassifications),1)) {
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == prophageclassifications[[i]][[8]]),]
     viral_subset <- windowsize_func(viral_subset,windowsize)
