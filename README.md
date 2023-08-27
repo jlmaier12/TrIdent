@@ -43,7 +43,7 @@ With transductomics, a researcher can obtain information about the phage-host pa
 - VLP-fraction: Represents only the virus and 'viral-like particles' associated with the microbiome of interest
     - The VLP-fraction must be obtained by an appropriate ultra-purification protocol for your sample type to remove bacterial cells and contaminating free bacterial DNA.
  
-After shotgun metagenomic sequencing of both samples (see Kleiner et al. (2020) for details on sequencing requirements), assemble a metagenome from the whole-community reads. Map the reads from both the VLP-fraction and whole-community to the metagenome contigs. Any read mapper can be used, however we recommend using [BBMap] (https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/installation-guide/) with `ambiguous=random`, `qtrim=lr`, and `minid=0.97`. 
+After shotgun metagenomic sequencing of both samples (see Kleiner et al. (2020) for details on sequencing requirements), assemble a metagenome from the whole-community reads. Map the reads from both the VLP-fraction and whole-community to the metagenome contigs. Any read mapper can be used, however we recommend using [BBMap](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/installation-guide/) with `ambiguous=random`, `qtrim=lr`, and `minid=0.97`. 
 
 Create pileup files using `BBMap` pileup.sh with 100 bp window sizes:
 ```{bash}
