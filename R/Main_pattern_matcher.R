@@ -5,8 +5,9 @@
 #' @param phageread_dataset A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs
 #' @param microbialread_dataset A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs
 #' @param windowsize The window size used to re-average read coverage datasets
+#' @param blocksize The minimum size of the prophage-like block pattern. Default is 10000 bp.
 #' @keywords internal
-pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsize) {
+pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsize, blocksize) {
   refnames <- unique(phageread_dataset[,1])
   best_match_list <- list()
   filteredout_contigs <- rep(NA, length(refnames))
@@ -44,25 +45,25 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
     microbial_subset[is.nan.data.frame(microbial_subset)] <- 0
     if (viral_subset[nrow(viral_subset),3]< 45000) {
       no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize)
+      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, blocksize)
+      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, blocksize)
+      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, blocksize)
       best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match)
       best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]]) %>% as.numeric()
     } else if (viral_subset[nrow(viral_subset),3]> 45000 & viral_subset[nrow(viral_subset),3]< 100000){ #only do gen. pattern_matching on contigs greater than 60Kbp
       no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize)
+      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, blocksize)
+      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, blocksize)
+      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, blocksize)
       Gen_LR_wstart_best_match <- slope_LefttoRight_withstart(viral_subset, windowsize)
       Gen_RL_wstart_best_match <- slope_RighttoLeft_withstart(viral_subset, windowsize)
       best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match, Gen_LR_wstart_best_match, Gen_RL_wstart_best_match)
       best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]], Gen_LR_wstart_best_match[[1]], Gen_RL_wstart_best_match[[1]]) %>% as.numeric()
     } else {
       no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize)
+      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, blocksize)
+      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, blocksize)
+      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, blocksize)
       Gen_LR_best_match <- slope_LefttoRight(viral_subset, windowsize)
       Gen_RL_best_match <- slope_RighttoLeft(viral_subset, windowsize)
       Gen_LR_wstart_best_match <- slope_LefttoRight_withstart(viral_subset, windowsize)

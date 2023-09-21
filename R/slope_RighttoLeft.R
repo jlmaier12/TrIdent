@@ -9,15 +9,15 @@ slope_RighttoLeft <- function (viral_subset, windowsize) {
   max_read_cov <- max(viral_subset[,2])
   min_read_cov <- min(viral_subset[,2])
   half_read_cov <- abs((max_read_cov-min_read_cov))/2
-  bottomtotop_read_cov <- as.numeric(abs((max_read_cov - half_read_cov))/10)
+  bottomtotop_read_cov <- as.numeric(abs((max_read_cov - (min_read_cov+half_read_cov)))/10)
   newmax <- max_read_cov+bottomtotop_read_cov
-  bottomtotop_read_cov <- abs((newmax-half_read_cov)/10)
+  bottomtotop_read_cov <- abs((newmax-(min_read_cov+half_read_cov))/10)
   Cov_values_contig <- viral_subset[,2]
   cov_steps <- (newmax-min_read_cov)/((nrow(viral_subset)-1))
   pattern <- seq(min_read_cov,newmax,cov_steps)
   diff <- mean(abs(Cov_values_contig - pattern))
   best_match_info <- list(diff, min_read_cov, newmax, cov_steps, 1, length(pattern))
-  for(cov in seq(newmax, half_read_cov, -bottomtotop_read_cov)) {
+  for(cov in seq(newmax, (min_read_cov+half_read_cov), -bottomtotop_read_cov)) {
     slope_bottom <- min_read_cov
     cov_steps <- (cov-slope_bottom)/((nrow(viral_subset)-1))
     pattern <- seq(slope_bottom,cov,cov_steps)

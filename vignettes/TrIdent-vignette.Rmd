@@ -258,7 +258,7 @@ plot1
 To run `TrIdent_Classifier()` in default-mode, run the following:
 
 ```{r}
-TrIdent_results <- TrIdent_Classifier(VLPFraction_sampledata, WholeCommunity_sampledata)
+TrIdent_results <- TrIdent_Classifier(phageread_dataset=VLPFraction_sampledata, microbial_readdataset=WholeCommunity_sampledata, windowsize = 1000, blocksize=10000, cleanup=TRUE)
 ```
 
 ###### Non-default:
@@ -270,13 +270,13 @@ Note how processing time compares between the default of 1000 `windowsize` and t
 Increase `windowsize` to 2000bp:
 
 ```{r}
-TrIdent_results_increasewindow <- TrIdent_Classifier(VLPFraction_sampledata, WholeCommunity_sampledata, windowsize=2000)
+TrIdent_results_increasewindow <- TrIdent_Classifier(phageread_dataset=VLPFraction_sampledata, microbial_readdataset=WholeCommunity_sampledata, windowsize=2000, blocksize=10000, cleanup=TRUE)
 ```
 
 Decrease `windowsize` to 500bp:
 
 ```{r}
-TrIdent_results_increasewindow <- TrIdent_Classifier(VLPFraction_sampledata, WholeCommunity_sampledata, windowsize=500)
+TrIdent_results_increasewindow <- TrIdent_Classifier(phageread_dataset=VLPFraction_sampledata, microbial_readdataset=WholeCommunity_sampledata, windowsize=500, blocksize=10000, cleanup=TRUE)
 ```
 
 ##### Obtain results of main classifier:

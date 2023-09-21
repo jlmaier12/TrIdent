@@ -13,7 +13,7 @@ matchsize_checker <- function(classificationsummary, transductionclassification_
     ref_name <- transductionclassification_list[[i]][[8]]
     start_pos <- transductionclassification_list[[i]][[5]]
     end_pos <- transductionclassification_list[[i]][[6]]
-    classificationsummary[which(classificationsummary[,1]==ref_name),3] <- (end_pos-start_pos) *windowsize
+    classificationsummary[which(classificationsummary[,1]==ref_name),3] <- length(c(start_pos:end_pos)) *windowsize
   }
   return(classificationsummary)
 }
