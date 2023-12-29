@@ -25,39 +25,45 @@ Plot_TrIdentPatternMatches <- function(phageread_dataset, microbialread_dataset,
   plots <- list()
   ref_names <- c()
   for (i in seq(1,length(transductionclassifications_wlowratios),1)) {
-    ref_name <- transductionclassifications_wlowratios[[i]][[8]]
+    ref_name <- transductionclassifications_wlowratios[[i]][[9]]
     ref_names <- c(ref_names, ref_name)
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == ref_name),]
     viral_subset <- windowsize_func(viral_subset,windowsize)
-    viral_subset[is.nan.data.frame(viral_subset)] <- 0
     microbial_subset <- microbialread_dataset[which(microbialread_dataset[,1] == ref_name),]
     microbial_subset <- windowsize_func(microbial_subset,windowsize)
-    microbial_subset[is.nan.data.frame(microbial_subset)] <- 0
     match_info <- final_summary_table[which(final_summary_table[,1]==ref_name),]
     classification <- match_info[,2]
     pattern <- pattern_builder(viral_subset, transductionclassifications_wlowratios, classification, i)
     pattern_match <- cbind(viral_subset, pattern)
     match_length <- match_info[,3]
     classification <- match_info[,2]
-    if (is.na(match_info[4]) == TRUE){
+    if (is.na(match_info[6]) == TRUE){
       prophage_activity <- NULL
-    } else if (match_info[4]=="YES"){
+    } else if (match_info[6]=="YES"){
       prophage_activity <- "Active/highly abundant prophage"
+    } else if (match_info[6]=="MIXED"){
+      prophage_activity <- "Not-homogenously present/integrated"
     } else {
       prophage_activity <- NULL
     }
     wholecomm_plot <- ggplot(data=microbial_subset, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
-      labs(title=paste(ref_name, "Classification", classification ),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ", y="Whole-community \n read coverage") +
+      labs(title=paste(ref_name, "Classification:", classification ),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ", y="Whole-community \n read coverage") +
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-            panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))
+            panel.background = element_blank(), axis.line = element_line(colour = "black"),
+            text = element_text(size = 14),
+            axis.text = element_text(size=10),
+            plot.margin=margin(t = 0, r = 0, b = 0, l = 2))
 
     Overlay_plot <- ggplot(data=pattern_match, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
       geom_line(aes(y=pattern), color="black", size=1)+
       labs(x="Contig position (bp)", y="VLP-fraction \n read coverage")+
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-            panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))
+            panel.background = element_blank(), axis.line = element_line(colour = "black"),
+            text = element_text(size = 14),
+            axis.text = element_text(size=10),
+            plot.margin=margin(t = 0, r = 0, b = 0, l = 2))
 
     combined_plot <- (wholecomm_plot/Overlay_plot)
     plots[[i]] <- combined_plot

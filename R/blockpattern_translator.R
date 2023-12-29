@@ -19,7 +19,7 @@ blockpattern_translator <- function(viral_subset, best_match_info, windowsize, p
     start_pos <- which(pattern==max(pattern))[1]
     end_pos <- which(pattern==max(pattern))[length(which(pattern==max(pattern)))]
     if (diff < best_match_info[[1]]){
-      best_match_info <- list(diff, min_pattern_cov, max_pattern_cov, "NA", start_pos, end_pos)
+      best_match_info <- list(diff, min_pattern_cov, max_pattern_cov, "NA", start_pos, end_pos, "NA")
     }
   }
   return(best_match_info)

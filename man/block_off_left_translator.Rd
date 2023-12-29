@@ -4,14 +4,16 @@
 \alias{block_off_left_translator}
 \title{Block off-left pattern translator}
 \usage{
-block_off_left_translator(viral_subset, windowsize, blocksize)
+block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
 }
 \arguments{
 \item{viral_subset}{A subset of the read coverage dataset that pertains only to the contig currently being assessed}
 
 \item{windowsize}{The window size used to re-average read coverage datasets}
 
-\item{blocksize}{The minimum size of the prophage-like block pattern. Default is 10000 bp.}
+\item{minblocksize}{The minimum size of the prophage-like block pattern. Default is 10000 bp.}
+
+\item{maxblocksize}{The maximum size of the prophage-like block pattern. Default is NA.}
 }
 \description{
 Build and translate a block pattern going off the left side of the contig. Stop translating when the pattern left on the contig is 10,000bp. Translate the pattern 2000bp at a time.

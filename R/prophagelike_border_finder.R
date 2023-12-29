@@ -8,14 +8,19 @@
 #' @param windowsize The window size used to re-average read coverage datasets
 #' @keywords internal
 prophagelike_border_finder <- function(viral_subset,transductionclassificationpatterns,i, windowsize) {
-  max_value <- viral_subset[order(viral_subset[,2], decreasing=TRUE),2][2]
   left_margin_rowpos <- transductionclassificationpatterns[[i]][[5]] *windowsize/100
   right_margin_rowpos <- transductionclassificationpatterns[[i]][[6]] *windowsize/100
   left_margin_bppos <- transductionclassificationpatterns[[i]][[5]] *windowsize
   right_margin_bppos <- transductionclassificationpatterns[[i]][[6]] *windowsize
+  left_row_index <- which(viral_subset[,3]==left_margin_bppos)
+  right_row_index <- which(viral_subset[,3]==right_margin_bppos)
+  left_row_index <- ifelse(length(left_row_index)==0, 1, which(viral_subset[,3]==left_margin_bppos))
+  right_row_index <- ifelse(length(right_row_index)==0, nrow(viral_subset), which(viral_subset[,3]==right_margin_bppos))
+  match_region <- viral_subset[c(left_row_index:right_row_index),]
+  max_value <- match_region[order(match_region[,2], decreasing=TRUE),2][2]
   X <- 1
   repeat {
-    if (viral_subset[X,2] >= 0.2*max_value) {
+    if (viral_subset[X,2] >= (0.20*max_value)) {
       left_margin_bppos <- viral_subset[X,3]
       left_margin_rowpos <- X
       break
@@ -25,7 +30,7 @@ prophagelike_border_finder <- function(viral_subset,transductionclassificationpa
   }
   Y <- nrow(viral_subset)
   repeat {
-    if (viral_subset[Y,2] >= 0.2*max_value) {
+    if (viral_subset[Y,2] >= (0.20*max_value)){
       right_margin_bppos <- viral_subset[Y,3]
       right_margin_rowpos <- Y
       break
@@ -36,3 +41,4 @@ prophagelike_border_finder <- function(viral_subset,transductionclassificationpa
   margins <- list(left_margin_bppos, right_margin_bppos, left_margin_rowpos, right_margin_rowpos)
   return(margins)
 }
+

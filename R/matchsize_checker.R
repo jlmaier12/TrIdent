@@ -9,11 +9,15 @@
 matchsize_checker <- function(classificationsummary, transductionclassification_list, windowsize){
   classificationsummary <- as.data.frame(classificationsummary)
   classificationsummary$match_size <- rep(NA, nrow(classificationsummary))
+  classificationsummary$start_pos <- rep(NA, nrow(classificationsummary))
+  classificationsummary$stop_pos <- rep(NA, nrow(classificationsummary))
   for (i in seq(1,length(transductionclassification_list),1)) {
-    ref_name <- transductionclassification_list[[i]][[8]]
+    ref_name <- transductionclassification_list[[i]][[9]]
     start_pos <- transductionclassification_list[[i]][[5]]
     end_pos <- transductionclassification_list[[i]][[6]]
-    classificationsummary[which(classificationsummary[,1]==ref_name),3] <- length(c(start_pos:end_pos)) *windowsize
+    classificationsummary[which(classificationsummary[,1]==ref_name),3] <- (length(c(start_pos:end_pos))-1) *windowsize
+    classificationsummary[which(classificationsummary[,1]==ref_name),4] <- start_pos *windowsize
+    classificationsummary[which(classificationsummary[,1]==ref_name),5] <- end_pos *windowsize
   }
   return(classificationsummary)
 }

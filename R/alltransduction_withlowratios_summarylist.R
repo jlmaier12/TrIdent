@@ -9,7 +9,7 @@ alltransduction_withlowratios_summarylist <- function(best_match_list, summaryta
   A<-1
   transductionclassification_withlowratios_list <- list()
   for (i in seq(1,length(best_match_list),1)){
-    ref_name <- best_match_list[[i]][[8]]
+    ref_name <- best_match_list[[i]][[9]]
     classification <-  summarytable_wratios[which(summarytable_wratios[,1]==ref_name),2]
     if(classification=="None") next
     transductionclassification_withlowratios_list[[A]] <- best_match_list[[i]]

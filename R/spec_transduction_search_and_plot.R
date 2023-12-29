@@ -13,15 +13,10 @@
 #' @keywords internal
 spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, transductionclassifications, transductionclassificationsummary, windowsize, i, noreadcov, spectranslength){
   position <- logcoverage <- NULL
-  specialized_transduction_summary <- c(ref_name, rep(NA, 3))
-  active_prophage <- transductionclassificationsummary[which(transductionclassificationsummary[,1]== ref_name),4]
-  if (active_prophage == "YES") {
-    active_prophage <- "Highly active/abundant"
-  } else {
-    active_prophage <- NULL
-  }
+  specialized_transduction_summary <- c(ref_name, rep(NA, 5))
+  active_prophage <- ifelse(transductionclassificationsummary[which(transductionclassificationsummary[,1]== ref_name),6] == "YES", "Highly active/abundant", NA)
   viral_subset <- phageread_dataset[which(phageread_dataset[,1] == ref_name),]
-  classification <- transductionclassifications[[i]][[7]]
+  classification <- transductionclassifications[[i]][[8]]
   viral_zoom_pos <- viral_subset_zoom(viral_subset, transductionclassifications, i, 500, windowsize)
   start_pos <- viral_zoom_pos[[1]]
   end_pos <- viral_zoom_pos[[2]]
@@ -54,31 +49,35 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
     Y <- Y+1
   }
   fill <- "deepskyblue3"
-  if (X >= spectranslength/100) {
+  if (X-zero_countX >= spectranslength/100) {
     transduction_start_left <- viral_zoom[start_pos_row-(X-zero_countX),3]
     transduction_left <- "Yes"
     alpha_l <- 1
     fill <- "seagreen"
     specialized_transduction_summary[3] <- "yes"
+    specialized_transduction_summary[5] <- (X-zero_countX)*100
   } else {
     transduction_left <- "No"
     transduction_start_left <- start_pos_bp
     alpha_l <- 0
     specialized_transduction_summary[3] <- "no"
+    specialized_transduction_summary[5] <- NA
   }
-  if (Y >= spectranslength/100) {
+  if (Y-zero_countY >= spectranslength/100) {
     transduction_start_right <- viral_zoom[end_pos_row+(Y-zero_countY),3]
     transduction_right <- "Yes"
     alpha_r <- 1
     fill <- "seagreen"
     specialized_transduction_summary[4] <- "yes"
+    specialized_transduction_summary[6] <- (Y-zero_countY)*100
   } else {
     transduction_right <- "No"
     transduction_start_right <- end_pos_bp
     alpha_r <- 0
     specialized_transduction_summary[4] <- "no"
+    specialized_transduction_summary[6] <- NA
   }
-  specialized_transduction_summary[2] <- ifelse((X >=spectranslength/100 | Y >=spectranslength/100), "yes", "no")
+  specialized_transduction_summary[2] <- ifelse((X-zero_countX >=spectranslength/100 | Y-zero_countY >=spectranslength/100), "yes", "no")
   plot <- (ggplot(data=viral_zoom, aes(x=position, y=logcoverage))+
              geom_area(fill=fill) +
              geom_vline(xintercept=c(start_pos_bp, end_pos_bp), linewidth=1)+

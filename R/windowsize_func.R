@@ -18,5 +18,6 @@ windowsize_func <- function(read_dataset, windowsize){
   position <- seq(windowsize, length(coverage)*windowsize, windowsize)
   ref_name <- rep(read_dataset[1,1], length(position))
   newdataset <- cbind.data.frame(ref_name, coverage, position) %>% as.data.frame()
+  newdataset[is.nan.data.frame(newdataset)] <- 0
   return(newdataset)
 }

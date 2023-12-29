@@ -8,6 +8,6 @@ notransduction_pattern <- function (viral_subset) {
   pattern <- rep(mean(viral_subset[,2]),nrow(viral_subset))
   Cov_values_contig <- viral_subset[,2]
   diff <- mean(abs(Cov_values_contig - pattern))
-  best_match_info <- list(diff, mean(viral_subset[,2]), nrow(viral_subset), "NA", "NA", "NA", "None")
+  best_match_info <- list(diff, mean(viral_subset[,2]), nrow(viral_subset), "NA", "NA", "NA", "NA","None")
   return(best_match_info)
 }

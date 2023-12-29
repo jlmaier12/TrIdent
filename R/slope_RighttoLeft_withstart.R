@@ -9,14 +9,16 @@ slope_RighttoLeft_withstart <- function (viral_subset, windowsize) {
   max_read_cov <- max(viral_subset[,2])
   min_read_cov <- min(viral_subset[,2])
   half_read_cov <- abs((max_read_cov-min_read_cov))/2
-  bottomtotop_read_cov <- as.numeric(abs((max_read_cov - (min_read_cov+half_read_cov)))/10)
+  bottomtotop_read_cov <- as.numeric(abs(max_read_cov - (min_read_cov+half_read_cov))/10)
+  newmax <- max_read_cov+bottomtotop_read_cov
   Cov_values_contig <- viral_subset[,2]
-  cov_steps <- (max_read_cov-min_read_cov)/((nrow(viral_subset)-((10000/windowsize)+1)))
-  pattern <- c(seq(min_read_cov,max_read_cov,cov_steps),rep(min_read_cov,10000/windowsize))
+  cov_steps <- (newmax-min_read_cov)/((nrow(viral_subset)-((10000/windowsize)+1)))
+  pattern <- c(seq(min_read_cov,newmax,cov_steps),rep(min_read_cov,10000/windowsize))
   diff <- mean(abs(Cov_values_contig - pattern))
   end_pos <- which(pattern==max(pattern))
-  best_match_info <- list(diff, min_read_cov, max_read_cov, cov_steps, 1, end_pos)
-  for(cov in seq(max_read_cov, (min_read_cov+half_read_cov), -bottomtotop_read_cov)) {
+  slope <- (newmax-min_read_cov)/(nrow(viral_subset)-1)
+  best_match_info <- list(diff, min_read_cov, newmax, cov_steps, 1, end_pos, slope)
+  for(cov in seq(newmax, (min_read_cov+half_read_cov), -bottomtotop_read_cov)) {
     slope_bottom <- min_read_cov
     cov_steps <- (cov-slope_bottom)/((nrow(viral_subset)-((10000/windowsize)+1)))
     pattern <- c(seq(slope_bottom,cov,cov_steps),rep(min_read_cov,10000/windowsize))
@@ -32,6 +34,6 @@ slope_RighttoLeft_withstart <- function (viral_subset, windowsize) {
       if (abs(slope) < (15/100000) | slope <0) break
     }
   }
-  best_match_results <- append(best_match_info, "Gen/Lat/GTA")
+  best_match_results <- c(best_match_info, "Gen/Lat/GTA")
   return(best_match_results)
 }

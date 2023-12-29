@@ -8,8 +8,8 @@ contig_classification_summary <- function(best_match_list){
   ref_name <- rep(NA, length(best_match_list))
   classifications <- rep(NA, length(best_match_list))
   for (i in seq(1,length(best_match_list),1)){
-    ref_name[i] <- best_match_list[[i]][[8]]
-    classifications[i] <- best_match_list[[i]][[7]]
+    ref_name[i] <- best_match_list[[i]][[9]]
+    classifications[i] <- best_match_list[[i]][[8]]
   }
   classification_summary <- cbind(ref_name, classifications)
   return(classification_summary)

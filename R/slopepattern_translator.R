@@ -12,6 +12,7 @@ slopepattern_translator <- function(viral_subset, best_match_info, windowsize, p
   min_read_cov <- min(pattern)
   max_read_cov <- max(pattern)
   Cov_values_contig <- viral_subset[,2]
+  slope <- best_match_info[[7]]
   repeat {
     if (direction== "lefttoright") {
       pattern <- c(rep(min_read_cov,2000/windowsize),pattern[-c((length(pattern)-((2000/windowsize)-1)):length(pattern))])
@@ -30,7 +31,7 @@ slopepattern_translator <- function(viral_subset, best_match_info, windowsize, p
     if((length(pattern[!(pattern %in% min_read_cov)]) * windowsize)<45000) break
     diff <- mean(abs(Cov_values_contig - pattern))
     if (diff < best_match_info[[1]]){
-      best_match_info <- list(diff, slope_bottom, max_read_cov, cov_steps, start_pos, end_pos)
+      best_match_info <- list(diff, slope_bottom, max_read_cov, cov_steps, start_pos, end_pos, slope)
     }
   }
   return(best_match_info)

@@ -27,18 +27,18 @@
   }
   if(missing(specificcontig)) {
     potential_spec_transduction <- 0
-    specialized_transduction_summary <- data.frame(matrix(ncol = 4, nrow = 0))
-    colnames(specialized_transduction_summary) <- c("ref_name", "Specialized_transduction", "Left", "Right")
+    specialized_transduction_summary <- data.frame(matrix(ncol = 6, nrow = 0))
+    colnames(specialized_transduction_summary) <- c("ref_name", "Specialized_transduction", "Left", "Right", "Length_left", "Length_right")
     plots <- list()
     J <- 1
     for (i in  seq(1, length(transductionclassificationpatterns), 1)) {
-      classification <- transductionclassificationpatterns[[i]][[7]]
+      classification <- transductionclassificationpatterns[[i]][[8]]
       if (classification != "Prophage-like") next
-      ref_name <- transductionclassificationpatterns[[i]][[8]]
+      ref_name <- transductionclassificationpatterns[[i]][[9]]
       spec_trans_pred <- spec_transduction_search_and_plot(ref_name, phageread_dataset, transductionclassificationpatterns, transductionclassificationsummary, windowsize, i, noreadcov, spectranslength)
       if(spec_trans_pred[[1]][[2]] == "yes") {
         potential_spec_transduction <- potential_spec_transduction +1}
-      specialized_transduction_summary[J,c(1:4)] <- spec_trans_pred[[1]]
+      specialized_transduction_summary[J,c(1:6)] <- spec_trans_pred[[1]]
       plots[[J]] <- spec_trans_pred[[2]]
       J <- J+1
     }
@@ -49,7 +49,7 @@
     return(final_spectransduction_list)
   } else {
     for (i in  seq(1, length(transductionclassificationpatterns), 1)) {
-      ref_name <- transductionclassificationpatterns[[i]][[8]]
+      ref_name <- transductionclassificationpatterns[[i]][[9]]
       if (ref_name == specificcontig) {
         spec_trans_pred <- spec_transduction_search_and_plot(ref_name, phageread_dataset, transductionclassificationpatterns, transductionclassificationsummary, windowsize, i, noreadcov, spectranslength)
         return(spec_trans_pred[[2]])

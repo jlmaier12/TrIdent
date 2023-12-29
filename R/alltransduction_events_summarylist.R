@@ -8,7 +8,7 @@ alltransduction_events_summarylist <- function(best_match_list){
   A<-1
   transductionclassification_list <- list()
   for (i in seq(1,length(best_match_list),1)){
-    classification <-  best_match_list[[i]][[7]]
+    classification <-  best_match_list[[i]][[8]]
     if(classification=="None") next
     transductionclassification_list[[A]] <- best_match_list[[i]]
     A <- A+1

@@ -4,14 +4,16 @@
 \alias{full_blockpattern_builder}
 \title{Builds pattern for full block-like pattern}
 \usage{
-full_blockpattern_builder(viral_subset, windowsize, blocksize)
+full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize)
 }
 \arguments{
 \item{viral_subset}{A subset of the read coverage dataset that pertains only to the contig currently being assessed}
 
 \item{windowsize}{The window size used to re-average read coverage datasets}
 
-\item{blocksize}{The minimum size of the prophage-like block pattern. Default is 10000 bp.}
+\item{minblocksize}{The minimum size of the prophage-like block pattern. Default is 10000 bp.}
+
+\item{maxblocksize}{The maximum size of the prophage-like block pattern. Default is NA.}
 }
 \description{
 Build the full block pattern and provide it as input to the blockpattern_translator to be translated across a contig. The pattern is made smaller length-wise 2000bp at a time, and the pattern stops decreasing in length once it reaches 10000bp.
