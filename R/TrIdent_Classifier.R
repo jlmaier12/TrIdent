@@ -1,6 +1,6 @@
 #' Classify contigs as Prophage-like, Gen/Lat/GTA, None, or HighVLPWCratio
 #'
-#' Classifies contigs as prophage-like, gen/lat/GTA, none, or highVLPWCratio. This function performs all the pattern-matching and summarizes the results into a list. The first item in the list is a table consisting of the summary information of all the contigs that passed through pattern-matching (i.e were not filtered out). The second item in the list is a table consisting of the summary information of all contigs that were predicted as containing a potential prophage, generalized transduction and/or low whole-community: VLP-fraction read coverage ratios. The third item in the list contains the best pattern-match information associated with each contig in the previous table. The fourth and final object in the list is a table containing the contigs that were filtered out prior to pattern_matching and the reason why.
+#' Classifies contigs as prophage-like, gen/lat/GTA, none, or highVLPWCratio. This function performs all the pattern-matching and summarizes the results into a list. The first item in the list is a table consisting of the summary information of all the contigs that passed through pattern-matching (i.e were not filtered out). The second item in the list is a table consisting of the summary information of all contigs that were predicted as containing a potential prophage, generalized, lateral or GTA (Gen/Lat/GTA) transduction and/or low whole-community: VLP-fraction read coverage ratios. The third item in the list contains the best pattern-match information associated with each contig in the previous table. The fourth object in the list is a table containing the contigs that were filtered out prior to pattern_matching and the reason why. The fifth item is the windowsize used for the search.
 #'
 #'@param phageread_dataset A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs
 #'@param microbial_readdataset A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs
@@ -14,6 +14,10 @@
 #'TrIdent_results <- TrIdent_Classifier(VLP_fracreadcov, whole_commreadcov, windowsize=1000, minblocksize=10000, maxblocksize=150000, cleanup=TRUE)
 #'}
   TrIdent_Classifier <- function(phageread_dataset, microbial_readdataset, windowsize = 1000, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE){
+  if(windowsize != 100 | windowsize != 200| windowsize != 500|windowsize != 1000|windowsize != 2000) {
+    cat("windowsize must be either 100, 200, 500, 1000 or 2000!")
+    break
+  }
   start_time <- Sys.time()
   if (cleanup==TRUE){
   phageread_dataset <- readcovdf_formatter(phageread_dataset)
