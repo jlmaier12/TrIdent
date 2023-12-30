@@ -76,7 +76,7 @@ WholeCommunity_pileup100 <- read.delim("WholeCommunity_pileup_bincov100.txt", he
 
 **Run `TrIdent_Classifier()` to classify contigs as Prophage-like, Gen/Lat/GTA, HighVLPWCRC, or None:** 
 ```{r}
-Trident_results <- TrIdent_Classifier(VLP_fraction_pileup100, WholeCommunity_pileup100, windowsize=1000)
+Trident_results <- TrIdent_Classifier(VLP_pileup=VLP_fraction_pileup100, WC_pileup=WholeCommunity_pileup100, minblocksize=10000, maxblocksize=200000, windowsize=1000)
 
 Summary_table <- Trident_results$Full_summary_table
 Cleaned_table <- Trident_results$Cleaned_summary_table
@@ -90,11 +90,11 @@ The output from `TrIdent_Classifier()` is a list that contains five objects-
 4. FilteredOut_contig_table: A table containing all contigs that were filtered out and the respective reason.
 5. Windowsize: The windowsize used.
 
-Note that the `windowsize` is a user-defined variable. Please see the [TrIdent tutorial](./TrIdentTutorial.html) to understand how changing the `windowsize` may alter your results.
+Note that `windowsize`, `minblocksize` and `maxblocksize` are user-defined variables. Please see the [TrIdent tutorial](./TrIdentTutorial.html) to understand how changing these variables may alter your results.
 
 **Plot the results of the `TrIdent_Classifier()` pattern-matching:**
 ```{r}
-Trident_plots <- Plot_TrIdentPatternMatches(VLP_fraction_pileup100, WholeCommunity_pileup100, Trident_results)
+Trident_plots <- Plot_TrIdentPatternMatches(VLP_pileup=VLP_fraction_pileup100, WC_pileup=WholeCommunity_pileup100, transductionclassifications=Trident_results)
 
 #View all pattern matches to contigs classified as  Prophage-like, Gen/Lat/GTA, or HighVLPWCRC:
 Trident_plots
@@ -109,7 +109,7 @@ Trident_plots$NODE_12
 
 Search all contigs classified as Prophage-like for specialized transduction
 ```{r}
-Spec_transduction <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, noreadcov=500, spectranslength=2000)
+Spec_transduction <- SpecializedTransduction_ID(VLP_pileup=P_Spades3_100, transductionclassifications=Trident_results, noreadcov=500, spectranslength=2000)
 
 Spec_transduction_summary <- Spec_transduction$Summary_table
 Spec_transduction_plots <- Spec_transduction$Plots
@@ -118,7 +118,7 @@ Spec_transduction_Contig10 <- Spec_transduction_plots$NODE_10
 
 Search a specific contig classified as Prophage-like for specialized transduction
 ```{r}
-Spec_transduction_Contig1 <- SpecializedTransduction_ID(P_Spades3_100, Trident_results, specificcontig="NODE_1", noreadcov=500, spectranslength=2000)
+Spec_transduction_Contig1 <- SpecializedTransduction_ID(VLP_pileup=P_Spades3_100, transductionclassifications=Trident_results, specificcontig="NODE_1", noreadcov=500, spectranslength=2000)
 ```
 Note that `noreadcov` and `spectranslength` are user-defined variables. Please see the [TrIdent tutorial](./TrIdentTutorial.html) to understand how changing `noreadcov` and `spectranslength` may alter your results.
 
