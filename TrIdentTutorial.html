@@ -404,7 +404,7 @@ from the whole-community reads. The whole-community and VLP-fraction
 reads were mapped to the metagenome contigs using <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbmap-guide/">BBMap</a>. 
 The resulting .BAM file was sorted and indexed using the <a href="http://www.htslib.org/">Samtools</a> <code>index</code> and <code>sort</code> functions, respectively. Finally, two pileup files were
 generated to summarize the respective read coverages across each contig.
-The contigs were pre-filtered to remove contigs less than 40 kbp.
+The contigs were pre-filtered to remove contigs less than 30 kbp.
 <strong>Note- Specific sequencing requirements are needed for transductomics! 
 Sample preparation and sequencing procedures are detailed in Kleiner et al. (2020).</strong> 
 A subset of 10 contigs from the mouse fecal metagenome were selected for the sample 
@@ -480,8 +480,7 @@ your own data-cleaning and reformatting.</p>
 <p><code>TrIdent_Classifier()</code> is the main function that TrIdent
 relies on. This function cleans and reformats your input data, filters
 contigs based on length and read coverage, performs pattern-matching to
-classify contigs, identifies active/highly abundant prophage/phage
-inducible chromosomal islands (PICIs), determines which contigs have
+classify contigs, identifies active/highly abundant prophage-like elements, determines which contigs have
 high VLP-fraction:whole-community read coverage ratios, and outputs all
 information in a neat summary table.</p>
 <p><code>TrIdent_Classifier()</code> features:</p>
@@ -505,7 +504,7 @@ pattern is built, it is translated across the contig being assessed, and the mea
 difference in coverage (match-score) between the contig and the pattern is calculated at
 each translation. Theoretically, <strong>if a pattern is a perfect-match to the coverages 
 on a contig, then taking the mean absolute difference will result in a 0. Obviously, no 
-pattern will be a perfect-match to a contig, but the closer to a 0 the match-score is, the 
+pattern will be a perfect-match to a contig, but the closer to 0 the match-score is, the 
 better that pattern matches the read coverage pattern on the contig.</strong>
 The contig is classified based on the pattern
 that achieves the lowest match-score.</p></li>
@@ -589,7 +588,11 @@ region has a mean read coverage ratio greater than 1.3. If the
 non-prophage/PICI region is less than 20,000 bp, then the contig is
 labeled as ‘CBD’ (Can’t Be Determined) as its difficult to determine if
 the prophage/PICI region is truely elevated when there is so little
-non-prophage/PICI region to compare to.</p>
+non-prophage/PICI region to compare to. Conversely, the prophage/PICI region may also have 'depressed' read
+coverage in the whole-community fraction. This is likely due to the non-homogenous intergration of the prophage/PICI
+in the associated bacterial host population. If the ratio of read coverage in the prophage/PICI:non-prophage/PICI regions is
+less than 0.5, the contig is labeled as 'mixed' which indicates a prophage/PICI which may have 'mixed' integration in the 
+host population. </p>
 <p><strong>Reference</strong>: Kieft K, Anantharaman K. Deciphering
 Active Prophages from Metagenomes. mSystems. 2022 Apr 26;7(2):e0008422.
 doi: 10.1128/msystems.00084-22. Epub 2022 Mar 24. PMID: 35323045; PMCID:
@@ -628,7 +631,7 @@ the data. Resizing is done by averaging the read coverages across the specified 
 <code>TrIdent_Classifier()</code> resizes windows to 1000 bp
 as a default. Depending on the dataset, the user may want to select a
 different <code>windowsize</code>. Users can choose between windowsizes
-of 200, 500, 1000 or 2000. We recommend increasing
+of 200, 500, 1000 or 2000 ONLY. We recommend increasing
 the <code>windowsize</code> to 2000 if processing speed is of importance
 or if data is noisy (i.e. VLP-fraction contaminated with external
 bacterial DNA). We recommend decreasing the <code>windowsize</code> if
@@ -636,6 +639,15 @@ your data is very clean and/or <strong>small</strong> and you are
 interested in increasing the resolution of read coverage patterns for
 the initial classification of contigs. Note that decreasing the <code>windowsize</code> 
 will increase TrIdent's processing time!</p>
+
+</p> Users may also define the minimum (</code>minblocksize</code>) and maximum (</code>maxblocksize</code>) size of
+  the block-like pattern that TrIdent uses for prophage/PICI pattern matching. The default (</code>minblocksize</code>) is 10,000bp and the default
+  (</code>maxblocksize</code>) is undefined. Be aware that changing the (</code>minblocksize</code>) and (</code>maxblocksize</code>) will not
+  necessarily remove contigs with prophage/PICI patterns smaller/larger than the defined parameters from the resulting classifications.
+  Contigs with prophage/PICI patterns larger/smaller than the (</code>maxblocksize</code>) and (</code>minblocksize</code>) may still be classified,
+  however, the classifications and associated pattern matches may be poor. For example, if a contig has a clear prophage/PICI pattern that's ~50,000bp but the user
+  sets the (</code>maxblocksize=40000</code>), TrIdent will likely still classify the contig as prophage-like as the maximum block-like pattern of 40,0000bp 
+  will still achieve a lower pattern match score than any of the Gen/Lat/GTA or none patterns.
 <div id="default" class="section level6">
 <h6>Default:</h6>
 <p>To run <code>TrIdent_Classifier()</code> in default-mode, run the
