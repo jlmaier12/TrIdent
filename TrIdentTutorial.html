@@ -549,7 +549,7 @@ slopes changed while only the slopes are changed on patterns 1 and 2.
   followed by the block’s width to ensure a variety of block height/width combinations are
   tested. The block widths never get smaller than 10 kbp as a default as it can be difficult
   to distinguish between prophage/PICIs and other mobile genetic elements, like transposons,
-  in that size range. However, the minimum block width is a user-defined variable (<code>blocksize</code>)
+  in that size range. However, the minimum block width is a user-defined variable (<code>minblocksize</code>)
   and can be changed if smaller mobile genetic elements are of interest. The block heights 
   are decreased followed by the block’s width to ensure that a variety of block height/width 
   combinations are tested. Pattern 1 represents a prophage/PICI that is entirely on the contig
@@ -640,13 +640,13 @@ interested in increasing the resolution of read coverage patterns for
 the initial classification of contigs. Note that decreasing the <code>windowsize</code> 
 will increase TrIdent's processing time!</p>
 
-</p> Users may also define the minimum (</code>minblocksize</code>) and maximum (</code>maxblocksize</code>) size of
-  the block-like pattern that TrIdent uses for prophage/PICI pattern matching. The default (</code>minblocksize</code>) is 10,000bp and the default
-  (</code>maxblocksize</code>) is undefined. Be aware that changing the (</code>minblocksize</code>) and (</code>maxblocksize</code>) will not
+</p> Users may also define the minimum ( </code>minblocksize</code> ) and maximum ( </code>maxblocksize</code> ) size of
+  the block-like pattern that TrIdent uses for prophage/PICI pattern matching. The default </code>minblocksize</code> is 10,000bp and the default
+  </code>maxblocksize</code> is undefined. Be aware that changing the </code>minblocksize</code> and </code>maxblocksize</code> will not
   necessarily remove contigs with prophage/PICI patterns smaller/larger than the defined parameters from the resulting classifications.
-  Contigs with prophage/PICI patterns larger/smaller than the (</code>maxblocksize</code>) and (</code>minblocksize</code>) may still be classified,
+  Contigs with prophage/PICI patterns larger/smaller than the </code>maxblocksize</code> and </code>minblocksize</code> may still be classified,
   however, the classifications and associated pattern matches may be poor. For example, if a contig has a clear prophage/PICI pattern that's ~50,000bp but the user
-  sets the (</code>maxblocksize=40000</code>), TrIdent will likely still classify the contig as prophage-like as the maximum block-like pattern of 40,0000bp 
+  sets the </code>maxblocksize=40000</code>, TrIdent will likely still classify the contig as prophage-like as the maximum block-like pattern of 40,0000bp 
   will still achieve a lower pattern match score than any of the Gen/Lat/GTA or none patterns.
 <div id="default" class="section level6">
 <h6>Default:</h6>
