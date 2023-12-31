@@ -5,7 +5,7 @@
 \title{Identify potential specialized transduction events on contigs classified as Prophage-like}
 \usage{
 SpecializedTransduction_ID(
-  phageread_dataset,
+  VLP_pileup,
   transductionclassification,
   specificcontig,
   noreadcov = 500,
@@ -14,7 +14,7 @@ SpecializedTransduction_ID(
 )
 }
 \arguments{
-\item{phageread_dataset}{A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
+\item{VLP_pileup}{A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
 
 \item{transductionclassification}{Output from TrIdent_Classifier}
 
@@ -31,10 +31,10 @@ Search contigs classified as prophage-like for potential specialized transductio
 }
 \examples{
 \dontrun{
-Spec_Transduction <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results)
+Spec_Transduction <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassifications=TrIdent_results)
 Summary_Table <- spec_transduction[[1]]
 NODE_8_plot <- spec_transduction[[2]]$NODE_8
 
-Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_fracreadcov, TrIdent_results, specificcontig="NODE_1", noreadcov=1000, spectranslength=4000)
+Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassifications=TrIdent_results, specificcontig="NODE_1", noreadcov=1000, spectranslength=4000)
 }
 }

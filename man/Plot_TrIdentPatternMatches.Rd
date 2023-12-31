@@ -5,16 +5,16 @@
 \title{Plot read coverage graphs of contigs classified as Prophage-like, Gen/Lat/GTA, or HighVLPWCRC}
 \usage{
 Plot_TrIdentPatternMatches(
-  phageread_dataset,
-  microbialread_dataset,
+  VLP_pileup,
+  WC_pileup,
   transductionclassifications,
   cleanup = TRUE
 )
 }
 \arguments{
-\item{phageread_dataset}{A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
+\item{VLP_pileup}{A dataframe containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
 
-\item{microbialread_dataset}{A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs}
+\item{WC_pileup}{A dataframe containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs}
 
 \item{transductionclassifications}{Output from TrIdent_Classifier}
 
@@ -25,7 +25,7 @@ Plot the read coverages of a contig and its associated pattern-match for each co
 }
 \examples{
 \dontrun{
-pattern_matches <- Plot_TrIdentPatternMatches(VLP_fracreadcov, whole_commreadcov, TrIdent_results)
+pattern_matches <- Plot_TrIdentPatternMatches(VLP_pileup=VLP_fracreadcov, WC_pileup=whole_commreadcov, transductionclassifications=TrIdent_results)
 pattern_matches$NODE_1
 }
 }
