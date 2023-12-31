@@ -6,7 +6,7 @@
 \usage{
 SpecializedTransduction_ID(
   VLP_pileup,
-  transductionclassification,
+  transductionclassifications,
   specificcontig,
   noreadcov = 500,
   spectranslength = 2000,
@@ -16,7 +16,7 @@ SpecializedTransduction_ID(
 \arguments{
 \item{VLP_pileup}{A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
 
-\item{transductionclassification}{Output from TrIdent_Classifier}
+\item{transductionclassifications}{Output from TrIdent_Classifier}
 
 \item{specificcontig}{Provide the name of a specific contig if you would like to search only that contig.i.e. "NODE_1"}
 
@@ -31,10 +31,10 @@ Search contigs classified as prophage-like for potential specialized transductio
 }
 \examples{
 \dontrun{
-Spec_Transduction <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassifications=TrIdent_results)
+Spec_Transduction <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassificationss=TrIdent_results)
 Summary_Table <- spec_transduction[[1]]
 NODE_8_plot <- spec_transduction[[2]]$NODE_8
 
-Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassifications=TrIdent_results, specificcontig="NODE_1", noreadcov=1000, spectranslength=4000)
+Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassificationss=TrIdent_results, specificcontig="NODE_1", noreadcov=1000, spectranslength=4000)
 }
 }

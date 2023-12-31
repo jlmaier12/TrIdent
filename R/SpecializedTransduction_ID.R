@@ -3,7 +3,7 @@
 #' Search contigs classified as prophage-like for potential specialized transduction. Returns a list with the first object containing a summary table and the second object containing a list of plots of prophage-like patterns with associated specialzied transduction search results. If the plot is green, it has been identified as having potential specialized transduction.
 #'
 #' @param VLP_pileup A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs
-#' @param transductionclassification Output from TrIdent_Classifier
+#' @param transductionclassifications Output from TrIdent_Classifier
 #' @param noreadcov How many bp of no read coverage are encountered before specialized transduction searching stops? Default is 500.
 #' @param spectranslength How many bp of read coverage are needed for specialized transduction to be considered? Default is 2000.
 #' @param specificcontig Provide the name of a specific contig if you would like to search only that contig.i.e. "NODE_1"
@@ -12,16 +12,16 @@
 #'
 #' @examples
 #' \dontrun{
-#' Spec_Transduction <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassifications=TrIdent_results)
+#' Spec_Transduction <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassificationss=TrIdent_results)
 #' Summary_Table <- spec_transduction[[1]]
 #' NODE_8_plot <- spec_transduction[[2]]$NODE_8
 #'
-#' Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassifications=TrIdent_results, specificcontig="NODE_1", noreadcov=1000, spectranslength=4000)
+#' Spec_Transduction_NODE1 <- SpecializedTransduction_ID(VLP_pileup=VLP_fracreadcov, transductionclassificationss=TrIdent_results, specificcontig="NODE_1", noreadcov=1000, spectranslength=4000)
 #' }
- SpecializedTransduction_ID <- function(VLP_pileup, transductionclassification, specificcontig, noreadcov=500, spectranslength=2000, cleanup=TRUE){
-  transductionclassificationpatterns <- transductionclassification[[3]]
-  transductionclassificationsummary <- transductionclassification[[1]]
-  windowsize <- transductionclassification[[5]]
+ SpecializedTransduction_ID <- function(VLP_pileup, transductionclassifications, specificcontig, noreadcov=500, spectranslength=2000, cleanup=TRUE){
+  transductionclassificationspatterns <- transductionclassifications[[3]]
+  transductionclassificationssummary <- transductionclassifications[[1]]
+  windowsize <- transductionclassifications[[5]]
   if (cleanup==TRUE){
   VLP_pileup <- readcovdf_formatter(VLP_pileup)
   }
@@ -31,11 +31,11 @@
     colnames(specialized_transduction_summary) <- c("ref_name", "Specialized_transduction", "Left", "Right", "Length_left", "Length_right")
     plots <- list()
     J <- 1
-    for (i in  seq(1, length(transductionclassificationpatterns), 1)) {
-      classification <- transductionclassificationpatterns[[i]][[8]]
+    for (i in  seq(1, length(transductionclassificationspatterns), 1)) {
+      classification <- transductionclassificationspatterns[[i]][[8]]
       if (classification != "Prophage-like") next
-      ref_name <- transductionclassificationpatterns[[i]][[9]]
-      spec_trans_pred <- spec_transduction_search_and_plot(ref_name, VLP_pileup, transductionclassificationpatterns, transductionclassificationsummary, windowsize, i, noreadcov, spectranslength)
+      ref_name <- transductionclassificationspatterns[[i]][[9]]
+      spec_trans_pred <- spec_transduction_search_and_plot(ref_name, VLP_pileup, transductionclassificationspatterns, transductionclassificationssummary, windowsize, i, noreadcov, spectranslength)
       if(spec_trans_pred[[1]][[2]] == "yes") {
         potential_spec_transduction <- potential_spec_transduction +1}
       specialized_transduction_summary[J,c(1:6)] <- spec_trans_pred[[1]]
@@ -48,10 +48,10 @@
     names(final_spectransduction_list) <- c("Summary_table", "Plots")
     return(final_spectransduction_list)
   } else {
-    for (i in  seq(1, length(transductionclassificationpatterns), 1)) {
-      ref_name <- transductionclassificationpatterns[[i]][[9]]
+    for (i in  seq(1, length(transductionclassificationspatterns), 1)) {
+      ref_name <- transductionclassificationspatterns[[i]][[9]]
       if (ref_name == specificcontig) {
-        spec_trans_pred <- spec_transduction_search_and_plot(ref_name, VLP_pileup, transductionclassificationpatterns, transductionclassificationsummary, windowsize, i, noreadcov, spectranslength)
+        spec_trans_pred <- spec_transduction_search_and_plot(ref_name, VLP_pileup, transductionclassificationspatterns, transductionclassificationssummary, windowsize, i, noreadcov, spectranslength)
         return(spec_trans_pred[[2]])
       }
     }
