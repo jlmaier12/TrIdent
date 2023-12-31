@@ -14,13 +14,15 @@
 #'TrIdent_results <- TrIdent_Classifier(VLP_pileup=VLP_fracreadcov, WC_pileup=whole_commreadcov, windowsize=1000, minblocksize=10000, maxblocksize=150000, cleanup=TRUE)
 #'}
   TrIdent_Classifier <- function(VLP_pileup, WC_pileup, windowsize = 1000, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE){
-  if(windowsize != 100 | windowsize != 200| windowsize != 500|windowsize != 1000|windowsize != 2000) {
-  stop("windowsize must be either 100, 200, 500, 1000 or 2000!")
-  start_time <- Sys.time()
+  if(!(windowsize %in% list(100,200,500,1000,2000)))  {
+  stop("windowsize must be either 100, 200, 500, 1000 or 2000!")}
+    start_time <- Sys.time()
   if (cleanup==TRUE){
   VLP_pileup <- readcovdf_formatter(VLP_pileup)
   WC_pileup <- readcovdf_formatter(WC_pileup)
   }
+  if(abs(VLP_pileup[1,3]-VLP_pileup[2,3]) != 100|abs(WC_pileup[1,3]-WC_pileup[2,3]) != 100) {
+  stop("pileup files MUST have a windowsize/binsize of 100!")}
   cat("Starting pattern-matching... \n")
   SM_classifications_summary <- pattern_matcher(VLP_pileup, WC_pileup, windowsize, minblocksize, maxblocksize)
   SM_classifications <- SM_classifications_summary[[1]]
@@ -48,7 +50,6 @@
   cat(paste(length(which(final_summary_list[[1]][,6]=="YES")), "of the predicted prophages/prophage-like elements are highly active or abundant \n"))
   cat(paste(length(which(final_summary_list[[1]][,6]=="MIXED")), "of the predicted prophages/prophage-like elements are not homogenously integrated into their bacterial host population \n  \n"))
   return(final_summary_list)
-  }
 }
 
 
