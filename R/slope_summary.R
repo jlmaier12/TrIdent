@@ -10,10 +10,8 @@ slope_summary <- function(classificationsummary, genlatGTAclassifications){
   if(length(genlatGTAclassifications)==0) {
     return(classificationsummary)
   }
-  for (i in seq(1,length(genlatGTAclassifications),1)) {
-    slope <- round(genlatGTAclassifications[[i]][[7]], digits=4)
-    ref_name <- genlatGTAclassifications[[i]][[9]]
-    classificationsummary[which(classificationsummary[,1]==ref_name),8] <- slope
-  }
+  lapply(1:length(genlatGTAclassifications), function(i) {
+    classificationsummary[which(classificationsummary[,1]==genlatGTAclassifications[[i]][[9]]),8] <<- round(genlatGTAclassifications[[i]][[7]], digits=4)
+  })
   return(classificationsummary)
 }

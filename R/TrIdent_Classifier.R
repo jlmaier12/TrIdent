@@ -14,41 +14,48 @@
 #'TrIdent_results <- TrIdent_Classifier(VLP_pileup=VLP_fracreadcov, WC_pileup=whole_commreadcov, windowsize=1000, minblocksize=10000, maxblocksize=150000, cleanup=TRUE)
 #'}
   TrIdent_Classifier <- function(VLP_pileup, WC_pileup, windowsize = 1000, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE){
-  if(!(windowsize %in% list(100,200,500,1000,2000)))  {
-  stop("windowsize must be either 100, 200, 500, 1000 or 2000!")}
+  
+    #error catching
+    if(!(windowsize %in% list(100,200,500,1000,2000)))  {
+      stop("windowsize must be either 100, 200, 500, 1000 or 2000!")}
+    if (cleanup==TRUE){
+      VLP_pileup <- readcovdf_formatter(VLP_pileup)
+      WC_pileup <- readcovdf_formatter(WC_pileup)
+    }
+    if(abs(VLP_pileup[1,3]-VLP_pileup[2,3]) != 100|abs(WC_pileup[1,3]-WC_pileup[2,3]) != 100) {
+      stop("pileup files MUST have a windowsize/binsize of 100!")
+    }
+    
+    #main algorithm start
     start_time <- Sys.time()
-  if (cleanup==TRUE){
-  VLP_pileup <- readcovdf_formatter(VLP_pileup)
-  WC_pileup <- readcovdf_formatter(WC_pileup)
-  }
-  if(abs(VLP_pileup[1,3]-VLP_pileup[2,3]) != 100|abs(WC_pileup[1,3]-WC_pileup[2,3]) != 100) {
-  stop("pileup files MUST have a windowsize/binsize of 100!")}
-  cat("Starting pattern-matching... \n")
-  SM_classifications_summary <- pattern_matcher(VLP_pileup, WC_pileup, windowsize, minblocksize, maxblocksize)
-  SM_classifications <- SM_classifications_summary[[1]]
-  filteredoutcontigs <- SM_classifications_summary[[2]]
-  cat("Identifying potential transducing events \n")
-  prophage_classifications_list <- allprophagelike_matches(SM_classifications)
-  genlatGTA_classifications_list <- allgenlatGTA_matches(SM_classifications)
-  alltransduction_classifications_list <- alltransduction_events_summarylist(SM_classifications)
-  classification_summary_df <- contig_classification_summary(SM_classifications)
-  summary_table_withratios <- WCVF_ratio_calculator(classification_summary_df, WC_pileup, VLP_pileup)
-  cat("Determining sizes (bp) of potential transduction events \n")
-  summary_table_matchsize <- matchsize_checker(summary_table_withratios, alltransduction_classifications_list, windowsize)
-  cat("Identifying highly active/abundant prophage-like elements \n")
-  summary_table_almostfinal <- prophagelikeactivity_checker(summary_table_matchsize, prophage_classifications_list, VLP_pileup, WC_pileup, windowsize)
-  summary_table_final <- slope_summary(summary_table_almostfinal, genlatGTA_classifications_list)
-  cat("Finalizing output \n")
-  contigswith_transductioneventsandlowratios_list <- alltransduction_withlowratios_summarylist(SM_classifications, summary_table_final)
-  cleaned_summary_table <- summary_table_final[which(summary_table_final[,2]=="Prophage-like"|summary_table_final[,2]=="Gen/Lat/GTA"|summary_table_final[,2]=="HighVLPWCReadCov"),]
-  final_summary_list<-list(summary_table_final,cleaned_summary_table, contigswith_transductioneventsandlowratios_list, filteredoutcontigs, windowsize)
-  names(final_summary_list) <- c("Full_summary_table", "Cleaned_summary_table", "PatternMatchInfo", "FilteredOutContig_table", "Windowsize")
-  end_time <- Sys.time()
-  cat(paste("Execuion time:", end_time-start_time, "\n"))
-  cat(paste(nrow(filteredoutcontigs), "contigs were filtered out based on short length or low read coverage \n"))
-  print(table(final_summary_list[[1]][,2]))
-  cat(paste(length(which(final_summary_list[[1]][,6]=="YES")), "of the predicted prophages/prophage-like elements are highly active or abundant \n"))
-  cat(paste(length(which(final_summary_list[[1]][,6]=="MIXED")), "of the predicted prophages/prophage-like elements are not homogenously integrated into their bacterial host population \n  \n"))
+    cat("Starting pattern-matching... \n")
+    SM_classifications_summary <- pattern_matcher(VLP_pileup, WC_pileup, windowsize, minblocksize, maxblocksize)
+    cat("Identifying potential transducing events \n")
+    cat("Determining sizes (bp) of potential transduction events \n")
+    cat("Identifying highly active/abundant prophage-like elements \n")
+    summary_table_final <- slope_summary(
+      prophagelikeactivity_checker(
+        matchsize_checker(
+          WCVF_ratio_calculator(
+            contig_classification_summary(SM_classifications_summary[[1]]), 
+          WC_pileup, VLP_pileup), 
+        alltransduction_events_summarylist(SM_classifications_summary[[1]]), windowsize), 
+      allprophagelike_matches(SM_classifications_summary[[1]]), VLP_pileup, WC_pileup, windowsize), 
+    allgenlatGTA_matches(SM_classifications_summary[[1]]))
+  
+    cat("Finalizing output \n")
+    final_summary_list<-list(summary_table_final,
+                             summary_table_final[which(summary_table_final[,2]=="Prophage-like"|summary_table_final[,2]=="Gen/Lat/GTA"|summary_table_final[,2]=="HighVLPWCReadCov"),], 
+                             alltransduction_withlowratios_summarylist(SM_classifications_summary[[1]], summary_table_final), 
+                             SM_classifications_summary[[2]], 
+                             windowsize)
+    names(final_summary_list) <- c("Full_summary_table", "Cleaned_summary_table", "PatternMatchInfo", "FilteredOutContig_table", "Windowsize")
+    end_time <- Sys.time()
+    cat(paste("Execuion time:", end_time-start_time, "\n"))
+    cat(paste(nrow(SM_classifications_summary[[2]]), "contigs were filtered out based on short length or low read coverage \n"))
+    print(table(final_summary_list[[1]][,2]))
+    cat(paste(length(which(final_summary_list[[1]][,6]=="YES")), "of the predicted prophages/prophage-like elements are highly active or abundant \n"))
+    cat(paste(length(which(final_summary_list[[1]][,6]=="MIXED")), "of the predicted prophages/prophage-like elements are not homogenously integrated into their bacterial host population \n  \n"))
   return(final_summary_list)
 }
 

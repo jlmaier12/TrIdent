@@ -23,31 +23,33 @@ block_off_left_translator <- function (viral_subset, windowsize, minblocksize, m
   diff <- mean(abs(Cov_values_contig - pattern))
   end_pos <- (which(pattern == min(pattern))[1])-1
   best_match_info <- list(diff, min_read_cov, startingcoverages[1], "NA", 1, end_pos, "NA")
-  for(cov in startingcoverages) {
+  lapply(1:length(startingcoverages), function(i) {
+    cov<-startingcoverages[[i]]
     pattern <- c(rep(cov, shape_length), rep(min_read_cov, nonshape))
-  repeat {
-      diff <- mean(abs(Cov_values_contig - pattern))
-      end_pos <- (which(pattern == min_read_cov)[1])-1
-      if (diff < best_match_info[[1]]){
-        best_match_info <- list(diff, min_read_cov, cov, "NA", 1, end_pos, "NA")
-      }
-      pattern <- c(pattern[-c(1:(2000/windowsize))], rep(min_read_cov, (2000/windowsize)))
-      if (length(which(pattern==cov)) < (minblocksize/windowsize)+1) break
+    repeat {
+        diff <- mean(abs(Cov_values_contig - pattern))
+        end_pos <- (which(pattern == min_read_cov)[1])-1
+        if (diff < best_match_info[[1]]){
+          best_match_info <<- list(diff, min_read_cov, cov, "NA", 1, end_pos, "NA")
+        }
+        pattern <- c(pattern[-c(1:(2000/windowsize))], rep(min_read_cov, (2000/windowsize)))
+        if (length(which(pattern==cov)) < (minblocksize/windowsize)+1) break
     }
-  }
+  })
   new_pattern_coverages <- blockheight_optim(best_match_info, startingcoverages, bottomtotop_read_cov)
-  for(newcov in new_pattern_coverages) {
+  lapply(1:length(new_pattern_coverages), function(i) {
+    newcov<-new_pattern_coverages[[i]]
     pattern <- c(rep(newcov, shape_length), rep(min_read_cov, nonshape))
     repeat {
       end_pos <- (which(pattern == min(pattern))[1])-1
       diff <- mean(abs(Cov_values_contig - pattern))
       if (diff < best_match_info[[1]]){
-        best_match_info <-  list(diff, min_read_cov, newcov, "NA", 1, end_pos, "NA")
+        best_match_info <<- list(diff, min_read_cov, newcov, "NA", 1, end_pos, "NA")
       }
       pattern <- c(pattern[-c(1:(2000/windowsize))], rep(min_read_cov, (2000/windowsize)))
       if (length(which(pattern==newcov)) < (minblocksize/windowsize)+1) break
     }
-  }
+  })
   best_match_results <- c(best_match_info, "Prophage-like")
   return(best_match_results)
 }

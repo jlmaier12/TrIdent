@@ -18,22 +18,22 @@ slope_RighttoLeft_withstart <- function (viral_subset, windowsize) {
   end_pos <- which(pattern==max(pattern))
   slope <- (newmax-min_read_cov)/(nrow(viral_subset)-1)
   best_match_info <- list(diff, min_read_cov, newmax, cov_steps, 1, end_pos, slope)
-  for(cov in seq(newmax, (min_read_cov+half_read_cov), -bottomtotop_read_cov)) {
+  lapply(seq(newmax, (min_read_cov+half_read_cov), -bottomtotop_read_cov), function(cov) {
     slope_bottom <- min_read_cov
     cov_steps <- (cov-slope_bottom)/((nrow(viral_subset)-((10000/windowsize)+1)))
     pattern <- c(seq(slope_bottom,cov,cov_steps),rep(min_read_cov,10000/windowsize))
     slope <- (cov-slope_bottom)/(nrow(viral_subset)-((10000/windowsize)+1))
     step <- ((cov-slope_bottom)/10)
-    if (abs(slope) < (15/100000) | slope <0) next
+    if (abs(slope) < (15/100000) | slope <0) return(NULL)
     repeat {
-      best_match_info <- slopepattern_translator(viral_subset,best_match_info, windowsize, pattern, "righttoleft")
+      best_match_info <<- slopepattern_translator(viral_subset,best_match_info, windowsize, pattern, "righttoleft")
       slope_bottom <- slope_bottom + step
       cov_steps <- (cov-slope_bottom)/((nrow(viral_subset)-((10000/windowsize)+1)))
       pattern <- c(seq(slope_bottom,cov,cov_steps),rep(min_read_cov,10000/windowsize))
       slope <- (cov-slope_bottom)/(nrow(viral_subset)-((10000/windowsize)+1))
       if (abs(slope) < (15/100000) | slope <0) break
     }
-  }
+  })
   best_match_results <- c(best_match_info, "Gen/Lat/GTA")
   return(best_match_results)
 }

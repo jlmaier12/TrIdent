@@ -18,13 +18,13 @@ slope_LefttoRight_withstart <- function (viral_subset, windowsize) {
   start_pos <- which(pattern==max(pattern))
   slope <- (min_read_cov-newmax)/(nrow(viral_subset)-1)
   best_match_info <- list(diff, min_read_cov, newmax, -cov_steps, start_pos, length(pattern), slope)
-  for(cov in seq(newmax, (min_read_cov+half_read_cov), -bottomtotop_read_cov)) {
+  lapply(seq(newmax, (min_read_cov+half_read_cov), -bottomtotop_read_cov), function(cov) {
     slope_bottom <- min_read_cov
     cov_steps <- (cov-slope_bottom)/((nrow(viral_subset)-((10000/windowsize)+1)))
     pattern <- c(rep(min_read_cov,10000/windowsize), seq(cov,slope_bottom, -cov_steps))
     slope <- (cov-slope_bottom)/(nrow(viral_subset)-((10000/windowsize)+1))
     step <- ((slope_bottom-cov)/10)
-    if (abs(slope) < (15/100000) | slope >0) next
+    if (abs(slope) < (15/100000) | slope >0) return(NULL)
     repeat {
       best_match_info <- slopepattern_translator(viral_subset, best_match_info, windowsize, pattern, "lefttoright")
       slope_bottom <- slope_bottom + step
@@ -33,7 +33,7 @@ slope_LefttoRight_withstart <- function (viral_subset, windowsize) {
       slope <- (slope_bottom-cov)/(nrow(viral_subset)-((10000/windowsize)+1))
       if (abs(slope) < (15/100000) | slope >0) break
     }
-  }
+  })
   best_match_results <- c(best_match_info, "Gen/Lat/GTA")
   return(best_match_results)
 }

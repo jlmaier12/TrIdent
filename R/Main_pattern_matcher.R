@@ -16,7 +16,8 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   A <- 1
   B <- 1
   C <- 1
-  for (i in refnames) {
+  lapply(1:length(refnames), function(p) {
+    i<-refnames[[p]]
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == i),]
     if(B == floor(length(refnames)/4)){
       cat("A quarter of the way done with pattern_matching \n")
@@ -27,21 +28,19 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
     if(B == floor((length(refnames)*3)/4)){
       cat("Almost done with pattern_matching! \n")
     }
-    B <- B+1
+    B <<- B+1
     if (viral_subset[nrow(viral_subset),3]< 30000) {
-      filteredout_contigs[C] <- i
-      reason[C] <- "Contig length too small"
-      C <- C+1
-      next
+      filteredout_contigs[C] <<- i
+      reason[C] <<- "Contig length too small"
+      C <<- C+1
+      return(NULL)
       } else if (viral_subset[(order(viral_subset[,2], decreasing=TRUE))[minblocksize/100],2] <= 10) {
-      filteredout_contigs[C] <-  i
-      reason[C] <-  "Low VLP-fraction read cov"
-      C <- C+1
-      next
+      filteredout_contigs[C] <<-  i
+      reason[C] <<-  "Low VLP-fraction read cov"
+      C <<- C+1
+      return(NULL)
     }
     viral_subset <- windowsize_func(viral_subset,windowsize)
-    microbial_subset <- microbialread_dataset[which(microbialread_dataset[,1] == i),]
-    microbial_subset <- windowsize_func(microbial_subset,windowsize)
     if (viral_subset[nrow(viral_subset),3]< 45000) {
       no_transduction_best_match <- notransduction_pattern(viral_subset)
       prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
@@ -71,9 +70,9 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
       best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]], Gen_LR_best_match[[1]], Gen_RL_best_match[[1]], Gen_LR_wstart_best_match[[1]], Gen_RL_wstart_best_match[[1]]) %>% as.numeric()
     }
     best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
-    best_match_list[[A]] <- c(best_match, i)
-    A <- A+1
-  }
+    best_match_list[[A]] <<- c(best_match, i)
+    A <<- A+1
+  })
   filteredout_contigs <- filteredout_contigs[!is.na(filteredout_contigs)]
   reason <- reason[!is.na(reason)]
   filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)

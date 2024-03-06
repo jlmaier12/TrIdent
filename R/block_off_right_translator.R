@@ -23,31 +23,33 @@ block_off_right_translator <- function (viral_subset, windowsize, minblocksize, 
   diff <- mean(abs(Cov_values_contig - pattern))
   start_pos <- (which(pattern == max(pattern))[1])
   best_match_info <- list(diff, min_read_cov, startingcoverages[1], "NA", start_pos, length(pattern), "NA")
-  for(cov in startingcoverages) {
+  lapply(1:length(startingcoverages), function(i) {
+    cov<-startingcoverages[[i]]
     pattern <- c(rep(min_read_cov, nonshape), rep(cov, shape_length))
     repeat {
       diff <- mean(abs(Cov_values_contig - pattern))
       start_pos <- (which(pattern == max(pattern))[1])
       if (diff < best_match_info[[1]]){
-        best_match_info <- list(diff, min_read_cov, cov, "NA", start_pos, length(pattern), "NA")
+        best_match_info <<- list(diff, min_read_cov, cov, "NA", start_pos, length(pattern), "NA")
       }
       pattern <- c(rep(min_read_cov,(2000/windowsize)),pattern[-c(((length(pattern))-((2000/windowsize)-1)):length(pattern))]) #variable, removing 2000bp at a time
       if (length(which(pattern==cov)) < (minblocksize/windowsize)+1) break
-      }
-  }
+    }
+  })
   new_pattern_coverages <- blockheight_optim(best_match_info, startingcoverages, bottomtotop_read_cov)
-  for(newcov in new_pattern_coverages) {
+  lapply(1:length(new_pattern_coverages), function(i) {
+    newcov<-new_pattern_coverages[[i]]
     pattern <- c(rep(min_read_cov, nonshape), rep(newcov, shape_length))
     repeat {
       diff <- mean(abs(Cov_values_contig - pattern))
       start_pos <- (which(pattern == max(pattern))[1])
       if (diff < best_match_info[[1]]){
-        best_match_info <- list(diff, min_read_cov, newcov, "NA", start_pos, length(pattern), "NA")
+        best_match_info <<- list(diff, min_read_cov, newcov, "NA", start_pos, length(pattern), "NA")
       }
       pattern <- c(rep(min_read_cov,(2000/windowsize)),pattern[-c(((length(pattern))-((2000/windowsize)-1)):length(pattern))]) #variable, removing 2000bp at a time
       if (length(which(pattern==newcov)) < (minblocksize/windowsize)+1) break
     }
-  }
+  })
   best_match_results <- c(best_match_info, "Prophage-like")
   return(best_match_results)
 }

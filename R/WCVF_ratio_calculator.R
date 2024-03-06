@@ -8,7 +8,8 @@
 #' @keywords internal
 WCVF_ratio_calculator <- function(classificationsummary, microbialread_dataset, phageread_dataset){
   None_indexes <- which(classificationsummary[,2]=="None")
-  for (i in None_indexes) {
+  lapply(1:length(None_indexes), function(p) {
+    i<-None_indexes[[p]]
     ref_name <- classificationsummary[i,1]
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == ref_name),]
     viral_subset[is.nan.data.frame(viral_subset)] <- 0
@@ -16,10 +17,10 @@ WCVF_ratio_calculator <- function(classificationsummary, microbialread_dataset, 
     microbial_subset[is.nan.data.frame(microbial_subset)] <- 0
     WC_to_VLPF_ratio <- median(microbial_subset[,2])/ median(viral_subset[,2])
     if(WC_to_VLPF_ratio < 2) {
-      classificationsummary[i,2] <- "HighVLPWCReadCov"
+      classificationsummary[i,2] <<- "HighVLPWCReadCov"
     } else {
-      classificationsummary[i,2] <- "None"
+      classificationsummary[i,2] <<- "None"
     }
-  }
+  })
   return(classificationsummary)
 }

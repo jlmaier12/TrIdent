@@ -5,10 +5,7 @@
 #' @param read_dataset A table containing contig names, coverages averaged over 100bp windows, and contig positions
 #' @keywords internal
 readcovdf_formatter <- function(read_dataset) {
-  column_classes <- c()
-  for (i in c(1:ncol(read_dataset))) {
-    column_classes <- c(column_classes, class(read_dataset[1,i]))
-  }
+  column_classes <- lapply(1:ncol(read_dataset), function(i) class(read_dataset[, i]))
   for (i in c(which(column_classes=="integer"))){
     if (length(which(read_dataset[,i]==100))>1){
       position_colindex <- i

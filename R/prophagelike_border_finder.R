@@ -16,8 +16,7 @@ prophagelike_border_finder <- function(viral_subset,transductionclassificationpa
   right_row_index <- which(viral_subset[,3]==right_margin_bppos)
   left_row_index <- ifelse(length(left_row_index)==0, 1, which(viral_subset[,3]==left_margin_bppos))
   right_row_index <- ifelse(length(right_row_index)==0, nrow(viral_subset), which(viral_subset[,3]==right_margin_bppos))
-  match_region <- viral_subset[c(left_row_index:right_row_index),]
-  max_value <- match_region[order(match_region[,2], decreasing=TRUE),2][2]
+  max_value <- viral_subset[c(left_row_index:right_row_index),][order(viral_subset[c(left_row_index:right_row_index),][,2], decreasing=TRUE),2][2]
   X <- 1
   repeat {
     if (viral_subset[X,2] >= (0.20*max_value)) {

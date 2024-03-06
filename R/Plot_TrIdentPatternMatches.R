@@ -19,12 +19,12 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
   transductionclassifications_wlowratios <- transductionclassifications[[3]]
   final_summary_table <- transductionclassifications[[1]]
   if(cleanup==TRUE){
-  VLP_pileup <- readcovdf_formatter(VLP_pileup)
-  WC_pileup <- readcovdf_formatter(WC_pileup)
+    VLP_pileup <- readcovdf_formatter(VLP_pileup)
+    WC_pileup <- readcovdf_formatter(WC_pileup)
   }
   plots <- list()
   ref_names <- c()
-  for (i in seq(1,length(transductionclassifications_wlowratios),1)) {
+  plots<-lapply(1:length(transductionclassifications_wlowratios), function(i){
     ref_name <- transductionclassifications_wlowratios[[i]][[9]]
     ref_names <- c(ref_names, ref_name)
     viral_subset <- VLP_pileup[which(VLP_pileup[,1] == ref_name),]
@@ -66,8 +66,8 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
             plot.margin=margin(t = 0, r = 0, b = 0, l = 2))
 
     combined_plot <- (wholecomm_plot/Overlay_plot)
-    plots[[i]] <- combined_plot
-  }
+    combined_plot
+  })
   names(plots) <- ref_names
   return(plots)
 }

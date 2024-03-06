@@ -24,25 +24,27 @@ full_blockpattern_builder <- function (viral_subset, windowsize, minblocksize, m
   start_pos <- (which(pattern == max(pattern))[1])
   end_pos <- which(pattern==max(pattern))[length(which(pattern==max(pattern)))]
   best_match_info <- list(diff, min_read_cov, startingcoverages[1], "NA", start_pos, end_pos, "NA")
-  for(cov in startingcoverages) {
+  lapply(1:length(startingcoverages), function(i) {
+    cov<-startingcoverages[[i]]
     pattern <- c(rep(min_read_cov, 10000/windowsize), rep(cov, shape_length), rep(min_read_cov, nonshape))
     repeat {
       middle_rows <- which(pattern == cov)
       if (length(middle_rows) < (minblocksize/windowsize)+1) break
-      best_match_info <- blockpattern_translator(viral_subset, best_match_info, windowsize, pattern)
+      best_match_info <<- blockpattern_translator(viral_subset, best_match_info, windowsize, pattern)
       pattern <- c(pattern[-c(middle_rows[2]:middle_rows[(2000/windowsize)+1])],rep(min_read_cov,2000/windowsize)) #remove 2000bp at a time
     }
-  }
+  })
   new_pattern_coverages <- blockheight_optim(best_match_info, startingcoverages, bottomtotop_read_cov)
-  for(newcov in new_pattern_coverages) {
+  lapply(1:length(new_pattern_coverages), function(i) {
+    newcov<-new_pattern_coverages[[i]]
     pattern <- c(rep(min_read_cov, 10000/windowsize), rep(newcov, shape_length), rep(min_read_cov, nonshape))
     repeat {
       middle_rows <- which(pattern == newcov)
       if (length(middle_rows) < (minblocksize/windowsize)+1) break
-      best_match_info <- blockpattern_translator(viral_subset, best_match_info, windowsize, pattern)
+      best_match_info <<- blockpattern_translator(viral_subset, best_match_info, windowsize, pattern)
       pattern <- c(pattern[-c(middle_rows[2]:middle_rows[(2000/windowsize)+1])],rep(min_read_cov,2000/windowsize)) #remove 2000bp at a time
     }
-  }
+  })
   best_match_results <- c(best_match_info, "Prophage-like")
   return(best_match_results)
 }
