@@ -42,32 +42,35 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
     }
     viral_subset <- windowsize_func(viral_subset,windowsize)
     if (viral_subset[nrow(viral_subset),3]< 45000) {
-      no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize)
-      best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match)
-      best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]]) %>% as.numeric()
+      best_match_summary <- list(notransduction_pattern(viral_subset),  
+                                 block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize))
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
+                                    best_match_summary[[3]][[1]], best_match_summary[[4]][[1]]) %>% as.numeric()
     } else if (viral_subset[nrow(viral_subset),3]> 45000 & viral_subset[nrow(viral_subset),3]< 100000){ #only do gen. pattern_matching on contigs greater than 60Kbp
-      no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize)
-      Gen_LR_wstart_best_match <- slope_LefttoRight_withstart(viral_subset, windowsize)
-      Gen_RL_wstart_best_match <- slope_RighttoLeft_withstart(viral_subset, windowsize)
-      best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match, Gen_LR_wstart_best_match, Gen_RL_wstart_best_match)
-      best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]], Gen_LR_wstart_best_match[[1]], Gen_RL_wstart_best_match[[1]]) %>% as.numeric()
+      best_match_summary <- list(notransduction_pattern(viral_subset), 
+                                 block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 slope_LefttoRight_withstart(viral_subset, windowsize), 
+                                 slope_RighttoLeft_withstart(viral_subset, windowsize))
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]], 
+                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]], 
+                                    best_match_summary[[5]][[1]],best_match_summary[[6]][[1]]) %>% as.numeric()
     } else {
-      no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize)
-      Gen_LR_best_match <- slope_LefttoRight(viral_subset, windowsize)
-      Gen_RL_best_match <- slope_RighttoLeft(viral_subset, windowsize)
-      Gen_LR_wstart_best_match <- slope_LefttoRight_withstart(viral_subset, windowsize)
-      Gen_RL_wstart_best_match <- slope_RighttoLeft_withstart(viral_subset, windowsize)
-      best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match, Gen_LR_best_match, Gen_RL_best_match, Gen_LR_wstart_best_match, Gen_RL_wstart_best_match)
-      best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]], Gen_LR_best_match[[1]], Gen_RL_best_match[[1]], Gen_LR_wstart_best_match[[1]], Gen_RL_wstart_best_match[[1]]) %>% as.numeric()
+      best_match_summary <- list(notransduction_pattern(viral_subset), 
+                                 block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 slope_LefttoRight(viral_subset, windowsize), 
+                                 slope_RighttoLeft(viral_subset, windowsize), 
+                                 slope_LefttoRight_withstart(viral_subset, windowsize), 
+                                 slope_RighttoLeft_withstart(viral_subset, windowsize))
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]], 
+                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]], 
+                                    best_match_summary[[5]][[1]],best_match_summary[[6]][[1]], 
+                                    best_match_summary[[7]][[1]]) %>% as.numeric()
     }
     best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
     best_match_list[[A]] <<- c(best_match, i)

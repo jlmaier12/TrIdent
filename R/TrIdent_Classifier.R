@@ -14,17 +14,23 @@
 #'TrIdent_results <- TrIdent_Classifier(VLP_pileup=VLP_fracreadcov, WC_pileup=whole_commreadcov, windowsize=1000, minblocksize=10000, maxblocksize=150000, cleanup=TRUE)
 #'}
   TrIdent_Classifier <- function(VLP_pileup, WC_pileup, windowsize = 1000, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE){
-  
+    #block size need to be greater than 2000 ---> wait for jessie to check 
+    # Write check for VLP_pileup, WC_pileup --> txt files, look into pileup types (bedfiles)
+    #check to make sure vlp and wc are of the same file size row wise
+    #VLP and wc format 
+    # add to read_covdf_formatter for error schecking 
+    
     #error catching
-    if(!(windowsize %in% list(100,200,500,1000,2000)))  {
-      stop("windowsize must be either 100, 200, 500, 1000 or 2000!")}
-    if (cleanup==TRUE){
-      VLP_pileup <- readcovdf_formatter(VLP_pileup)
-      WC_pileup <- readcovdf_formatter(WC_pileup)
+    if(!(windowsize %in% list(100,200,500,1000,2000))){
+      stop("windowsize must be either 100, 200, 500, 1000 or 2000!")
     }
-    if(abs(VLP_pileup[1,3]-VLP_pileup[2,3]) != 100|abs(WC_pileup[1,3]-WC_pileup[2,3]) != 100) {
+    VLP_pileup <- readcovdf_formatter(VLP_pileup)
+    WC_pileup <- readcovdf_formatter(WC_pileup)
+    if(abs(VLP_pileup[1,3]-VLP_pileup[2,3]) != 100|abs(WC_pileup[1,3]-WC_pileup[2,3]) != 100){
       stop("pileup files MUST have a windowsize/binsize of 100!")
     }
+
+
     
     #main algorithm start
     start_time <- Sys.time()
