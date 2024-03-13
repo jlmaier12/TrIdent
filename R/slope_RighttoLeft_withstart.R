@@ -13,25 +13,25 @@ slope_RighttoLeft_withstart <- function (viral_subset, windowsize) {
   newmax <- max_read_cov+bottomtotop_read_cov
   Cov_values_contig <- viral_subset[,2]
   cov_steps <- (newmax-min_read_cov)/((nrow(viral_subset)-((10000/windowsize)+1)))
-  pattern <- c(seq(min_read_cov,newmax,cov_steps),rep(min_read_cov,10000/windowsize))
+  pattern <- c(seq(min_read_cov,newmax,cov_steps),rep(min_read_cov,10000/windowsize)) #different in each function
   diff <- mean(abs(Cov_values_contig - pattern))
-  end_pos <- which(pattern==max(pattern))
-  slope <- (newmax-min_read_cov)/(nrow(viral_subset)-1)
-  best_match_info <- list(diff, min_read_cov, newmax, cov_steps, 1, end_pos, slope)
+  end_pos <- which(pattern==max(pattern)) #different in each function
+  slope <- (newmax-min_read_cov)/(nrow(viral_subset)-1) #different in each function
+  best_match_info <- list(diff, min_read_cov, newmax, cov_steps, 1, end_pos, slope) #different in each function
   lapply(seq(newmax, (min_read_cov+half_read_cov), -bottomtotop_read_cov), function(cov) {
     slope_bottom <- min_read_cov
     cov_steps <- (cov-slope_bottom)/((nrow(viral_subset)-((10000/windowsize)+1)))
-    pattern <- c(seq(slope_bottom,cov,cov_steps),rep(min_read_cov,10000/windowsize))
-    slope <- (cov-slope_bottom)/(nrow(viral_subset)-((10000/windowsize)+1))
-    step <- ((cov-slope_bottom)/10)
-    if (abs(slope) < (15/100000) | slope <0) return(NULL)
+    pattern <- c(seq(slope_bottom,cov,cov_steps),rep(min_read_cov,10000/windowsize)) #different in each function
+    slope <- (cov-slope_bottom)/(nrow(viral_subset)-((10000/windowsize)+1)) #different in each function
+    step <- ((cov-slope_bottom)/10) #different in each function
+    if (abs(slope) < (15/100000) | slope <0) return(NULL) #different in each function
     repeat {
-      best_match_info <<- slopepattern_translator(viral_subset,best_match_info, windowsize, pattern, "righttoleft")
+      best_match_info <<- slopepattern_translator(viral_subset,best_match_info, windowsize, pattern, "righttoleft") #different in each function
       slope_bottom <- slope_bottom + step
       cov_steps <- (cov-slope_bottom)/((nrow(viral_subset)-((10000/windowsize)+1)))
-      pattern <- c(seq(slope_bottom,cov,cov_steps),rep(min_read_cov,10000/windowsize))
-      slope <- (cov-slope_bottom)/(nrow(viral_subset)-((10000/windowsize)+1))
-      if (abs(slope) < (15/100000) | slope <0) break
+      pattern <- c(seq(slope_bottom,cov,cov_steps),rep(min_read_cov,10000/windowsize)) #different in each function
+      slope <- (cov-slope_bottom)/(nrow(viral_subset)-((10000/windowsize)+1)) #different in each function
+      if (abs(slope) < (15/100000) | slope <0) break #different in each function
     }
   })
   best_match_results <- c(best_match_info, "Gen/Lat/GTA")

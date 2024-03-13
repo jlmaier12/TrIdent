@@ -19,20 +19,20 @@ block_off_left_translator <- function (viral_subset, windowsize, minblocksize, m
   startingcoverages <- seq((min_read_cov+quarter_read_cov),  max_read_cov, bottomtotop_read_cov)
   shape_length <- ifelse((nrow(viral_subset)-(10000/windowsize))>(maxblocksize/windowsize),maxblocksize/windowsize,nrow(viral_subset)-(10000/windowsize))
   nonshape <- nrow(viral_subset)-shape_length
-  pattern <- c(rep(startingcoverages[1], shape_length), rep(min_read_cov, nonshape))
+  pattern <- c(rep(startingcoverages[1], shape_length), rep(min_read_cov, nonshape))   #Different in each function
   diff <- mean(abs(Cov_values_contig - pattern))
-  end_pos <- (which(pattern == min(pattern))[1])-1
-  best_match_info <- list(diff, min_read_cov, startingcoverages[1], "NA", 1, end_pos, "NA")
+  end_pos <- (which(pattern == min(pattern))[1])-1   #The start and stop positions used for determining the pattern length are different in each function
+  best_match_info <- list(diff, min_read_cov, startingcoverages[1], "NA", 1, end_pos, "NA")   #Recorded different for each function
   lapply(1:length(startingcoverages), function(i) {
     cov<-startingcoverages[[i]]
     pattern <- c(rep(cov, shape_length), rep(min_read_cov, nonshape))
     repeat {
         diff <- mean(abs(Cov_values_contig - pattern))
-        end_pos <- (which(pattern == min_read_cov)[1])-1
+        end_pos <- (which(pattern == min_read_cov)[1])-1 #Different in each function
         if (diff < best_match_info[[1]]){
-          best_match_info <<- list(diff, min_read_cov, cov, "NA", 1, end_pos, "NA")
+          best_match_info <<- list(diff, min_read_cov, cov, "NA", 1, end_pos, "NA") #Different in each function
         }
-        pattern <- c(pattern[-c(1:(2000/windowsize))], rep(min_read_cov, (2000/windowsize)))
+        pattern <- c(pattern[-c(1:(2000/windowsize))], rep(min_read_cov, (2000/windowsize))) #Different in each function
         if (length(which(pattern==cov)) < (minblocksize/windowsize)+1) break
     }
   })
@@ -41,12 +41,12 @@ block_off_left_translator <- function (viral_subset, windowsize, minblocksize, m
     newcov<-new_pattern_coverages[[i]]
     pattern <- c(rep(newcov, shape_length), rep(min_read_cov, nonshape))
     repeat {
-      end_pos <- (which(pattern == min(pattern))[1])-1
+      end_pos <- (which(pattern == min(pattern))[1])-1 #Different in each function
       diff <- mean(abs(Cov_values_contig - pattern))
       if (diff < best_match_info[[1]]){
-        best_match_info <<- list(diff, min_read_cov, newcov, "NA", 1, end_pos, "NA")
+        best_match_info <<- list(diff, min_read_cov, newcov, "NA", 1, end_pos, "NA") #Different in each function
       }
-      pattern <- c(pattern[-c(1:(2000/windowsize))], rep(min_read_cov, (2000/windowsize)))
+      pattern <- c(pattern[-c(1:(2000/windowsize))], rep(min_read_cov, (2000/windowsize))) #Different in each function
       if (length(which(pattern==newcov)) < (minblocksize/windowsize)+1) break
     }
   })
