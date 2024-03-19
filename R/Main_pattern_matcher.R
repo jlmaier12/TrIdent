@@ -41,18 +41,19 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
       return(NULL)
     }
     viral_subset <- windowsize_func(viral_subset,windowsize)
+    blocks_list<-block_builder(viral_subset, windowsize, minblocksize, maxblocksize) #combined function
     if (viral_subset[nrow(viral_subset),3]< 45000) {
       best_match_summary <- list(notransduction_pattern(viral_subset),  
-                                 block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
-                                 block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
-                                 full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize))
+                                 blocks_list[[1]], 
+                                 blocks_list[[2]], 
+                                 blocks_list[[3]])
       best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
                                     best_match_summary[[3]][[1]], best_match_summary[[4]][[1]]) %>% as.numeric()
     } else if (viral_subset[nrow(viral_subset),3]> 45000 & viral_subset[nrow(viral_subset),3]< 100000){ #only do gen. pattern_matching on contigs greater than 60Kbp
       best_match_summary <- list(notransduction_pattern(viral_subset), 
-                                 block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
-                                 block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
-                                 full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 blocks_list[[1]], 
+                                 blocks_list[[2]], 
+                                 blocks_list[[3]], 
                                  slope_LefttoRight_withstart(viral_subset, windowsize), 
                                  slope_RighttoLeft_withstart(viral_subset, windowsize))
       best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]], 
@@ -60,9 +61,9 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
                                     best_match_summary[[5]][[1]],best_match_summary[[6]][[1]]) %>% as.numeric()
     } else {
       best_match_summary <- list(notransduction_pattern(viral_subset), 
-                                 block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
-                                 block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize), 
-                                 full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize), 
+                                 blocks_list[[1]], 
+                                 blocks_list[[2]],
+                                 blocks_list[[3]], 
                                  slope_LefttoRight(viral_subset, windowsize), 
                                  slope_RighttoLeft(viral_subset, windowsize), 
                                  slope_LefttoRight_withstart(viral_subset, windowsize), 
@@ -72,6 +73,8 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
                                     best_match_summary[[5]][[1]],best_match_summary[[6]][[1]], 
                                     best_match_summary[[7]][[1]]) %>% as.numeric()
     }
+    rm(blocks_list)
+    rm(viral_subset)
     best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
     best_match_list[[A]] <<- c(best_match, i)
     A <<- A+1

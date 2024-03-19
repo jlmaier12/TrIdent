@@ -2,6 +2,7 @@
 % Please edit documentation in R/Help.R
 \docType{package}
 \name{TrIdent}
+\alias{TrIdent-package}
 \alias{TrIdent}
 \title{TrIdent- Transduction Identification info}
 \description{
