@@ -19,16 +19,14 @@
     if(!(windowsize %in% list(100,200,500,1000,2000))){
       stop("windowsize must be either 100, 200, 500, 1000 or 2000!")
     }
-    if(minblocksize < 2000){
+    if(minblocksize <= 2000){
       stop("Block size must be greater than 2000")
     }
-    
     VLP_pileup <- readcovdf_formatter(VLP_pileup)
     WC_pileup <- readcovdf_formatter(WC_pileup)
     if(nrow(VLP_pileup)!=nrow(WC_pileup)){
-      stop("Somethign has gone wrong: VLP and WC pileup files have differing row numbers")
+      stop("Something has gone wrong: VLP and WC pileup files have differing row numbers")
     }
-    
     if(abs(VLP_pileup[1,3]-VLP_pileup[2,3]) != 100|abs(WC_pileup[1,3]-WC_pileup[2,3]) != 100){
       stop("pileup files MUST have a windowsize/binsize of 100!")
     }
