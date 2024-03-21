@@ -7,6 +7,9 @@
 #' @param windowsize The window size used to re-average read coverage datasets
 #' @keywords internal
 matchsize_checker <- function(classificationsummary, transductionclassification_list, windowsize){
+  if(length(transductionclassification_list)==0){
+    stop("NO TRANSDUCTION EVENTS FOUND")
+  }
   classificationsummary <- as.data.frame(classificationsummary)
   classificationsummary$match_size <- rep(NA, nrow(classificationsummary))
   classificationsummary$start_pos <- rep(NA, nrow(classificationsummary))
