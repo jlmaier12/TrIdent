@@ -75,5 +75,5 @@ slope_direct <- function (viral_subset, windowsize) {
       }
     }
   })
-  return(list(c(best_match_info_lr, "Gen/Lat/GTA"), c(best_match_info_rl, "Gen/Lat/GTA")))
+  return(list(c(best_match_info_lr, "Sloping"), c(best_match_info_rl, "Sloping")))
 }

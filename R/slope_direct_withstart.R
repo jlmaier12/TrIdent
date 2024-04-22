@@ -80,5 +80,5 @@ slope_direct_withstart <- function (viral_subset, windowsize) {
     
   })
 
-  return(list(c(best_match_info_lrs, "Gen/Lat/GTA"),  c(best_match_info_rls, "Gen/Lat/GTA")))
+  return(list(c(best_match_info_lrs, "Sloping"),  c(best_match_info_rls, "Sloping")))
 }

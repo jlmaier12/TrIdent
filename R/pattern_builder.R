@@ -22,7 +22,7 @@ pattern_builder <- function(viral_subset, transductionclassifications_wlowratios
       match_region <- end_pos-start_pos
       pattern <- c(rep(min_read_cov, start_pos), rep(max_read_cov, match_region), rep(min_read_cov, (nrow(viral_subset)-(match_region+start_pos))))
     }
-  } else if (classification=="Gen/Lat/GTA") {
+  } else if (classification=="Sloping") {
     if (start_pos==1 & end_pos == nrow(viral_subset) & gen_covsteps < 0){
       pattern <- seq(max_read_cov, min_read_cov, gen_covsteps)
     } else if (start_pos==1 & end_pos == nrow(viral_subset) & gen_covsteps > 0){
@@ -32,7 +32,7 @@ pattern_builder <- function(viral_subset, transductionclassifications_wlowratios
     } else if (end_pos != nrow(viral_subset)) {
       pattern <- c(seq(min_read_cov, max_read_cov, gen_covsteps),rep(min(viral_subset[,2]), (nrow(viral_subset)-end_pos)))
     }
-  } else if (classification=="HighVLPWCReadCov") {
+  } else if (classification=="HighCoverageNoPattern") {
     pattern <- rep(min_read_cov, max_read_cov) #for nones, min read cov is actually mean read cov and max read cov is the contig length
   }
   return(pattern)

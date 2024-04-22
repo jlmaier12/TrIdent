@@ -13,6 +13,7 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   best_match_list <- list()
   filteredout_contigs <- rep(NA, length(refnames))
   reason <- rep(NA, length(refnames))
+  match_scoreQC <- rep(NA, length(refnames))
   A <- 1
   B <- 1
   C <- 1
@@ -43,45 +44,53 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
     viral_subset <- windowsize_func(viral_subset,windowsize)
     blocks_list<-block_builder(viral_subset, windowsize, minblocksize, maxblocksize) #combined function
     if (viral_subset[nrow(viral_subset),3]< 45000) {
-      best_match_summary <- list(notransduction_pattern(viral_subset),  
-                                 blocks_list[[1]], 
-                                 blocks_list[[2]], 
+      best_match_summary <- list(notransduction_pattern(viral_subset),
+                                 blocks_list[[1]],
+                                 blocks_list[[2]],
                                  blocks_list[[3]])
       best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
                                     best_match_summary[[3]][[1]], best_match_summary[[4]][[1]]) %>% as.numeric()
     } else if (viral_subset[nrow(viral_subset),3]> 45000 & viral_subset[nrow(viral_subset),3]< 100000){ #only do gen. pattern_matching on contigs greater than 60Kbp
       slope_list<-slope_direct_withstart(viral_subset, windowsize)
-      best_match_summary <- list(notransduction_pattern(viral_subset), 
-                                 blocks_list[[1]], 
-                                 blocks_list[[2]], 
-                                 blocks_list[[3]], 
-                                 slope_list[[1]], 
+      best_match_summary <- list(notransduction_pattern(viral_subset),
+                                 blocks_list[[1]],
+                                 blocks_list[[2]],
+                                 blocks_list[[3]],
+                                 slope_list[[1]],
                                  slope_list[[2]])
-      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]], 
-                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]], 
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
+                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]],
                                     best_match_summary[[5]][[1]],best_match_summary[[6]][[1]]) %>% as.numeric()
     } else {
       slope_list<-slope_direct_withstart(viral_subset, windowsize)
       slope_list_no_start<-slope_direct(viral_subset, windowsize)
-      best_match_summary <- list(notransduction_pattern(viral_subset), 
-                                 blocks_list[[1]], 
+      best_match_summary <- list(notransduction_pattern(viral_subset),
+                                 blocks_list[[1]],
                                  blocks_list[[2]],
-                                 blocks_list[[3]], 
-                                 slope_list_no_start[[1]], 
-                                 slope_list_no_start[[2]], 
-                                 slope_list[[1]], 
+                                 blocks_list[[3]],
+                                 slope_list_no_start[[1]],
+                                 slope_list_no_start[[2]],
+                                 slope_list[[1]],
                                  slope_list[[2]])
-      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]], 
-                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]], 
-                                    best_match_summary[[5]][[1]],best_match_summary[[6]][[1]], 
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
+                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]],
+                                    best_match_summary[[5]][[1]],best_match_summary[[6]][[1]],
                                     best_match_summary[[7]][[1]]) %>% as.numeric()
     }
     best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
     best_match_list[[A]] <<- c(best_match, i)
+    match_scoreQC <- c(match_scoreQC, best_match[[1]]/mean(viral_subset$coverage))
     A <<- A+1
   })
   filteredout_contigs <- filteredout_contigs[!is.na(filteredout_contigs)]
   reason <- reason[!is.na(reason)]
+  match_scoreQC <- match_scoreQC[!is.na(match_scoreQC)]
+  match_scoreQC <- as.data.frame(match_scoreQC)
+  colnames(match_scoreQC) <- "Match_score"
+  print(ggplot(data=match_scoreQC, aes(x=Match_score))+
+          geom_density()+
+          labs(title="Match-score quality threshold", caption="(Lower scores are better matches)")+
+          theme_bw())
   filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)
   pattern_matching_summary <- list(best_match_list, filteredout_summary_df)
   return(pattern_matching_summary)

@@ -9,7 +9,7 @@ alltransduction_events_summarylist <- function(best_match_list){
   transductionclassification_list <- list()
   lapply(1:length(best_match_list), function(i) {
     classification <-  best_match_list[[i]][[8]]
-    if(classification=="None") return(NULL)
+    if(classification=="InsufficientCoverage") return(NULL)
     transductionclassification_list[[A]] <<- best_match_list[[i]]
     A <<- A+1
   })
