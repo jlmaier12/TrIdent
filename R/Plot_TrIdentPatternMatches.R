@@ -19,6 +19,7 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
   windowsize <- transductionclassifications[[5]]
   transductionclassifications_wlowratios <- transductionclassifications[[3]]
   final_summary_table <- transductionclassifications[[1]]
+  MSF <- ifelse(missing(matchscorefilter) == TRUE, 0, matchscorefilter)
   if(cleanup==TRUE){
     VLP_pileup <- readcovdf_formatter(VLP_pileup)
     WC_pileup <- readcovdf_formatter(WC_pileup)
@@ -40,8 +41,7 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
     classification <- match_info[,2]
     match_score <- transductionclassifications_wlowratios[[i]][[1]]
     matchscoreQC <- match_score/mean(viral_subset$coverage)
-    if(missing(matchscorefilter) == FALSE ){
-    if (matchscoreQC > matchscorefilter) next }
+    if (MSF != 0) {if (matchscoreQC > MSF) return()}
     if (is.na(match_info[6]) == TRUE){
       prophage_activity <- NULL
     } else if (match_info[6]=="YES"){
@@ -62,7 +62,7 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
 
     Overlay_plot <- ggplot(data=pattern_match, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
-      geom_line(aes(y=pattern), color="black", size=1)+
+      geom_line(aes(y=pattern), color="black", linewidth=1)+
       labs(x="Contig position (bp)", y="VLP-fraction \n read coverage")+
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(), axis.line = element_line(colour = "black"),

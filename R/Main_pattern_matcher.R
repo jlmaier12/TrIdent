@@ -80,7 +80,7 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
     }
     best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
     best_match_list[[A]] <<- c(best_match, i)
-    match_scoreQC <- c(match_scoreQC, best_match[[1]]/mean(viral_subset$coverage))
+    match_scoreQC[A] <<- best_match[[1]]/mean(viral_subset$coverage)
     A <<- A+1
   })
   filteredout_contigs <- filteredout_contigs[!is.na(filteredout_contigs)]
@@ -88,8 +88,9 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   match_scoreQC <- match_scoreQC[!is.na(match_scoreQC)]
   match_scoreQC <- as.data.frame(match_scoreQC)
   colnames(match_scoreQC) <- "Match_score"
-  plot <- ggplot(data=match_scoreQC, aes(x=Match_score))+
-          geom_density()+
+  #print(match_scoreQC)
+  plot <- ggplot(data=match_scoreQC)+
+          geom_density(aes(x=Match_score))+
           labs(title="Match-score quality threshold", caption="(Lower scores are better matches)")+
           theme_bw()
   filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)
