@@ -88,7 +88,6 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   match_scoreQC <- match_scoreQC[!is.na(match_scoreQC)]
   match_scoreQC <- as.data.frame(match_scoreQC)
   colnames(match_scoreQC) <- "Match_score"
-  #print(match_scoreQC)
   plot <- ggplot(data=match_scoreQC)+
           geom_density(aes(x=Match_score))+
           labs(title="Match-score quality threshold", caption="(Lower scores are better matches)")+

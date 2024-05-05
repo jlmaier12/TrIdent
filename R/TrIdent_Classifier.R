@@ -9,12 +9,13 @@
 #'@param minblocksize The minimum size of the prophage-like block pattern. Default is 10000 bp.
 #'@param maxblocksize The maximum size of the prophage-like block pattern. Default is NA
 #'@param mincontiglength The minimum contig size (in bp) to perform pattern-matching on. Contigs smaller than this threshold will be filtered out. Default is 30,000bp
+#'@param SaveFilesTo Provide a path to the directory you wish to save TrIdent output summary tables to. TrIdent will make a folder within the provided directory to store results. This parameter is useful if running TrIdent on the command line.
 #'@export
 #'
 #'@examples \dontrun{
-#'TrIdent_results <- TrIdent_Classifier(VLP_pileup=VLP_fracreadcov, WC_pileup=whole_commreadcov, windowsize=1000, minblocksize=10000, maxblocksize=150000, cleanup=TRUE)
+#'TrIdent_results <- TrIdent_Classifier(VLP_pileup=VLP_fracreadcov, WC_pileup=whole_commreadcov, windowsize=1000, minblocksize=10000, maxblocksize=150000, mincontiglength=30000, SaveFilesTo="C://Users//Path//to//Folder", cleanup=TRUE)
 #'}
-  TrIdent_Classifier <- function(VLP_pileup, WC_pileup, windowsize = 1000, minblocksize=10000, maxblocksize=Inf, mincontiglength=30000, cleanup=TRUE){
+  TrIdent_Classifier <- function(VLP_pileup, WC_pileup, windowsize = 1000, minblocksize=10000, maxblocksize=Inf, mincontiglength=30000, SaveFilesTo, cleanup=TRUE){
 
     #error catching
     if(!(windowsize %in% list(100,200,500,1000,2000))){
@@ -64,7 +65,12 @@
     cat(paste(length(which(final_summary_list[[1]][,6]=="YES")), "of the predicted prophages/prophage-like elements are highly active or abundant \n"))
     cat(paste(length(which(final_summary_list[[1]][,6]=="MIXED")), "of the predicted prophages/prophage-like elements are not homogenously integrated into their bacterial host population \n  \n"))
     print(SM_classifications_summary[[3]])
-    return(final_summary_list)
+    if(missing(SaveFilesTo)==FALSE){
+      ifelse(!dir.exists(paths=paste0(SaveFilesTo, "\\TrIdentOutput")), dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")), print("'TrIdentOutput' folder exists already in the provided directory"))
+      write.table(summary_table_final, file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table.txt"), sep = "\t", row.names = FALSE)
+      write.table(summary_table_final[which(summary_table_final[,2]=="Prophage-like"|summary_table_final[,2]=="Sloping"|summary_table_final[,2]=="HighCoverageNoPattern"),],
+                  file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table_cleaned.txt"), sep = "\t", row.names = FALSE)
+      return(final_summary_list)
+      } else {
+      return(final_summary_list) }
 }
-
-
