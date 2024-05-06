@@ -30,7 +30,6 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
   ref_names <- c()
   plots<-lapply(1:length(transductionclassifications_wlowratios), function(i){
     ref_name <- transductionclassifications_wlowratios[[i]][[9]]
-    print(ref_name)
     viral_subset <- VLP_pileup[which(VLP_pileup[,1] == ref_name),]
     viral_subset <- windowsize_func(viral_subset,windowsize)
     microbial_subset <- WC_pileup[which(WC_pileup[,1] == ref_name),]
@@ -76,7 +75,7 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
     combined_plot <- (wholecomm_plot/Overlay_plot)
     combined_plot
   })
-  plots <- plots[-which(sapply(plots, is.null))]
+  plots <- Filter(Negate(is.null), plots)
   names(plots) <- ref_names
   if (FilePath != 0) {
     ifelse(!dir.exists(paths=paste0(FilePath, "\\TrIdentOutput")), dir.create(paste0(FilePath, "\\TrIdentOutput")), print("'TrIdentOutput' folder exists already in the provided directory"))
