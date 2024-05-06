@@ -67,9 +67,9 @@
     print(SM_classifications_summary[[3]])
     if(missing(SaveFilesTo)==FALSE){
       ifelse(!dir.exists(paths=paste0(SaveFilesTo, "\\TrIdentOutput")), dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")), print("'TrIdentOutput' folder exists already in the provided directory"))
-      write.table(summary_table_final, file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table.txt"), sep = "\t", row.names = FALSE)
+      write.table(summary_table_final, file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table.csv"), sep = ",", row.names = FALSE)
       write.table(summary_table_final[which(summary_table_final[,2]=="Prophage-like"|summary_table_final[,2]=="Sloping"|summary_table_final[,2]=="HighCoverageNoPattern"),],
-                  file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table_cleaned.txt"), sep = "\t", row.names = FALSE)
+                  file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table_cleaned.csv"), sep = ",", row.names = FALSE)
       ggsave(filename= paste0(SaveFilesTo, "\\TrIdentOutput\\MatchScoreDensityPlot.png"), plot=SM_classifications_summary[[3]],
              width = 4, height = 4)
       return(final_summary_list)
