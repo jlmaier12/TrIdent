@@ -73,6 +73,7 @@
       ggsave(filename= paste0(SaveFilesTo, "\\TrIdentOutput\\MatchScoreDensityPlot.png"), plot=SM_classifications_summary[[3]],
              width = 4, height = 4)
       return(final_summary_list)
-      } else {
-      return(final_summary_list) }
+    }else{
+      return(final_summary_list) 
+    }
 }

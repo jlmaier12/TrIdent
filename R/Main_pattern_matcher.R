@@ -90,8 +90,23 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   colnames(match_scoreQC) <- "Match_score"
   plot <- ggplot(data=match_scoreQC)+
     geom_histogram(aes(x=Match_score))+
-    labs(title="Match-score quality threshold", caption="(Lower scores are better matches)")+
     theme_bw()
+  #added code
+  counts <- ggplot_build(plot)$data[[1]]$count
+  breaks <- ggplot_build(plot)$data[[1]]$x
+  max_count <- max(counts)
+  mode_bins <- breaks[which(counts == max_count)]
+  end_points <- c(mode_bins, mode_bins + diff(breaks)[1])
+  
+  mean_data <- mean(match_scoreQC[["Match_score"]])
+  sd_data <- sd(match_scoreQC[["Match_score"]])
+  two_sd_from_mode <- mode_bins[1] + 2 * sd_data
+  closest_bin <- breaks[which.min(abs(breaks - two_sd_from_mode))]
+  closest_bin_end<-c(closest_bin, closest_bin + diff(breaks)[1])
+  
+  plot <- plot + geom_vline(xintercept = closest_bin_end[2], linetype = "dashed", color = "red") +
+    labs(title="Match-score quality threshold", caption=paste("Lower scores are better matches, Sugg_threshold=", as.character(round(closest_bin_end[2],3)), sep=""))
+  
   filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)
   pattern_matching_summary <- list(best_match_list, filteredout_summary_df, plot)
   return(pattern_matching_summary)
