@@ -11,7 +11,7 @@ slope_summary <- function(classificationsummary, genlatGTAclassifications){
     return(classificationsummary)
   }
   lapply(1:length(genlatGTAclassifications), function(i) {
-    classificationsummary[which(classificationsummary[,1]==genlatGTAclassifications[[i]][[9]]),8] <<- round(genlatGTAclassifications[[i]][[7]], digits=4)
+    classificationsummary[which(classificationsummary[,1]==genlatGTAclassifications[[i]][[9]]),9] <<- round(genlatGTAclassifications[[i]][[7]], digits=4)
   })
   return(classificationsummary)
 }

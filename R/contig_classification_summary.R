@@ -7,10 +7,12 @@
 contig_classification_summary <- function(best_match_list){
   ref_name <- rep(NA, length(best_match_list))
   classifications <- rep(NA, length(best_match_list))
+  NormMatchScore <- rep(NA, length(best_match_list))
   lapply(1:length(best_match_list), function(i) {
+    NormMatchScore[i] <<- best_match_list[[i]][[10]]
     ref_name[i] <<- best_match_list[[i]][[9]]
     classifications[i] <<- best_match_list[[i]][[8]]
   })
-  classification_summary <- cbind(ref_name, classifications)
+  classification_summary <- cbind.data.frame(ref_name, classifications, NormMatchScore)
   return(classification_summary)
 }

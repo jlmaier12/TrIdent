@@ -54,7 +54,7 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
     }
     wholecomm_plot <- ggplot(data=microbial_subset, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
-      labs(title=paste(ref_name, "Classification:", classification ),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ", y="Whole-community \n read coverage") +
+      labs(title=paste(ref_name, "Classification:", classification, matchscoreQC),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ", y="Whole-community \n read coverage") +
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(), axis.line = element_line(colour = "black"),
             text = element_text(size = 14),
