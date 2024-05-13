@@ -52,7 +52,7 @@
 
     cat("Finalizing output \n")
     final_summary_list<-list(summary_table_final,
-                             summary_table_final[which(summary_table_final[,2]=="Prophage-like"|summary_table_final[,2]=="Gen/Lat/GTA"|summary_table_final[,2]=="HighVLPWCReadCov"),],
+                             summary_table_final[which(summary_table_final[,2]=="Prophage-like"|summary_table_final[,2]=="Sloping"|summary_table_final[,2]=="HighCoverageNoPattern"),],
                              alltransduction_withlowratios_summarylist(SM_classifications_summary[[1]], summary_table_final),
                              SM_classifications_summary[[2]],
                              windowsize)

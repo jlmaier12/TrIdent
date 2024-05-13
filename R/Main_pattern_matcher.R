@@ -14,7 +14,7 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   best_match_list <- list()
   filteredout_contigs <- rep(NA, length(refnames))
   reason <- rep(NA, length(refnames))
-  match_scoreQC <- rep(NA, length(refnames))
+  norm_matchscore <- rep(NA, length(refnames))
   A <- 1
   B <- 1
   C <- 1
@@ -79,19 +79,25 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
                                     best_match_summary[[7]][[1]]) %>% as.numeric()
     }
     best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
-    best_match_list[[A]] <<- c(best_match, i)
-    match_scoreQC[A] <<- best_match[[1]]/mean(viral_subset$coverage)
+    best_match_list[[A]] <<- c(best_match, i, best_match[[1]]/mean(viral_subset$coverage))
+    norm_matchscore[A] <<- best_match[[1]]/mean(viral_subset$coverage)
     A <<- A+1
   })
   filteredout_contigs <- filteredout_contigs[!is.na(filteredout_contigs)]
   reason <- reason[!is.na(reason)]
-  match_scoreQC <- match_scoreQC[!is.na(match_scoreQC)]
-  match_scoreQC <- as.data.frame(match_scoreQC)
-  colnames(match_scoreQC) <- "Match_score"
-  plot <- ggplot(data=match_scoreQC)+
-    geom_histogram(aes(x=Match_score))+
-    labs(title="Match-score quality threshold", caption="(Lower scores are better matches)")+
-    theme_bw()
+  norm_matchscore <- norm_matchscore[!is.na(norm_matchscore)]
+  norm_matchscoredf <- as.data.frame(norm_matchscore)
+  colnames(norm_matchscoredf) <- "Match_score"
+  brks <- seq(min(norm_matchscoredf$Match_score), max(norm_matchscoredf$Match_score), length.out = 40)
+  histogram <- hist(norm_matchscoredf$Match_score, breaks = brks, plot=FALSE)
+  ST <- sug_threshold(norm_matchscoredf, histogram)
+  plot <- ggplot(data=norm_matchscoredf)+
+    theme_bw()+
+    geom_histogram(aes(x=Match_score), breaks = brks)+
+    geom_vline(xintercept = ST, color="red")+
+    annotate(geom="label", x = ST, y= max(histogram$counts),label=round(ST, digits = 2)) +
+    labs(title="Quality of pattern matches", x= "Normalized Pattern Match Score", y= "count", caption=paste("(Lower scores are better matches) \n
+         Suggested Filtering Threshold=",round(ST, digits=2)))
   filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)
   pattern_matching_summary <- list(best_match_list, filteredout_summary_df, plot)
   return(pattern_matching_summary)
