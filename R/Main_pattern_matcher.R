@@ -94,11 +94,10 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
   plot <- ggplot(data=norm_matchscoredf)+
     theme_bw()+
     geom_histogram(aes(x=Match_score), breaks = brks)+
-    geom_vline(aes(xintercept = ST, color="Threshold"))+
+    geom_vline(xintercept = ST, color="red")+
     annotate(geom="label", x = ST, y= max(histogram$counts),label=round(ST, digits = 2)) +
-    labs(title="Quality of pattern matches", x= "Normalized Pattern Match Score", y= "count", caption="(Lower scores are better matches)")+
-    scale_color_manual(name = "Suggested Filtering \n       Threshold", values = c(Threshold = "black"))+
-    theme(legend.position="right")
+    labs(title="Quality of pattern matches", x= "Normalized Pattern Match Score", y= "count", caption=paste("(Lower scores are better matches) \n
+         Suggested Filtering Threshold=",round(ST, digits=2)))
   filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)
   pattern_matching_summary <- list(best_match_list, filteredout_summary_df, plot)
   return(pattern_matching_summary)
