@@ -16,7 +16,6 @@
 #' pattern_matches$NODE_1
 #' }
 Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassifications, matchscorefilter, SaveFilesTo, cleanup=TRUE) {
-  
   position <- coverage <- NULL
   windowsize <- transductionclassifications[[5]]
   transductionclassifications_wlowratios <- transductionclassifications[[3]]
@@ -31,7 +30,6 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
   ref_names <- c()
   plots<-lapply(1:length(transductionclassifications_wlowratios), function(i){
     ref_name <- transductionclassifications_wlowratios[[i]][[9]]
-    print(ref_name)
     viral_subset <- VLP_pileup[which(VLP_pileup[,1] == ref_name),]
     viral_subset <- windowsize_func(viral_subset,windowsize)
     microbial_subset <- WC_pileup[which(WC_pileup[,1] == ref_name),]
