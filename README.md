@@ -55,13 +55,13 @@ Import the VLP_fraction_pileup_bincov100.txt and WholeCommunity_pileup_bincov100
 
 ## TrIdent description 
 
-TrIdent first classifies contigs as 'Prophage-like', 'Gen/Lat/GTA', 'HighVLPWCRC', or 'None' using pattern-matching to detect patterns in read coverages.
+TrIdent first classifies contigs as 'Prophage-like', 'Sloping', 'HighCoverageNoPattern', or 'InsufficientCoverage' using pattern-matching to detect patterns in read coverages.
 
-- Prophage-like classifications include potential prophages or phage-inducible chromosomal islands (PICIs)
-    - In addition to identifying prophages and PICIs on contigs, TrIdent also determines if they are highly active/abundant by assessing the associated read coverage in the whole-community fraction. If the read coverage of a prophage/PICI region is elevated above the non-prophage/PICI region of a contig, it is an indicator that the prophage/PICI is actively replicating or is highly abundant as its genome is represented in a higher ratio than its host bacteria.  
-- Gen/Lat/GTA classifications include potential generalized, lateral or gene transfer agent (GTA) transduction events
-- HighVLPWCRC classifications stand for ‘High VLP-fraction:Whole-Community Read Coverage ratio’ which means the contig has no pattern match but has an unusually high amount of bacterial DNA in the VLP-fraction and may represent the ‘tail’ of a sloping pattern formed by a Gen/Lat/GTA event, unknown transduction pathways or contamination from other sources e.g. very small, very dense cells that were co-purified with VLPs.
-- None classifications includes contigs with no pattern matches and low/no read coverage in the VLP-fraction.
+- Prophage-like classifications include potential prophages, phage-inducible chromosomal islands (PICIs), or other prophage-like integrated genetic elements
+    - In addition to identifying prophage-like elements on contigs, TrIdent also determines if they are highly active/abundant OR heterogenously present in the host bacterial population by assessing the associated read coverage in the whole-community fraction. If the whole-communityread coverage of a prophage-like region is elevated above the non-prophage region of a contig, it is an indicator that the prophage-like element is actively replicating or is highly abundant as its genome is represented in a higher ratio than its host bacteria. Conversely, if the whole-community read coverage of the prophage-like region is depressed compared to the non-prophage region of a contig, it is an indicator that the genetic element is only integrated into a portion of the host bacterial population. 
+- Sloping classifications include potential generalized, lateral, or gene transfer agent (GTA) transduction events as well as other unknown transduction mechanisms associated with large, non-random transfers of bacterial DNA
+- HighCoverageNoPattern classifications are used for contigs with no distinct read coverage pattern in the VLP-fraction, but has an unusually high amount of bacterial DNA in the VLP-fraction and may represent the ‘tail’ of a sloping pattern formed by a sloping transduction event, unknown transduction pathways or contamination from other sources e.g. very small, very dense cells that were co-purified with VLPs.
+- InsufficientCoverage classifications includes contigs with no pattern matches and low/no read coverage in the VLP-fraction.
 
 
 Next, TrIdent can search contigs predicted as 'Prophage-like' for specialized transduction events to provide the user with a holistic view of the transduction actively occuring in their microbiome of interest. 
@@ -74,9 +74,9 @@ VLP_fraction_pileup100 <- read.delim("VLP_fraction_pileup_bincov100.txt", header
 WholeCommunity_pileup100 <- read.delim("WholeCommunity_pileup_bincov100.txt", header=FALSE, comment.char="#")
 ```
 
-**Run `TrIdent_Classifier()` to classify contigs as Prophage-like, Gen/Lat/GTA, HighVLPWCRC, or None:** 
+**Run `TrIdent_Classifier()` to classify contigs as Prophage-like, Sloping, HighCoverageNoPattern, or InsufficientCoverage:** 
 ```{r}
-Trident_results <- TrIdent_Classifier(VLP_pileup=VLP_fraction_pileup100, WC_pileup=WholeCommunity_pileup100, minblocksize=10000, maxblocksize=200000, windowsize=1000)
+Trident_results <- TrIdent_Classifier(VLP_pileup=VLPFraction_sampledata, WC_pileup=WholeCommunity_sampledata, windowsize=1000)
 
 Summary_table <- Trident_results$Full_summary_table
 Cleaned_table <- Trident_results$Cleaned_summary_table
@@ -96,7 +96,7 @@ Note that `windowsize`, `minblocksize` and `maxblocksize` are user-defined varia
 ```{r}
 Trident_plots <- Plot_TrIdentPatternMatches(VLP_pileup=VLP_fraction_pileup100, WC_pileup=WholeCommunity_pileup100, transductionclassifications=Trident_results)
 
-#View all pattern matches to contigs classified as  Prophage-like, Gen/Lat/GTA, or HighVLPWCRC:
+#View all pattern matches to contigs classified as  Prophage-like, Sloping, or HighCoverageNoPattern:
 Trident_plots
 
 #View/save specific plot:
