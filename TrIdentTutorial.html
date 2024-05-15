@@ -385,7 +385,7 @@ transduced DNA in pure cultures and microbial communities. Microbiome 8,
 classify, and characterize potential transducing events:</p>
 <ul>
 <li><code>TrIdent_Classifier()</code>: Classifies contigs as
-‘Prophage-like’, ‘Gen/Lat/GTA’, ‘HighVLPWCReadCov’, and ‘None’</li>
+‘Prophage-like’, ‘Sloping’, ‘HighCoverageNoPattern’, and ‘InsufficientCoverage’</li>
 <li><code>PlotTrIdentPatternMatches()</code>: Plots results of
 TrIdent_Classifier</li>
 <li><code>SpecializedTransduction_ID()</code>: Detects potential
@@ -488,9 +488,10 @@ data-cleaning and reformatting.</p>
 <p><code>TrIdent_Classifier()</code> is the main function that TrIdent
 relies on. This function cleans and reformats your input data, filters
 contigs based on length and read coverage, performs pattern-matching to
-classify contigs, identifies active/highly abundant prophage-like
+classify contigs, identifies active/highly abundant and heterogenously integrated prophage-like
 elements, determines which contigs have high
-VLP-fraction:whole-community read coverage ratios, and outputs all
+VLP-fraction:whole-community read coverage ratios, identifies start and stop positions and sizes of pattern matches, 
+calculates slopes for Sloping pattern matches, generates a pattern-match quality score and outputs all
 information in a neat summary table.</p>
 <p><code>TrIdent_Classifier()</code> features:</p>
 <p><strong>1. Contig filtering:</strong></p>
