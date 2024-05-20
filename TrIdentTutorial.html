@@ -645,7 +645,7 @@ meaningful as it increases automatically with more reads sequenced for
 the VLP fraction. As such, one needs to be careful in the interpretation
 of these ratios.</strong></p>
 <hr />
-<h4><strong>TrIdent user parameters:</strong></h4>
+<h4><strong><code>TrIdent_Classifier</code> user parameters:</strong></h4>
 <ul> 
 <li><code>VLP-pileup</code></li>
 <li><code>WC_pileup</code></li>
@@ -656,7 +656,13 @@ of these ratios.</strong></p>
 <li><code>SaveFilesTo</code></li>
 <li><code>cleanup</code></li>
 </ul>
-<p><code>TrIdent_Classifier()</code> resizes the bins or ‘windows’ used
+<p><code>VLP-pileup</code> A dataframe containing contig names, coverages 
+averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs</p>
+  
+<p><code>WC_pileup</code> A dataframe containing contig names, coverages 
+averaged over 100bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs</p>
+  
+<p><code>windowsize</code> TrIdent resizes the bins or ‘windows’ used
 by <code>pileup.sh</code> to improve processing time and reduce noise in
 the data. Resizing is done by averaging the read coverages across the
 specified windowsize. <code>TrIdent_Classifier()</code> resizes windows
@@ -669,12 +675,19 @@ DNA). We recommend decreasing the <code>windowsize</code> if your data
 is very clean and/or small and you are interested in increasing the
 resolution of read coverage patterns for the initial classification of
 contigs. Note that decreasing the windowsize will increase TrIdent’s
-processing time!</p>
-<p>Users may also define the minimum (<code>minblocksize</code>) and
-maximum (<code>maxblocksize</code>) size of the block-like pattern that
-TrIdent uses for prophage-like pattern matching. The default
-<code>minblocksize</code> is 10,000bp and the default
-<code>maxblocksize</code> is undefined. Be aware that changing the
+processing time!
+
+Increasing/decreasing the <code>windowsize</code> may alter the
+results of the <code>TrIdent_Classifier()</code> slightly. Prophage-like
+classifications tend to stay the same when <code>windowsize</code> is
+changed, but Sloping and HighCoverageNoPattern classifications may switch
+classes with each other. This is due to how averaging the read coverages
+affects the sloping pattern./p>
+  
+<p><code>minblocksize</code> The minimum size of prophage-like patterns. The default is 10,000bp. </p>
+  
+<p><code>maxblocksize</code> The maximum size of prophage-like patterns. The default is undefined/NA (i.e. no max size). </p>
+<p>Be aware that changing the
 <code>minblocksize</code> and <code>maxblocksize</code> will not
 necessarily remove contigs with prophage-like patterns smaller/larger
 than the defined parameters from the resulting classifications. Contigs
@@ -682,54 +695,59 @@ with prophage-like patterns larger/smaller than the
 <code>maxblocksize</code> and <code>minblocksize</code> may still be
 classified, however, the classifications and associated pattern matches
 may be poor. For example, if a contig has a clear prophage-like pattern
-that’s ~50,000bp but the user sets the <code>maxblocksize=40000</code>,
+that’s ~50,000 bp but the user sets the <code>maxblocksize=40000</code>,
 TrIdent will likely still classify the contig as prophage-like as the
-maximum block-like pattern of 40,0000bp will still achieve a lower
+maximum block-like pattern of 40,0000 bp will still achieve a lower
 pattern match score than any of the Sloping or 'No pattern' patterns.</p>
+  
+<p><code>mincontiglength</code> The minimum contig length used processed for pattern-matching. 
+Contigs shorter than the <code>mincontiglength</code> will be filtered out prior to pattern-matching. The default is 30,000 bp</p>
+  
+<p><code>SaveFilesTo</code> A file path in which TrIdent saves outputs to. This is useful if using TrIdent in a command-line environment. Default is that files are NOT saved to an output folder.</p>
+  
+<p><code>cleanup</code> If TRUE, TrIdent will clean and re-format the input pileup files to ensure they are in the correct format for pattern-matching. If FALSE, users are responsible 
+for putting their input files into the correct format (specified above). TRUE by default.</p>
+
 <p>TrIdent </p>
 </div>
 <div id="default" class="section level4">
 <h4>Default:</h4>
 <p>To run <code>TrIdent_Classifier()</code> in default-mode, run the
 following:</p>
-<pre class="r"><code>TrIdent_results &lt;- TrIdent_Classifier(VLP_pileup=VLPFraction_sampledata, WC_pileup=WholeCommunity_sampledata, windowsize=1000, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE)
+<pre class="r"><code>TrIdent_results &lt;- TrIdent_Classifier(VLP_pileup=VLPFraction_sampledata, WC_pileup=WholeCommunity_sampledata)
 ## Starting pattern-matching... 
 ## A quarter of the way done with pattern_matching 
 ## Half of the way done with pattern_matching 
 ## Almost done with pattern_matching! 
 ## Identifying potential transducing events 
 ## Determining sizes (bp) of potential transduction events 
-## Identifying highly active/abundant prophage-like elements 
+## Identifying highly active/abundant or heterogenously integrated prophage-like elements 
 ## Finalizing output 
 ## Execuion time: 23.9757790565491 
-## 1 contigs were filtered out based on short length or low read coverage 
+## 1 contigs were filtered out based on low read coverage 
+## 0 contigs were filtered out based on length  
 ## 
 ##             Sloping   HighCoverageNoPattern  InsufficientCoverage  Prophage-like 
 ##                2                2                      1                  4 
-## 2 of the predicted prophage-like elements are highly active or abundant 
-## 1 of the predicted prophage-like elements are not homogenously integrated into their bacterial host population 
+## 2 of the prophage-like classifications are highly active or abundant 
+## 1 of the prophage-like classifications are 'mixed', i.e. heterogenously integrated into their bacterial host population 
 ## </code></pre>
 </div>
-<div id="non-default" class="section level4">
-<h4>Non-default:</h4>
-<p>Increasing/decreasing the <code>windowsize</code> may alter the
-results of the <code>TrIdent_Classifier()</code> slightly. Prophage-like
-classifications tend to stay the same when <code>windowsize</code> is
-changed, but Sloping and HighCoverageNoPattern classifications may switch
-classes with each other. This is due to how averaging the read coverages
-affects the sloping pattern. High activity/abundance labels on
-Prophage-like classifications may also change based on how the averaging
-affects the pattern-match size. Prophage-like elements that are on the border of
-being considered highly active/abundant are typically more affected by
-changing the <code>windowsize</code>.</p>
-<p>Note how processing time (in seconds) compares between the default of
-1000 <code>windowsize</code> and the user-defined 2000 and 500
-<code>windowsize</code>. The differences are small since the sample
-dataset only consists of 10 contigs, but on larger datasets these time
-differences can add up.</p>
-<p>Increase <code>windowsize</code> to 2000bp:</p>
 
-</div>
+<p><code>TrIdent_Classifier()</code> outputs a histogram containing the distribution of normalized pattern-match scores for your dataset.
+The normalized pattern-match score is the pattern-match score for a specific classification divided by the contig's average read coverage. 
+This normlaized match score is an indicator of a pattern-match's quality i.e. how well the TrIdent pattern fits the associated contig's read coverage profile.
+Smaller match-scores, and normalized match-scores, indicate better pattern matches. The histogram can be used to filter the resulting TrIdent classifications 
+by quality of pattern matches. A suggested filtering threshold is marked on the plot with a vertical line, however, we encourage users to 
+
+For the test dataset, the resulting histogram looks like this:
+
+
+However, for a 'real' dataset, the histogram looks like more of a normal distribution:
+
+  
+</p>
+
 <div id="obtain-results-of-main-classifier" class="section level4">
 <h4>Obtain results of main classifier:</h4>
 <p>The output of <code>TrIdent_Classifier()</code> is a list containing
@@ -755,6 +773,7 @@ name:</p>
 <colgroup>
 <col width="10%" />
 <col width="17%" />
+<col width="17%" />
 <col width="11%" />
 <col width="10%" />
 <col width="9%" />
@@ -766,6 +785,7 @@ name:</p>
 <tr class="header">
 <th align="left">ref_name</th>
 <th align="left">classifications</th>
+<th align="left">NormMatchScore</th>
 <th align="right">match_size</th>
 <th align="right">start_pos</th>
 <th align="right">stop_pos</th>
@@ -778,6 +798,7 @@ name:</p>
 <tr class="odd">
 <td align="left">NODE_25</td>
 <td align="left">InsufficientCoverage</td>
+<td align="left">0.20711667</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -788,6 +809,7 @@ name:</p>
 <tr class="even">
 <td align="left">NODE_44</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.19117212</td>
 <td align="right">65000</td>
 <td align="right">151000</td>
 <td align="right">216000</td>
@@ -798,6 +820,7 @@ name:</p>
 <tr class="odd">
 <td align="left">NODE_62</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.14338316</td>
 <td align="right">171000</td>
 <td align="right">63000</td>
 <td align="right">234000</td>
@@ -808,6 +831,7 @@ name:</p>
 <tr class="even">
 <td align="left">NODE_125</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.23903635</td>
 <td align="right">31000</td>
 <td align="right">153000</td>
 <td align="right">184000</td>
@@ -818,6 +842,7 @@ name:</p>
 <tr class="odd">
 <td align="left">NODE_238</td>
 <td align="left">Sloping</td>
+<td align="left">0.14225027</td>
 <td align="right">146000</td>
 <td align="right">1000</td>
 <td align="right">147000</td>
@@ -828,6 +853,7 @@ name:</p>
 <tr class="even">
 <td align="left">NODE_251</td>
 <td align="left">Sloping</td>
+<td align="left">0.11734790</td>
 <td align="right">144000</td>
 <td align="right">1000</td>
 <td align="right">145000</td>
@@ -838,6 +864,7 @@ name:</p>
 <tr class="odd">
 <td align="left">NODE_368</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.16050720</td>
 <td align="right">28000</td>
 <td align="right">27000</td>
 <td align="right">55000</td>
@@ -848,6 +875,7 @@ name:</p>
 <tr class="even">
 <td align="left">NODE_560</td>
 <td align="left">HighCoverageNoPattern</td>
+<td align="left">0.07094737</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -858,6 +886,7 @@ name:</p>
 <tr class="odd">
 <td align="left">NODE_1088</td>
 <td align="left">HighCoverageNoPattern</td>
+<td align="left">0.08964437</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -892,7 +921,34 @@ table</caption>
 coverage plots of all contigs predicted as either Sloping,
 Prophage-like, or HighCoverageNoPattern and their respective pattern
 matches.</p>
-<pre class="r"><code>TrIdent_patternmatches &lt;- Plot_TrIdentPatternMatches(VLP_pileup=VLPFraction_sampledata, WC_pileup=WholeCommunity_sampledata, transductionclassifications=TrIdent_results, cleanup=TRUE)</code></pre>
+
+<h4><strong><code>Plot_TrIdentPatternMatches()</code> user parameters:</strong></h4>
+<ul> 
+<li><code>VLP-pileup</code></li>
+<li><code>WC_pileup</code></li>
+<li><code>transductionclassifications</code></li>
+<li><code>MatchScoreFilter</code></li>
+<li><code>SaveFilesTo</code></li>
+<li><code>cleanup</code></li>
+</ul>
+
+<p><code>VLP-pileup</code>A dataframe containing contig names, coverages 
+averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs</p>
+  
+<p><code>WC_pileup</code>A dataframe containing contig names, coverages 
+averaged over 100bp windows, and contig positions associated with mapping whole-community-fraction reads to whole-community contigs</p>
+
+<p><code>transductionclassifications</code></p> The complete output from <code>TrIdent_Classifier()</code>
+
+<p><code>MatchScoreFilter</code> Used to filter the <code>TrIdent_Classifier()</code> classifications by the quality of their respective pattern-matches.
+</p> 
+
+<p><code>SaveFilesTo</code></p>
+
+<p><code>cleanup</code></p>
+
+<h4>Default:</h4>
+<pre class="r"><code>TrIdent_patternmatches &lt;- Plot_TrIdentPatternMatches(VLP_pileup=VLPFraction_sampledata, WC_pileup=WholeCommunity_sampledata, transductionclassifications=TrIdent_results)</code></pre>
 <p>View either all plots at once or one plot at a time. All of the
 output plots can be saved as individual <code>ggplot</code> objects for
 further manipulation by the user. Each plot is named by its respective
@@ -1124,6 +1180,7 @@ transduction by specifying the contig’s reference name with the
 <colgroup>
 <col width="6%" />
 <col width="10%" />
+<col width="10%" />
 <col width="6%" />
 <col width="6%" />
 <col width="5%" />
@@ -1140,6 +1197,7 @@ transduction by specifying the contig’s reference name with the
 <tr class="header">
 <th align="left">ref_name</th>
 <th align="left">classifications</th>
+<th align="left">NormMatchScore</th>
 <th align="right">match_size</th>
 <th align="right">start_pos</th>
 <th align="right">stop_pos</th>
@@ -1156,7 +1214,8 @@ transduction by specifying the contig’s reference name with the
 <tbody>
 <tr class="odd">
 <td align="left">NODE_1088</td>
-<td align="left">HighVLPWCReadCov</td>
+<td align="left">HighCoverageNoPattern</td>
+<td align="left">0.08964437</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -1172,6 +1231,7 @@ transduction by specifying the contig’s reference name with the
 <tr class="even">
 <td align="left">NODE_125</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.23903635</td>  
 <td align="right">31000</td>
 <td align="right">153000</td>
 <td align="right">184000</td>
@@ -1186,7 +1246,8 @@ transduction by specifying the contig’s reference name with the
 </tr>
 <tr class="odd">
 <td align="left">NODE_238</td>
-<td align="left">Gen/Lat/GTA</td>
+<td align="left">Sloping</td>
+<td align="left">0.14225027</td>  
 <td align="right">146000</td>
 <td align="right">1000</td>
 <td align="right">147000</td>
@@ -1201,7 +1262,8 @@ transduction by specifying the contig’s reference name with the
 </tr>
 <tr class="even">
 <td align="left">NODE_25</td>
-<td align="left">None</td>
+<td align="left">InsufficientCoverage</td>
+<td align="left">NA</td>  
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -1216,7 +1278,8 @@ transduction by specifying the contig’s reference name with the
 </tr>
 <tr class="odd">
 <td align="left">NODE_251</td>
-<td align="left">Gen/Lat/GTA</td>
+<td align="left">Sloping</td>
+<td align="left">0.11734790</td>  
 <td align="right">144000</td>
 <td align="right">1000</td>
 <td align="right">145000</td>
@@ -1232,6 +1295,7 @@ transduction by specifying the contig’s reference name with the
 <tr class="even">
 <td align="left">NODE_368</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.16050720</td>  
 <td align="right">28000</td>
 <td align="right">27000</td>
 <td align="right">55000</td>
@@ -1247,6 +1311,7 @@ transduction by specifying the contig’s reference name with the
 <tr class="odd">
 <td align="left">NODE_44</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.19117212</td>   
 <td align="right">65000</td>
 <td align="right">151000</td>
 <td align="right">216000</td>
@@ -1261,7 +1326,8 @@ transduction by specifying the contig’s reference name with the
 </tr>
 <tr class="even">
 <td align="left">NODE_560</td>
-<td align="left">HighVLPWCReadCov</td>
+<td align="left">HighCoverageNoPattern</td>
+<td align="left">0.07094737</td>  
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -1277,6 +1343,7 @@ transduction by specifying the contig’s reference name with the
 <tr class="odd">
 <td align="left">NODE_62</td>
 <td align="left">Prophage-like</td>
+<td align="left">0.14338316</td>  
 <td align="right">171000</td>
 <td align="right">63000</td>
 <td align="right">234000</td>
