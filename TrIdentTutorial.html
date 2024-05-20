@@ -645,7 +645,7 @@ meaningful as it increases automatically with more reads sequenced for
 the VLP fraction. As such, one needs to be careful in the interpretation
 of these ratios.</strong></p>
 <hr />
-<h4><strong><code>TrIdent_Classifier</code> user parameters:</strong></h4>
+<h4><strong><code>TrIdent_Classifier()</code> user parameters:</strong></h4>
 <ul> 
 <li><code>VLP-pileup</code></li>
 <li><code>WC_pileup</code></li>
@@ -708,7 +708,6 @@ Contigs shorter than the <code>mincontiglength</code> will be filtered out prior
 <p><code>cleanup</code> If TRUE, TrIdent will clean and re-format the input pileup files to ensure they are in the correct format for pattern-matching. If FALSE, users are responsible 
 for putting their input files into the correct format (specified above). TRUE by default.</p>
 
-<p>TrIdent </p>
 </div>
 <div id="default" class="section level4">
 <h4>Default:</h4>
@@ -738,10 +737,11 @@ following:</p>
 The normalized pattern-match score is the pattern-match score for a specific classification divided by the contig's average read coverage. 
 This normlaized match score is an indicator of a pattern-match's quality i.e. how well the TrIdent pattern fits the associated contig's read coverage profile.
 Smaller match-scores, and normalized match-scores, indicate better pattern matches. The histogram can be used to filter the resulting TrIdent classifications 
-by quality of pattern matches. A suggested filtering threshold is marked on the plot with a vertical line, however, we encourage users to 
+by quality of pattern matches. A suggested filtering threshold is marked on the plot with a vertical line, however, the suggested threshold tends to be stringent and
+quality pattern-matches may be filtered out if the upper threshold boundary is not explored. We encourage users to initially test a filtering value slightly greater than the suggested threshold to
 
 For the test dataset, the resulting histogram looks like this:
-
+<img src= "C:\Users\jlmaier\Desktop\TrIdent\filteringthesholdimg.jpg"  width="70%" />
 
 However, for a 'real' dataset, the histogram looks like more of a normal distribution:
 
@@ -943,11 +943,13 @@ averaged over 100bp windows, and contig positions associated with mapping whole-
 <p><code>MatchScoreFilter</code> Used to filter the <code>TrIdent_Classifier()</code> classifications by the quality of their respective pattern-matches.
 </p> 
 
-<p><code>SaveFilesTo</code></p>
+<p><code>SaveFilesTo</code> A file path in which TrIdent saves outputs to. Each plot is saved as an indiviudal png file named by the associated contig reference name. 
+This is useful if using TrIdent in a command-line environment. Default is that files are NOT saved to an output folder.</p>
 
-<p><code>cleanup</code></p>
+<p><code>cleanup</code>If TRUE, TrIdent will clean and re-format the input pileup files to ensure they are in the correct format for pattern-matching. If FALSE, users are responsible 
+for putting their input files into the correct format (specified above). TRUE by default.</p>
 
-<h4>Default:</h4>
+<h4> <code>TrIdent_Classifier()</code> Default:</h4>
 <pre class="r"><code>TrIdent_patternmatches &lt;- Plot_TrIdentPatternMatches(VLP_pileup=VLPFraction_sampledata, WC_pileup=WholeCommunity_sampledata, transductionclassifications=TrIdent_results)</code></pre>
 <p>View either all plots at once or one plot at a time. All of the
 output plots can be saved as individual <code>ggplot</code> objects for
