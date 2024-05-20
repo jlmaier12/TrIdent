@@ -741,7 +741,7 @@ by quality of pattern matches. A suggested filtering threshold is marked on the 
 quality pattern-matches may be filtered out if the upper threshold boundary is not explored. For this reason, we encourage users to initially test a filtering value slightly greater than the suggested threshold.</p>
 
 <p>For the test dataset, the resulting histogram looks like this:</p>
-<p><img src= ‪"C:\Users\jlmaier\Desktop\filteringthesholdimg.png"  width="70%" /></p>
+<p><img src=  width="70%" /></p>
   
 
 <p>However, for a 'real' dataset, the histogram looks like more of a normal distribution:</p>
@@ -940,7 +940,7 @@ averaged over 100bp windows, and contig positions associated with mapping whole-
 <p><code>transductionclassifications</code></p> The complete output from <code>TrIdent_Classifier()</code>
 
 <p><code>MatchScoreFilter</code> Used to filter the <code>TrIdent_Classifier()</code> classifications by the quality of their respective pattern-matches.
-</p> 
+Choose the filtering theshold using the histogram of normalize pattern-match scores output with <code>TrIdent_Classifier()</code>. There is no filter set by default. </p> 
 
 <p><code>SaveFilesTo</code> A file path in which TrIdent saves outputs to. Each plot is saved as an indiviudal png file named by the associated contig reference name. 
 This is useful if using TrIdent in a command-line environment. Default is that files are NOT saved to an output folder.</p>
