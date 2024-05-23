@@ -24,8 +24,10 @@
     if(minblocksize <= 2000){
       stop("Block size must be greater than 2000")
     }
-    VLP_pileup <- readcovdf_formatter(VLP_pileup)
-    WC_pileup <- readcovdf_formatter(WC_pileup)
+    if(cleanup==TRUE){
+      VLP_pileup <- readcovdf_formatter(VLP_pileup)
+      WC_pileup <- readcovdf_formatter(WC_pileup)
+    }
     if(nrow(VLP_pileup)!=nrow(WC_pileup)){
       stop("Something has gone wrong: VLP and WC pileup files have differing row numbers")
     }
