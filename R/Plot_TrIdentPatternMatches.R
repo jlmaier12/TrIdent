@@ -38,7 +38,7 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
     classification <- match_info[,2]
     pattern <- pattern_builder(viral_subset, transductionclassifications_wlowratios, classification, i)
     pattern_match <- cbind(viral_subset, pattern)
-    match_length <- match_info[,3]
+    match_length <- match_info[,4]
     classification <- match_info[,2]
     match_score <- transductionclassifications_wlowratios[[i]][[1]]
     matchscoreQC <- match_score/mean(viral_subset$coverage)
@@ -54,7 +54,7 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
     }
     wholecomm_plot <- ggplot(data=microbial_subset, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
-      labs(title=paste(ref_name, "Classification:", classification, matchscoreQC),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ", y="Whole-community \n read coverage") +
+      labs(title=paste(ref_name, "Classification:", classification),subtitle=paste("Matching-region size (bp):", match_length, prophage_activity), x=" ", y="Whole-community \n read coverage") +
       theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
             panel.background = element_blank(), axis.line = element_line(colour = "black"),
             text = element_text(size = 14),

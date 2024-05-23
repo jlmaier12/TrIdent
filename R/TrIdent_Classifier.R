@@ -39,7 +39,7 @@
     SM_classifications_summary <- pattern_matcher(VLP_pileup, WC_pileup, windowsize, minblocksize, maxblocksize, mincontiglength)
     cat("Identifying potential transducing events \n")
     cat("Determining sizes (bp) of potential transduction events \n")
-    cat("Identifying highly active/abundant prophage-like elements \n")
+    cat("Identifying highly active/abundant or heterogenously integrated prophage-like elements \n")
     summary_table_final <- slope_summary(
       prophagelikeactivity_checker(
         matchsize_checker(
@@ -62,8 +62,8 @@
     cat(paste(length(which(SM_classifications_summary[[2]][,2]=="Low VLP-fraction read cov")), "contigs were filtered out based on low read coverage \n"))
     cat(paste(length(which(SM_classifications_summary[[2]][,2]=="Contig length too small")), "contigs were filtered out based on length \n"))
     print(table(final_summary_list[[1]][,2]))
-    cat(paste(length(which(final_summary_list[[1]][,6]=="YES")), "of the predicted prophages/prophage-like elements are highly active or abundant \n"))
-    cat(paste(length(which(final_summary_list[[1]][,6]=="MIXED")), "of the predicted prophages/prophage-like elements are not homogenously integrated into their bacterial host population \n  \n"))
+    cat(paste(length(which(final_summary_list[[1]][,6]=="YES")), "of the prophage-like classifications are highly active or abundant \n"))
+    cat(paste(length(which(final_summary_list[[1]][,6]=="MIXED")), "of the prophage-like classifications are mixed, i.e. heterogenously integrated into their bacterial host population \n  \n"))
     print(SM_classifications_summary[[3]])
     if(missing(SaveFilesTo)==FALSE){
       ifelse(!dir.exists(paths=paste0(SaveFilesTo, "\\TrIdentOutput")), dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")), print("'TrIdentOutput' folder exists already in the provided directory"))
