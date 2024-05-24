@@ -13,7 +13,7 @@ blockpattern_translator <- function(viral_subset, best_match_info, windowsize, p
   min_pattern_cov <- min(pattern)
   max_pattern_cov <- max(pattern)
   repeat {
-    pattern <- c(rep(min_pattern_cov, (2000/windowsize)),pattern[-c((length(pattern)-((2000/windowsize)-1)):length(pattern))])
+    pattern <- c(rep(min_pattern_cov, (1000/windowsize)),pattern[-c((length(pattern)-((1000/windowsize)-1)):length(pattern))])
     if(pattern[length(pattern)-(5000/windowsize)]>min_pattern_cov) break
     diff <- mean(abs(Cov_values_contig - pattern))
     start_pos <- which(pattern==max(pattern))[1]
