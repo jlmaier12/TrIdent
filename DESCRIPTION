@@ -9,10 +9,12 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports: stats, dplyr, ggplot2, patchwork, stringr, tidyr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
+Config/testthat/edition: 3

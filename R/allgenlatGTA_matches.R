@@ -7,11 +7,11 @@
 allgenlatGTA_matches <- function(best_match_list){
   A<-1
   genlatGTAclassification_list <- list()
-  for (i in seq(1,length(best_match_list),1)){
+  lapply(1:length(best_match_list), function(i) {
     classification <-  best_match_list[[i]][[8]]
-    if(classification !="Gen/Lat/GTA") next
-    genlatGTAclassification_list[[A]] <- best_match_list[[i]]
-    A <- A+1
-  }
+    if(classification !="Sloping") return(NULL)
+      genlatGTAclassification_list[[A]] <<- best_match_list[[i]]
+      A <<- A+1
+  })
   return(genlatGTAclassification_list)
 }

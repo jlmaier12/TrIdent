@@ -19,16 +19,16 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
   }else{
     active_prophage <- NULL #ifelse can't set variables to NULL
   }
-  viral_subset <- phageread_dataset[which(phageread_dataset[,1] == ref_name),]
-  classification <- transductionclassifications[[i]][[8]]
-  viral_zoom_pos <- viral_subset_zoom(viral_subset, transductionclassifications, i, 500, windowsize)
+  #viral_subset <- phageread_dataset[which(phageread_dataset[,1] == ref_name),]
+  #classification <- transductionclassifications[[i]][[8]]
+  viral_zoom_pos <- viral_subset_zoom(phageread_dataset[which(phageread_dataset[,1] == ref_name),], transductionclassifications, i, 500, windowsize)
   start_pos <- viral_zoom_pos[[1]]
   end_pos <- viral_zoom_pos[[2]]
-  viral_zoom <- viral_subset[c(start_pos:end_pos),]
-  viral_zoom_pos <- viral_subset_zoom(viral_subset, transductionclassifications, i, 100, windowsize)
+  viral_zoom <- phageread_dataset[which(phageread_dataset[,1] == ref_name),][c(start_pos:end_pos),]
+  viral_zoom_pos <- viral_subset_zoom(phageread_dataset[which(phageread_dataset[,1] == ref_name),], transductionclassifications, i, 100, windowsize)
   start_pos <- viral_zoom_pos[[1]]
   end_pos <- viral_zoom_pos[[2]]
-  viral_zoom_margin <- viral_subset[c(start_pos:end_pos),]
+  viral_zoom_margin <- phageread_dataset[which(phageread_dataset[,1] == ref_name),][c(start_pos:end_pos),]
   margins <- prophagelike_border_finder(viral_zoom_margin, transductionclassifications, i, windowsize)
   start_pos_bp <-margins[[1]]
   start_pos_row <- which(viral_zoom[,3]==start_pos_bp)
@@ -89,6 +89,6 @@ spec_transduction_search_and_plot <- function(ref_name, phageread_dataset, trans
              geom_vline(xintercept=transduction_start_right, color="red", alpha=alpha_r, linewidth=1)+
              theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                    panel.background = element_blank(), axis.line = element_line(colour = "black"),text = element_text(size = 15))+
-             labs(title=paste(ref_name,classification, active_prophage), subtitle=paste0("Specialized transduction on left: ", transduction_left,", ", "on right: ", transduction_right), x="Contig Position (bp)", y="VLP-fraction \n log10 read coverage"))
+             labs(title=paste(ref_name,transductionclassifications[[i]][[8]], active_prophage), subtitle=paste0("Specialized transduction on left: ", transduction_left,", ", "on right: ", transduction_right), x="Contig Position (bp)", y="VLP-fraction \n log10 read coverage"))
   return(list(specialized_transduction_summary, plot))
 }

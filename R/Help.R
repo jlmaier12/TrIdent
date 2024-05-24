@@ -17,4 +17,5 @@
 #' @import tidyr
 #' @import patchwork
 #' @importFrom stats median
+#' @importFrom utils write.table
 NULL

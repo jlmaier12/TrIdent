@@ -7,16 +7,19 @@
 #' @param windowsize The window size used to re-average read coverage datasets
 #' @param minblocksize The minimum size of the prophage-like block pattern. Default is 10000 bp.
 #' @param maxblocksize The maximum size of the prophage-like block pattern. Default is NA
+#' @param mincontiglength The minimum contig size (in bp) to perform pattern-matching on. Contigs smaller than this threshold will be filtered out. Default is 30,000bp
 #' @keywords internal
-pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsize, minblocksize, maxblocksize) {
+pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsize, minblocksize, maxblocksize, mincontiglength) {
   refnames <- unique(phageread_dataset[,1])
   best_match_list <- list()
   filteredout_contigs <- rep(NA, length(refnames))
   reason <- rep(NA, length(refnames))
+  norm_matchscore <- rep(NA, length(refnames))
   A <- 1
   B <- 1
   C <- 1
-  for (i in refnames) {
+  lapply(1:length(refnames), function(p) {
+    i<-refnames[[p]]
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == i),]
     if(B == floor(length(refnames)/4)){
       cat("A quarter of the way done with pattern_matching \n")
@@ -27,56 +30,75 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
     if(B == floor((length(refnames)*3)/4)){
       cat("Almost done with pattern_matching! \n")
     }
-    B <- B+1
-    if (viral_subset[nrow(viral_subset),3]< 30000) {
-      filteredout_contigs[C] <- i
-      reason[C] <- "Contig length too small"
-      C <- C+1
-      next
+    B <<- B+1
+    if (viral_subset[nrow(viral_subset),3]< mincontiglength) {
+      filteredout_contigs[C] <<- i
+      reason[C] <<- "Contig length too small"
+      C <<- C+1
+      return(NULL)
       } else if (viral_subset[(order(viral_subset[,2], decreasing=TRUE))[minblocksize/100],2] <= 10) {
-      filteredout_contigs[C] <-  i
-      reason[C] <-  "Low VLP-fraction read cov"
-      C <- C+1
-      next
+      filteredout_contigs[C] <<-  i
+      reason[C] <<-  "Low VLP-fraction read cov"
+      C <<- C+1
+      return(NULL)
     }
     viral_subset <- windowsize_func(viral_subset,windowsize)
-    microbial_subset <- microbialread_dataset[which(microbialread_dataset[,1] == i),]
-    microbial_subset <- windowsize_func(microbial_subset,windowsize)
+    blocks_list<-block_builder(viral_subset, windowsize, minblocksize, maxblocksize) #combined function
     if (viral_subset[nrow(viral_subset),3]< 45000) {
-      no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize)
-      best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match)
-      best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]]) %>% as.numeric()
+      best_match_summary <- list(notransduction_pattern(viral_subset),
+                                 blocks_list[[1]],
+                                 blocks_list[[2]],
+                                 blocks_list[[3]])
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
+                                    best_match_summary[[3]][[1]], best_match_summary[[4]][[1]]) %>% as.numeric()
     } else if (viral_subset[nrow(viral_subset),3]> 45000 & viral_subset[nrow(viral_subset),3]< 100000){ #only do gen. pattern_matching on contigs greater than 60Kbp
-      no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize)
-      Gen_LR_wstart_best_match <- slope_LefttoRight_withstart(viral_subset, windowsize)
-      Gen_RL_wstart_best_match <- slope_RighttoLeft_withstart(viral_subset, windowsize)
-      best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match, Gen_LR_wstart_best_match, Gen_RL_wstart_best_match)
-      best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]], Gen_LR_wstart_best_match[[1]], Gen_RL_wstart_best_match[[1]]) %>% as.numeric()
+      slope_list<-slope_direct_withstart(viral_subset, windowsize)
+      best_match_summary <- list(notransduction_pattern(viral_subset),
+                                 blocks_list[[1]],
+                                 blocks_list[[2]],
+                                 blocks_list[[3]],
+                                 slope_list[[1]],
+                                 slope_list[[2]])
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
+                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]],
+                                    best_match_summary[[5]][[1]],best_match_summary[[6]][[1]]) %>% as.numeric()
     } else {
-      no_transduction_best_match <- notransduction_pattern(viral_subset)
-      prophage_off_left_best_match <- block_off_left_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      prophage_off_right_best_match <-  block_off_right_translator(viral_subset, windowsize, minblocksize, maxblocksize)
-      full_prophage_best_match <- full_blockpattern_builder(viral_subset, windowsize, minblocksize, maxblocksize)
-      Gen_LR_best_match <- slope_LefttoRight(viral_subset, windowsize)
-      Gen_RL_best_match <- slope_RighttoLeft(viral_subset, windowsize)
-      Gen_LR_wstart_best_match <- slope_LefttoRight_withstart(viral_subset, windowsize)
-      Gen_RL_wstart_best_match <- slope_RighttoLeft_withstart(viral_subset, windowsize)
-      best_match_summary <- list(no_transduction_best_match, prophage_off_left_best_match, prophage_off_right_best_match, full_prophage_best_match, Gen_LR_best_match, Gen_RL_best_match, Gen_LR_wstart_best_match, Gen_RL_wstart_best_match)
-      best_match_score_summary <- c(no_transduction_best_match[[1]],prophage_off_left_best_match[[1]], prophage_off_right_best_match[[1]], full_prophage_best_match[[1]], Gen_LR_best_match[[1]], Gen_RL_best_match[[1]], Gen_LR_wstart_best_match[[1]], Gen_RL_wstart_best_match[[1]]) %>% as.numeric()
+      slope_list<-slope_direct_withstart(viral_subset, windowsize)
+      slope_list_no_start<-slope_direct(viral_subset, windowsize)
+      best_match_summary <- list(notransduction_pattern(viral_subset),
+                                 blocks_list[[1]],
+                                 blocks_list[[2]],
+                                 blocks_list[[3]],
+                                 slope_list_no_start[[1]],
+                                 slope_list_no_start[[2]],
+                                 slope_list[[1]],
+                                 slope_list[[2]])
+      best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
+                                    best_match_summary[[3]][[1]],best_match_summary[[4]][[1]],
+                                    best_match_summary[[5]][[1]],best_match_summary[[6]][[1]],
+                                    best_match_summary[[7]][[1]]) %>% as.numeric()
     }
     best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
-    best_match_list[[A]] <- c(best_match, i)
-    A <- A+1
-  }
+    best_match_list[[A]] <<- c(best_match, i, best_match[[1]]/mean(viral_subset$coverage))
+    norm_matchscore[A] <<- best_match[[1]]/mean(viral_subset$coverage)
+    A <<- A+1
+  })
   filteredout_contigs <- filteredout_contigs[!is.na(filteredout_contigs)]
   reason <- reason[!is.na(reason)]
+  norm_matchscore <- norm_matchscore[!is.na(norm_matchscore)]
+  norm_matchscoredf <- as.data.frame(norm_matchscore)
+  colnames(norm_matchscoredf) <- "Match_score"
+  brks <- seq(min(norm_matchscoredf$Match_score), max(norm_matchscoredf$Match_score), length.out = 40)
+  histogram <- hist(norm_matchscoredf$Match_score, breaks = brks, plot=FALSE)
+  ST <- sug_threshold(norm_matchscoredf, histogram)
+  plot <- ggplot(data=norm_matchscoredf)+
+    theme_bw()+
+    geom_histogram(aes(x=Match_score), breaks = brks)+
+    geom_vline(xintercept = ST, color="red")+
+    annotate(geom="label", x = ST, y= max(histogram$counts),label=round(ST, digits = 2)) +
+    labs(title="Quality of pattern matches", x= "Normalized Pattern Match Score", y= "count", caption=paste("(Lower scores are better matches) \n
+         Suggested Filtering Threshold=",round(ST, digits=2)))
   filteredout_summary_df <- cbind.data.frame(filteredout_contigs, reason)
-  pattern_matching_summary <- list(best_match_list, filteredout_summary_df)
+  pattern_matching_summary <- list(best_match_list, filteredout_summary_df, plot)
   return(pattern_matching_summary)
 }

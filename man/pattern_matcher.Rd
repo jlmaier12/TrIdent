@@ -9,7 +9,8 @@ pattern_matcher(
   microbialread_dataset,
   windowsize,
   minblocksize,
-  maxblocksize
+  maxblocksize,
+  mincontiglength
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ pattern_matcher(
 \item{minblocksize}{The minimum size of the prophage-like block pattern. Default is 10000 bp.}
 
 \item{maxblocksize}{The maximum size of the prophage-like block pattern. Default is NA}
+
+\item{mincontiglength}{The minimum contig size (in bp) to perform pattern-matching on. Contigs smaller than this threshold will be filtered out. Default is 30,000bp}
 }
 \description{
 Creates the viral_subset, representative of one contig, that is used as input for each individual pattern-building function. After the information associated with the best match for each pattern is obtained, the pattern with the lowest mean absolute difference (score) is chosen as the prediction for the contig being assessed. Prior to the pattern-building and translating, contigs less than 30,000bp and contigs where the value 50th from the max (5000bp) is less than or equal to 10 are removed. Contigs less than 45,000bp are matched against all three prophage patterns and the 'no transduction' pattern. Contigs greater than 45,000bp but less than 100,000 are matched against all three prophage patterns, the two generalized patterns with slopes that start on the contig, and the 'no transduction' pattern. Contigs greater than 100,000bp are matched against all pattern varieties.
