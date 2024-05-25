@@ -60,7 +60,7 @@
                              windowsize)
     names(final_summary_list) <- c("Full_summary_table", "Cleaned_summary_table", "PatternMatchInfo", "FilteredOutContig_table", "Windowsize")
     end_time <- Sys.time()
-    cat(paste("Execuion time:", end_time-start_time, "\n"))
+    cat(paste("Execuion time:", end_time-start_time, "sec \n"))
     cat(paste(length(which(SM_classifications_summary[[2]][,2]=="Low VLP-fraction read cov")), "contigs were filtered out based on low read coverage \n"))
     cat(paste(length(which(SM_classifications_summary[[2]][,2]=="Contig length too small")), "contigs were filtered out based on length \n"))
     print(table(final_summary_list[[1]][,2]))
