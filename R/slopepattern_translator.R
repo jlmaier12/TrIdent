@@ -12,14 +12,14 @@ slopepattern_translator <- function(viral_subset, best_match_info, windowsize, p
   min_read_cov <- min(pattern)
   repeat {
     if (direction== "lefttoright") {
-      pattern <- c(rep(min_read_cov,2000/windowsize),pattern[-c((length(pattern)-((2000/windowsize)-1)):length(pattern))])
+      pattern <- c(rep(min_read_cov,1000/windowsize),pattern[-c((length(pattern)-((1000/windowsize)-1)):length(pattern))])
       start_pos <- which(pattern==max(pattern))
       slope_bottom <- min(pattern[pattern != min(pattern)])
       end_pos <- which(pattern==slope_bottom)
       cov_steps <- -(max(pattern)-slope_bottom)/abs(end_pos-start_pos)
     }
     if (direction =="righttoleft") {
-      pattern <- c(pattern[-c(1:(2000/windowsize))],rep(min_read_cov,2000/windowsize))
+      pattern <- c(pattern[-c(1:(1000/windowsize))],rep(min_read_cov,1000/windowsize))
       end_pos <- which(pattern==max(pattern))
       slope_bottom <- min(pattern[pattern != min(pattern)])
       start_pos <- which(pattern==slope_bottom)

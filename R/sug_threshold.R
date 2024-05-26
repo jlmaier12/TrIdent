@@ -7,6 +7,7 @@
 #' @keywords internal
 sug_threshold <- function (norm_match_scoredf, histogram){
   max <- which.max(histogram$counts)
+  SD<- sd(histogram$counts)/2
   zeros <- c()
   if(max(norm_match_scoredf$Match_score) <= 0.3) return(max(norm_match_scoredf$Match_score))
   repeat{
@@ -22,7 +23,7 @@ sug_threshold <- function (norm_match_scoredf, histogram){
       break
     }
   }
-  QCvalue <- histogram$breaks[ 0:1 + max ]
+  QCvalue <- histogram$breaks[ 0:1 + (max+SD) ]
   return(QCvalue[[1]])
 }
 
