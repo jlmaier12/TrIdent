@@ -11,9 +11,7 @@
 prophagelikeactivity_checker <- function(classificationsummary, prophageclassifications, phageread_dataset, microbialread_dataset, windowsize){
   classificationsummary$active_prophage <- rep(NA, nrow(classificationsummary))
   classificationsummary$elevation_ratio <- rep(NA, nrow(classificationsummary))
-  if(length(prophageclassifications)==0) {
-    return(classificationsummary)
-  }
+  if(length(prophageclassifications)==0) return(classificationsummary)
   lapply(1:length(prophageclassifications), function(i) {
     viral_subset <- phageread_dataset[which(phageread_dataset[,1] == prophageclassifications[[i]][[9]]),]
     viral_subset <- windowsize_func(viral_subset,windowsize)

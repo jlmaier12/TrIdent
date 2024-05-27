@@ -8,6 +8,7 @@
 #' @keywords internal
 WCVF_ratio_calculator <- function(classificationsummary, microbialread_dataset, phageread_dataset){
   None_indexes <- which(classificationsummary[,2]=="InsufficientCoverage")
+  if(length(None_indexes)==0) return(classificationsummary)
   lapply(1:length(None_indexes), function(p) {
     i<-None_indexes[[p]]
     ref_name <- classificationsummary[i,1]
