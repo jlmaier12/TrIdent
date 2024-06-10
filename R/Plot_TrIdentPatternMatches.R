@@ -43,11 +43,11 @@ Plot_TrIdentPatternMatches <- function(VLP_pileup, WC_pileup, transductionclassi
     match_score <- transductionclassifications_wlowratios[[i]][[1]]
     matchscoreQC <- match_score/mean(viral_subset$coverage)
     if (MSF != 0) {if (matchscoreQC > MSF) return()}
-    if (is.na(match_info[6]) == TRUE){
+    if (is.na(match_info[7]) == TRUE){
       prophage_activity <- NULL
-    } else if (match_info[6]=="YES"){
+    } else if (match_info[7]=="YES"){
       prophage_activity <- "Active/highly abundant prophage-like element"
-    } else if (match_info[6]=="MIXED"){
+    } else if (match_info[7]=="MIXED"){
       prophage_activity <- "Not-homogenously present/integrated prophage-like element"
     } else {
       prophage_activity <- NULL

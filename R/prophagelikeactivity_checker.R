@@ -27,12 +27,13 @@ prophagelikeactivity_checker <- function(classificationsummary, prophageclassifi
       microbial_subset <- microbialread_dataset[which(microbialread_dataset[,1] == prophageclassifications[[i]][[9]]),]
       microbial_subset <- windowsize_func(microbial_subset,windowsize)
       prophage_region <- microbial_subset[c(start_pos:end_pos),2]
-      nonprophage_region <- microbial_subset[c(c(0:start_pos),c(end_pos:nrow(microbial_subset))),2]
+      nonprophage_region <- microbial_subset[which(!microbial_subset[,2]%in%prophage_region),2]
+      #nonprophage_region <- microbial_subset[c((0:start_pos),(end_pos:nrow(microbial_subset))),2]
       ratio <- round(mean(prophage_region)/mean(nonprophage_region), digits=4)
       classificationsummary[which(classificationsummary[,1]==ref_name),8] <<- ratio
       if(ratio > 1.3) {
         classificationsummary[which(classificationsummary[,1]==ref_name),7] <<- "YES"
-      } else if (ratio < 0.5){
+      } else if (ratio < 0.75){
         classificationsummary[which(classificationsummary[,1]==ref_name),7] <<- "MIXED"
       } else {
         classificationsummary[which(classificationsummary[,1]==ref_name),7] <<- "NO"

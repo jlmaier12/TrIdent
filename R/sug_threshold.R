@@ -2,14 +2,14 @@
 #'
 #' Uses the distribution of normalized pattern match-scores to calculate a suggested filtering threshold.
 #'
-#' @param norm_match_scoredf A dataframe containing normalized pattern-match scores
+#' @param norm_match_scores Mormalized pattern-match score vector
 #' @param histogram A histogram object created from normaized pattern-match scores
 #' @keywords internal
-sug_threshold <- function (norm_match_scoredf, histogram){
+sug_threshold <- function (norm_match_scores, histogram){
   max <- which.max(histogram$counts)
   SD<- sd(histogram$counts)/2
   zeros <- c()
-  if(max(norm_match_scoredf$Match_score) <= 0.3) return(max(norm_match_scoredf$Match_score))
+  if(max(norm_match_scores) <= 0.3) return(max(norm_match_scores))
   repeat{
     freq1 <- histogram$counts[[max]]
     max <- max+1

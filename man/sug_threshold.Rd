@@ -4,10 +4,10 @@
 \alias{sug_threshold}
 \title{Calculates a suggested filtering threshold for plotting/saving TrIdent results}
 \usage{
-sug_threshold(norm_match_scoredf, histogram)
+sug_threshold(norm_match_scores, histogram)
 }
 \arguments{
-\item{norm_match_scoredf}{A dataframe containing normalized pattern-match scores}
+\item{norm_match_scores}{Mormalized pattern-match score vector}
 
 \item{histogram}{A histogram object created from normaized pattern-match scores}
 }

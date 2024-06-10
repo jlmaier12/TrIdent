@@ -64,15 +64,26 @@
     cat(paste(length(which(SM_classifications_summary[[2]][,2]=="Low VLP-fraction read cov")), "contigs were filtered out based on low read coverage \n"))
     cat(paste(length(which(SM_classifications_summary[[2]][,2]=="Contig length too small")), "contigs were filtered out based on length \n"))
     print(table(final_summary_list[[1]][,2]))
-    cat(paste(length(which(final_summary_list[[1]][,6]=="YES")), "of the prophage-like classifications are highly active or abundant \n"))
-    cat(paste(length(which(final_summary_list[[1]][,6]=="MIXED")), "of the prophage-like classifications are mixed, i.e. heterogenously integrated into their bacterial host population \n  \n"))
-    print(SM_classifications_summary[[3]])
+    cat(paste(length(which(final_summary_list[[1]][,7]=="YES")), "of the prophage-like classifications are highly active or abundant \n"))
+    cat(paste(length(which(final_summary_list[[1]][,7]=="MIXED")), "of the prophage-like classifications are mixed, i.e. heterogenously integrated into their bacterial host population \n  \n"))
+    clean_summary_table <- final_summary_list[[2]]
+    brks <- seq(min(clean_summary_table$NormMatchScore), max(clean_summary_table$NormMatchScore), length.out = 40)
+    histogram <- hist(clean_summary_table$NormMatchScore, breaks = brks, plot=FALSE)
+    ST <- sug_threshold(clean_summary_table$NormMatchScore, histogram)
+    plot <- ggplot(data=clean_summary_table)+
+      theme_bw()+
+      geom_histogram(aes(x=NormMatchScore, fill=classifications), breaks = brks)+
+      geom_vline(xintercept = ST, color="red")+
+      annotate(geom="label", x = ST, y= max(histogram$counts),label=round(ST, digits = 2)) +
+      labs(title="Quality of pattern matches", x= "Normalized Pattern Match Score", y= "count", caption=paste("(Lower scores are better matches) \n
+         Suggested Filtering Threshold=",round(ST, digits=2)))
+    print(plot)
     if(missing(SaveFilesTo)==FALSE){
       ifelse(!dir.exists(paths=paste0(SaveFilesTo, "\\TrIdentOutput")), dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")), print("'TrIdentOutput' folder exists already in the provided directory"))
       write.table(summary_table_final, file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table.csv"), sep = ",", row.names = FALSE)
       write.table(summary_table_final[which(summary_table_final[,2]=="Prophage-like"|summary_table_final[,2]=="Sloping"|summary_table_final[,2]=="HighCoverageNoPattern"),],
                   file = paste0(SaveFilesTo,"\\TrIdentOutput\\summary_table_cleaned.csv"), sep = ",", row.names = FALSE)
-      ggsave(filename= paste0(SaveFilesTo, "\\TrIdentOutput\\MatchScoreDensityPlot.png"), plot=SM_classifications_summary[[3]],
+      ggsave(filename= paste0(SaveFilesTo, "\\TrIdentOutput\\MatchScoreDensityPlot.png"), plot=plot,
              width = 4, height = 4)
       return(final_summary_list)
       } else {
