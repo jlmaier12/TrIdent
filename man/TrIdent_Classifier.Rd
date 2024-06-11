@@ -20,13 +20,13 @@ TrIdent_Classifier(
 
 \item{WC_pileup}{A dataframe containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs}
 
-\item{windowsize}{The number of base pairs to average coverage values over. Options are 100, 200, 500, 1000 and 2000 ONLY. Larger window sizes improve processing time but the resolution of read coverage patterns may be lost. Default is 1000bp.}
+\item{windowsize}{The number of base pairs to average coverage values over. Options are 100, 200, 500, 1000 ONLY. Larger window sizes improve processing time but the resolution of read coverage patterns may be lost. Default is 1000 bp.}
 
 \item{minblocksize}{The minimum size of the prophage-like block pattern. Default is 10000 bp.}
 
 \item{maxblocksize}{The maximum size of the prophage-like block pattern. Default is NA}
 
-\item{mincontiglength}{The minimum contig size (in bp) to perform pattern-matching on. Contigs smaller than this threshold will be filtered out. Default is 30,000bp}
+\item{mincontiglength}{The minimum contig size (in bp) to perform pattern-matching on. Contigs smaller than this threshold will be filtered out. Default is 30,000 bp. Minimum size for prophage-like pattern-matching is 21,000 bp. Minimum size for Sloping pattern-matching is 45,000 bp.}
 
 \item{SaveFilesTo}{Provide a path to the directory you wish to save TrIdent output summary tables to. TrIdent will make a folder within the provided directory to store results. This parameter is useful if running TrIdent on the command line.}
 
