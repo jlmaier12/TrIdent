@@ -8,8 +8,8 @@ Automatic detection, classification and characterization of active transduction 
 >
 >- This page contains basic background information on TrIdent. To learn how TrIdent is used and the expected output, visit the [tutorial here](https://jlmaier12.github.io/TrIdent/TrIdentTutorial.html).
 >- TrIdent comes preloaded with a small sample dataset so users can follow along with the tutorial in their own R console. The tutorial takes ~5-10 minutes. 
->- Find TrIdent [installation instructions here](./TrIdentBeta_installation.html).
->- If you are using your own data, make sure it's correct! You need an ultrapurified virome and a metagenome from the same sample. Find detailed [input data requirements here](./TrIdentTutorial.html#input-data).
+>- Find TrIdent [installation instructions here](./https://jlmaier12.github.io/TrIdent/TrIdentBeta_installation.html).
+>- If you are using your own data, make sure it's correct! You need an ultrapurified virome and a metagenome from the same sample. Find detailed [input data requirements here](https://jlmaier12.github.io/TrIdent/TrIdentTutorial.html#input-data).
 >- Please email me at jlmaier@ncsu.edu if you have any questions or issues.
 >- If you try TrIdent to any extent, please let me know your thoughts [here](https://docs.google.com/forms/d/e/1FAIpQLSeGYRKpkhbBqWyioE0X_n6BoitlYjsy9SBM0GP6cOVOd3XOkA/viewform?usp=sf_link) so I can improve! 
 >- If read coverage pattern-matching is of interest to you, check out my other R package- [ProActive.](https://jlmaier12.github.io/ProActive/) 
