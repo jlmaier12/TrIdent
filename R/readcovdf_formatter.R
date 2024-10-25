@@ -14,6 +14,7 @@ readcovdf_formatter <- function(read_dataset) {
   reformatted_readdataset <- cbind.data.frame(read_dataset[,which(column_classes == "character")],read_dataset[,which(column_classes == "numeric")], read_dataset[,position_colindex])
   colnames(reformatted_readdataset) <- c("ref_name", "coverage", "position")
   reformatted_readdataset$ref_name <- gsub("\\s.*", "", reformatted_readdataset$ref_name)
+  #reformatted_readdataset$ref_name <- gsub("_.*", "", reformatted_readdataset$ref_name)
   return(reformatted_readdataset)
 }
 

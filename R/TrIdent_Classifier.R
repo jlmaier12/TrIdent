@@ -21,8 +21,8 @@
     if(!(windowsize %in% list(100,200,500,1000))){
       stop("windowsize must be either 100, 200, 500, or 1000 bp!")
     }
-    if(mincontiglength < 21000){
-      stop("mincontiglength must be at least 21000 bp for pattern-matching!")
+    if(mincontiglength < 30000){
+      stop("mincontiglength must be at least 30000 bp for pattern-matching!")
     }
     if(minblocksize <= 1000){
       stop("minblocksize must be greater than 1000 bp!")

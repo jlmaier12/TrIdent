@@ -44,15 +44,18 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
       return(NULL)
     }
     viral_subset <- windowsize_func(viral_subset,windowsize)
-    blocks_list<-block_builder(viral_subset, windowsize, minblocksize, maxblocksize) #combined function
-    if (viral_subset[nrow(viral_subset),3]< 45000) {
+    if(length(unique(viral_subset[,2]))!=1) blocks_list<-block_builder(viral_subset, windowsize, minblocksize, maxblocksize) #combined function
+    if(length(unique(viral_subset[,2]))==1) {
+      best_match_summary <- list(notransduction_pattern(viral_subset))
+      best_match_score_summary <- c(best_match_summary[[1]][[1]]) %>% as.numeric()
+    } else if (viral_subset[nrow(viral_subset),3]< 45000) {
       best_match_summary <- list(notransduction_pattern(viral_subset),
                                  blocks_list[[1]],
                                  blocks_list[[2]],
                                  blocks_list[[3]])
       best_match_score_summary <- c(best_match_summary[[1]][[1]],best_match_summary[[2]][[1]],
                                     best_match_summary[[3]][[1]], best_match_summary[[4]][[1]]) %>% as.numeric()
-    } else if (viral_subset[nrow(viral_subset),3]> 45000 & viral_subset[nrow(viral_subset),3]< 100000){ #only do gen. pattern_matching on contigs greater than 60Kbp
+    } else if (viral_subset[nrow(viral_subset),3]> 45000 & viral_subset[nrow(viral_subset),3]< 100000){
       slope_list<-slope_direct_withstart(viral_subset, windowsize)
       best_match_summary <- list(notransduction_pattern(viral_subset),
                                  blocks_list[[1]],
@@ -79,7 +82,7 @@ pattern_matcher <- function (phageread_dataset, microbialread_dataset, windowsiz
                                     best_match_summary[[5]][[1]],best_match_summary[[6]][[1]],
                                     best_match_summary[[7]][[1]]) %>% as.numeric()
     }
-    best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]] #may need to have a way for matches to 'tie'
+    best_match <- best_match_summary[[which(best_match_score_summary == min(best_match_score_summary))[1]]]
     best_match_list[[A]] <<- c(best_match, i, best_match[[1]]/mean(viral_subset$coverage))
     norm_matchscore[A] <<- best_match[[1]]/mean(viral_subset$coverage)
     refs[A] <<- i

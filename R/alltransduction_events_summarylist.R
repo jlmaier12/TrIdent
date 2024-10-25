@@ -7,6 +7,7 @@
 alltransduction_events_summarylist <- function(best_match_list){
   A<-1
   transductionclassification_list <- list()
+  if (length(best_match_list)==0) stop ("NO TRANSDUCTION EVENTS FOUND")
   lapply(1:length(best_match_list), function(i) {
     classification <-  best_match_list[[i]][[8]]
     if(classification=="InsufficientCoverage") return(NULL)

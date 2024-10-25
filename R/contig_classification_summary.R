@@ -5,6 +5,7 @@
 #' @param best_match_list Classifications made with pattern_matcher function. Classifications are stored as the first item in the best_match_list.
 #' @keywords internal
 contig_classification_summary <- function(best_match_list){
+  if (length(best_match_list)==0) stop ("NO TRANSDUCTION EVENTS FOUND")
   ref_name <- rep(NA, length(best_match_list))
   classifications <- rep(NA, length(best_match_list))
   NormMatchScore <- rep(NA, length(best_match_list))

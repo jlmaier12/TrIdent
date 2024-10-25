@@ -25,7 +25,7 @@ slopepattern_translator <- function(viral_subset, best_match_info, windowsize, p
       start_pos <- which(pattern==slope_bottom)
       cov_steps <- ((max(pattern)-slope_bottom)/abs(end_pos-start_pos))
     }
-    if((length(pattern[!(pattern %in% min_read_cov)]) * windowsize)<45000) break
+    if((length(pattern[!(pattern %in% min_read_cov)]) * windowsize)<30000) break #45000
     diff <- mean(abs(viral_subset[,2] - pattern))
     if (diff < best_match_info[[1]]){
       best_match_info <- list(diff, slope_bottom, max(pattern), cov_steps, start_pos, end_pos, best_match_info[[7]])

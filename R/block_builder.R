@@ -35,10 +35,10 @@ block_builder <- function (viral_subset, windowsize, minblocksize, maxblocksize)
   start_pos_right <- (which(pattern_right == max(pattern_right))[1])
   best_match_info_right <- list(diff_right, min_read_cov, startingcoverages[1], "NA", start_pos_right, length(pattern_right), "NA")
   #left pattern
-  pattern_left <- c(rep(startingcoverages[1], shape_length), rep(min_read_cov, nonshape))   #Different in each function
+  pattern_left <- c(rep(startingcoverages[1], shape_length), rep(min_read_cov, nonshape))
   diff_left <- mean(abs(Cov_values_contig - pattern_left))
-  end_pos_left <- (which(pattern_left == min(pattern_left))[1])-1   #The start and stop positions used for determining the pattern length are different in each function
-  best_match_info_left <- list(diff_left, min_read_cov, startingcoverages[1], "NA", 1, end_pos_left, "NA")   #Recorded different for each function
+  end_pos_left <- (which(pattern_left == min(pattern_left))[1])-1
+  best_match_info_left <- list(diff_left, min_read_cov, startingcoverages[1], "NA", 1, end_pos_left, "NA")
   lapply(1:length(startingcoverages), function(i) {
     cov<-startingcoverages[[i]]
     pattern_full <- c(rep(min_read_cov, 10000/windowsize), rep(cov, shape_length_full), rep(min_read_cov, nonshape_full))
@@ -51,11 +51,11 @@ block_builder <- function (viral_subset, windowsize, minblocksize, maxblocksize)
       #left repeats
       if(indic_left != 1){
         diff_left <- mean(abs(Cov_values_contig - pattern_left))
-        end_pos_left <- (which(pattern_left == min_read_cov)[1])-1 #Different in each function
+        end_pos_left <- (which(pattern_left == min_read_cov)[1])-1
         if (diff_left < best_match_info_left[[1]]){
-          best_match_info_left <<- list(diff_left, min_read_cov, cov, "NA", 1, end_pos_left, "NA") #Different in each function
+          best_match_info_left <<- list(diff_left, min_read_cov, cov, "NA", 1, end_pos_left, "NA")
         }
-        pattern_left <- c(pattern_left[-c(1:(1000/windowsize))], rep(min_read_cov, (1000/windowsize))) #Different in each function
+        pattern_left <- c(pattern_left[-c(1:(1000/windowsize))], rep(min_read_cov, (1000/windowsize)))
         if (length(which(pattern_left==cov)) < (minblocksize/windowsize)+1){
           indic_left <-1
         }
@@ -65,9 +65,9 @@ block_builder <- function (viral_subset, windowsize, minblocksize, maxblocksize)
         diff_right <- mean(abs(Cov_values_contig - pattern_right))
         start_pos_right <- (which(pattern_right == max(pattern_right))[1])
         if (diff_right < best_match_info_right[[1]]){
-          best_match_info_right <<- list(diff_right, min_read_cov, cov, "NA", start_pos_right, length(pattern_right), "NA") #Different in each function
+          best_match_info_right <<- list(diff_right, min_read_cov, cov, "NA", start_pos_right, length(pattern_right), "NA")
         }
-        pattern_right <- c(rep(min_read_cov,(1000/windowsize)),pattern_right[-c(((length(pattern_right))-((1000/windowsize)-1)):length(pattern_right))]) #Different in each function
+        pattern_right <- c(rep(min_read_cov,(1000/windowsize)),pattern_right[-c(((length(pattern_right))-((1000/windowsize)-1)):length(pattern_right))])
         if (length(which(pattern_right==cov)) < (minblocksize/windowsize)+1){
           indic_right <- 1
         }
@@ -78,7 +78,7 @@ block_builder <- function (viral_subset, windowsize, minblocksize, maxblocksize)
           indic_full<-1
         }else{
           best_match_info_full <<- blockpattern_translator(viral_subset, best_match_info_full, windowsize, pattern_full)
-          pattern_full <- c(pattern_full[-c(middle_rows_full[2]:middle_rows_full[(1000/windowsize)+1])],rep(min_read_cov,1000/windowsize)) #remove 2000bp at a time
+          pattern_full <- c(pattern_full[-c(middle_rows_full[2]:middle_rows_full[(1000/windowsize)+1])],rep(min_read_cov,1000/windowsize)) #remove 1000bp at a time
         }
 
       }
@@ -91,12 +91,12 @@ block_builder <- function (viral_subset, windowsize, minblocksize, maxblocksize)
     newcov_left<-new_pattern_coverages_left[[i]]
     pattern_left <- c(rep(newcov_left, shape_length), rep(min_read_cov, nonshape))
     repeat {
-      end_pos_left <- (which(pattern_left == min(pattern_left))[1])-1 #Different in each function
+      end_pos_left <- (which(pattern_left == min(pattern_left))[1])-1
       diff_left <- mean(abs(Cov_values_contig - pattern_left))
       if (diff_left < best_match_info_left[[1]]){
-        best_match_info_left <<- list(diff_left, min_read_cov, newcov_left, "NA", 1, end_pos_left, "NA") #Different in each function
+        best_match_info_left <<- list(diff_left, min_read_cov, newcov_left, "NA", 1, end_pos_left, "NA")
       }
-      pattern_left <- c(pattern_left[-c(1:(1000/windowsize))], rep(min_read_cov, (1000/windowsize))) #Different in each function
+      pattern_left <- c(pattern_left[-c(1:(1000/windowsize))], rep(min_read_cov, (1000/windowsize)))
       if (length(which(pattern_left==newcov_left)) < (minblocksize/windowsize)+1) break
     }
   })
@@ -110,14 +110,14 @@ block_builder <- function (viral_subset, windowsize, minblocksize, maxblocksize)
   new_pattern_coverages_right <- blockheight_optim(best_match_info_right, startingcoverages, bottomtotop_read_cov)
   lapply(1:length(new_pattern_coverages_right), function(i) {
     newcov_right<-new_pattern_coverages_right[[i]]
-    pattern_right <- c(rep(min_read_cov, nonshape), rep(newcov_right, shape_length)) #Different in each function
+    pattern_right <- c(rep(min_read_cov, nonshape), rep(newcov_right, shape_length))
     repeat {
       diff_right <- mean(abs(Cov_values_contig - pattern_right))
-      start_pos_right <- (which(pattern_right == max(pattern_right))[1]) #Different in each function
+      start_pos_right <- (which(pattern_right == max(pattern_right))[1])
       if (diff_right < best_match_info_right[[1]]){
         best_match_info_right <<- list(diff_right, min_read_cov, newcov_right, "NA", start_pos_right, length(pattern_right), "NA")
       }
-      pattern_right <- c(rep(min_read_cov,(1000/windowsize)),pattern_right[-c(((length(pattern_right))-((1000/windowsize)-1)):length(pattern_right))]) ##Different in each function
+      pattern_right <- c(rep(min_read_cov,(1000/windowsize)),pattern_right[-c(((length(pattern_right))-((1000/windowsize)-1)):length(pattern_right))])
       if (length(which(pattern_right==newcov_right)) < (minblocksize/windowsize)+1) break
     }
   })
@@ -136,7 +136,7 @@ block_builder <- function (viral_subset, windowsize, minblocksize, maxblocksize)
       middle_rows_full <- which(pattern_full == newcov_full)
       if (length(middle_rows_full) < (minblocksize/windowsize)+1) break
       best_match_info_full <<- blockpattern_translator(viral_subset, best_match_info_full, windowsize, pattern_full)
-      pattern_full <- c(pattern_full[-c(middle_rows_full[2]:middle_rows_full[(1000/windowsize)+1])],rep(min_read_cov,1000/windowsize)) #remove 2000bp at a time
+      pattern_full <- c(pattern_full[-c(middle_rows_full[2]:middle_rows_full[(1000/windowsize)+1])],rep(min_read_cov,1000/windowsize)) #remove 1000bp at a time
     }
   })
   best_match_results_full <- c(best_match_info_full, "Prophage-like")
