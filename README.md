@@ -6,7 +6,7 @@ Automatic detection, classification and characterization of active transduction 
 ## Thank you for being a beta-tester!
 >**Some things to know:**
 >
->- This page contains basic background information on TrIdent. To learn how TrIdent is used and the expected output, visit the [tutorial here](./TrIdentTutorial.html).
+>- This page contains basic background information on TrIdent. To learn how TrIdent is used and the expected output, visit the [tutorial here](https://jlmaier12.github.io/TrIdent/TrIdentTutorial.html).
 >- TrIdent comes preloaded with a small sample dataset so users can follow along with the tutorial in their own R console. The tutorial takes ~5-10 minutes. 
 >- Find TrIdent [installation instructions here](./TrIdentBeta_installation.html).
 >- If you are using your own data, make sure it's correct! You need an ultrapurified virome and a metagenome from the same sample. Find detailed [input data requirements here](./TrIdentTutorial.html#input-data).
