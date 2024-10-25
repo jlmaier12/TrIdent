@@ -405,25 +405,18 @@ VLP-fraction were sequenced with Illumina (paired-end mode, 150 bp
 reads) after which the metagenome was assembled from the whole-community
 reads. The whole-community and VLP-fraction raw reads were mapped to the
 metagenome contigs using <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbmap-guide/">BBMap</a>.
-The resulting .BAM file was sorted and indexed using the <a href="https://www.htslib.org/">Samtools</a> <code>sort</code> and
-<code>index</code> functions, respectively. Finally, two pileup files
-were generated to summarize the respective read coverages across each
-contig. The contigs were pre-filtered to remove contigs less than 30
+The BBMap command generates two pileup files to summarize the respective read coverages across each
+contig. The contigs were filtered prior to mapping to remove contigs less than 30
 kbp. <strong>Note- Specific sequencing requirements are needed for
 transductomics! Sample preparation and sequencing procedures are
 detailed in Kleiner et al. (2020).</strong> A subset of 10 contigs from
 the mouse fecal metagenome were selected for the sample dataset used in
 this tutorial.</p>
-<p>The two pileup files were generated using BBMap’s
-<code>ambiguous=random</code>, <code>qtrim=lr</code>,
-<code>minid=0.97</code>, and <code>binsize=100</code>. <strong>The
-binsize/windowsize must be 100!</strong></p>
-<p><strong>We recommend using the commands below (with your own sorted
-.bam files) to generate the pileup files needed for
-TrIdent:</strong></p>
-<pre class="bash"><code>pileup.sh in=VLPFraction_ReadMappingSorted.bam out=VLPFraction.pileupcovstats bincov=VLPFraction.bincov100 binsize=100 stdev=t
+<p><strong>Use the commands below (with your own files) to generate the pileup files needed for
+TrIdent. Note that the covbinsize/windowsize must be 100!</strong></p>
+<pre class="bash"><code> bbmap.sh ambiguous=random minid=0.97 reference=WC_filteredcontigs.fa in1=VLPreads_R1.fa in2=VLPreads_R2.fa bincov=VLP_pileup.bincov100 covbinsize=100
 
-pileup.sh in=WholeCommunity_ReadMappingSorted.bam out=WholeCommunity.pileupcovstats bincov=WholeCommunity.bincov100 binsize=100 stdev=t</code></pre>
+bbmap.sh ambiguous=random minid=0.97 reference=WC_filteredcontigs.fa in1=WCreads_R1.fa in2=WCreads_R2.fa bincov=WC_pileup.bincov100 covbinsize=100</code></pre>
 </div>
 <div id="in-r" class="section level4">
 <h4>In R…</h4>
