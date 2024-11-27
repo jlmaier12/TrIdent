@@ -46,13 +46,15 @@
       normMatchScore <- TrIdentResultSumm[which(TrIdentResultSumm[,1] == contigName), 3]
       if(is.na(specificContig)) {
         if (classification == "Prophage-like" & normMatchScore < matchScoreFilter) {
-          specTransInfo <<- specTransductionSearchAndPlot(contigName, VLPpileup, TrIdentResultPatterns, TrIdentResultSumm, windowSize, i, noReadCov, specTransLength, logScale)
+          specTransInfo <<- specTransductionSearchAndPlot(contigName, VLPpileup, TrIdentResultPatterns, TrIdentResultSumm,
+                                                          windowSize, i, noReadCov, specTransLength, logScale)
           if(specTransInfo[[1]][[2]] == "yes") specTransCount <<- specTransCount + 1
           specTransSumm[J,c(1:6)] <<- specTransInfo[[1]]
           plots[[J]] <<- specTransInfo[[2]]
           J <<- J+1
    }} else if (contigName == specificContig & classification == "Prophage-like" & normMatchScore < matchScoreFilter) {
-            specTransInfo <<- specTransductionSearchAndPlot(contigName, VLPpileup, TrIdentResultPatterns, TrIdentResultSumm, windowSize, i, noReadCov, specTransLength, logScale)
+            specTransInfo <<- specTransductionSearchAndPlot(contigName, VLPpileup, TrIdentResultPatterns, TrIdentResultSumm,
+                                                            windowSize, i, noReadCov, specTransLength, logScale)
             if(specTransInfo[[1]][[2]] == "yes") specTransCount <<- specTransCount + 1
             specTransSumm[J,c(1:6)] <<- specTransInfo[[1]]
             plots[[J]] <<- specTransInfo[[2]]

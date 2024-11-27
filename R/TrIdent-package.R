@@ -1,28 +1,38 @@
-#' @keywords internal
-"_PACKAGE"
-#' @name TrIdent
+#' @title \bold{TrIdent} - \bold{Tr}ansduction \bold{Ident}ification
 #'
 #' @description
-#' Automatic detection, classification and characterization of potential active transducing events based on sequencing read coverage patterns.
+#' Automatic detection, classification and characterization of transduction
+#' events in transductomics datasets using read coverage pattern-matching.
 #'
-#' @author Jessie Maier \email{jlmaier@ncsu.edu} Jorden Rabasco \email{jrabasc@ncsu.edu}
+#' Please see \href{https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5}{Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities}
+#' for more information on the transductomics method, data and analysis workflow.
 #'
 #' @details
-#' See [plotTrIdentResults()] to view TrIdent pattern match results
+#' The three main functions in TrIdent are:
+#' \enumerate{
+#' \item \code{\link{TrIdentClassifier}} performs the pattern-matching, classification and
+#' characterization of read coverage patterns on contigs.
+#' \item \code{\link{plotTrIdentResults}} plots the results from \code{TrIdentClassifier()}
+#' \item \code{\link{specializedTransductionID}} searches contigs classified as Prophage-like
+#' by \code{TrIdentClassifier()} for potential specialized transduction
+#'}
 #'
-#' @seealso {\link{TrIdentClassifier}}
-#' @seealso [plotTrIdentResults()] to view TrIdent pattern match results
-#' @seealso [specializedTransductionID()]
+#' @author Jessie Maier \email{jlmaier@ncsu.edu} & Jorden Rabasco \email{jrabasc@ncsu.edu}
 #'
+#' @keywords internal
+"_PACKAGE"
+
 ## usethis namespace: start
-#' @import ggplot2
 #' @import dplyr
+#' @import ggplot2
+#' @import patchwork
 #' @import stringr
 #' @import tidyr
-#' @import patchwork
+#' @importFrom graphics hist
+#' @importFrom roll roll_sd
 #' @importFrom stats median
 #' @importFrom stats sd
-#' @importFrom graphics hist
+#' @importFrom utils capture.output
 #' @importFrom utils write.table
 ## usethis namespace: end
 NULL
