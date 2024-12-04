@@ -10,7 +10,8 @@ patternMatcher(
   windowSize,
   minBlockSize,
   maxBlockSize,
-  minContigLength
+  minContigLength,
+  minSlope
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ patternMatcher(
 \item{maxBlockSize}{The maximum size of the prophage-like block pattern. Default is NA}
 
 \item{minContigLength}{The minimum contig size (in bp) to perform pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.}
+
+\item{minSlope}{The minimum slope value to test for sloping patterns}
 }
 \description{
 Creates the viralSubset, representative of one contig, that is used as input for each individual

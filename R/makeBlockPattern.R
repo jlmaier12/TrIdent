@@ -11,7 +11,8 @@
 #' @param cov The height value of the block pattern
 #' @keywords internal
 makeBlockPattern <- function(viralSubset, windowSize, fullLeftRight, blockLength, nonBlock, minReadCov, cov){
-  if (fullLeftRight == "Full") pattern <- c(rep(minReadCov, 10000 / windowSize), rep(cov, blockLength), rep(minReadCov, nonBlock))
+  #if (fullLeftRight == "Full") pattern <- c(rep(minReadCov, 10000 / windowSize), rep(cov, blockLength), rep(minReadCov, nonBlock))
+  if (fullLeftRight == "Full") pattern <- c(rep(minReadCov, 5000 / windowSize), rep(cov, blockLength), rep(minReadCov, nonBlock))
   if (fullLeftRight == "Left") pattern <- c(rep(cov, blockLength), rep(minReadCov, nonBlock))
   if (fullLeftRight == "Right") pattern <- c(rep(minReadCov, nonBlock), rep(cov, blockLength))
   diff <- mean(abs(viralSubset[,2] - pattern))

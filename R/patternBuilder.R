@@ -15,11 +15,11 @@ patternBuilder <- function(viralSubset, classifList, classification, i) {
   startPos <- classifList[[i]][[5]]
   endPos <- classifList[[i]][[6]]
   if (classification == "Prophage-like"){
-    if (startPos == 1) pattern <- c(rep(maxReadCov,endPos), rep(minReadCov, (nrow(viralSubset) - endPos)))
+    if (startPos == 1) pattern <- c(rep(maxReadCov, endPos), rep(minReadCov, (nrow(viralSubset) - endPos)))
     else if (endPos == nrow(viralSubset)) pattern <- c(rep(minReadCov, startPos), rep(maxReadCov, (nrow(viralSubset) - startPos)))
     else {
       blockRegion <- endPos - startPos
-      pattern <- c(rep(minReadCov, startPos), rep(maxReadCov, blockRegion), rep(minReadCov, (nrow(viralSubset) - (blockRegion+startPos))))
+      pattern <- c(rep(minReadCov, startPos), rep(maxReadCov, blockRegion), rep(minReadCov, (nrow(viralSubset) - (blockRegion + startPos))))
     }
   } else if (classification == "Sloping") {
     if (startPos == 1 & endPos == nrow(viralSubset) & slopingCovSteps < 0) pattern <- seq(maxReadCov, minReadCov, slopingCovSteps)

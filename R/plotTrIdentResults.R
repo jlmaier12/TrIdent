@@ -40,24 +40,28 @@ plotTrIdentResults <- function(VLPpileup, WCpileup, TrIdentResults, matchScoreFi
     classification <- patternMatchInfo[,2]
     pattern <- patternBuilder(viralSubset, cleanSummaryTable, classification, i)
     patternMatch <- cbind(viralSubset, pattern)
-    matchLength <- patternMatchInfo[,4]
+    matchLength <- patternMatchInfo[,5]
     matchscoreQC <- (cleanSummaryTable[[i]][[1]]) / mean(viralSubset$coverage)
     if (MSF != 0) {if (matchscoreQC > MSF) return()}
-    if (is.na(patternMatchInfo[7]) == TRUE) prophageLikeRegionReadCov <- NULL
-    else if (patternMatchInfo[7] == "Elevated") prophageLikeRegionReadCov <- "Active/highly abundant prophage-like element"
-    else if (patternMatchInfo[7] == "Depressed") prophageLikeRegionReadCov <- "Not homogenously present/integrated prophage-like element"
-    else prophageLikeRegionReadCov <- NULL
+    if (classification == "Sloping") subtitleInfo <- paste("Slope:", patternMatchInfo[10])
+    else if (classification == "HighCovNoPattern") subtitleInfo <- paste("VLP:WC ratio:", patternMatchInfo[4])
+    else if (classification == "Prophage-like") {
+      if (is.na(patternMatchInfo[8]) == TRUE) subtitleInfo <- NULL
+      else if (patternMatchInfo[8] == "Elevated") subtitleInfo <- "Active/highly abundant Prophage-like element"
+      else if (patternMatchInfo[8] == "Depressed") subtitleInfo <- "Not homogenously integrated Prophage-like element"
+      else subtitleInfo <- NULL
+      }
     wholecomm_plot <- ggplot(data=microbialSubset, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
       labs(title=paste(contigName, "Classification:", classification),
-           subtitle=paste("Matching-region size (bp):", matchLength, prophageLikeRegionReadCov),
+           subtitle=paste("Matching-region size (bp):", matchLength, subtitleInfo),
            x=" ", y="Whole-community \n read coverage") +
       scale_x_continuous(expand = c(0, 0)) +
       theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
             panel.background=element_blank(), axis.line=element_line(colour="black"),
             text = element_text(size=14),
             axis.text = element_text(size=10),
-            plot.margin=margin(t=0, r=0, b=0, l=2))
+            plot.margin=margin(t=0, r=6, b=0, l=2))
 
     Overlay_plot <- ggplot(data=patternMatch, aes(x=position, y=coverage))+
       geom_area(fill="deepskyblue3") +
@@ -68,7 +72,7 @@ plotTrIdentResults <- function(VLPpileup, WCpileup, TrIdentResults, matchScoreFi
             panel.background=element_blank(), axis.line=element_line(colour="black"),
             text=element_text(size=14),
             axis.text=element_text(size=10),
-            plot.margin=margin(t=0, r=0, b=0, l=2))
+            plot.margin=margin(t=0, r=6, b=0, l=2))
 
     contigNames <<- c(contigNames, contigName)
     combined_plot <- (wholecomm_plot / Overlay_plot)

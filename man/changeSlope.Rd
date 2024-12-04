@@ -4,7 +4,14 @@
 \alias{changeSlope}
 \title{Change slope of sloping pattern}
 \usage{
-changeSlope(leftOrRight, slopeBottom, halfToMaxReadCov, cov, viralSubset)
+changeSlope(
+  leftOrRight,
+  slopeBottom,
+  halfToMaxReadCov,
+  cov,
+  viralSubset,
+  windowSize
+)
 }
 \arguments{
 \item{leftOrRight}{Generate pattern for negative slope (left to right, i.e. 'Left') or positive slope (right to left, i.e. 'Right')}
@@ -16,6 +23,8 @@ changeSlope(leftOrRight, slopeBottom, halfToMaxReadCov, cov, viralSubset)
 \item{cov}{The value for the top of the slope}
 
 \item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig currently being assessed}
+
+\item{windowSize}{The window size used to re-average read coverage pileup}
 }
 \description{
 Change the value of the slope used for the sloping pattern-match

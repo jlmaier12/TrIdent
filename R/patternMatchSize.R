@@ -8,7 +8,6 @@
 #' @keywords internal
 patternMatchSize <- function(classifSumm, classifList, windowSize){
   message("Determining sizes (bp) of pattern matches")
-  if(length(classifList) == 0) stop("NO TRANSDUCTION EVENTS FOUND")
   classifSumm <- as.data.frame(classifSumm)
   classifSumm$matchSize <- rep(NA, nrow(classifSumm))
   classifSumm$startPosBp <- rep(NA, nrow(classifSumm))
@@ -17,9 +16,9 @@ patternMatchSize <- function(classifSumm, classifList, windowSize){
     contigName <- classifList[[i]][[9]]
     startPos <- classifList[[i]][[5]]
     endPos <- classifList[[i]][[6]]
-    classifSumm[which(classifSumm[,1] == contigName),4] <<- (length(c(startPos:endPos)) - 1) * windowSize
-    classifSumm[which(classifSumm[,1] == contigName),5] <<- startPos * windowSize
-    classifSumm[which(classifSumm[,1] == contigName),6] <<- endPos * windowSize
+    classifSumm[which(classifSumm[,1] == contigName),5] <<- (length(c(startPos:endPos)) - 1) * windowSize
+    classifSumm[which(classifSumm[,1] == contigName),6] <<- startPos * windowSize
+    classifSumm[which(classifSumm[,1] == contigName),7] <<- endPos * windowSize
   })
   return(classifSumm)
 }

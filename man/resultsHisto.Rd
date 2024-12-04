@@ -4,10 +4,12 @@
 \alias{resultsHisto}
 \title{Create histogram of normalized pattern-match scores}
 \usage{
-resultsHisto(summaryList)
+resultsHisto(summaryList, suggFiltThresh)
 }
 \arguments{
 \item{summaryList}{Classification summary table filtered to only include contigs with Prophage-like, Sloping and HighCovNoPattern classifications}
+
+\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold on the output pattern-match score histogram. Default is FALSE.}
 }
 \description{
 Plots a histogram of normalized match scores for all Prophage-like, Sloping and HighCovNoPattern classifications

@@ -2,7 +2,7 @@
 % Please edit documentation in R/TrIdentClassifier.R
 \name{TrIdentClassifier}
 \alias{TrIdentClassifier}
-\title{Classify contigs as Prophage-like, Sloping, HighCoverageNoPattern, and NoPattern}
+\title{Classify contigs as Prophage-like, Sloping, HighCovNoPattern, and NoPattern}
 \usage{
 TrIdentClassifier(
   VLPpileup,
@@ -11,6 +11,8 @@ TrIdentClassifier(
   minBlockSize = 10000,
   maxBlockSize = Inf,
   minContigLength = 30000,
+  minSlope = 0.001,
+  suggFiltThresh = FALSE,
   SaveFilesTo,
   cleanup = TRUE
 )
@@ -27,6 +29,10 @@ TrIdentClassifier(
 \item{maxBlockSize}{The maximum size of the Prophage-like block pattern. Default is NA.}
 
 \item{minContigLength}{The minimum contig size (in bp) to perform pattern-matching on. Must be at least 25,000 bp. Default is 30,000 bp.}
+
+\item{minSlope}{The minimum slope value to test for sloping patterns. Default is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp)}
+
+\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold on the output pattern-match score histogram. Default is FALSE.}
 
 \item{SaveFilesTo}{Provide a path to the directory you wish to save TrIdent output summary tables to. TrIdent will make a folder within the provided directory to store results.}
 

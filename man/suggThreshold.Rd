@@ -13,6 +13,6 @@ suggThreshold(normMatchScores, histogram)
 }
 \description{
 Uses the distribution of normalized pattern match-scores to calculate a suggested filtering threshold. The
-threshold is de
+threshold is two standard deviations to the right of the maximum histogram value.
 }
 \keyword{internal}

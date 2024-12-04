@@ -9,9 +9,9 @@ test_that("specializedTransductionID", {
   expect_equal(temp_Specialized_transduction$Summary_table, copied_Specialized_transduction$Summary_table)
   expect_equal(temp_plot, copied_plot)
 
-  temp_Specialized_transduction_n44 <- specializedTransductionID(VLPpileup=VLPFractionSamplePileup, TrIdentResults=TrIdent_results, specificContig="NODE_44")
-  copied_Specialized_transduction_NODE44 <- Specialized_transduction_NODE44
-  expect_equal(temp_Specialized_transduction_n44$Plots$plot, copied_Specialized_transduction_NODE44$Plots$plot)
+  temp_Specialized_transduction_n62 <- specializedTransductionID(VLPpileup=VLPFractionSamplePileup, TrIdentResults=TrIdent_results, specificContig="NODE_62")
+  copied_Specialized_transduction_NODE62 <- Specialized_transduction_NODE62
+  expect_equal(temp_Specialized_transduction_n44$Plots$plot, copied_Specialized_transduction_NODE62$Plots$plot)
 })
 
 #test_that("SpecializedTransduction_ID_Node_44", {

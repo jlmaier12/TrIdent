@@ -15,10 +15,15 @@ blockBuilder <- function (viralSubset, windowSize, minBlockSize, maxBlockSize) {
   covSteps <- abs(maxReadCov - (minReadCov + quarterReadCov)) / 10
   startingCovs <- seq((minReadCov + quarterReadCov),  maxReadCov, covSteps)
 
-  blockLength <- ifelse((nrow(viralSubset) - (10000 / windowSize)) > (maxBlockSize / windowSize), maxBlockSize / windowSize, nrow(viralSubset) - (10000 / windowSize))
+  #blockLength <- ifelse((nrow(viralSubset) - (10000 / windowSize)) > (maxBlockSize / windowSize), maxBlockSize / windowSize, nrow(viralSubset) - (10000 / windowSize))
+  blockLength <- ifelse((nrow(viralSubset) - (5000 / windowSize)) > (maxBlockSize / windowSize), maxBlockSize / windowSize, nrow(viralSubset) - (5000 / windowSize))
+
   nonBlock <- nrow(viralSubset) - blockLength
-  blockLengthFull <- ifelse((nrow(viralSubset) - (20000 / windowSize)) > (maxBlockSize / windowSize), maxBlockSize / windowSize, nrow(viralSubset) - (20000 / windowSize))
-  nonBlockFull <- nrow(viralSubset) - (blockLengthFull + (10000 / windowSize))
+  #blockLengthFull <- ifelse((nrow(viralSubset) - (20000 / windowSize)) > (maxBlockSize / windowSize), maxBlockSize / windowSize, nrow(viralSubset) - (20000 / windowSize))
+  blockLengthFull <- ifelse((nrow(viralSubset) - (10000 / windowSize)) > (maxBlockSize / windowSize), maxBlockSize / windowSize, nrow(viralSubset) - (10000 / windowSize))
+
+  #nonBlockFull <- nrow(viralSubset) - (blockLengthFull + (10000 / windowSize))
+  nonBlockFull <- nrow(viralSubset) - (blockLengthFull + (5000 / windowSize))
 
   bestMatchInfoFull <- makeBlockPattern(viralSubset, windowSize, "Full", blockLengthFull, nonBlockFull, minReadCov, startingCovs[1])[[1]]
   bestMatchInfoRight <- makeBlockPattern(viralSubset, windowSize, "Right", blockLength, nonBlock, minReadCov, startingCovs[1])[[1]]

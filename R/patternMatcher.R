@@ -13,8 +13,9 @@
 #' @param minBlockSize The minimum size of the prophage-like block pattern. Default is 10,000 bp.
 #' @param maxBlockSize The maximum size of the prophage-like block pattern. Default is NA
 #' @param minContigLength The minimum contig size (in bp) to perform pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.
+#' @param minSlope The minimum slope value to test for sloping patterns
 #' @keywords internal
-patternMatcher <- function (VLPpileup, WCpileup, windowSize, minBlockSize, maxBlockSize, minContigLength) {
+patternMatcher <- function (VLPpileup, WCpileup, windowSize, minBlockSize, maxBlockSize, minContigLength, minSlope) {
 contigNames <- unique(VLPpileup[,1])
 bestMatchList <- list()
 filteredOutContigs <- rep(NA, length(contigNames))
@@ -47,16 +48,9 @@ refs <- rep(NA, length(contigNames))
     if(length(unique(viralSubset[,2])) == 1) {
       bestMatchSumm <- list(noPattern(viralSubset))
       bestMatchScoreSumm <- c(bestMatchSumm[[1]][[1]]) %>% as.numeric()
-    } else if (viralSubset[nrow(viralSubset),3] < 45000) {
-      bestMatchSumm <- list(noPattern(viralSubset),
-                                 blocksList[[1]],
-                                 blocksList[[2]],
-                                 blocksList[[3]])
-      bestMatchScoreSumm <- c(bestMatchSumm[[1]][[1]], bestMatchSumm[[2]][[1]],
-                              bestMatchSumm[[3]][[1]], bestMatchSumm[[4]][[1]]) %>% as.numeric()
     } else {
-      slopeList <- slopeWithStart(viralSubset, windowSize)
-      slopeListNoStart <- fullSlope(viralSubset)
+      slopeList <- slopeWithStart(viralSubset, windowSize, minSlope)
+      slopeListNoStart <- fullSlope(viralSubset, windowSize, minSlope)
       bestMatchSumm <- list(noPattern(viralSubset),
                                  blocksList[[1]],
                                  blocksList[[2]],

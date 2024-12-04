@@ -6,7 +6,7 @@
 \title{VLP-Fraction of Sample Dataset}
 \format{
 ## 'VLPFractionSamplePileup'
-A data frame with 25,668 rows and 4 columns:
+A data frame with 10,805 rows and 4 columns:
 \describe{
  \item{V1}{Contig accession}
  \item{V2}{Mapped read coverage averaged over a 100 bp window size}
@@ -33,16 +33,16 @@ The sequencing reads were mapped to the associated whole-community assembly usin
 The bbmap.sh bincov parameter with covbinsize=100 was used to create a pileup file with 100 bp windows. A
 subset of 10 contigs from the pileup file were selected for this sample dataset. The contigs were chosen because their associated
 read coverage patterns in the VLP-fraction exemplify TrIdent's pattern-matching functionality across classifications:
-NODE_4  None, filtered out
-NODE_44 Prophage-like, active/abundant, with spec transduction
-NODE_125  prophage-like, off one side of contig, no spec transduction
-NODE_238  Sloping, left to right slope
-NODE_251  Sloping, right to left slope
-NODE_25  None, no pattern match
-NODE_62  Prophage-like, with spec transduction
-NODE_368  Prophage-like, not homogeneously integrated/present, no spec transduction
-NODE_560  HighCovNoPattern
-NODE_1088  HighCovNoPattern
+NODE_617: Prophage-like, active/abundant, with spec transduction
+NODE_125: Prophage-like, off one side of contig, no spec transduction
+NODE_352: Sloping, left to right slope
+NODE_251: Sloping, right to left slope
+NODE_2060: Sloping, right to left slope with start
+NODE_1401: None, no pattern match
+NODE_62: Prophage-like, with spec transduction
+NODE_368: Prophage-like, not homogeneously integrated/present, no spec transduction
+NODE_560: HighCovNoPattern
+NODE_1165: None, filtered out
 To access the sequencing data used to generate this pileup file and for additional details on the
 assembly and mapping parameters, refer to the reference below:
 Reference: Kleiner, M., Bushnell, B., Sanderson, K.E. et al.

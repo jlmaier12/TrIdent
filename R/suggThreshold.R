@@ -1,7 +1,7 @@
 #' Calculates a suggested filtering threshold for plotting/saving TrIdent results
 #'
 #' Uses the distribution of normalized pattern match-scores to calculate a suggested filtering threshold. The
-#' threshold is de
+#' threshold is two standard deviations to the right of the maximum histogram value.
 #'
 #' @param normMatchScores Normalized pattern-match score vector
 #' @param histogram A histogram object created from normalized pattern-match scores

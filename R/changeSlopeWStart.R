@@ -13,10 +13,11 @@
 changeSlopeWStart <- function(leftOrRight, slopeBottom, slopeBottomChange, cov, viralSubset, windowSize){
   minReadCov <- min(viralSubset[,2])
   slopeBottom <- slopeBottom + slopeBottomChange
-  covSteps <- (cov - slopeBottom) / ((nrow(viralSubset) - ((10000 / windowSize) + 1)))
+  covSteps <- (cov - slopeBottom) / ((nrow(viralSubset) - ((5000 / windowSize) + 1)))
   covSteps <- ifelse(leftOrRight == "Left", -covSteps, covSteps)
-  pattern <- if(leftOrRight == "Left") c(rep(minReadCov, 10000 / windowSize), seq(cov, slopeBottom, covSteps)) else c(seq(slopeBottom, cov, covSteps), rep(minReadCov, 10000 / windowSize))
-  slope <-  ifelse(leftOrRight == "Left", (slopeBottom - cov) / (nrow(viralSubset) - ((10000 / windowSize) + 1)) , (cov - slopeBottom) / (nrow(viralSubset) - ((10000 / windowSize) + 1)))
+  pattern <- if(leftOrRight == "Left") c(rep(minReadCov, 5000 / windowSize), seq(cov, slopeBottom, covSteps))
+             else c(seq(slopeBottom, cov, covSteps), rep(minReadCov, 5000 / windowSize))
+  slope <-  ifelse(leftOrRight == "Left", (slopeBottom - cov) / ((nrow(viralSubset) * windowSize) - 5000), (cov - slopeBottom) /  ((nrow(viralSubset) * windowSize) - 5000))
   return(list(pattern, slope, slopeBottom))
 }
 

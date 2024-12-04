@@ -1,9 +1,12 @@
 ---
-title: "Using TrIdent"
-author: "Jessie Maier"
-output: rmarkdown::html_vignette
+title: "TrIdent"
+author: "Jessie Maier & Jorden Rabasco"
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_depth: 2
 description: >
-  TrIdent (Transduction Identification) is a reference-independent tool for the automated detection, classification and characterization of transduction events in   metagenomic sequence data. With only three functions, TrIdent is fast and user-friendly. Learn how to use TrIdent with a sample dataset here. 
+  TrIdent (Transduction Identification) is a reference-independent tool for the automated detection, classification and characterization of transduction events in metagenomic sequence data. With only three functions, TrIdent is fast and user-friendly. Learn how to use TrIdent with a sample dataset here. 
 vignette: >
   %\VignetteIndexEntry{Using TrIdent}
   %\VignetteEngine{knitr::rmarkdown}
@@ -27,88 +30,125 @@ library(patchwork)
 library(ggplot2)
 ```
 
-### Description:
+# Introduction
 
-TrIdent automates the transductomics data analysis process. Transductomics is a method developed by Dr. Manuel Kleiner to detect ongoing transduction in DNA sequencing reads. The method relies on mapping reads from a virome (VLP-fraction) of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by viruses or VLPs (Viral-Like Particles) will map back to their bacterial contigs of origin creating read coverage patterns indicative of active transduction. Read 'Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities' Kleiner et al. (2020) for more information.
+### **TrIdent**- **Tr**ansduction **Ident**ification
+
+TrIdent is a reference-independent bioinformatics tool that automates the analysis of transductomics data by automatically detecting, classifying and characterizing potential transducing events in read coverage data. Transductomics is a DNA-sequencing based method for the detection and characterization of transduction events. Developed by Kleiner et al. (2020), transductomics relies on mapping reads from a virome (VLP-fraction) of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by viruses and other VLPs (Virus-like particles) will map back to the bacterial contigs of origin creating read coverage patterns indicative of potential ongoing transduction.
 
 **Reference:** Kleiner, M., Bushnell, B., Sanderson, K.E. et al. Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities. Microbiome 8, 158 (2020). <https://doi.org/10.1186/s40168-020-00935-5>
 
-------------------------------------------------------------------------
-
-# TrIdent tutorial:
-
-**TrIdent**- **Tr**ansduction **Ident**ification
-
 TrIdent consists of three main functions to automatically detect, classify, and characterize potential transducing events:
 
--   `TrIdentClassifier()`: Classifies contigs as 'Prophage-like', 'Gen/Lat/GTA', 'HighVLPWCReadCov', and None
--   `PlotTrIdentPatternMatches()`: Plots results of TrIdent_Classifier
--   `SpecializedTransductionID()`: Detects potential specialized transduction on contigs classified as Prophage-like
+-   `TrIdentClassifier()`: Classifies contigs as 'Prophage-like', 'Sloping', 'HighCovNoPattern', and 'NoPattern' using pattern-matching
+-   `plotTrIdentResults()`: Plots pattern-matching results of `TrIdentClassifier()`
+-   `specializedTransductionID()`:  searches contigs classified as Prophage-like by `TrIdentClassifier()` for potential specialized transduction
 
-Running TrIdent in default mode is the easiest, but users can learn how to use various arguments to modify TrIdent's results in this tutorial.
+# Installation
 
-##### Input Data:
-
-The datasets used in this tutorial- 'VLPFraction_sampledata' and 'WholeCommunity_sampledata'- were generated from a conventional mouse fecal metagenome. The homogenized feces represents the whole-community fraction. The VLP-fraction of the fecal sample was separated and purified via CsCl density gradient ultracentrifugation. Both the whole-community and VLP-fraction were sequenced with Illumina (paired-end mode, 150 bp reads) after which the metagenome was assembled from the whole-community reads. The whole-community and VLP-fraction reads were mapped to the metagenome contigs and two pileup files were generated to summarize the respective read coverages across each contig. The contigs were pre-filtered to remove contigs less than 40 kbp. **Note- long contigs and high read coverage are needed for transductomics! Make sure you obtain enough reads from your sample to assemble a high quality metagenome.**  A description of this process (__with specific sequencing information__) is detailed in Kleiner et al. (2020). A subset of 10 contigs from the mouse fecal metagenome were selected for the sample dataset used in this tutorial.
-
-The two pileup files were generated using BBMap's `pileup.sh` with a binsize of 100. **We highly recommend using the commands below (with your own sorted .bam files) to generate the pileup files needed for TrIdent:**
-
-```{bash, eval=FALSE}
-pileup.sh in=VLPFraction_ReadMappingSorted.bam out=VLPFraction.pileupcovstats bincov=VLPFraction.bincov100 binsize=100 stdev=t
-
-pileup.sh in=WholeCommunity_ReadMappingSorted.bam out=WholeCommunity.pileupcovstats bincov=WholeCommunity.bincov100 binsize=100 stdev=t
-```
-
-##### In R...
-
-Load the package into your library. If you don't already have TrIdent, you can find installation instructions [here](./TrIdent/TrIdentBeta-installation.html)
-
+## BioConductor install
 ```{r, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("TrIdent")
 library(TrIdent)
 ```
 
-Import your pileup files:
+## GitHub install
+```{r, eval=FALSE}
+if (!require("devtools", quietly = TRUE))
+    install.packages("devtools")
 
-The 'VLPFraction.bincov100' and 'WholeCommunity.bincov100' .txt files generated by BBMap's `pileup.sh` (example above) can be used directly for input to TrIdent. **The windowsize/binsize used to generate these files must be 100**. Here is what the raw pileup file should look like however the information in the first column may be formatted differently depending on your contig accession format:
+devtools::install_github("jlmaier12/TrIdent", ref="master")
+library(TrIdent)
+```
 
+
+# Input Data
+
+## Transductomics data
+Transductomics allows for a glimpse into the 'transductome' (i.e the DNA being transduced) in a microbiome sample be identifying the bacterial DNA being actively carried by viral-like particles (VLPs). A transductomics dataset consists of two parts- a whole-community fraction and a VLP-fraction. The whole-community fraction is generated by extracting and sequencing DNA from the whole sample. The VLP-fraction is generated by first separating and ultra purifying the VLPs from the sample followed by DNA extraction and sequencing. Sequencing reads from the whole-community fraction are assembled and then both the whole-community and VLP-fraction reads are mapped to the assembly. **Read mapping should be performed using a high minimum identity (0.97 or higher) and random mapping of ambiguous reads.**  The pileup files needed for TrIdent are generated using using bam files produced during read mapping. More information on pileup files below. 
+
+### Example transductomics data generation workflow:
+Generating transductomics data from a conventional mouse fecal metagenome: 
+- Homogenized feces represents the whole-community. 
+- The VLP-fraction of the fecal homogenate is separated with 0.2um filtration to remove bacterial cells, treated with DNase to remove free DNA and purified via CsCl density gradient ultracentrifugation. 
+- Both the whole-community and VLP-fraction are sequenced with Illumina (paired-end mode, 150 bp reads).
+- Sequencing reads are decontaminated from host sequences and trimmed to remove adapters and low quality sequences.
+- The metagenome is assembled from the whole-community reads and filtered to remove contigs less that 30,000 bp (min. contig size for TrIdent).
+- The whole-community and VLP-fraction raw reads are mapped to the metagenome contigs to create two separate bam files
+- bam files are used to create two pileup txt files
+
+Note- Specific sequencing requirements are needed for transductomics! Sample preparation and sequencing procedures are detailed in Kleiner et al. (2020).
+
+## Pileup files
+A pileup file is a file format that consists of ***. We take advantage of the fact that pileup files can be used to generate a rolling mean of read coverages and associated base pair positions across every contig in a metagenome, effectively summarizing the read coverage patterns across contigs while reducing the size of the data.  
+
+Some read mappers, like BBMap, will allow for the generation of pileup files in the bbmap.sh command with the use of the bincov output. Otherwise, SAMtools pileup can convert bam files produced by any read mapper to pileup functions compatible with TrIdent. The more 
+
+TrIdent classifies mapped read coverage patterns using a novel pattern-matching algorithm that operates on pileup files. Pileup files are generated through read mapping and containg a rolling mean of read coverages and associated base pair positions for every contig in a metagenome assembly. TrIdent requires two pileup files:
+
+- a VLP-fraction pileup: Sequencing reads from a sample's VLP-fraction mapped to a metagenome assembly from the same sample.
+- a whole-community pileup: Sequencing reads from a sample's whole-community mapped to the metagenome of the same sample. 
+
+**The data used for each pileup file must originate from the same sample. Pileup files must use a 100 bp window/bin size for the rolling mean.** 
+
+Here is what the pileup file format should look like. The information in the first column may be formatted differently depending on your contig accession format:
 ```{r echo=FALSE}
+data(WholeCommunitySamplePileup)
 data(VLPFractionSamplePileup)
 print(head(VLPFractionSamplePileup), row.names=FALSE)
 ```
 
--   The first column contains character strings of the contig accessions given by the assembler used.
--   The second column contains numerical values of read coverages binned over 100 bp regions.
--   The third column contains integer values for the starting position of each 100 bp bin. The position restarts at the start of each new contig.
--   The fourth column contains integer values for the starting position of each 100 bp bin. The position does NOT restart at the start of each new contig.
-
-**Note** 'VLPFraction_sampledata' and 'WholeCommunity_sampledata' come preloaded with the TrIdent package. There is no nead to load or import these files. 
-
-TrIdent has built-in data cleaning and reformatting that is guaranteed to work for files output by BBMap's `pileup.sh`. **If you do not use BBMap's `pileup.sh` to generate the pileup files, then you are responsible for data-cleaning and reformatting.** Your pileup files must be in the following format (same column names, same column classes, etc.) and you must use the `cleanup=FALSE` argument for the `TrIdent_classifier()`, `Plot_TrIdentPatternMatches()`, and `SpecializedTransduction_ID()`.
-
+TrIdent has built-in data cleaning and reformatting. **If you do not use BBMap's `pileup.sh` to generate the pileup files, then you are responsible for data-cleaning and reformatting.** Your pileup files must be in the following format (same column names, same column classes, etc.) and you must use the `cleanup=FALSE` argument for the `TrIdent_classifier()`, `Plot_TrIdentPatternMatches()`, and `SpecializedTransduction_ID()`.
 ```{r, echo=FALSE}
 data(CleanVLPFractionSamplePileup)
 print(head(CleanVLPFractionSamplePileup), row.names=FALSE)
 ```
 
-The `CleanVLPFraction_sampledata` comes preloaded with TrIdent. Feel free to use this dataframe as an example if you are doing your own data-cleaning and reformatting.
+# Quick Start
 
-## Running TrIdent:
+Here is how to run TrIdent with default parameters. TrIdent involves the use of three functions that are used in the following order:
+```{r}
+TrIdentOutput <- TrIdentClassifier(VLPpileup=VLPFractionSamplePileup, WCpileup=WholeCommunitySamplePileup)
+```
 
-### TrIdentClassifier():
+```{r}
+TrIdentPlots <- plotTrIdentResults(VLPpileup=VLPFractionSamplePileup, WCpileup=WholeCommunitySamplePileup, TrIdentResults=TrIdentOutput)
+TrIdentPlots
+```
 
-`TrIdentClassifier()` is the main function that TrIdent relies on. This function cleans and reformats your input data, filters contigs based on length and read coverage, performs pattern-matching to classify contigs, identifies active/highly abundant prophage/phage inducible chromosomal islands (PICIs), determines which contigs have high VLP-fraction:whole-community read coverage ratios, and outputs all information in a neat summary table.
+```{r}
+SpecTransduction <- specializedTransductionID(VLPpileup=VLPFractionSamplePileup, TrIdentResults=TrIdentOutput)
+SpecTransduction
+```
+
+
+# TrIdentClassifier()
+
+`TrIdentClassifier()`  is the main function in TrIdent. This function cleans and reformats your input data, filters contigs based on length and read coverage, performs pattern-matching to classify contigs, identifies active/highly abundant and heterogenously integrated prophage-like elements, determines which contigs have high VLP-fraction:whole-community read coverage ratios, identifies start and stop positions and sizes of pattern matches, calculates slopes for Sloping pattern matches, generates a pattern-match quality score and outputs all information in a neat summary table.
 
 `TrIdentClassifier()` features:
 
 1.  **Contig filtering:**
 
-    Contigs are filtered out based on short length or low read coverage. Contigs less than 30kbp and contigs where the 50th greatest coverage value is less than 10 are removed prior to pattern-matching. Contigs shorter than 30kbp are likely poor quality and are not big enough to show clear transduction patterns. **If you would like to speed-up processing time of TrIdent, consider pre-filtering your assembly for contigs greater than 30kbp!** Contigs where the 50th greatest coverage value is less than 10 means that there is no region on the contig with read coverages greater than 10 for at least 5,000bp. The low read coverage filtering was done in this way as to avoid filtering out long contigs with short Prophage-like patterns that might get removed if filtering was done with averages or medians. Complete Prophage-like patterns should be at least 10kbp, but we recognize that Prophage-like patterns that fall off the side of a contig may be shorter.
+    Contigs are filtered out based on short length or low read coverage. TrIdent filters out contigs that do not have at least 10x coverage on a total of 5000 bp across the whole contig due to insufficient read coverage. Contigs where the 50th greatest coverage value is less than 10 means that there is no region on the contig with read coverages greater than 10 for at least 5,000bp. The low read coverage filtering was done in this way to avoid filtering out long contigs with short Prophage-like patterns that might get removed if filtering was done with averages or medians. Additionally, contigs less than 30 kbp are filtered out by default, however this can be changed with the MinContigLength parameter. Contigs shorter than 30 kbp may be poor quality and are not big enough to show clear transduction patterns. If you would like to speed-up processing time of TrIdent, consider pre-filtering your assembly for contigs greater than 30 kbp!
 
 2.  **Pattern-matching:**
+    TrIdent uses predefined patterns which correspond to various mechanisms of transduction. The patterns are built using the
+specific length and read coverage values of the contig being assessed. Patterns are translated across each contig and at each
+translation, a match-score is calculated by taking the mean absolute difference of the VLP-fraction read coverage and the
+pattern values. The smaller the match-score, the better the pattern-match. After a pattern is fully translated across a
+contig, certain aspects of the pattern are changed (i.e. height, width, slope) and translation is repeated. This process of
+translation and pattern re-scaling is repeated until a wide variety of height, width and slope combinations are tested for
+each pattern variation. After pattern-matching is complete, the pattern associated with the best match-score is used for
+contig classification. Contigs are classified as ‘Prophage-like’, ‘Sloping’, ‘HighCovNoPattern' or 'NoPattern'. 
 
-    Contigs that are not filtered out proceed on to pattern-matching where they are matched a variety of patterns representing transduction events. Patterns are 'built' and scaled specific to the characteristics of each contig to ensure the best fits. After a pattern is built, it is translated across the contig being assessed, and the mean absolute difference (match-score) in coverage between the contig and the pattern is calculated at each translation. Theoretically, if a pattern is a perfect-match to the coverages on a contig, then taking the difference will result in a 0. Obviously, no pattern will be a *perfect*-match to a contig, but the closer to a 0 the match-score is, the better that pattern matches the read coverage pattern on the contig. The contig is classified based on the pattern that achieves the lowest match-score.
+    
+    Contigs that are not filtered out proceed to pattern-matching where they are matched with a variety of patterns representing transduction events. Patterns are ‘built’ and the x and y-axis values are scaled specific to the characteristics of each contig to ensure the pattern-matching is data agnostic. After a pattern is built, it is translated across the contig being assessed, and the mean absolute difference in coverage (match-score) between the contig and the pattern is calculated at each translation. Theoretically, if a pattern is a perfect match to the coverages on a contig, then taking the mean absolute difference in y-axis values will result in a 0. Obviously, no pattern will be a perfect match to a contig, but the closer to 0 the match-score is, the better that pattern matches the read coverage pattern on the contig. The contig is classified based on the pattern that achieves the lowest match-score.
 
-##### Patterns
+## Patterns
 
 -   **Sloping:** There are four sloping pattern variations in the Gen/Lat/GTA class. The sloping pattern is representative of generalized, lateral and gene transfer agents due to the decreasing frequency of DNA packaging moving away from the packaging initiation sites. All patterns are built to the same length at the contig being assessed. The peak of the slope starts slightly above the contigs' maximum coverage value and the base of the slope starts at the contig's minimum coverage value. The slopes are decreased until a minimum slope of 0.0001 (change of 10 read coverage values over 100,000bp) is reached. Generalized, lateral and gene transfer agent transduction events can span many kbps of DNA and a single contig typically does not capture the entire event. Depending on which part of the transducing event is captured by the contig, the sloping can be very severe or almost 0. Patterns 1 and 2 represent contigs that capture a Gen/Lat/GTA transducing event somewhere in the middle. Patterns 2 and 4 represent contigs that capture the packagining initiation of a Gen/Lat/GTA transducing event. Patterns 2 and 4 are translated across the contig in addition to having the slopes changed while only the slopes are changed on patterns 1 and 2.
 
@@ -120,7 +160,7 @@ plot1 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   geom_line(linewidth=2)+
     labs(x=NULL,y=NULL, title="Pattern 1")+
     theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -133,7 +173,7 @@ plot2 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   geom_line(linewidth=2)+
     labs(x=NULL,y=NULL,title="Pattern 2")+
     theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -146,7 +186,7 @@ plot3 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   geom_line(linewidth=2)+
     labs(x=NULL,y=NULL, title="Pattern 3")+
     theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -159,7 +199,7 @@ plot4 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   geom_line(linewidth=2)+
   labs(x=NULL,y=NULL, title="Pattern 4")+
   theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -170,7 +210,7 @@ plot4 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
 plot1+plot2+plot3+plot4
 ```
 
--   **Prophage and PICIs (Prophage-like):**
+-   **Prophage-like:**
 
 There are three patterns in the Prophage-like class. The block pattern is representative of the prophage or phage-inducible chromosomal islands (PICIs) reads mapping back to their respective integration sites in the host bacterium's chromosome. The block patterns are built to the same length at the contig being assessed. The top of the block starts at the contig's maximum coverage value while the base starts at the contig's minimum coverage value. The block width starts close to the length of the contig. The block heights are decreased followed by the block's width to ensure a variety of block height/width combinations are tested. Each pattern variation is translated across the contig. The blocks widths never get smaller than 10kbp. Pattern 1 represents a prophage/PICI that is entirely on the contig while patterns 2 and 3 repesent a prophage/PICI that trails off the right or left side of the contig, respectively.
 
@@ -181,7 +221,7 @@ plot1 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   geom_line(linewidth=2)+
     labs(x=NULL,y=NULL,title="Pattern 1")+
     theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -194,7 +234,7 @@ plot2 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   geom_line(linewidth=2)+
     labs(x=NULL,y=NULL,title="Pattern 2")+
     theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -207,7 +247,7 @@ plot3 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   geom_line(linewidth=2)+
     labs(x=NULL,y=NULL, title="Pattern 3")+
     theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -217,7 +257,7 @@ plot3 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
 plot1+plot2+plot3
 ```
 
--   **No transduction (None):**
+-   **No pattern:**
 
 There is one pattern in the None class. In order to know if the match score generated for a Gen/Lat/GTA or Prophage-like pattern match on a specific contig is 'good', we need a baseline match score to compare to. A contig without a Prophage-like or Gen/Lat/GTA pattern is likely to have fairly even read coverage across the contig which the None pattern tries to match. If the contig truely does have a Prophage-like or Gen/Lat/GTA pattern, its match score to the none score is likely to be worse than the match score to the pattern it truely matches. The pattern is built to the length of the contig being assessed and is simply the mean coverage of the contig.
 
@@ -229,7 +269,7 @@ plot1 <- ggplot(dataframe, aes(x=mockpos, y=mockcov))+
   ylim(0,100)+
     labs(x=NULL,y=NULL, title="Pattern 1")+
     theme_classic()+
-  theme(axis.text.x=element_blank(),
+  ggplot2::theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank(),
@@ -255,7 +295,6 @@ plot1
 
 `TrIdentClassifier()` resizes the bins or 'windows' used by `pileup.sh` to improve processing time and reduce noise in the data. `TrIdentClassifier()` resizes windows to 1000 bp as a default. Depending on the dataset, the user may want to select a different `windowsize`. Users can choose between windowsizes of 200, 500, 1000 or 2000 **only**. We recommend increasing the `windowsize` to 2000 if processing speed is of importance or if data is noisy (i.e. VLP-fraction contaminated with external bacterial DNA). We recommend decreasing the `windowsize` if your data is very clean and/or **small** and you are interested in increasing the resolution of read coverage patterns for the initial classification of contigs.
 
-###### Default:
 
 To run `TrIdentClassifier()` in default-mode, run the following:
 
@@ -263,25 +302,7 @@ To run `TrIdentClassifier()` in default-mode, run the following:
 #TrIdent_results <- TrIdentClassifier(phageread_dataset=VLPFraction_sampledata, microbial_readdataset=WholeCommunity_sampledata, windowsize = 1000, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE)
 ```
 
-###### Non-default:
 
-Increasing/decreasing the `windowsize` may alter the results of the `TrIdent_Classifier()` slightly. Prophage-like classifications tend to stay the same when `windowsize` is changed, but Gen/Lat/GTA and HighVLPWCReadCov classifications may switch classes with each other. This is due to how averaging the read coverages affects the sloping pattern. High activity/abundance labels on Prophage-like classifications may also change based on how the averaging affects the pattern-match size. Prophage/PICIs that are on the border of being considered highly active/abundant are typically more affected by changing the `windowsize`.
-
-Note how processing time compares between the default of 1000 `windowsize` and the user-defined 2000 and 500 `windowsize`. The differences are small since the sample dataset only consists of 10 contigs, but on larger datasets these time differences can add up. 
-
-Increase `windowsize` to 2000bp:
-
-```{r}
-#TrIdent_results_increasewindow <- TrIdentClassifier(phageread_dataset=VLPFraction_sampledata, microbial_readdataset=WholeCommunity_sampledata, windowsize=2000, minblocksize=10000, maxblocksize=Inf,cleanup=TRUE)
-```  
-
-Decrease `windowsize` to 500bp:
-
-```{r}
-#TrIdent_results_increasewindow <- TrIdentClassifier(phageread_dataset=VLPFraction_sampledata, microbial_readdataset=WholeCommunity_sampledata, windowsize=500, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE)
-```
-
-##### Obtain results of main classifier:
 
 The output of `TrIdentClassifier()` is a list containing five objects:
 
@@ -309,7 +330,7 @@ Save the desired list-item to a new variable using its associated name:
 #kable(filteredout_contigs, caption="The TrIdentClassifier filtered-out contig summary table")
 ```
 
-### Plot_TrIdentPatternMatches()
+# Plot_TrIdentPatternMatches()
 
 `Plot_TrIdentPatternMatches()` will output a list of read coverage plots of all contigs predicted as either Gen/Lat/GTA, Prophage-like, or HighVLPWCReadCov and their respective pattern matches.
 
@@ -340,7 +361,7 @@ View one plot:
 #TrIdent_patternmatches$NODE_10
 ```
 
-### SpecializedTransduction_ID()
+# SpecializedTransduction_ID()
 
 Specialized transduction occurs when a prophage/PICI has an improper excision from the host bacterium's chromosome and accidentally packages a small portion of bacterial DNA directly outside the prophage/PICI region. `SpecializedTransduction_ID()` searches contigs classified as Prophage-like for dense read coverage outside the borders of the Prophage-like pattern that could represent specialized transduction. Because specialized transduction tends to be fairly short (several kbps) compared to generalized/lateral/gene transfer agent transduction (tens to hundreds of kbps), averaging over a 1000 bp distance (i.e using a `windowsize=1000`) can 'blur' specialized transduction patterns depending on their size. This is why specialized transduction is not identified in `TrIdent_Classifier()`. Instead, we use the locations of prophages/PICIs identified with `TrIdent_Classifier()` to guide our search for specialized transduction in `SpecializedTransduction_ID()`.
 
@@ -392,25 +413,8 @@ View a specific plot:
 #Specialized_transduction$Plots$NODE_2
 ```
 
-###### Non-default:
 
-We suggest using the default values for searching all Prophage-like contigs and only changing the `noreadcov` and `spectranslength` arguments when adapting the specialized transduction search for specific contigs. See examples below:
-
-NODE_44 has been identified as having potential specialized transduction outside of its left border. Perhaps the user wants larger regions of coverage to be considered specialized transduction. `SpecializedTransduction_ID()` identifies this as specialized transduction because the region of read coverage is at least 1000 bp long (`spectranslength` default). To change this, the user might increase the `spectranslength`.
-
-```{r}
-#Specialized_transduction_NODE44 <- SpecializedTransduction_ID(VLPFraction_sampledata, TrIdent_results, "NODE_44", spectranslength=4000)
-#Specialized_transduction_NODE44
-```
-
-NODE_2 has a small amount of dense read coverage outside of its left border which one might consider potential specialized transduction. `SpecializedTransduction_ID()` does not identify this as specialized transduction because there is a 500 bp (`noreadcov` default) region of no read coverage which stops the specialized transduction search. To change this, the user might increase the `noreadcov`.
-
-```{r}
-#Specialized_transduction_NODE2 <- SpecializedTransduction_ID(VLPFraction_sampledata, TrIdent_results, "NODE_2", noreadcov=900)
-#Specialized_transduction_NODE2
-```
-
-### Create final summary table:
+ Create final summary table:
 
 If you'd like to combine the summary tables produced by `TrIdentClassifier()` and `SpecializedTransduction_ID()`, try the following code:
 

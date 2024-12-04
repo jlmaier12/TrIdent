@@ -47,9 +47,9 @@ specTransduction <- specializedTransductionID(
                     TrIdentResults=TrIdentSampleOutput
                     )
 
-specTransductionNODE44 <- specializedTransductionID(
+specTransductionNODE62 <- specializedTransductionID(
                           VLPpileup=VLPFractionSamplePileup,
                           TrIdentResults=TrIdentSampleOutput,
-                          specificContig="NODE_44"
+                          specificContig="NODE_62"
                           )
 }

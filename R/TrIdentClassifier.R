@@ -1,4 +1,4 @@
-#' Classify contigs as Prophage-like, Sloping, HighCoverageNoPattern, and NoPattern
+#' Classify contigs as Prophage-like, Sloping, HighCovNoPattern, and NoPattern
 #'
 #' Performs all the pattern-matching and summarizes the results into a list. The first item in the list
 #' is a table consisting of the summary information of all the contigs that passed through pattern-matching
@@ -14,7 +14,9 @@
 #'@param minBlockSize The minimum size of the Prophage-like block pattern. Default is 10,000 bp.
 #'@param maxBlockSize The maximum size of the Prophage-like block pattern. Default is NA.
 #'@param minContigLength The minimum contig size (in bp) to perform pattern-matching on. Must be at least 25,000 bp. Default is 30,000 bp.
+#'@param minSlope The minimum slope value to test for sloping patterns. Default is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp)
 #'@param SaveFilesTo Provide a path to the directory you wish to save TrIdent output summary tables to. TrIdent will make a folder within the provided directory to store results.
+#'@param suggFiltThresh TRUE or FALSE, Suggest a filtering threshold on the output pattern-match score histogram. Default is FALSE.
 #'@importFrom utils capture.output
 #'@export
 #'
@@ -25,7 +27,7 @@
 #'                    VLPpileup=VLPFractionSamplePileup,
 #'                    WCpileup=WholeCommunitySamplePileup
 #'                    )
-TrIdentClassifier <- function(VLPpileup, WCpileup, windowSize=1000, minBlockSize=10000, maxBlockSize=Inf, minContigLength=30000, SaveFilesTo, cleanup=TRUE){
+TrIdentClassifier <- function(VLPpileup, WCpileup, windowSize=1000, minBlockSize=10000, maxBlockSize=Inf, minContigLength=30000, minSlope=0.001, suggFiltThresh=FALSE, SaveFilesTo, cleanup=TRUE){
 ##error catching
   if(!(windowSize %in% list(100, 200, 500, 1000))) stop("windowSize must be either 100, 200, 500, or 1000 bp!")
   if(minContigLength < 25000) stop("minContigLength must be at least 25,000 bp for pattern-matching!")
@@ -33,25 +35,22 @@ TrIdentClassifier <- function(VLPpileup, WCpileup, windowSize=1000, minBlockSize
   if(nrow(VLPpileup) != nrow(WCpileup)) stop("VLP and WC pileup files have differing row numbers")
   if(abs(VLPpileup[1,3] - VLPpileup[2,3]) != 100 | abs(WCpileup[1,3] - WCpileup[2,3]) != 100) stop("pileup files MUST have a windowSize/binsize of 100!")
 
+##main algorithm start
+  startTime <- Sys.time()
+  message("Reformatting pileup files")
   if(cleanup == TRUE){
     VLPpileup <- pileupFormatter(VLPpileup)
     WCpileup <- pileupFormatter(WCpileup)
-    }
-  ##main algorithm start
-  startTime <- Sys.time()
+  }
   message("Starting pattern-matching...")
-  classificationSummary <- patternMatcher(VLPpileup, WCpileup, windowSize, minBlockSize, maxBlockSize, minContigLength)
-  summaryTable <- slopeSumm(
-    prophageLikeElevation(
-      patternMatchSize(
-        microbialToViralRatioCalc(
-          contigClassSumm(classificationSummary[[1]]),
-        WCpileup, VLPpileup),
-      allClassifSummList(classificationSummary[[1]]), windowSize),
-    allProphageLikeClassifs(classificationSummary[[1]]), VLPpileup, WCpileup, windowSize),
-  allSlopingClassifs(classificationSummary[[1]]))
+  classificationSummary <- patternMatcher(VLPpileup, WCpileup, windowSize, minBlockSize, maxBlockSize, minContigLength, minSlope)
+  summaryTable <- contigClassSumm(classificationSummary[[1]])
+  summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup)
+  summaryTable <- patternMatchSize(summaryTable, classificationSummary[[1]], windowSize)
+  summaryTable <- prophageLikeElevation(summaryTable, allProphageLikeClassifs(classificationSummary[[1]]), VLPpileup, WCpileup, windowSize)
+  summaryTable <- slopeSumm(summaryTable, allSlopingClassifs(classificationSummary[[1]]))
 
-  message("Finalizing output \n")
+  message("Finalizing output")
   summaryList <- list(SummaryTable=summaryTable,
                       CleanedSummaryTable=summaryTable[which(summaryTable[,2] == "Prophage-like" | summaryTable[,2] == "Sloping" | summaryTable[,2] == "HighCovNoPattern"),],
                       PatternMatchInfo=allPatternMatches(classificationSummary[[1]], summaryTable),
@@ -66,11 +65,11 @@ TrIdentClassifier <- function(VLPpileup, WCpileup, windowSize=1000, minBlockSize
                "contigs were filtered out based on length"))
   table <- (table(summaryList[[1]][,2]))
   message(paste0(capture.output(table), collapse = "\n"))
-  message(paste(length(which(summaryList[[1]][,7] == "Elevated")),
+  message(paste(length(which(summaryList[[1]][,8] == "Elevated")),
                 "of the prophage-like classifications are highly active or abundant"))
-  message(paste(length(which(summaryList[[1]][,7] == "Depressed")),
+  message(paste(length(which(summaryList[[1]][,8] == "Depressed")),
                 "of the prophage-like classifications are mixed, i.e. heterogenously integrated into their bacterial host population"))
-  print(resultsHisto(summaryList))
+  print(resultsHisto(summaryList, suggFiltThresh))
   if(missing(SaveFilesTo) == FALSE){
     ifelse(!dir.exists(paths=paste0(SaveFilesTo, "\\TrIdentOutput")),
             dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),

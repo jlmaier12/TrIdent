@@ -9,7 +9,7 @@ slopeSumm <- function(classifSumm, slopingClassifList){
   classifSumm$slope <- rep(NA, nrow(classifSumm))
   if(length(slopingClassifList) == 0) return(classifSumm)
   lapply(seq_along(slopingClassifList), function(i) {
-    classifSumm[which(classifSumm[,1] == slopingClassifList[[i]][[9]]), 9] <<- round(slopingClassifList[[i]][[7]], digits=4)
+    classifSumm[which(classifSumm[,1] == slopingClassifList[[i]][[9]]), 10] <<- round(slopingClassifList[[i]][[7]], digits=4)
   })
   return(classifSumm)
 }

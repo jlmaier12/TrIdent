@@ -4,7 +4,7 @@
 \alias{makeFullSlopes}
 \title{Make full slope patterns}
 \usage{
-makeFullSlopes(leftOrRight, viralSubset, newMax, minReadCov)
+makeFullSlopes(leftOrRight, viralSubset, newMax, minReadCov, windowSize)
 }
 \arguments{
 \item{leftOrRight}{Generate pattern for negative slope (left to right, i.e. 'Left') or positive slope (right to left, i.e. 'Right')}
@@ -14,6 +14,8 @@ makeFullSlopes(leftOrRight, viralSubset, newMax, minReadCov)
 \item{newMax}{A value for the top of the sloping pattern that is slightly higher than the maximum coverage value on the viralSubset}
 
 \item{minReadCov}{Minimum read coverage value of the viralSubset}
+
+\item{windowSize}{The window size used to re-average read coverage pileups}
 }
 \description{
 Makes slope patterns sloping either left to right (Left) or right to left (right) across the contig being assessed.

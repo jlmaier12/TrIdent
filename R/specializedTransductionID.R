@@ -23,10 +23,10 @@
 #'                     TrIdentResults=TrIdentSampleOutput
 #'                     )
 #'
-#' specTransductionNODE44 <- specializedTransductionID(
+#' specTransductionNODE62 <- specializedTransductionID(
 #'                           VLPpileup=VLPFractionSamplePileup,
 #'                           TrIdentResults=TrIdentSampleOutput,
-#'                           specificContig="NODE_44"
+#'                           specificContig="NODE_62"
 #'                           )
  specializedTransductionID <- function(VLPpileup, TrIdentResults, specificContig, noReadCov=500, specTransLength=2000, matchScoreFilter=Inf, logScale=FALSE, cleanup=TRUE){
   specTransInfo <- NULL
