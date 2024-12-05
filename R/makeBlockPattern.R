@@ -1,0 +1,24 @@
+#' Make block patterns for pattern-matching
+#'
+#' Make full, left and right block patterns for Prophage-like classifications
+#'
+#' @param viralSubset A subset of the read coverage pileup that pertains only to the contig currently being assessed
+#' @param windowSize The window size used to re-average read coverage pileups
+#' @param fullLeftRight The block pattern variation being built
+#' @param blockLength Maximum block pattern length
+#' @param nonBlock Maximum non-block pattern length
+#' @param minReadCov Either 0 or the minimum VLP-fraction read coverage value
+#' @param cov The height value of the block pattern
+#' @keywords internal
+makeBlockPattern <- function(viralSubset, windowSize, fullLeftRight, blockLength, nonBlock, minReadCov, cov){
+  #if (fullLeftRight == "Full") pattern <- c(rep(minReadCov, 10000 / windowSize), rep(cov, blockLength), rep(minReadCov, nonBlock))
+  if (fullLeftRight == "Full") pattern <- c(rep(minReadCov, 5000 / windowSize), rep(cov, blockLength), rep(minReadCov, nonBlock))
+  if (fullLeftRight == "Left") pattern <- c(rep(cov, blockLength), rep(minReadCov, nonBlock))
+  if (fullLeftRight == "Right") pattern <- c(rep(minReadCov, nonBlock), rep(cov, blockLength))
+  diff <- mean(abs(viralSubset[,2] - pattern))
+  startPos <- ifelse(fullLeftRight == "Full" | fullLeftRight == "Right", (which(pattern == max(pattern))[1]), 1)
+  endPos <- if (fullLeftRight == "Full") which(pattern == max(pattern))[length(which(pattern == max(pattern)))]
+            else if (fullLeftRight == "Left") (which(pattern == min(pattern))[1]) - 1
+            else length(pattern)
+  return(list(list(diff, minReadCov, cov, "NA", startPos, endPos, "NA", "Prophage-like"), pattern))
+}

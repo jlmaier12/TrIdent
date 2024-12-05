@@ -1,0 +1,23 @@
+Package: TrIdent
+Type: Package
+BiocType: Software 
+Title: TrIdent - Transduction Identification
+Version: 0.1.0
+Author: Jessie Maier, Jorden Rabasco
+Maintainer: Jessie Maier <jlmaier@ncsu.edu> Jorden Rabasco <jrabasc@ncsu.edu>
+Description: Automatic detection, classification and characterization of transduction events in microbiomes using read coverage pattern-matching.
+License: GPL-2
+Encoding: UTF-8
+LazyData: false
+Imports: stats, dplyr, ggplot2, patchwork, stringr, tidyr, roll
+RoxygenNote: 7.3.2
+biocViews: Coverage, Metagenomics, PatternLogic
+BugReports: https://github.com/jlmaier12/TrIdent/issues 
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
+Config/testthat/edition: 3
