@@ -9,7 +9,8 @@ slopeSumm(classifSumm, slopingClassifList)
 \arguments{
 \item{classifSumm}{Classification summary table}
 
-\item{slopingClassifList}{A list containing pattern match information associated with all contigs classified as sloping.}
+\item{slopingClassifList}{A list containing pattern match information associated with all contigs
+classified as sloping.}
 }
 \value{
 dataframe

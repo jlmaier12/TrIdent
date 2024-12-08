@@ -7,14 +7,16 @@
 changeWindowSize(cleanPileup, windowSize)
 }
 \arguments{
-\item{cleanPileup}{A read coverage dataset that has been cleaned and reformatted by the readcovdf_formatter function}
+\item{cleanPileup}{A read coverage dataset that has been cleaned and reformatted.}
 
-\item{windowSize}{The number of base pairs to average coverage values over. Options are 100, 500, 1000, or 2000 only!}
+\item{windowSize}{The number of base pairs to average coverage values over. Options are 100,
+500, 1000, or 2000 only!}
 }
 \value{
 Dataframe
 }
 \description{
-Re-averages window sizes of read coverage averages. Start with 100bp windows always. Cannot make window size less than 100bp.
+Re-averages window sizes of read coverage averages. Start with 100bp windows
+always. Cannot make window size less than 100bp.
 }
 \keyword{internal}

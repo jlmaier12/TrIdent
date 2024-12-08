@@ -1,6 +1,7 @@
 #' TrIdentSampleOutput
 #'
-#' The TrIdentClassifier output from the VLPFractionSamplePileup and WholeCommunitySamplePileup files run with default parameters
+#' The TrIdentClassifier output from the VLPFractionSamplePileup and
+#' WholeCommunitySamplePileup files run with default parameters
 #' Report...
 #' @keywords internal
 #' @usage data('TrIdentSampleOutput')
@@ -14,7 +15,8 @@
 #'    \item{windowSize}{windowSize used in TrIdentClassifier function (1000)}
 #'    }
 #' @details
-#' A list object produced by the TrIdentClassifier function run on the VLPFractionSamplePileup
-#' and WholeCommunitySamplePileup files run with default parameters
+#' A list object produced by the TrIdentClassifier function run on the
+#' VLPFractionSamplePileup and WholeCommunitySamplePileup files run with
+#' default parameters
 #'
 "TrIdentSampleOutput"

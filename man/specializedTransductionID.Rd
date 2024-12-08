@@ -2,7 +2,8 @@
 % Please edit documentation in R/specializedTransductionID.R
 \name{specializedTransductionID}
 \alias{specializedTransductionID}
-\title{Identify potential specialized transduction events on contigs classified as Prophage-like}
+\title{Identify potential specialized transduction events on contigs classified as
+Prophage-like}
 \usage{
 specializedTransductionID(
   VLPpileup,
@@ -22,24 +23,33 @@ specializedTransductionID(
 
 \item{specificContig}{Optional, Search a specific contig classified as Prophage-like ("NODE_1").}
 
-\item{noReadCov}{Number of basepairs of zero read coverage encountered before specialized transduction searching stops. Default is 500.}
+\item{noReadCov}{Number of basepairs of zero read coverage encountered before specialized
+transduction searching stops. Default is 500.}
 
-\item{specTransLength}{Number of basepairs of non-zero read coverage needed for specialized transduction to be considered. Default is 2000.}
+\item{specTransLength}{Number of basepairs of non-zero read coverage needed for specialized
+transduction to be considered. Default is 2000.}
 
-\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern match-scores. A suggested filtering threshold is provided by `TrIdentClassifier()` if `suggFiltThresh=TRUE`.}
+\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern match-scores. A
+suggested filtering threshold is provided by `TrIdentClassifier()` if
+`suggFiltThresh=TRUE`.}
 
-\item{logScale}{TRUE or FALSE, display VLP-fraction read coverage in log10 scale. Default is FALSE.}
+\item{logScale}{TRUE or FALSE, display VLP-fraction read coverage in log10 scale. Default is
+FALSE.}
 
-\item{SaveFilesTo}{Provide a path to the directory you wish to save output to. specializedTransductionID() will make a folder within the provided directory to store results.}
+\item{SaveFilesTo}{Provide a path to the directory you wish to save output to.
+specializedTransductionID() will make a folder within the provided directory
+to store results.}
 }
 \value{
 Large list containing two objects
 }
 \description{
-Search contigs classified as Prophage-like for dense read coverage outside of the pattern-match borders
-that may indicate specialized transduction. Returns a list with the first object containing a summary table
-and the second object containing a list of plots of with associated specialzied transduction search results.
-If the plot is green, it has been identified as having potential specialized transduction.
+Search contigs classified as Prophage-like for dense read coverage outside
+of the pattern-match borders that may indicate specialized transduction.
+Returns a list with the first object containing a summary table and the
+second object containing a list of plots of with associated specialzied
+transduction search results. If the plot is green, it has been identified as
+having potential specialized transduction.
 }
 \examples{
 data("VLPFractionSamplePileup")

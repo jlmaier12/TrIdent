@@ -7,12 +7,14 @@
 pileupFormatter(pileup)
 }
 \arguments{
-\item{pileup}{A table containing contig names, read coverages averaged over 100 bp windows, and contig positions}
+\item{pileup}{A table containing contig names, read coverages averaged over 100 bp windows,
+and contig positions}
 }
 \value{
 dataframe
 }
 \description{
-Places columns in correct order and renames columns. Cleans the contig labels to remove excess information after whitespace.
+Places columns in correct order and renames columns. Cleans the contig labels
+to remove excess information after whitespace.
 }
 \keyword{internal}

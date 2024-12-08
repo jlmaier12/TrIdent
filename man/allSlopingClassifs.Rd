@@ -13,6 +13,7 @@ allSlopingClassifs(bestMatchList)
 List
 }
 \description{
-Collects pattern information associated with all contigs classified as Sloping in the patternMatcher function.
+Collects pattern information associated with all contigs classified as
+Sloping in the patternMatcher function.
 }
 \keyword{internal}

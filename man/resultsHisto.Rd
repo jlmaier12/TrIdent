@@ -7,16 +7,19 @@
 resultsHisto(summaryList, suggFiltThresh)
 }
 \arguments{
-\item{summaryList}{Classification summary table filtered to only include contigs with Prophage-like, Sloping and HighCovNoPattern classifications}
+\item{summaryList}{Classification summary table filtered to only include contigs with
+Prophage-like, Sloping and HighCovNoPattern classifications}
 
-\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold on the output pattern-match score histogram. Default is FALSE.}
+\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold on the output pattern-match
+score histogram. Default is FALSE.}
 }
 \value{
 ggplot object
 }
 \description{
-Plots a histogram of normalized match scores for all Prophage-like, Sloping and HighCovNoPattern classifications
-and colors the plot based on the classifications. A suggested filtering threshold is provided for filtering results
-based on the quality of the pattern-match.
+Plots a histogram of normalized match scores for all Prophage-like, Sloping
+and HighCovNoPattern classifications and colors the plot based on the
+classifications. A suggested filtering threshold is provided for filtering
+results based on the quality of the pattern-match.
 }
 \keyword{internal}

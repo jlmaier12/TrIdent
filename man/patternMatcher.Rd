@@ -15,9 +15,13 @@ patternMatcher(
 )
 }
 \arguments{
-\item{VLPpileup}{A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
+\item{VLPpileup}{A table containing contig names, coverages averaged over 100 bp windows, and
+contig positions associated with mapping VLP-fraction reads to
+whole-community contigs}
 
-\item{WCpileup}{A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs}
+\item{WCpileup}{A table containing contig names, coverages averaged over 100 bp windows, and
+contig positions associated with mapping whole-community reads to
+whole-community contigs}
 
 \item{windowSize}{The window size used to re-average read coverage datasets}
 
@@ -25,7 +29,8 @@ patternMatcher(
 
 \item{maxBlockSize}{The maximum size of the prophage-like block pattern. Default is NA}
 
-\item{minContigLength}{The minimum contig size (in bp) to perform pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.}
+\item{minContigLength}{The minimum contig size (in bp) to perform pattern-matching on. Must be at
+least 20,000 bp. Default is 30,000 bp.}
 
 \item{minSlope}{The minimum slope value to test for sloping patterns}
 }
@@ -33,11 +38,11 @@ patternMatcher(
 List containing three objects.
 }
 \description{
-Creates the viralSubset, representative of one contig, that is used as input for each individual
-pattern-matching function. After the information associated with the best match for each pattern
-is obtained, the pattern with the smallest match score is used to classify the contig being assessed.
-Prior to the pattern-matching, contigs smaller than the minContigLength and contigs without 5,000 bp of 10x
-read coverage are removed. Contigs less than 45,000 bp are matched against all three block pattern variations
-and the NoPattern pattern. Contigs greater than 45,000 bp are matched against all pattern varieties.
+Creates the viralSubset, representative of one contig, that is used as input
+for each individual pattern-matching function. After the information
+associated with the best match for each pattern is obtained, the pattern
+with the smallest match score is used to classify the contig being assessed.
+Prior to the pattern-matching, contigs smaller than the minContigLength and
+contigs without 5,000 bp of 10x read coverage are removed.
 }
 \keyword{internal}

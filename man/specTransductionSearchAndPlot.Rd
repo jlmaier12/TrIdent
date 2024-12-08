@@ -19,27 +19,34 @@ specTransductionSearchAndPlot(
 \arguments{
 \item{contigName}{The reference name of the contig currently being assessed (i.e "NODE_1")}
 
-\item{VLPpileup}{A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
+\item{VLPpileup}{A table containing contig names, coverages averaged over 100 bp windows, and
+contig positions associated with mapping VLP-fraction reads to
+whole-community contigs}
 
-\item{classifPatternMatches}{The pattern match information associated with each contig classified as prophage-like,  sloping, or HighCovNoPattern}
+\item{classifPatternMatches}{The pattern match information associated with each contig classified as
+prophage-like,  sloping, or HighCovNoPattern}
 
-\item{classifSumm}{The summary information associated with each contig classified as Prophage-like, Sloping, or HighCovNoPattern}
+\item{classifSumm}{The summary information associated with each contig classified as
+Prophage-like, Sloping, or HighCovNoPattern}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 
 \item{i}{The index for the contig currently being assessed}
 
-\item{noReadCov}{How many bp of no read coverage are encountered before searching stops? Default is 500.}
+\item{noReadCov}{How many bp of no read coverage are encountered before searching stops?
+Default is 500.}
 
-\item{specTransLength}{How many bp of read coverage to look for outside of prophage borders? Default is 2000.}
+\item{specTransLength}{How many bp of read coverage to look for outside of prophage borders?
+Default is 2000.}
 
-\item{logScale}{If TRUE, coverage is plotted in log10. If FALSE, raw coverage values are plotted. Default is FALSE.}
+\item{logScale}{If TRUE, coverage is plotted in log10. If FALSE, raw coverage values are
+plotted. Default is FALSE.}
 }
 \value{
 List containing two objects
 }
 \description{
-Search contigs classified as prophage-like for potential specialized transduction and return
-the plot visualizing the search results.
+Search contigs classified as prophage-like for potential specialized
+transduction and return the plot visualizing the search results.
 }
 \keyword{internal}

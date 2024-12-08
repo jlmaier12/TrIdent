@@ -1,9 +1,12 @@
 #' No pattern pattern-match
 #'
-#' A horizontal line at the mean or median coverage should be an optimal pattern-match
-#' if the contig read coverage displays no sloping or block patterns
+#' A horizontal line at the mean or median coverage should be an optimal
+#' pattern-match if the contig read coverage displays no sloping or block
+#' patterns
 #'
-#' @param viralSubset A subset of the read coverage pileup that pertains only to the contig currently being assessed
+#' @param viralSubset
+#' A subset of the read coverage pileup that pertains only to the contig
+#' currently being assessed
 #' @return List
 #' @keywords internal
 noPattern <- function (viralSubset) {
@@ -12,6 +15,7 @@ noPattern <- function (viralSubset) {
   diff1 <- mean(abs(viralSubset[,2] - pattern1))
   diff2 <- mean(abs(viralSubset[,2] - pattern2))
   diff <- ifelse(diff1 < diff2, diff1, diff2)
-  bestMatchInfo <- list(diff, mean(viralSubset[,2]), nrow(viralSubset), "NA", 1, nrow(viralSubset), "NA", "NoPattern")
+  bestMatchInfo <- list(diff, mean(viralSubset[,2]), nrow(viralSubset), "NA",
+                        1, nrow(viralSubset), "NA", "NoPattern")
   return(bestMatchInfo)
 }

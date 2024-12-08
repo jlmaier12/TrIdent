@@ -7,7 +7,8 @@
 blockBuilder(viralSubset, windowSize, minBlockSize, maxBlockSize)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
+currently being assessed}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 
@@ -19,6 +20,7 @@ blockBuilder(viralSubset, windowSize, minBlockSize, maxBlockSize)
 List containing three objects
 }
 \description{
-Build and translate a block pattern going off the left side, right side and full length of the contig.
+Build and translate a block pattern going off the left side, right side and
+full length of the contig.
 }
 \keyword{internal}

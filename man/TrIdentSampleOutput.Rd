@@ -19,11 +19,13 @@ A list with 5 objects:
 data('TrIdentSampleOutput')
 }
 \description{
-The TrIdentClassifier output from the VLPFractionSamplePileup and WholeCommunitySamplePileup files run with default parameters
+The TrIdentClassifier output from the VLPFractionSamplePileup and
+WholeCommunitySamplePileup files run with default parameters
 Report...
 }
 \details{
-A list object produced by the TrIdentClassifier function run on the VLPFractionSamplePileup
-and WholeCommunitySamplePileup files run with default parameters
+A list object produced by the TrIdentClassifier function run on the
+VLPFractionSamplePileup and WholeCommunitySamplePileup files run with
+default parameters
 }
 \keyword{internal}

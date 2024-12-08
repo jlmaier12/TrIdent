@@ -2,7 +2,8 @@
 % Please edit documentation in R/plotTrIdentResults.R
 \name{plotTrIdentResults}
 \alias{plotTrIdentResults}
-\title{Plot read coverage graphs of contigs classified as Prophage-like, Sloping, or HighCovNoPattern}
+\title{Plot read coverage graphs of contigs classified as Prophage-like, Sloping, or
+HighCovNoPattern}
 \usage{
 plotTrIdentResults(
   VLPpileup,
@@ -19,16 +20,20 @@ plotTrIdentResults(
 
 \item{TrIdentResults}{Output from `TrIdentClassifier()`.}
 
-\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern match-scores. A suggested filtering threshold is provided by `TrIdentClassifier()` if `suggFiltThresh=TRUE`.}
+\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern match-scores. A
+suggested filtering threshold is provided by `TrIdentClassifier()` if
+`suggFiltThresh=TRUE`.}
 
-\item{saveFilesTo}{Optional, Provide a path to the directory you wish to save output to. A folder will be made within  the provided directory to store results.}
+\item{saveFilesTo}{Optional, Provide a path to the directory you wish to save output to. A
+folder will be made within  the provided directory to store results.}
 }
 \value{
 Large list containing ggplot objects
 }
 \description{
-Plot the read coverages of a contig and its associated pattern-match for Prophage-like,
-Sloping and HighCovNoPattern classifications. Returns a list of ggplot objects.
+Plot the read coverages of a contig and its associated pattern-match for
+Prophage-like, Sloping and HighCovNoPattern classifications. Returns a list
+of ggplot objects.
 }
 \examples{
 data("VLPFractionSamplePileup")

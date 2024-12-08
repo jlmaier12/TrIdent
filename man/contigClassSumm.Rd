@@ -13,6 +13,7 @@ contigClassSumm(bestMatchList)
 dataframe
 }
 \description{
-Summarizes the classifications made in the patternMatcher function into a dataframe.
+Summarizes the classifications made in the patternMatcher function into a
+dataframe.
 }
 \keyword{internal}

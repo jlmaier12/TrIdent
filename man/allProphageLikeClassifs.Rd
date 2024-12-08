@@ -13,6 +13,7 @@ allProphageLikeClassifs(bestMatchList)
 List
 }
 \description{
-Collects pattern information associated with all contigs classified as Prophage-like.
+Collects pattern information associated with all contigs classified as
+Prophage-like.
 }
 \keyword{internal}

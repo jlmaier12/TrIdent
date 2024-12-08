@@ -9,6 +9,6 @@
 #' @return Dataframe
 #' @keywords internal
 NARemover <- function(x) {
-  do.call(cbind, lapply(x, is.nan))
-  }
+do.call(cbind, lapply(x, is.nan))
+}
 

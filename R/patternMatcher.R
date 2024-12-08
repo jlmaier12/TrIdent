@@ -1,32 +1,43 @@
 #' Main pattern-matching function
 #'
-#' Creates the viralSubset, representative of one contig, that is used as input for each individual
-#' pattern-matching function. After the information associated with the best match for each pattern
-#' is obtained, the pattern with the smallest match score is used to classify the contig being assessed.
-#' Prior to the pattern-matching, contigs smaller than the minContigLength and contigs without 5,000 bp of 10x
-#' read coverage are removed. Contigs less than 45,000 bp are matched against all three block pattern variations
-#' and the NoPattern pattern. Contigs greater than 45,000 bp are matched against all pattern varieties.
+#' Creates the viralSubset, representative of one contig, that is used as input
+#' for each individual pattern-matching function. After the information
+#' associated with the best match for each pattern is obtained, the pattern
+#' with the smallest match score is used to classify the contig being assessed.
+#' Prior to the pattern-matching, contigs smaller than the minContigLength and
+#' contigs without 5,000 bp of 10x read coverage are removed.
 #'
-#' @param VLPpileup A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs
-#' @param WCpileup A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs
+#' @param VLPpileup
+#' A table containing contig names, coverages averaged over 100 bp windows, and
+#' contig positions associated with mapping VLP-fraction reads to
+#' whole-community contigs
+#' @param WCpileup
+#' A table containing contig names, coverages averaged over 100 bp windows, and
+#' contig positions associated with mapping whole-community reads to
+#' whole-community contigs
 #' @param windowSize The window size used to re-average read coverage datasets
-#' @param minBlockSize The minimum size of the prophage-like block pattern. Default is 10,000 bp.
-#' @param maxBlockSize The maximum size of the prophage-like block pattern. Default is NA
-#' @param minContigLength The minimum contig size (in bp) to perform pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.
+#' @param minBlockSize
+#' The minimum size of the prophage-like block pattern. Default is 10,000 bp.
+#' @param maxBlockSize
+#' The maximum size of the prophage-like block pattern. Default is NA
+#' @param minContigLength
+#' The minimum contig size (in bp) to perform pattern-matching on. Must be at
+#' least 20,000 bp. Default is 30,000 bp.
 #' @param minSlope The minimum slope value to test for sloping patterns
 #' @return List containing three objects.
 #' @keywords internal
-patternMatcher <- function (VLPpileup, WCpileup, windowSize, minBlockSize, maxBlockSize, minContigLength, minSlope) {
+patternMatcher <- function (VLPpileup, WCpileup, windowSize, minBlockSize,
+                            maxBlockSize, minContigLength, minSlope) {
 contigNames <- unique(VLPpileup[,1])
 bestMatchList <- list()
 filteredOutContigs <- rep(NA, length(contigNames))
 reason <- rep(NA, length(contigNames))
 normMatchScore <- rep(NA, length(contigNames))
 refs <- rep(NA, length(contigNames))
-  A <- 1
-  B <- 1
-  C <- 1
-  lapply(seq_along(contigNames), function(p) {
+A <- 1
+B <- 1
+C <- 1
+lapply(seq_along(contigNames), function(p) {
     i <- contigNames[[p]]
     viralSubset <- VLPpileup[which(VLPpileup[,1] == i),]
     if(B == floor(length(contigNames) / 4)) message("A quarter of the way done with pattern matching")
@@ -45,7 +56,10 @@ refs <- rep(NA, length(contigNames))
       return(NULL)
     }
     viralSubset <- changeWindowSize(viralSubset, windowSize)
-    if(length(unique(viralSubset[,2])) != 1) blocksList <- blockBuilder(viralSubset, windowSize, minBlockSize, maxBlockSize)
+    if(length(unique(viralSubset[,2])) != 1) blocksList <- blockBuilder(viralSubset,
+                                                                        windowSize,
+                                                                        minBlockSize,
+                                                                        maxBlockSize)
     if(length(unique(viralSubset[,2])) == 1) {
       bestMatchSumm <- list(noPattern(viralSubset))
       bestMatchScoreSumm <- c(bestMatchSumm[[1]][[1]]) %>% as.numeric()
@@ -70,14 +84,15 @@ refs <- rep(NA, length(contigNames))
     normMatchScore[A] <<- bestMatch[[1]] / mean(viralSubset$coverage)
     refs[A] <<- i
     A <<- A+1
-  })
-  filteredOutContigs <- filteredOutContigs[!is.na(filteredOutContigs)]
-  reason <- reason[!is.na(reason)]
-  normMatchScore <- normMatchScore[!is.na(normMatchScore)]
-  refs <- refs[!is.na(refs)]
-  normMatchScoreTable <- cbind.data.frame(refs, normMatchScore)
-  colnames(normMatchScoreTable) <- c("contigName", "normMatchScore")
-  filteredOutSummaryTable <- cbind.data.frame(filteredOutContigs, reason)
-  patternMatchSummaryList <- list(bestMatchList, filteredOutSummaryTable, normMatchScoreTable)
-  return(patternMatchSummaryList)
+})
+filteredOutContigs <- filteredOutContigs[!is.na(filteredOutContigs)]
+reason <- reason[!is.na(reason)]
+normMatchScore <- normMatchScore[!is.na(normMatchScore)]
+refs <- refs[!is.na(refs)]
+normMatchScoreTable <- cbind.data.frame(refs, normMatchScore)
+colnames(normMatchScoreTable) <- c("contigName", "normMatchScore")
+filteredOutSummaryTable <- cbind.data.frame(filteredOutContigs, reason)
+patternMatchSummaryList <- list(bestMatchList, filteredOutSummaryTable,
+                                normMatchScoreTable)
+return(patternMatchSummaryList)
 }

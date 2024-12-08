@@ -7,9 +7,11 @@
 prophageLikeBorders(viralSubset, classificationPatterns, i, windowSize)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
+currently being assessed}
 
-\item{classificationPatterns}{The pattern match information associated with each contig classified as Prophage-like, Sloping, or HighCovNoPattern}
+\item{classificationPatterns}{The pattern match information associated with each contig classified as
+Prophage-like, Sloping, or HighCovNoPattern}
 
 \item{i}{The index for the contig currently being assessed}
 
@@ -19,7 +21,8 @@ prophageLikeBorders(viralSubset, classificationPatterns, i, windowSize)
 List
 }
 \description{
-Find borders of Prophage-like patterns with more specificity than pattern-matching using
-100 bp window pileups and sliding standard deviation technique.
+Find borders of Prophage-like patterns with more specificity than
+pattern-matching using 100 bp window pileups and sliding standard deviation
+technique.
 }
 \keyword{internal}

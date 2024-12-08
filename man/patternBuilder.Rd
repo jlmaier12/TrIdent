@@ -7,9 +7,11 @@
 patternBuilder(viralSubset, classifList, classification, i)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
+currently being assessed}
 
-\item{classifList}{A list containing pattern match information associated with all classified contigs.}
+\item{classifList}{A list containing pattern match information associated with all classified
+contigs.}
 
 \item{classification}{The contig's classification assigned by the TrIdentClassifier function}
 

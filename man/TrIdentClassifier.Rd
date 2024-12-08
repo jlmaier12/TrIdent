@@ -21,30 +21,39 @@ TrIdentClassifier(
 
 \item{WCpileup}{A whole-community pileup file.}
 
-\item{windowSize}{The number of basepairs to average read coverage values over. Options are 100, 200, 500, 1000 ONLY.  Default is 1000.}
+\item{windowSize}{The number of basepairs to average read coverage values over. Options are 100,
+200, 500, 1000 ONLY.  Default is 1000.}
 
 \item{minBlockSize}{The minimum size (in bp) of the Prophage-like block pattern. Default is 10000.}
 
-\item{maxBlockSize}{The maximum size (in bp) of the Prophage-like block pattern. Default is NA (no maximum).}
+\item{maxBlockSize}{The maximum size (in bp) of the Prophage-like block pattern. Default is NA
+(no maximum).}
 
-\item{minContigLength}{The minimum contig size (in bp) to perform pattern-matching on. Must be at least 25000. Default is 30000.}
+\item{minContigLength}{The minimum contig size (in bp) to perform pattern-matching on. Must be at
+least 25000. Default is 30000.}
 
-\item{minSlope}{The minimum slope value to test for sloping patterns. Default is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).}
+\item{minSlope}{The minimum slope value to test for sloping patterns. Default is 0.001
+(i.e minimum change of 10x read coverage over 100,000 bp).}
 
-\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold for TrIdent classifications based on the normalized pattern-match scores. Default is FALSE.}
+\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold for TrIdent classifications
+based on the normalized pattern-match scores. Default is FALSE.}
 
-\item{SaveFilesTo}{Optional, Provide a path to the directory you wish to save output to. A folder will be made within the provided directory to store results.}
+\item{SaveFilesTo}{Optional, Provide a path to the directory you wish to save output to. A
+folder will be made within the provided directory to store results.}
 }
 \value{
 Large list containing 5 objects
 }
 \description{
-Performs all the pattern-matching and summarizes the results into a list. The first item in the list
-is a table consisting of the summary information of all the contigs that passed through pattern-matching
-(i.e were not filtered out). The second item in the list is a table consisting of the summary information
-of all contigs that were classified via pattern-matching. The third item in the list contains the pattern-match
-information associated with each contig in the previous table. The fourth object in the list is a table containing the
-contigs that were filtered out prior to pattern-matching. The fifth item is the windowSize used for the search.
+Performs all the pattern-matching and summarizes the results into a list.
+The first item in the list is a table consisting of the summary information
+of all the contigs that passed through pattern-matching (i.e were not
+filtered out). The second item in the list is a table consisting of the
+summary information of all contigs that were classified via pattern-matching.
+The third item in the list contains the pattern-match information associated
+with each contig in the previous table. The fourth object in the list is a
+table containing the contigs that were filtered out prior to
+pattern-matching. The fifth item is the windowSize used for the search.
 }
 \examples{
 data("VLPFractionSamplePileup")

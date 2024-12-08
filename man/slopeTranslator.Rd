@@ -13,13 +13,15 @@ slopeTranslator(
 )
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
+currently being assessed}
 
 \item{bestMatchInfo}{The pattern-match information associated with the current best pattern match.}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 
-\item{leftOrRight}{The direction of the sloping pattern. Either "Left" for left to right (neg) slopes or "Right" for right to left (pos) slopes.}
+\item{leftOrRight}{The direction of the sloping pattern. Either "Left" for left to right (neg)
+slopes or "Right" for right to left (pos) slopes.}
 
 \item{pattern}{A vector containing the values associated with the sloping pattern}
 }
@@ -27,7 +29,8 @@ slopeTranslator(
 List
 }
 \description{
-Translates a sloping pattern containing the initial jump-up in read coverage across a contig.
-Translate the pattern 1000 bp at a time. Stop translating when the pattern left on the contig reaches 20,000 bp.
+Translates a sloping pattern containing the initial jump-up in read coverage
+across a contig. Translate the pattern 1000 bp at a time. Stop translating
+when the pattern left on the contig reaches 20,000 bp.
 }
 \keyword{internal}

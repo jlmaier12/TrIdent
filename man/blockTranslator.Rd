@@ -7,7 +7,8 @@
 blockTranslator(viralSubset, bestMatchInfo, windowSize, pattern)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
+currently being assessed}
 
 \item{bestMatchInfo}{The information associated with the current best pattern-match.}
 
@@ -19,6 +20,8 @@ blockTranslator(viralSubset, bestMatchInfo, windowSize, pattern)
 List
 }
 \description{
-Translates full block-pattern across a contig. Translate the pattern 1000 bp at a time. Stop translating when the pattern is 5000 bp from the end of the contig.
+Translates full block-pattern across a contig. Translate the pattern 1000 bp
+at a time. Stop translating when the pattern is 5000 bp from the end of the
+contig.
 }
 \keyword{internal}

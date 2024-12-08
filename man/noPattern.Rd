@@ -7,13 +7,15 @@
 noPattern(viralSubset)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
+currently being assessed}
 }
 \value{
 List
 }
 \description{
-A horizontal line at the mean or median coverage should be an optimal pattern-match
-if the contig read coverage displays no sloping or block patterns
+A horizontal line at the mean or median coverage should be an optimal
+pattern-match if the contig read coverage displays no sloping or block
+patterns
 }
 \keyword{internal}
