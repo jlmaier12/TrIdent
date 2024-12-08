@@ -11,6 +11,9 @@ slopeSumm(classifSumm, slopingClassifList)
 
 \item{slopingClassifList}{A list containing pattern match information associated with all contigs classified as sloping.}
 }
+\value{
+dataframe
+}
 \description{
 Add slope information for sloping classifications to summary table
 }

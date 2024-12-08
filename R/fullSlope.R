@@ -5,6 +5,7 @@
 #' @param viralSubset A subset of the read coverage pileup that pertains only to the contig currently being assessed
 #' @param windowSize The window size used to re-average read coverage pileup
 #' @param minSlope The minimum slope value to test for sloping patterns
+#' @return List containing two objects
 #' @keywords internal
 fullSlope <- function (viralSubset, windowSize, minSlope) {
   maxReadCov <- max(viralSubset[,2])

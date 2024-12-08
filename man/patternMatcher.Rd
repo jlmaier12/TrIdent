@@ -29,6 +29,9 @@ patternMatcher(
 
 \item{minSlope}{The minimum slope value to test for sloping patterns}
 }
+\value{
+List containing three objects.
+}
 \description{
 Creates the viralSubset, representative of one contig, that is used as input for each individual
 pattern-matching function. After the information associated with the best match for each pattern

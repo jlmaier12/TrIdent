@@ -17,6 +17,9 @@ makeFullSlopes(leftOrRight, viralSubset, newMax, minReadCov, windowSize)
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 }
+\value{
+List
+}
 \description{
 Makes slope patterns sloping either left to right (Left) or right to left (right) across the contig being assessed.
 }

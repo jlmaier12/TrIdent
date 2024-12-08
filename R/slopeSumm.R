@@ -4,6 +4,7 @@
 #'
 #' @param classifSumm Classification summary table
 #' @param slopingClassifList A list containing pattern match information associated with all contigs classified as sloping.
+#' @return dataframe
 #' @keywords internal
 slopeSumm <- function(classifSumm, slopingClassifList){
   classifSumm$slope <- rep(NA, nrow(classifSumm))

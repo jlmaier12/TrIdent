@@ -7,6 +7,7 @@
 #' @param classificationPatterns The pattern match information associated with each contig classified as Prophage-like, Sloping, or HighCovNoPattern
 #' @param i The index for the contig currently being assessed
 #' @param windowsize The window size used to re-average read coverage pileups
+#' @return List
 #' @importFrom roll roll_sd
 #' @keywords internal
 prophageLikeBorders <- function(viralSubset, classificationPatterns, i, windowSize) {

@@ -15,6 +15,9 @@ prophageLikeBorders(viralSubset, classificationPatterns, i, windowSize)
 
 \item{windowsize}{The window size used to re-average read coverage pileups}
 }
+\value{
+List
+}
 \description{
 Find borders of Prophage-like patterns with more specificity than pattern-matching using
 100 bp window pileups and sliding standard deviation technique.

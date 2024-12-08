@@ -6,6 +6,7 @@
 #' @param bestMatchInfo The information associated with the current best pattern-match.
 #' @param windowSize The window size used to re-average read coverage pileups
 #' @param pattern A vector containing the values associated with the block pattern
+#' @return List
 #' @keywords internal
 blockTranslator <- function(viralSubset, bestMatchInfo, windowSize, pattern){
   minPattern <- min(pattern)

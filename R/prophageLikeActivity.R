@@ -7,6 +7,7 @@
 #' @param VLPpileup A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs
 #' @param WCpileup A table containing contig names, coverages averaged over 100bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs
 #' @param windowSize The window size used to re-average read coverage datasets
+#' @return Dataframe
 #' @keywords internal
 prophageLikeActivity <- function(classifSummTable, prophageLikeClassifList, VLPpileup, WCpileup, windowSize){
   classifSummTable$prophageLikeRegionReadCov <- rep(NA, nrow(classifSummTable))

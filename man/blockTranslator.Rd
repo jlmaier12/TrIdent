@@ -15,6 +15,9 @@ blockTranslator(viralSubset, bestMatchInfo, windowSize, pattern)
 
 \item{pattern}{A vector containing the values associated with the block pattern}
 }
+\value{
+List
+}
 \description{
 Translates full block-pattern across a contig. Translate the pattern 1000 bp at a time. Stop translating when the pattern is 5000 bp from the end of the contig.
 }

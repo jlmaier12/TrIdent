@@ -35,6 +35,9 @@ specTransductionSearchAndPlot(
 
 \item{logScale}{If TRUE, coverage is plotted in log10. If FALSE, raw coverage values are plotted. Default is FALSE.}
 }
+\value{
+List containing two objects
+}
 \description{
 Search contigs classified as prophage-like for potential specialized transduction and return
 the plot visualizing the search results.

@@ -13,6 +13,9 @@ fullSlope(viralSubset, windowSize, minSlope)
 
 \item{minSlope}{The minimum slope value to test for sloping patterns}
 }
+\value{
+List containing two objects
+}
 \description{
 Build a sloping pattern that consists of a sloping line spanning the contig being assessed. The line slopes from left to right. The slope of the line is changed, but the pattern is not translated across the contig.
 }

@@ -11,6 +11,9 @@ allPatternMatches(bestMatchList, classifSummTable)
 
 \item{classifSummTable}{Classification summary table with whole-community:VLP-fraction read coverage ratios calculated.}
 }
+\value{
+List
+}
 \description{
 Collects pattern information associated with all contigs classified as Prophage-like, Sloping and HighCovNoPattern.
 }

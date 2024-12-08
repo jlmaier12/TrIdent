@@ -12,6 +12,7 @@
 #' @param classifSumm The summary information associated with each contig classified as Prophage-like, Sloping, or HighCovNoPattern
 #' @param contigName The reference name of the contig currently being assessed (i.e "NODE_1")
 #' @param logScale If TRUE, coverage is plotted in log10. If FALSE, raw coverage values are plotted. Default is FALSE.
+#' @return List containing two objects
 #' @keywords internal
 specTransductionSearchAndPlot <- function(contigName, VLPpileup, classifPatternMatches, classifSumm, windowSize, i, noReadCov, specTransLength, logScale){
   position <- logcoverage <- NULL
@@ -55,7 +56,8 @@ specTransductionSearchAndPlot <- function(contigName, VLPpileup, classifPatternM
              geom_vline(xintercept=specTransRight, color="red", alpha=alphaR, linewidth=1)+
              scale_x_continuous(expand = c(0, 0)) +
              theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
-                   panel.background=element_blank(), axis.line=element_line(colour="black"),text=element_text(size=15))+
+                   plot.subtitle=element_text(size=10), panel.background=element_blank(),
+                   axis.line=element_line(colour="black"),text=element_text(size=15))+
              labs(title=paste(contigName, classifPatternMatches[[i]][[8]], prophageLikeInfo),
                   subtitle=paste("Specialized transduction on left:", specTransSumm[3], ",", "on right:", specTransSumm[4]),
                   x="Contig Position (bp)",

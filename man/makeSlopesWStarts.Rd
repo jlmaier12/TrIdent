@@ -17,6 +17,9 @@ makeSlopesWStarts(leftOrRight, viralSubset, newMax, minReadCov, windowSize)
 
 \item{windowSize}{The window size used to re-average read coverage pileup}
 }
+\value{
+List
+}
 \description{
 Makes slope patterns sloping either left to right (Left) or right to left (right) across the contig being assessed.
 Slope patterns contain an initiation point.

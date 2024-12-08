@@ -4,6 +4,7 @@
 #'
 #' @param bestMatchList Classifications made with patternMatcher function.
 #' @param classifSummTable Classification summary table with whole-community:VLP-fraction read coverage ratios calculated.
+#' @return List
 #' @keywords internal
 allPatternMatches <- function(bestMatchList, classifSummTable){
   A <- 1

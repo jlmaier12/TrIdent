@@ -15,6 +15,9 @@ blockBuilder(viralSubset, windowSize, minBlockSize, maxBlockSize)
 
 \item{maxBlockSize}{The maximum size of the prophage-like block pattern. Default is NA.}
 }
+\value{
+List containing three objects
+}
 \description{
 Build and translate a block pattern going off the left side, right side and full length of the contig.
 }

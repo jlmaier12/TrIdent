@@ -9,6 +9,7 @@
 #' @param nonBlock Maximum non-block pattern length
 #' @param minReadCov Either 0 or the minimum VLP-fraction read coverage value
 #' @param cov The height value of the block pattern
+#' @return List containing two objects
 #' @keywords internal
 makeBlockPattern <- function(viralSubset, windowSize, fullLeftRight, blockLength, nonBlock, minReadCov, cov){
   #if (fullLeftRight == "Full") pattern <- c(rep(minReadCov, 10000 / windowSize), rep(cov, blockLength), rep(minReadCov, nonBlock))

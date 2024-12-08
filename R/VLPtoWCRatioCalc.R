@@ -7,6 +7,7 @@
 #' @param classifSumm Classification summary table
 #' @param WCpileup A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping whole-community reads to whole-community contigs
 #' @param VLPpileup  A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs
+#' @return dataframe
 #' @keywords internal
 VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup){
   classifSumm$VLPWCRatio <- rep(NA, nrow(classifSumm))

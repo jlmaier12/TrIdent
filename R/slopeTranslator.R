@@ -8,6 +8,7 @@
 #' @param windowSize The window size used to re-average read coverage pileups
 #' @param pattern A vector containing the values associated with the sloping pattern
 #' @param leftOrRight The direction of the sloping pattern. Either "Left" for left to right (neg) slopes or "Right" for right to left (pos) slopes.
+#' @return List
 #' @keywords internal
 slopeTranslator <- function(viralSubset, bestMatchInfo, windowSize, slopeChange, leftOrRight){
   pattern <- slopeChange[[1]]

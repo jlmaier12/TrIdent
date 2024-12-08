@@ -8,6 +8,7 @@
 #' @param cov The value for the top of the slope
 #' @param viralSubset A subset of the read coverage pileup that pertains only to the contig currently being assessed
 #' @param windowSize The window size used to re-average read coverage pileup
+#' @return List
 #' @keywords internal
 #'
 changeSlopeWStart <- function(leftOrRight, slopeBottom, slopeBottomChange, cov, viralSubset, windowSize){

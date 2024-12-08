@@ -15,6 +15,9 @@ zeroCountSearch(startOrEnd, viralSubsetZoom, startOrEndPosRow, noReadCov)
 
 \item{noReadCov}{How many bp of no read coverage are encountered before specialized transduction searching stops? Default is 500.}
 }
+\value{
+List
+}
 \description{
 Checks to see at which point the number of consecutive zero values to the left and right of the prophage-like pattern match borders equals the noReadCov parameter
 }

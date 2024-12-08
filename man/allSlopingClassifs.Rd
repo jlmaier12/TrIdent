@@ -9,6 +9,9 @@ allSlopingClassifs(bestMatchList)
 \arguments{
 \item{bestMatchList}{Classifications made with patternMatcher function.}
 }
+\value{
+List
+}
 \description{
 Collects pattern information associated with all contigs classified as Sloping in the patternMatcher function.
 }

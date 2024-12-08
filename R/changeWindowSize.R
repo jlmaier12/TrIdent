@@ -4,6 +4,7 @@
 #'
 #' @param cleanPileup A read coverage dataset that has been cleaned and reformatted by the readcovdf_formatter function
 #' @param windowSize The number of base pairs to average coverage values over. Options are 100, 500, 1000, or 2000 only!
+#' @return Dataframe
 #' @keywords internal
 changeWindowSize <- function(cleanPileup, windowSize){
   coverage <- rep(NA, nrow(cleanPileup))

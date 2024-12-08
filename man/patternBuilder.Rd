@@ -15,6 +15,9 @@ patternBuilder(viralSubset, classifList, classification, i)
 
 \item{i}{The list index associated with each contig's pattern-match information}
 }
+\value{
+Vector
+}
 \description{
 Builds the pattern (vector) associated with the 'best pattern-match' for each
 contig classified as Prophage-like, Sloping, or HighCovNoPattern.

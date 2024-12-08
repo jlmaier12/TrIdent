@@ -13,6 +13,9 @@ slopeWithStart(viralSubset, windowSize, minSlope)
 
 \item{minSlope}{The minimum slope value to test for sloping patterns}
 }
+\value{
+List containing two objects
+}
 \description{
 Build, translate, and change slope of sloping pattern with slope start
 }

@@ -13,6 +13,9 @@ patternMatchSize(classifSumm, classifList, windowSize)
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 }
+\value{
+dataframe
+}
 \description{
 Calculate the size (bp) of the matching region for Prophage-like and Sloping patterns
 }

@@ -7,6 +7,7 @@
 #' @param newMax A value for the top of the sloping pattern that is slightly higher than the maximum coverage value on the viralSubset
 #' @param minReadCov Minimum read coverage value of the viralSubset
 #' @param windowSize The window size used to re-average read coverage pileups
+#' @return List
 #' @keywords internal
 makeFullSlopes <- function(leftOrRight, viralSubset, newMax, minReadCov, windowSize){
   contigCoverage <- viralSubset[,2]

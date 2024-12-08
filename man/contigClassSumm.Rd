@@ -9,6 +9,9 @@ contigClassSumm(bestMatchList)
 \arguments{
 \item{bestMatchList}{Classifications made with patternMatcher function.}
 }
+\value{
+dataframe
+}
 \description{
 Summarizes the classifications made in the patternMatcher function into a dataframe.
 }

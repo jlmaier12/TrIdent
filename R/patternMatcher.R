@@ -14,6 +14,7 @@
 #' @param maxBlockSize The maximum size of the prophage-like block pattern. Default is NA
 #' @param minContigLength The minimum contig size (in bp) to perform pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.
 #' @param minSlope The minimum slope value to test for sloping patterns
+#' @return List containing three objects.
 #' @keywords internal
 patternMatcher <- function (VLPpileup, WCpileup, windowSize, minBlockSize, maxBlockSize, minContigLength, minSlope) {
 contigNames <- unique(VLPpileup[,1])

@@ -13,6 +13,9 @@ VLPtoWCRatioCalc(classifSumm, WCpileup, VLPpileup)
 
 \item{VLPpileup}{A table containing contig names, coverages averaged over 100 bp windows, and contig positions associated with mapping VLP-fraction reads to whole-community contigs}
 }
+\value{
+dataframe
+}
 \description{
 Calculate the VLP-fraction:whole-community read coverage ratio for every contig using the median
 read coverage values. If the ratio is greater than 2 (i.e VLP-fraction read coverage

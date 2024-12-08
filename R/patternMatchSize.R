@@ -5,6 +5,7 @@
 #' @param classifSumm Classification summary table
 #' @param classifList A list containing pattern match information associated with all contig classifications
 #' @param windowSize The window size used to re-average read coverage pileups
+#' @return dataframe
 #' @keywords internal
 patternMatchSize <- function(classifSumm, classifList, windowSize){
   message("Determining sizes (bp) of pattern matches")

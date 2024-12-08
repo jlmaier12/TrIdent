@@ -17,6 +17,9 @@ prophageLikeZoom(viralSubset, classificationPatterns, i, zoom, windowSize)
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 }
+\value{
+Dataframe
+}
 \description{
 'Zoom-in' on (aka subset) desired region surrounding block pattern.
 }

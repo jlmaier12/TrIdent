@@ -23,6 +23,9 @@ slopeTranslator(
 
 \item{pattern}{A vector containing the values associated with the sloping pattern}
 }
+\value{
+List
+}
 \description{
 Translates a sloping pattern containing the initial jump-up in read coverage across a contig.
 Translate the pattern 1000 bp at a time. Stop translating when the pattern left on the contig reaches 20,000 bp.

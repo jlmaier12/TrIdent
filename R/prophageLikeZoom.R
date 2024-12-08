@@ -7,6 +7,7 @@
 #' @param i The index for the contig currently being assessed
 #' @param zoom The number of rows outside the start and stop positions of the block pattern to zoom-in on
 #' @param windowSize The window size used to re-average read coverage pileups
+#' @return Dataframe
 #' @keywords internal
 prophageLikeZoom <- function (viralSubset, classificationPatterns, i, zoom, windowSize) {
   startRowIdx <- classificationPatterns[[i]][[5]] * windowSize / 100

@@ -26,6 +26,9 @@ changeSlopeWStart(
 
 \item{windowSize}{The window size used to re-average read coverage pileup}
 }
+\value{
+List
+}
 \description{
 Change the value of the slope used for the sloping with start pattern-match
 }

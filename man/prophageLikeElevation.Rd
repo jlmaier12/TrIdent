@@ -23,6 +23,9 @@ prophageLikeElevation(
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 }
+\value{
+dataframe
+}
 \description{
 Determines whether a detected Prophage-like genetic element has read coverage in the whole-community
 that is either elevated or depressed compared to the average read coverage of the non-prophage region.

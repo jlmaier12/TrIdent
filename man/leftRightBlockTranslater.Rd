@@ -32,6 +32,9 @@ leftRightBlockTranslater(
 
 \item{minBlockSize}{The minimum size of the Prophage-like block pattern. Default is 10,000 bp.}
 }
+\value{
+List
+}
 \description{
 Translates left and right block patterns across contigs 1000 bp at a time
 }

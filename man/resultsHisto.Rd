@@ -11,6 +11,9 @@ resultsHisto(summaryList, suggFiltThresh)
 
 \item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold on the output pattern-match score histogram. Default is FALSE.}
 }
+\value{
+ggplot object
+}
 \description{
 Plots a histogram of normalized match scores for all Prophage-like, Sloping and HighCovNoPattern classifications
 and colors the plot based on the classifications. A suggested filtering threshold is provided for filtering results

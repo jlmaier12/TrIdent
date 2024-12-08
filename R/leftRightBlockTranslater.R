@@ -10,6 +10,7 @@
 #' @param cov The height value currently being used for the block pattern
 #' @param bestMatchInfo The information associated with the current best pattern match.
 #' @param minBlockSize The minimum size of the Prophage-like block pattern. Default is 10,000 bp.
+#' @return List
 #' @keywords internal
 leftRightBlockTranslater <- function(viralSubset, pattern, leftOrRight, windowSize, minReadCov, cov, bestMatchInfo, minBlockSize){
   repeat {

@@ -7,6 +7,7 @@
 #' @param classifList A list containing pattern match information associated with all classified contigs.
 #' @param i The list index associated with each contig's pattern-match information
 #' @param classification The contig's classification assigned by the TrIdentClassifier function
+#' @return Vector
 #' @keywords internal
 patternBuilder <- function(viralSubset, classifList, classification, i) {
   minReadCov <- classifList[[i]][[2]]

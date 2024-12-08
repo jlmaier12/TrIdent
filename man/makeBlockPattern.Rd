@@ -29,6 +29,9 @@ makeBlockPattern(
 
 \item{cov}{The height value of the block pattern}
 }
+\value{
+List containing two objects
+}
 \description{
 Make full, left and right block patterns for Prophage-like classifications
 }

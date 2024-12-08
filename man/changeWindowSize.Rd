@@ -11,6 +11,9 @@ changeWindowSize(cleanPileup, windowSize)
 
 \item{windowSize}{The number of base pairs to average coverage values over. Options are 100, 500, 1000, or 2000 only!}
 }
+\value{
+Dataframe
+}
 \description{
 Re-averages window sizes of read coverage averages. Start with 100bp windows always. Cannot make window size less than 100bp.
 }
