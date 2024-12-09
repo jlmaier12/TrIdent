@@ -2,9 +2,8 @@
 #'
 #' Build, translate, and change slope of sloping pattern with slope start
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
 #' @param windowSize The window size used to re-average read coverage pileups
 #' @param minSlope The minimum slope value to test for sloping patterns
 #' @return List containing two objects

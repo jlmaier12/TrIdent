@@ -3,11 +3,10 @@
 #' Re-averages window sizes of read coverage averages. Start with 100bp windows
 #' always. Cannot make window size less than 100bp.
 #'
-#' @param cleanPileup
-#' A read coverage dataset that has been cleaned and reformatted.
-#' @param windowSize
-#' The number of base pairs to average coverage values over. Options are 100,
-#' 500, 1000, or 2000 only!
+#' @param cleanPileup A read coverage dataset that has been cleaned and
+#'   reformatted.
+#' @param windowSize The number of base pairs to average coverage values over.
+#'   Options are 100, 500, 1000, or 2000 only!
 #' @return Dataframe
 #' @keywords internal
 changeWindowSize <- function(cleanPileup, windowSize) {

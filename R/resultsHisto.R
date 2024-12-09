@@ -1,18 +1,14 @@
 #' Create histogram of normalized pattern-match scores
 #'
-#' Plots a histogram of normalized match scores for all
-#' Prophage-like, Sloping and HighCovNoPattern classifications
-#' and colors the plot based on the classifications. A suggested
-#' filtering threshold is provided for filtering
+#' Plots a histogram of normalized match scores for all Prophage-like, Sloping
+#' and HighCovNoPattern classifications and colors the plot based on the
+#' classifications. A suggested filtering threshold is provided for filtering
 #' results based on the quality of the pattern-match.
 #'
-#' @param summaryList
-#'  Classification summary table filtered to only include
-#'  contigs with Prophage-like, Sloping and HighCovNoPattern
-#'  classifications
-#' @param suggFiltThresh
-#'  TRUE or FALSE, Suggest a filtering threshold on the
-#'  output pattern-match score histogram. Default is FALSE.
+#' @param summaryList Classification summary table filtered to only include
+#'   contigs with Prophage-like, Sloping and HighCovNoPattern classifications
+#' @param suggFiltThresh TRUE or FALSE, Suggest a filtering threshold on the
+#'   output pattern-match score histogram. Default is FALSE.
 #' @return ggplot object
 #' @keywords internal
 resultsHisto <- function(summaryList, suggFiltThresh) {

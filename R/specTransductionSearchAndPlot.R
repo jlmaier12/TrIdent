@@ -3,29 +3,23 @@
 #' Search contigs classified as prophage-like for potential specialized
 #' transduction and return the plot visualizing the search results.
 #'
-#' @param VLPpileup
-#' A table containing contig names, coverages averaged over 100 bp windows, and
-#' contig positions associated with mapping VLP-fraction reads to
-#' whole-community contigs
-#' @param classifPatternMatches
-#' The pattern match information associated with each contig classified as
-#' prophage-like,  sloping, or HighCovNoPattern
+#' @param VLPpileup A table containing contig names, coverages averaged over 100
+#'   bp windows, and contig positions associated with mapping VLP-fraction reads
+#'   to whole-community contigs
+#' @param classifPatternMatches The pattern match information associated with
+#'   each contig classified as prophage-like,  sloping, or HighCovNoPattern
 #' @param windowSize The window size used to re-average read coverage pileups
 #' @param i The index for the contig currently being assessed
-#' @param noReadCov
-#' How many bp of no read coverage are encountered before searching stops?
-#' Default is 500.
-#' @param specTransLength
-#' How many bp of read coverage to look for outside of prophage borders?
-#' Default is 2000.
-#' @param classifSumm
-#' The summary information associated with each contig classified as
-#' Prophage-like, Sloping, or HighCovNoPattern
-#' @param contigName
-#' The reference name of the contig currently being assessed (i.e "NODE_1")
-#' @param logScale
-#' If TRUE, coverage is plotted in log10. If FALSE, raw coverage values are
-#' plotted. Default is FALSE.
+#' @param noReadCov How many bp of no read coverage are encountered before
+#'   searching stops? Default is 500.
+#' @param specTransLength How many bp of read coverage to look for outside of
+#'   prophage borders? Default is 2000.
+#' @param classifSumm The summary information associated with each contig
+#'   classified as Prophage-like, Sloping, or HighCovNoPattern
+#' @param contigName The reference name of the contig currently being assessed
+#'   (i.e "NODE_1")
+#' @param logScale If TRUE, coverage is plotted in log10. If FALSE, raw coverage
+#'   values are plotted. Default is FALSE.
 #' @return List containing two objects
 #' @keywords internal
 specTransductionSearchAndPlot <- function(contigName,
@@ -39,9 +33,11 @@ specTransductionSearchAndPlot <- function(contigName,
                                             logScale) {
     position <- logcoverage <- NULL
     specTransSumm <- c(contigName, rep(NA, 5))
-    if (classifSumm[which(classifSumm[, 1] == contigName), 6] == "Elevated") {
+    if (classifSumm[which(classifSumm[, 1] == contigName),
+                    6] == "Elevated") {
         prophageLikeInfo <- "Highly active/abundant prophage-like element"
-    } else if (classifSumm[which(classifSumm[, 1] == contigName), 6] == "Depressed") {
+    } else if (classifSumm[which(classifSumm[, 1] == contigName),
+                           6] == "Depressed") {
         prophageLikeInfo <-
             "Not homogenously present/integrated prophage-like element"
     } else {

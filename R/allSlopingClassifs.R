@@ -1,10 +1,9 @@
-#' Collects Sloping classification pattern-match information
+#' Collects Sloping classification pattern-match i nformation
 #'
-#' Collects pattern information associated with all
-#' contigs classified as Sloping in the patternMatcher function.
+#' Collects pattern information associated with all contigs classified as
+#' Sloping in the patternMatcher function.
 #'
-#' @param bestMatchList
-#'  Classifications made with patternMatcher function.
+#' @param bestMatchList Classifications made with patternMatcher function.
 #' @return List
 #' @keywords internal
 allSlopingClassifs <- function(bestMatchList) {

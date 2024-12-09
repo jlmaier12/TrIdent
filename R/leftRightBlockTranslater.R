@@ -2,20 +2,18 @@
 #'
 #' Translates left and right block patterns across contigs 1000 bp at a time
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
 #' @param pattern The pattern vector being translated
 #' @param leftOrRight Is the left or right block pattern being translated
 #' @param windowSize The window size used to re-average read coverage pileups
-#' @param minReadCov
-#' The baseline value used for the region outside of the block pattern (either
-#' 0 or the minimum VLP-fraction read coverage for the contig)
+#' @param minReadCov The baseline value used for the region outside of the block
+#'   pattern (either 0 or the minimum VLP-fraction read coverage for the contig)
 #' @param cov The height value currently being used for the block pattern
-#' @param bestMatchInfo
-#' The information associated with the current best pattern match.
-#' @param minBlockSize
-#' The minimum size of the Prophage-like block pattern. Default is 10,000 bp.
+#' @param bestMatchInfo The information associated with the current best
+#'   pattern-match.
+#' @param minBlockSize The minimum size of the Prophage-like block pattern.
+#'   Default is 10,000 bp.
 #' @return List
 #' @keywords internal
 leftRightBlockTranslater <-
@@ -42,7 +40,8 @@ leftRightBlockTranslater <-
                         ) - 1)):length(pattern))]
                 )
             }
-            if (length(which(pattern == cov)) < (minBlockSize / windowSize) + 1) {
+            if (length(which(pattern == cov)) <
+                (minBlockSize / windowSize) + 1) {
                 break
             }
             diff <- mean(abs(viralSubset[, 2] - pattern))

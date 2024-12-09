@@ -1,26 +1,19 @@
-#' Determine Prophage-like read coverage elevation
-#' in whole-community
+#' Determine Prophage-like read coverage elevation in whole-community
 #'
-#' Determines whether a detected Prophage-like genetic
-#' element has read coverage in the whole-community that
-#' is either elevated or depressed compared to the
+#' Determines whether a detected Prophage-like genetic element has read coverage
+#' in the whole-community that is either elevated or depressed compared to the
 #' average read coverage of the non-prophage region.
 #'
-#' @param classifSummTable
-#'  Classification summary table
-#' @param prophageLikeClassifList
-#'  A list containing pattern match information associated
-#'  with all contigs classified as Prophage-like.
-#' @param VLPpileup
-#'  A table containing contig names, coverages averaged over
-#'  100 bp windows, and contig positions associated with
-#'  mapping VLP-fraction reads to whole-community contigs
-#' @param WCpileup
-#'  A table containing contig names, coverages averaged
-#'  over 100 bp windows, and contig positions associated with
-#'  mapping whole-community reads to whole-community contigs
-#' @param windowSize
-#' The window size used to re-average read coverage pileups
+#' @param classifSummTable Classification summary table
+#' @param prophageLikeClassifList A list containing pattern match information
+#'   associated with all contigs classified as Prophage-like.
+#' @param VLPpileup A table containing contig names, coverages averaged over 100
+#'   bp windows, and contig positions associated with mapping VLP-fraction reads
+#'   to whole-community contigs
+#' @param WCpileup A table containing contig names, coverages averaged over 100
+#'   bp windows, and contig positions associated with mapping whole-community
+#'   reads to whole-community contigs
+#' @param windowSize The window size used to re-average read coverage pileups
 #' @return dataframe
 #' @keywords internal
 prophageLikeElevation <-
@@ -65,15 +58,17 @@ prophageLikeElevation <-
                 round(mean(prophageLikeRegion) / mean(nonProphageLikeRegion),
                     digits = 4
                 )
-            classifSummTable[which(classifSummTable[, 1] == contigName), 9] <<- ratio
+            classifSummTable[which(classifSummTable[, 1] ==
+                                     contigName), 9] <<- ratio
             if (ratio > 1.15) {
-                classifSummTable[which(classifSummTable[, 1] == contigName), 8] <<-
-                    "Elevated"
+                classifSummTable[which(classifSummTable[, 1] ==
+                                         contigName), 8] <<- "Elevated"
             } else if (ratio < 0.75) {
-                classifSummTable[which(classifSummTable[, 1] == contigName), 8] <<-
-                    "Depressed"
+                classifSummTable[which(classifSummTable[, 1] ==
+                                         contigName), 8] <<- "Depressed"
             } else {
-                classifSummTable[which(classifSummTable[, 1] == contigName), 8] <<- "None"
+                classifSummTable[which(classifSummTable[, 1] ==
+                                         contigName), 8] <<- "None"
             }
         })
         return(classifSummTable)

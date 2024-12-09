@@ -3,14 +3,13 @@
 #' Build and translate a block pattern going off the left side, right side and
 #' full length of the contig.
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
 #' @param windowSize The window size used to re-average read coverage pileups
-#' @param minBlockSize
-#' The minimum size of the prophage-like block pattern. Default is 10000 bp.
-#' @param maxBlockSize
-#' The maximum size of the prophage-like block pattern. Default is NA.
+#' @param minBlockSize The minimum size of the prophage-like block pattern.
+#'   Default is 10000 bp.
+#' @param maxBlockSize The maximum size of the prophage-like block pattern.
+#'   Default is NA.
 #' @return List containing three objects
 #' @keywords internal
 blockBuilder <-
@@ -135,7 +134,8 @@ blockBuilder <-
                     break
                 }
                 patternFull <- c(
-                    patternFull[-c(middleRows[2]:middleRows[(1000 / windowSize) + 1])],
+                    patternFull[-c(middleRows[2]:
+                                     middleRows[(1000 / windowSize) + 1])],
                     rep(minReadCov, 1000 / windowSize)
                 )
             }

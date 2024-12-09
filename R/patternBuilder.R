@@ -1,18 +1,16 @@
 #' Pattern-builder
 #'
-#' Builds the pattern (vector) associated with the 'best pattern-match' for each
+#' Builds the pattern (vector) associated with the best pattern-match' for each
 #' contig classified as Prophage-like, Sloping, or HighCovNoPattern.
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
-#' @param classifList
-#' A list containing pattern match information associated with all classified
-#' contigs.
-#' @param i
-#' The list index associated with each contig's pattern-match information
-#' @param classification
-#' The contig's classification assigned by the TrIdentClassifier function
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
+#' @param classifList A list containing pattern match information associated
+#'   with all classified contigs.
+#' @param i The list index associated with each contig's pattern-match
+#'   information
+#' @param classification The contig's classification assigned by the
+#'   TrIdentClassifier function
 #' @return Vector
 #' @keywords internal
 patternBuilder <-
@@ -95,7 +93,8 @@ patternBuilder <-
                     )
                 )
             }
-            ## for NoPattern, min read cov=med read cov and max read cov=contig length
+            ##for NoPattern, min read cov = med read cov and
+            ##max read cov = contig length
         } else if (classification == "HighCovNoPattern") {
             pattern <- rep(
                 minReadCov,

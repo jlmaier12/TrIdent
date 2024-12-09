@@ -1,10 +1,9 @@
 #' Summarizes pattern-match information
 #'
-#' Summarizes the classifications made in the
-#' patternMatcher() function into a dataframe.
+#' Summarizes the classifications made in the patternMatcher() function into a
+#' dataframe.
 #'
-#' @param bestMatchList
-#'  Classifications made with patternMatcher function.
+#' @param bestMatchList Classifications made with patternMatcher function.
 #' @return dataframe
 #' @keywords internal
 contigClassSumm <- function(bestMatchList) {

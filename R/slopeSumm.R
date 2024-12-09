@@ -3,9 +3,8 @@
 #' Add slope information for sloping classifications to summary table
 #'
 #' @param classifSumm Classification summary table
-#' @param slopingClassifList
-#'  A list containing pattern match information
-#'  associated with all contigs classified as sloping.
+#' @param slopingClassifList A list containing pattern match information
+#'   associated with all contigs classified as sloping.
 #' @return dataframe
 #' @keywords internal
 slopeSumm <- function(classifSumm, slopingClassifList) {

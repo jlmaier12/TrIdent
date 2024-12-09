@@ -1,24 +1,19 @@
-#' Plot read coverage graphs of contigs classified as
-#' Prophage-like, Sloping, or HighCovNoPattern
+#' Plot read coverage graphs of contigs classified as Prophage-like, Sloping, or
+#' HighCovNoPattern
 #'
-#' Plot the read coverages of a contig and its associated
-#' pattern-match for Prophage-like, Sloping and HighCovNoPattern
-#' classifications. Returns a list of ggplot objects.
+#' Plot the read coverages of a contig and its associated pattern-match for
+#' Prophage-like, Sloping and HighCovNoPattern classifications. Returns a list
+#' of ggplot objects.
 #'
-#' @param VLPpileup
-#'  VLP-fraction pileup file.
-#' @param WCpileup
-#'  Whole-community pileup file.
-#' @param TrIdentResults
-#'  Output from `TrIdentClassifier()`.
-#' @param matchScoreFilter
-#'  Optional, Filter plots using the normalized pattern
-#'  match-scores. A suggested filtering threshold is
-#'  provided by `TrIdentClassifier()` if `suggFiltThresh=TRUE`.
-#' @param saveFilesTo
-#'  Optional, Provide a path to the directory you wish to
-#'  save output to. A folder will be made within the provided
-#'  directory to store results.
+#' @param VLPpileup VLP-fraction pileup file.
+#' @param WCpileup Whole-community pileup file.
+#' @param TrIdentResults Output from `TrIdentClassifier()`.
+#' @param matchScoreFilter Optional, Filter plots using the normalized pattern
+#'   match-scores. A suggested filtering threshold is provided by
+#'   `TrIdentClassifier()` if `suggFiltThresh=TRUE`.
+#' @param saveFilesTo Optional, Provide a path to the directory you wish to save
+#'   output to. A folder will be made within the provided directory to store
+#'   results.
 #' @return Large list containing ggplot objects
 #' @export
 #' @examples
@@ -84,7 +79,8 @@ plotTrIdentResults <- function(VLPpileup,
             } else if (patternMatchInfo[8] == "Elevated") {
                 subtitleInfo <- "Active/highly abundant Prophage-like element"
             } else if (patternMatchInfo[8] == "Depressed") {
-                subtitleInfo <- "Not homogenously integrated Prophage-like element"
+                subtitleInfo <- "Not homogenously integrated Prophage-like
+                element"
             } else {
                 subtitleInfo <- NULL
             }
@@ -117,7 +113,6 @@ plotTrIdentResults <- function(VLPpileup,
                     l = 2
                 )
             )
-
         Overlay_plot <-
             ggplot(data = patternMatch, aes(x = position, y = coverage)) +
             geom_area(fill = "deepskyblue3") +
@@ -125,7 +120,8 @@ plotTrIdentResults <- function(VLPpileup,
                 color = "black",
                 linewidth = 1
             ) +
-            labs(x = "Contig position (bp)", y = "VLP-fraction \n read coverage") +
+            labs(x = "Contig position (bp)", y = "VLP-fraction \n
+                 read coverage") +
             scale_x_continuous(expand = c(0, 0)) +
             theme(
                 panel.grid.major = element_blank(),
@@ -141,19 +137,18 @@ plotTrIdentResults <- function(VLPpileup,
                     l = 2
                 )
             )
-
         contigNames <<- c(contigNames, contigName)
         combined_plot <- (wholecomm_plot / Overlay_plot)
         combined_plot
     })
     plots <- Filter(Negate(is.null), plots)
     names(plots) <- contigNames
-
     if (missing(saveFilesTo) == FALSE) {
         ifelse(!dir.exists(paths = paste0(saveFilesTo, "\\TrIdentOutput")),
             dir.create(paste0(saveFilesTo, "\\TrIdentOutput")),
             stop(
-                "'TrIdentOutput' folder exists already in the provided directory"
+                "'TrIdentOutput' folder exists already in the provided
+                directory"
             )
         )
         lapply(

@@ -2,9 +2,8 @@
 #'
 #' Make full, left and right block patterns for Prophage-like classifications
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
 #' @param windowSize The window size used to re-average read coverage pileups
 #' @param fullLeftRight The block pattern variation being built
 #' @param blockLength Maximum block pattern length
@@ -46,7 +45,8 @@ makeBlockPattern <- function(viralSubset,
         )
     endPos <-
         if (fullLeftRight == "Full") {
-            which(pattern == max(pattern))[length(which(pattern == max(pattern)))]
+            which(pattern == max(pattern))[length(which(pattern ==
+                                                          max(pattern)))]
         } else if (fullLeftRight == "Left") {
             (which(pattern == min(pattern))[1]) - 1
         } else {

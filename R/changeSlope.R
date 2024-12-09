@@ -2,22 +2,15 @@
 #'
 #' Change the value of the slope used for the sloping pattern-match
 #'
-#' @param leftOrRight
-#'  Generate pattern for negative slope
-#'  (left to right, i.e. 'Left') or
-#'  positive slope (right to left, i.e. 'Right')
-#' @param slopeBottom
-#'  The value for the bottom of the sloping value
-#' @param halfToMaxReadCov
-#'  Half of the max VLP-fraction read coverage
-#'  divided by 10
-#' @param cov
-#'  The value for the top of the slope
-#' @param viralSubset
-#'  A subset of the read coverage pileup that pertains
-#'  only to the contig currently being assessed
-#' @param windowSize
-#'  The window size used to re-average read coverage pileup
+#' @param leftOrRight Generate pattern for negative slope (left to right, i.e.
+#'   'Left') or positive slope (right to left, i.e. 'Right')
+#' @param slopeBottom The value for the bottom of the sloping value
+#' @param halfToMaxReadCov Half of the max VLP-fraction read coverage divided by
+#'   10
+#' @param cov The value for the top of the slope
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
+#' @param windowSize The window size used to re-average read coverage pileup
 #' @return List
 #' @keywords internal
 changeSlope <-

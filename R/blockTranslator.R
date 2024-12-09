@@ -4,14 +4,13 @@
 #' at a time. Stop translating when the pattern is 5000 bp from the end of the
 #' contig.
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
-#' @param bestMatchInfo
-#' The information associated with the current best pattern-match.
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
+#' @param bestMatchInfo The information associated with the current best
+#'   pattern-match.
 #' @param windowSize The window size used to re-average read coverage pileups
-#' @param pattern
-#' A vector containing the values associated with the block pattern
+#' @param pattern A vector containing the values associated with the block
+#'   pattern
 #' @return List
 #' @keywords internal
 blockTranslator <-

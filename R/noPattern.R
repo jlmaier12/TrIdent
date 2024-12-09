@@ -4,9 +4,8 @@
 #' pattern-match if the contig read coverage displays no sloping or block
 #' patterns
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
 #' @return List
 #' @keywords internal
 noPattern <- function(viralSubset) {

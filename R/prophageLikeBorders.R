@@ -4,12 +4,10 @@
 #' pattern-matching using 100 bp window pileups and sliding standard deviation
 #' technique.
 #'
-#' @param viralSubset
-#' A subset of the read coverage pileup that pertains only to the contig
-#' currently being assessed
-#' @param classificationPatterns
-#' The pattern match information associated with each contig classified as
-#' Prophage-like, Sloping, or HighCovNoPattern
+#' @param viralSubset A subset of the read coverage pileup that pertains only to
+#'   the contig currently being assessed
+#' @param classificationPatterns The pattern match information associated with
+#'   each contig classified as Prophage-like, Sloping, or HighCovNoPattern
 #' @param i The index for the contig currently being assessed
 #' @param windowsize The window size used to re-average read coverage pileups
 #' @return List
@@ -32,7 +30,11 @@ prophageLikeBorders <-
             rollingSd <- roll_sd(leftSubset, width = 2)
             rollingSdNoNA <- rollingSd[-is.na(rollingSd)]
             leftBorderRowIdx <-
-                which(rollingSd == sort(rollingSdNoNA, TRUE)[1])[length(which(rollingSd == sort(rollingSdNoNA, TRUE)[1]))]
+                which(rollingSd ==
+                        sort(rollingSdNoNA,
+                             TRUE)[1])[length(which(rollingSd ==
+                                                      sort(rollingSdNoNA,
+                                                           TRUE)[1]))]
             leftBorderRowIdx <- searchStartRowIdx + leftBorderRowIdx
         }
         if (endRowIdx + 1 == (nrow(viralSubset))) {

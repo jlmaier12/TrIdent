@@ -1,15 +1,12 @@
 #' Pattern-match size calculator
 #'
-#' Calculate the size (bp) of the matching region
-#' for Prophage-like and Sloping patterns
+#' Calculate the size (bp) of the matching region for Prophage-like and Sloping
+#' patterns
 #'
-#' @param classifSumm
-#'  Classification summary table
-#' @param classifList
-#'  A list containing pattern match information associated
-#'  with all contig classifications
-#' @param windowSize The window size used to re-average
-#' read coverage pileups
+#' @param classifSumm Classification summary table
+#' @param classifList A list containing pattern match information associated
+#'   with all contig classifications
+#' @param windowSize The window size used to re-average read coverage pileups
 #' @return dataframe
 #' @keywords internal
 patternMatchSize <- function(classifSumm, classifList, windowSize) {

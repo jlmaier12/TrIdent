@@ -5,17 +5,14 @@
 #' read coverage of the non-prophage region.
 #'
 #' @param classifSummTable Classification summary table
-#' @param prophageLikeClassifList
-#' A list containing pattern match information associated with all contigs
-#' classified as prophage-like. Generated with the allprophagelike_matches
-#' @param VLPpileup
-#' A table containing contig names, coverages averaged over 100bp windows, and
-#' contig positions associated with mapping VLP-fraction reads to
-#' whole-community contigs
-#' @param WCpileup
-#' A table containing contig names, coverages averaged over 100bp windows, and
-#' contig positions associated with mapping whole-community reads to
-#' whole-community contigs
+#' @param prophageLikeClassifList A list containing pattern match information
+#'   associated with all contigs classified as prophage-like.
+#' @param VLPpileup A table containing contig names, coverages averaged over
+#'   100bp windows, and contig positions associated with mapping VLP-fraction
+#'   reads to whole-community contigs
+#' @param WCpileup A table containing contig names, coverages averaged over
+#'   100bp windows, and contig positions associated with mapping whole-community
+#'   reads to whole-community contigs
 #' @param windowSize The window size used to re-average read coverage datasets
 #' @return Dataframe
 #' @keywords internal
@@ -39,12 +36,6 @@ prophageLikeActivity <-
             endPos <- prophageLikeClassifList[[i]][[6]]
             contigName <- prophageLikeClassifList[[i]][[9]]
             blockLengthBp <- abs(endPos - startPos) * windowSize
-            # nonBlockLengthBp <- (nrow(viralSubset) * windowSize) - blockLengthBp
-            # if (nonBlockLengthBp < 20000) {
-            ## CBD=cant be determined
-            #  classifSummTable[which(classifSummTable[,1] == contigName),7] <<- "CBD"
-            #  classifSummTable[which(classifSummTable[,1] == contigName),8] <<- "CBD"
-            # } else {
             microbialSubset <-
                 changeWindowSize(WCpileup[which(WCpileup[, 1] ==
                     prophageLikeClassifList[[i]][[9]]), ], windowSize)

@@ -1,10 +1,9 @@
 #' Collects Prophage-like classification pattern-match information
 #'
-#' Collects pattern information associated with all
-#' contigs classified as Prophage-like.
+#' Collects pattern information associated with all contigs classified as
+#' Prophage-like.
 #'
-#' @param bestMatchList
-#'  Classifications made with patternMatcher function.
+#' @param bestMatchList Classifications made with patternMatcher function.
 #' @return List
 #' @keywords internal
 allProphageLikeClassifs <- function(bestMatchList) {

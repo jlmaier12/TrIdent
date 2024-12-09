@@ -1,11 +1,10 @@
 #' Correctly formats pileup files.
 #'
-#' Places columns in correct order and renames columns.
-#' Cleans the contig labels to remove excess information after whitespace.
+#' Places columns in correct order and renames columns. Cleans the contig labels
+#' to remove excess information after whitespace.
 #'
-#' @param pileup
-#'  A table containing contig names, read coverages
-#'  averaged over 100 bp windows,and contig positions
+#' @param pileup A table containing contig names, read coverages averaged over
+#'   100 bp windows,and contig positions
 #' @return dataframe
 #' @keywords internal
 pileupFormatter <- function(pileup) {
