@@ -14,22 +14,38 @@
 #' A vector containing the values associated with the block pattern
 #' @return List
 #' @keywords internal
-blockTranslator <- function(viralSubset, bestMatchInfo, windowSize, pattern){
-minPattern <- min(pattern)
-maxPattern <- max(pattern)
-repeat {
-    pattern <- c(rep(minPattern, (1000 / windowSize)),
-                 pattern[-c((length(pattern) - ((1000 / windowSize) - 1)):
-                              length(pattern))])
-    if(pattern[length(pattern) - (5000 / windowSize)] > minPattern) break
-    diff <- mean(abs(viralSubset[,2] - pattern))
-    startPos <- which(pattern == max(pattern))[1]
-    endPos <- which(pattern == max(pattern))[length(which(pattern ==
-                                                            max(pattern)))]
-    if (diff < bestMatchInfo[[1]]) bestMatchInfo <- list(diff, minPattern,
-                                                         maxPattern, "NA",
-                                                         startPos, endPos, "NA",
-                                                         "Prophage-like")
+blockTranslator <-
+    function(viralSubset,
+            bestMatchInfo,
+            windowSize,
+            pattern) {
+        minPattern <- min(pattern)
+        maxPattern <- max(pattern)
+        repeat {
+            pattern <- c(
+                rep(minPattern, (1000 / windowSize)),
+                pattern[-c((length(pattern) - ((
+                    1000 / windowSize) - 1)):length(pattern))]
+            )
+            if (pattern[length(pattern) - (5000 / windowSize)] > minPattern) {
+                break
+            }
+            diff <- mean(abs(viralSubset[, 2] - pattern))
+            startPos <- which(pattern == max(pattern))[1]
+            endPos <- which(pattern == max(pattern))[length(which(pattern ==
+                max(pattern)))]
+            if (diff < bestMatchInfo[[1]]) {
+                bestMatchInfo <- list(
+                    diff,
+                    minPattern,
+                    maxPattern,
+                    "NA",
+                    startPos,
+                    endPos,
+                    "NA",
+                    "Prophage-like"
+                )
+            }
+        }
+        return(bestMatchInfo)
     }
-return(bestMatchInfo)
-}

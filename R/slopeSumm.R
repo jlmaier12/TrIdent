@@ -4,15 +4,19 @@
 #'
 #' @param classifSumm Classification summary table
 #' @param slopingClassifList
-#' A list containing pattern match information associated with all contigs
-#' classified as sloping.
+#'  A list containing pattern match information
+#'  associated with all contigs classified as sloping.
 #' @return dataframe
 #' @keywords internal
-slopeSumm <- function(classifSumm, slopingClassifList){
-classifSumm$slope <- rep(NA, nrow(classifSumm))
-if(length(slopingClassifList) == 0) return(classifSumm)
-lapply(seq_along(slopingClassifList), function(i) {
-    classifSumm[which(classifSumm[,1] == slopingClassifList[[i]][[9]]), 10] <<- round(slopingClassifList[[i]][[7]], digits=4)
-})
-return(classifSumm)
+slopeSumm <- function(classifSumm, slopingClassifList) {
+    classifSumm$slope <- rep(NA, nrow(classifSumm))
+    if (length(slopingClassifList) == 0) {
+        return(classifSumm)
+    }
+    lapply(seq_along(slopingClassifList), function(i) {
+        classifSumm[which(classifSumm[, 1] ==
+            slopingClassifList[[i]][[9]]), 10] <<-
+            round(slopingClassifList[[i]][[7]], digits = 4)
+    })
+    return(classifSumm)
 }

@@ -10,22 +10,28 @@
 #' 500, 1000, or 2000 only!
 #' @return Dataframe
 #' @keywords internal
-changeWindowSize <- function(cleanPileup, windowSize){
-coverage <- rep(NA, nrow(cleanPileup))
-X <- 0
-Y <- windowSize / 100
-A <- 1
-repeat{
-    coverage[A] <- mean(cleanPileup[c(X:Y),2])
-    A <- A + 1
-    X <- X + (windowSize / 100)
-    Y <- Y + (windowSize / 100)
-    if (Y > nrow(cleanPileup)) break
-  }
-coverage <- coverage[!is.na(coverage)]
-position <- seq(windowSize, length(coverage) * windowSize, windowSize)
-contigName <- rep(cleanPileup[1,1], length(position))
-newWindowSizePileup <- cbind.data.frame(contigName, coverage, position) %>% as.data.frame()
-newWindowSizePileup[NARemover(newWindowSizePileup)] <- 0
-return(newWindowSizePileup)
+changeWindowSize <- function(cleanPileup, windowSize) {
+    coverage <- rep(NA, nrow(cleanPileup))
+    X <- 0
+    Y <- windowSize / 100
+    A <- 1
+    repeat {
+        coverage[A] <- mean(cleanPileup[c(X:Y), 2])
+        A <- A + 1
+        X <- X + (windowSize / 100)
+        Y <- Y + (windowSize / 100)
+        if (Y > nrow(cleanPileup)) {
+            break
+        }
+    }
+    coverage <- coverage[!is.na(coverage)]
+    position <-
+        seq(windowSize, length(coverage) * windowSize, windowSize)
+    contigName <- rep(cleanPileup[1, 1], length(position))
+    newWindowSizePileup <- cbind.data.frame(
+        contigName, coverage,
+        position
+    ) %>% as.data.frame()
+    newWindowSizePileup[NARemover(newWindowSizePileup)] <- 0
+    return(newWindowSizePileup)
 }

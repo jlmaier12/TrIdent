@@ -16,16 +16,28 @@
 #' @param windowSize The window size used to re-average read coverage pileups
 #' @return List
 #' @keywords internal
-makeFullSlopes <- function(leftOrRight, viralSubset, newMax, minReadCov,
-                           windowSize){
-  contigCoverage <- viralSubset[,2]
-  covSteps <- (newMax - minReadCov) / ((nrow(viralSubset) - 1))
-  covSteps <- ifelse(leftOrRight == "Left", -covSteps, covSteps)
-  startSeq <- ifelse(leftOrRight == "Left", newMax, minReadCov)
-  endSeq <- ifelse(leftOrRight == "Left", minReadCov, newMax)
-  pattern <- seq(startSeq, endSeq, covSteps)
-  diff <- mean(abs(contigCoverage - pattern))
-  slope <- (endSeq - startSeq) / (nrow(viralSubset) * windowSize)
-  return(list(diff, minReadCov, newMax, covSteps, 1, length(pattern),
-              slope, "Sloping"))
-}
+makeFullSlopes <-
+    function(leftOrRight,
+            viralSubset,
+            newMax,
+            minReadCov,
+            windowSize) {
+        contigCoverage <- viralSubset[, 2]
+        covSteps <- (newMax - minReadCov) / ((nrow(viralSubset) - 1))
+        covSteps <- ifelse(leftOrRight == "Left", -covSteps, covSteps)
+        startSeq <- ifelse(leftOrRight == "Left", newMax, minReadCov)
+        endSeq <- ifelse(leftOrRight == "Left", minReadCov, newMax)
+        pattern <- seq(startSeq, endSeq, covSteps)
+        diff <- mean(abs(contigCoverage - pattern))
+        slope <- (endSeq - startSeq) / (nrow(viralSubset) * windowSize)
+        return(list(
+            diff,
+            minReadCov,
+            newMax,
+            covSteps,
+            1,
+            length(pattern),
+            slope,
+            "Sloping"
+        ))
+    }

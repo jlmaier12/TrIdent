@@ -17,29 +17,62 @@
 #' slopes or "Right" for right to left (pos) slopes.
 #' @return List
 #' @keywords internal
-slopeTranslator <- function(viralSubset, bestMatchInfo, windowSize, slopeChange,
-                            leftOrRight){
-  pattern <- slopeChange[[1]]
-  minPattern <- min(pattern)
-  repeat {
-    if (leftOrRight == "Left") pattern <- c(rep(minPattern, 1000 / windowSize),
-                                            pattern[-c((length(pattern) - ((1000 / windowSize) - 1)):length(pattern))])
-    if (leftOrRight == "Right") pattern <- c(pattern[-(seq_len(1000 / windowSize))],
-                                             rep(minPattern, 1000 / windowSize))
-    slopeBottomIdx <- min(pattern[pattern != min(pattern)])
-    startRowIdx <- ifelse(leftOrRight == "Left", which(pattern == max(pattern)),
-                          which(pattern == slopeBottomIdx))
-    endRowIdx <- ifelse(leftOrRight == "Left", which(pattern == slopeBottomIdx),
-                        which(pattern == max(pattern)))
-    if((length(pattern[!(pattern %in% minPattern)]) * windowSize) < 20000) break
-    diff <- mean(abs(viralSubset[,2] - pattern))
-    if (diff < bestMatchInfo[[1]]) {
-      covSteps <- ((max(pattern) - slopeBottomIdx) / abs(endRowIdx - startRowIdx))
-      covSteps <- ifelse(leftOrRight == "Left", -covSteps, covSteps)
-      bestMatchInfo <- list(diff, slopeBottomIdx, max(pattern), covSteps,
-                            startRowIdx, endRowIdx, slopeChange[[2]], "Sloping")
+slopeTranslator <-
+    function(viralSubset,
+            bestMatchInfo,
+            windowSize,
+            slopeChange,
+            leftOrRight) {
+        pattern <- slopeChange[[1]]
+        minPattern <- min(pattern)
+        repeat {
+            if (leftOrRight == "Left") {
+                pattern <- c(
+                    rep(minPattern, 1000 / windowSize),
+                    pattern[-c((length(pattern) -
+                        ((
+                            1000 / windowSize
+                        ) - 1)):length(pattern))]
+                )
+            }
+            if (leftOrRight == "Right") {
+                pattern <- c(
+                    pattern[-(seq_len(1000 / windowSize))],
+                    rep(minPattern, 1000 / windowSize)
+                )
+            }
+            slopeBottomIdx <- min(pattern[pattern != min(pattern)])
+            startRowIdx <-
+                ifelse(leftOrRight == "Left",
+                    which(pattern == max(pattern)),
+                    which(pattern == slopeBottomIdx)
+                )
+            endRowIdx <-
+                ifelse(leftOrRight == "Left",
+                    which(pattern == slopeBottomIdx),
+                    which(pattern == max(pattern))
+                )
+            if ((length(pattern[!(pattern %in% minPattern)]) * windowSize) < 20000) {
+                break
+            }
+            diff <- mean(abs(viralSubset[, 2] - pattern))
+            if (diff < bestMatchInfo[[1]]) {
+                covSteps <- ((max(pattern) - slopeBottomIdx) /
+                    abs(endRowIdx - startRowIdx))
+                covSteps <-
+                    ifelse(leftOrRight == "Left", -covSteps, covSteps)
+                bestMatchInfo <-
+                    list(
+                        diff,
+                        slopeBottomIdx,
+                        max(pattern),
+                        covSteps,
+                        startRowIdx,
+                        endRowIdx,
+                        slopeChange[[2]],
+                        "Sloping"
+                    )
+            }
+        }
+        return(bestMatchInfo)
     }
-  }
-  return(bestMatchInfo)
-}
-

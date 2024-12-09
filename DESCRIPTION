@@ -16,14 +16,14 @@ Authors@R:
            comment = c(ORCID = "")))
 Description: 
   TrIdent automates the analysis of transductomics data by detecting,
-  classifying, and characterizing read coverage patterns associated with potential 
-  transduction events. Transductomics is a DNA sequencing-based method for the 
-  detection and characterization of transduction events in pure cultures and 
-  complex communities. Transductomics relies on mapping sequencing reads from a 
-  viral-like particle (VLP)-fraction of a sample to contigs assembled from the 
-  metagenome (whole-community) of the same sample. Reads from bacterial DNA 
-  carried by VLPs will map back to the bacterial contigs of origin creating read 
-  coverage patterns indicative of ongoing transduction.
+  classifying, and characterizing read coverage patterns associated with 
+  potential transduction events. Transductomics is a DNA sequencing-based 
+  method for the detection and characterization of transduction events in pure 
+  cultures and complex communities. Transductomics relies on mapping sequencing
+  reads from a viral-like particle (VLP)-fraction of a sample to contigs 
+  assembled from the metagenome (whole-community) of the same sample. Reads 
+  from bacterial DNA carried by VLPs will map back to the bacterial contigs of 
+  origin creating read coverage patterns indicative of ongoing transduction.
 License: GPL-2
 Encoding: UTF-8
 LazyData: false

@@ -17,17 +17,28 @@
 #' transduction searching stops? Default is 500.
 #' @return List
 #' @keywords internal
-zeroCountSearch <- function (startOrEnd, viralSubsetZoom, startOrEndPosRow,
-                             noReadCov){
-X <- ifelse(startOrEnd == "start", 1, -1)
-zeroCount <- 0
-repeat{
-    if((startOrEndPosRow - X) <= 1) break
-    if(startOrEndPosRow - X >= nrow(viralSubsetZoom)) break
-    zeroCount <- ifelse((viralSubsetZoom[(startOrEndPosRow - X),4] == 0),
-                        (zeroCount + 1), 0)
-    if(zeroCount == noReadCov / 100) break
-    X <- ifelse(startOrEnd == "start", X + 1, X - 1)
-}
-return(list(zeroCount, abs(X)))
-}
+zeroCountSearch <-
+    function(startOrEnd,
+            viralSubsetZoom,
+            startOrEndPosRow,
+            noReadCov) {
+        X <- ifelse(startOrEnd == "start", 1, -1)
+        zeroCount <- 0
+        repeat {
+            if ((startOrEndPosRow - X) <= 1) {
+                break
+            }
+            if (startOrEndPosRow - X >= nrow(viralSubsetZoom)) {
+                break
+            }
+            zeroCount <-
+                ifelse((viralSubsetZoom[(startOrEndPosRow - X), 4] == 0),
+                    (zeroCount + 1), 0
+                )
+            if (zeroCount == noReadCov / 100) {
+                break
+            }
+            X <- ifelse(startOrEnd == "start", X + 1, X - 1)
+        }
+        return(list(zeroCount, abs(X)))
+    }

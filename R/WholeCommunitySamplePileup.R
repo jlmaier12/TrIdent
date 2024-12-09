@@ -11,8 +11,10 @@
 #' \describe{
 #'  \item{V1}{Contig accession}
 #'  \item{V2}{Mapped read coverage averaged over a 100 bp window size}
-#'  \item{V3}{Starting position (bp) of each 100 bp window. Restarts from 0 at the start of each new contig.}
-#'  \item{V4}{Starting position (bp) of each 100 bp window. Does NOT restart at the start of each new contig.}
+#'  \item{V3}{Starting position (bp) of each 100 bp window. Restarts from 0 at
+#'  the start of each new contig.}
+#'  \item{V4}{Starting position (bp) of each 100 bp window. Does NOT restart at
+#'  the start of each new contig.}
 #' }
 #' @details
 #' This dataset represents one half of a complete transductomics dataset which
@@ -34,7 +36,8 @@
 #' NODE_2060: Sloping, right to left slope with start
 #' NODE_1401: None, no pattern match
 #' NODE_62: Prophage-like, with spec transduction
-#' NODE_368: Prophage-like, not homogeneously integrated/present, no spec transduction
+#' NODE_368: Prophage-like, not homogeneously integrated/present, no spec
+#' transduction
 #' NODE_560: HighCovNoPattern
 #' NODE_1165: None, filtered out
 #' To access the sequencing data used to generate this pileup file and for
@@ -44,5 +47,6 @@
 #' Transductomics: sequencing-based detection and analysis of transduced DNA in
 #' pure cultures and microbial communities. Microbiome 8, 158 (2020).
 #' https://doi.org/10.1186/s40168-020-00935-5
-#' @source <https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5>
+#' @source
+#' <https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5>
 "WholeCommunitySamplePileup"
