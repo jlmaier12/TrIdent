@@ -9,8 +9,8 @@ patternMatchSize(classifSumm, classifList, windowSize)
 \arguments{
 \item{classifSumm}{Classification summary table}
 
-\item{classifList}{A list containing pattern match information associated with all contig
-classifications}
+\item{classifList}{A list containing pattern match information associated
+with all contig classifications}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 }
@@ -18,7 +18,7 @@ classifications}
 dataframe
 }
 \description{
-Calculate the size (bp) of the matching region for Prophage-like and
-Sloping patterns
+Calculate the size (bp) of the matching region for Prophage-like and Sloping
+patterns
 }
 \keyword{internal}

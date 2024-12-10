@@ -18,13 +18,13 @@
 #' @keywords internal
 leftRightBlockTranslater <-
     function(viralSubset,
-            pattern,
-            leftOrRight,
-            windowSize,
-            minReadCov,
-            cov,
-            bestMatchInfo,
-            minBlockSize) {
+             pattern,
+             leftOrRight,
+             windowSize,
+             minReadCov,
+             cov,
+             bestMatchInfo,
+             minBlockSize) {
         repeat {
             pattern <- if (leftOrRight == "Left") {
                 c(

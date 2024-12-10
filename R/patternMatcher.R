@@ -1,36 +1,36 @@
-#'Main pattern-matching function
+#' Main pattern-matching function
 #'
-#'Creates the viralSubset, representative of one contig, that is used as input
-#'for each individual pattern-matching function. After the information
-#'associated with the best match for each pattern is obtained, the pattern with
-#'the smallest match score is used to classify the contig being assessed. Prior
-#'to the pattern-matching, contigs smaller than the minContigLength and contigs
-#'without 5,000 bp of 10x read coverage are removed.
+#' Creates the viralSubset, representative of one contig, that is used as input
+#' for each individual pattern-matching function. After the information
+#' associated with the best match for each pattern is obtained, the pattern with
+#' the smallest match score is used to classify the contig being assessed. Prior
+#' to the pattern-matching, contigs smaller than the minContigLength and contigs
+#' without 5,000 bp of 10x read coverage are removed.
 #'
-#'@param VLPpileup A table containing contig names, coverages averaged over 100
+#' @param VLPpileup A table containing contig names, coverages averaged over 100
 #'  bp windows, and contig positions associated with mapping VLP-fraction reads
 #'  to whole-community contigs
-#'@param WCpileup A table containing contig names, coverages averaged over 100
+#' @param WCpileup A table containing contig names, coverages averaged over 100
 #'  bp windows, and contig positions associated with mapping whole-community
 #'  reads to whole-community contigs
-#'@param windowSize The window size used to re-average read coverage datasets
-#'@param minBlockSize The minimum size of the prophage-like block pattern.
+#' @param windowSize The window size used to re-average read coverage datasets
+#' @param minBlockSize The minimum size of the prophage-like block pattern.
 #'  Default is 10,000 bp.
-#'@param maxBlockSize The maximum size of the prophage-like block pattern.
+#' @param maxBlockSize The maximum size of the prophage-like block pattern.
 #'  Default is NA
-#'@param minContigLength The minimum contig size (in bp) to perform
+#' @param minContigLength The minimum contig size (in bp) to perform
 #'  pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.
-#'@param minSlope The minimum slope value to test for sloping patterns
-#'@return List containing three objects.
-#'@keywords internal
+#' @param minSlope The minimum slope value to test for sloping patterns
+#' @return List containing three objects.
+#' @keywords internal
 patternMatcher <-
     function(VLPpileup,
-            WCpileup,
-            windowSize,
-            minBlockSize,
-            maxBlockSize,
-            minContigLength,
-            minSlope) {
+             WCpileup,
+             windowSize,
+             minBlockSize,
+             maxBlockSize,
+             minContigLength,
+             minSlope) {
         contigNames <- unique(VLPpileup[, 1])
         bestMatchList <- list()
         filteredOutContigs <- rep(NA, length(contigNames))
@@ -59,8 +59,9 @@ patternMatcher <-
                 C <<- C + 1
                 return(NULL)
             } else if (viralSubset[(order(viralSubset[, 2],
-                                          decreasing = TRUE))[minBlockSize /
-                                                              100], 2] <= 10) {
+                decreasing = TRUE
+            ))[minBlockSize /
+                100], 2] <= 10) {
                 filteredOutContigs[C] <<- i
                 reason[C] <<- "Low VLP-fraction read cov"
                 C <<- C + 1

@@ -7,16 +7,16 @@
 prophageLikeZoom(viralSubset, classificationPatterns, i, zoom, windowSize)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
-currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to
+the contig currently being assessed}
 
-\item{classificationPatterns}{The pattern match information associated with each contig classified as
-Prophage-like, sloping, or HighCovNoPattern}
+\item{classificationPatterns}{The pattern match information associated with
+each contig classified as Prophage-like, sloping, or HighCovNoPattern}
 
 \item{i}{The index for the contig currently being assessed}
 
-\item{zoom}{The number of rows outside the start and stop positions of the block pattern
-to zoom-in on}
+\item{zoom}{The number of rows outside the start and stop positions of the
+block pattern to zoom-in on}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 }

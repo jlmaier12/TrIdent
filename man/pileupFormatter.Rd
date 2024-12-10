@@ -7,8 +7,8 @@
 pileupFormatter(pileup)
 }
 \arguments{
-\item{pileup}{A table containing contig names, read coverages averaged over 100 bp windows,
-and contig positions}
+\item{pileup}{A table containing contig names, read coverages averaged over
+100 bp windows,and contig positions}
 }
 \value{
 dataframe

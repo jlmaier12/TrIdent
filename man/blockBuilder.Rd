@@ -7,14 +7,16 @@
 blockBuilder(viralSubset, windowSize, minBlockSize, maxBlockSize)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
-currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to
+the contig currently being assessed}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 
-\item{minBlockSize}{The minimum size of the prophage-like block pattern. Default is 10000 bp.}
+\item{minBlockSize}{The minimum size of the prophage-like block pattern.
+Default is 10000 bp.}
 
-\item{maxBlockSize}{The maximum size of the prophage-like block pattern. Default is NA.}
+\item{maxBlockSize}{The maximum size of the prophage-like block pattern.
+Default is NA.}
 }
 \value{
 List containing three objects

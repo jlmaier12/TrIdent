@@ -14,9 +14,9 @@
 #' @keywords internal
 blockBuilder <-
     function(viralSubset,
-            windowSize,
-            minBlockSize,
-            maxBlockSize) {
+             windowSize,
+             minBlockSize,
+             maxBlockSize) {
         maxReadCov <- max(viralSubset[, 2])
         minReadCov <- min(viralSubset[, 2])
         if (minReadCov > (maxReadCov * 0.2)) {
@@ -135,7 +135,7 @@ blockBuilder <-
                 }
                 patternFull <- c(
                     patternFull[-c(middleRows[2]:
-                                     middleRows[(1000 / windowSize) + 1])],
+                    middleRows[(1000 / windowSize) + 1])],
                     rep(minReadCov, 1000 / windowSize)
                 )
             }

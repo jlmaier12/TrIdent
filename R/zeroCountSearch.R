@@ -16,9 +16,9 @@
 #' @keywords internal
 zeroCountSearch <-
     function(startOrEnd,
-            viralSubsetZoom,
-            startOrEndPosRow,
-            noReadCov) {
+             viralSubsetZoom,
+             startOrEndPosRow,
+             noReadCov) {
         X <- ifelse(startOrEnd == "start", 1, -1)
         zeroCount <- 0
         repeat {

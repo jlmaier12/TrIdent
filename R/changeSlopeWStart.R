@@ -15,11 +15,11 @@
 #'
 changeSlopeWStart <-
     function(leftOrRight,
-            slopeBottom,
-            slopeBottomChange,
-            cov,
-            viralSubset,
-            windowSize) {
+             slopeBottom,
+             slopeBottomChange,
+             cov,
+             viralSubset,
+             windowSize) {
         minReadCov <- min(viralSubset[, 2])
         slopeBottom <- slopeBottom + slopeBottomChange
         covSteps <-

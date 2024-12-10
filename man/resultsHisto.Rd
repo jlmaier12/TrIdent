@@ -7,11 +7,11 @@
 resultsHisto(summaryList, suggFiltThresh)
 }
 \arguments{
-\item{summaryList}{Classification summary table filtered to only include contigs with
-Prophage-like, Sloping and HighCovNoPattern classifications}
+\item{summaryList}{Classification summary table filtered to only include
+contigs with Prophage-like, Sloping and HighCovNoPattern classifications}
 
-\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold on the output pattern-match
-score histogram. Default is FALSE.}
+\item{suggFiltThresh}{TRUE or FALSE, Suggest a filtering threshold on the
+output pattern-match score histogram. Default is FALSE.}
 }
 \value{
 ggplot object

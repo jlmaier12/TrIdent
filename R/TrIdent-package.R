@@ -1,14 +1,13 @@
 #' @title \bold{TrIdent} - \bold{Tr}ansduction \bold{Ident}ification
 #'
 #' @description Automatic detection, classification and characterization of
-#' transduction events in transductomics datasets using read coverage
-#' pattern-matching.
+#'   transduction events in transductomics datasets using read coverage
+#'   pattern-matching.
 #'
-#' Please see
-#' \href{https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5}
-#' {Transductomics: sequencing-based detection and analysis of transduced DNA
-#' in pure cultures and microbial communities} for more information on the
-#' transductomics method, data and analysis workflow.
+#'   Please see [Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities] (
+#'   https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5)
+#'   for more information on the transductomics method, data and analysis
+#'   workflow.
 #'
 #' @details The three main functions in TrIdent are:
 #' \enumerate{
@@ -22,7 +21,7 @@
 #' }
 #'
 #' @author Jessie Maier \email{jlmaier@ncsu.edu} & Jorden Rabasco
-#' \email{jrabasc@ncsu.edu}
+#'   \email{jrabasc@ncsu.edu}
 #'
 #' @keywords internal
 "_PACKAGE"

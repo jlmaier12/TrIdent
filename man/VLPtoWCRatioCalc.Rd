@@ -9,13 +9,13 @@ VLPtoWCRatioCalc(classifSumm, WCpileup, VLPpileup)
 \arguments{
 \item{classifSumm}{Classification summary table}
 
-\item{WCpileup}{A table containing contig names, coverages averaged over 100 bp windows, and
-contig positions associated with mapping whole-community reads to
-whole-community contigs}
+\item{WCpileup}{A table containing contig names, coverages averaged over 100
+bp windows, and contig positions associated with mapping whole-community
+reads to whole-community contigs}
 
-\item{VLPpileup}{A table containing contig names, coverages averaged over 100 bp windows, and
-contig positions associated with mapping VLP-fraction reads to
-whole-community contigs}
+\item{VLPpileup}{A table containing contig names, coverages averaged over 100
+bp windows, and contig positions associated with mapping VLP-fraction reads
+to whole-community contigs}
 }
 \value{
 dataframe

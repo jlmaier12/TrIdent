@@ -7,8 +7,8 @@
 slopeWithStart(viralSubset, windowSize, minSlope)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
-currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to
+the contig currently being assessed}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 

@@ -13,12 +13,12 @@
 #' @return List containing two objects
 #' @keywords internal
 makeBlockPattern <- function(viralSubset,
-                            windowSize,
-                            fullLeftRight,
-                            blockLength,
-                            nonBlock,
-                            minReadCov,
-                            cov) {
+                             windowSize,
+                             fullLeftRight,
+                             blockLength,
+                             nonBlock,
+                             minReadCov,
+                             cov) {
     if (fullLeftRight == "Full") {
         pattern <- c(
             rep(minReadCov, 5000 / windowSize),
@@ -46,7 +46,7 @@ makeBlockPattern <- function(viralSubset,
     endPos <-
         if (fullLeftRight == "Full") {
             which(pattern == max(pattern))[length(which(pattern ==
-                                                          max(pattern)))]
+                max(pattern)))]
         } else if (fullLeftRight == "Left") {
             (which(pattern == min(pattern))[1]) - 1
         } else {

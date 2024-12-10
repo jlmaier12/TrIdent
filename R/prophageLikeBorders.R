@@ -15,9 +15,9 @@
 #' @keywords internal
 prophageLikeBorders <-
     function(viralSubset,
-            classificationPatterns,
-            i,
-            windowSize) {
+             classificationPatterns,
+             i,
+             windowSize) {
         startRowIdx <- classificationPatterns[[i]][[5]] * windowSize / 100
         endRowIdx <- classificationPatterns[[i]][[6]] * windowSize / 100
         if (classificationPatterns[[i]][[5]] == 1) {
@@ -31,10 +31,14 @@ prophageLikeBorders <-
             rollingSdNoNA <- rollingSd[-is.na(rollingSd)]
             leftBorderRowIdx <-
                 which(rollingSd ==
-                        sort(rollingSdNoNA,
-                             TRUE)[1])[length(which(rollingSd ==
-                                                      sort(rollingSdNoNA,
-                                                           TRUE)[1]))]
+                    sort(
+                        rollingSdNoNA,
+                        TRUE
+                    )[1])[length(which(rollingSd ==
+                    sort(
+                        rollingSdNoNA,
+                        TRUE
+                    )[1]))]
             leftBorderRowIdx <- searchStartRowIdx + leftBorderRowIdx
         }
         if (endRowIdx + 1 == (nrow(viralSubset))) {

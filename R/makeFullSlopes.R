@@ -15,10 +15,10 @@
 #' @keywords internal
 makeFullSlopes <-
     function(leftOrRight,
-            viralSubset,
-            newMax,
-            minReadCov,
-            windowSize) {
+             viralSubset,
+             newMax,
+             minReadCov,
+             windowSize) {
         contigCoverage <- viralSubset[, 2]
         covSteps <- (newMax - minReadCov) / ((nrow(viralSubset) - 1))
         covSteps <- ifelse(leftOrRight == "Left", -covSteps, covSteps)

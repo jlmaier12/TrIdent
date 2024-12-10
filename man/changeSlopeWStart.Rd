@@ -14,8 +14,8 @@ changeSlopeWStart(
 )
 }
 \arguments{
-\item{leftOrRight}{Generate pattern for negative slope (left to right, i.e. 'Left') or positive
-slope (right to left, i.e. 'Right')}
+\item{leftOrRight}{Generate pattern for negative slope (left to right, i.e.
+'Left') or positive slope (right to left, i.e. 'Right')}
 
 \item{slopeBottom}{The value for the bottom of the sloping value}
 
@@ -23,8 +23,8 @@ slope (right to left, i.e. 'Right')}
 
 \item{cov}{The value for the top of the slope}
 
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
-currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to
+the contig currently being assessed}
 
 \item{windowSize}{The window size used to re-average read coverage pileup}
 }

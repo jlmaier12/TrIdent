@@ -15,16 +15,16 @@ prophageLikeActivity(
 \arguments{
 \item{classifSummTable}{Classification summary table}
 
-\item{prophageLikeClassifList}{A list containing pattern match information associated with all contigs
-classified as prophage-like. Generated with the allprophagelike_matches}
+\item{prophageLikeClassifList}{A list containing pattern match information
+associated with all contigs classified as prophage-like.}
 
-\item{VLPpileup}{A table containing contig names, coverages averaged over 100bp windows, and
-contig positions associated with mapping VLP-fraction reads to
-whole-community contigs}
+\item{VLPpileup}{A table containing contig names, coverages averaged over
+100bp windows, and contig positions associated with mapping VLP-fraction
+reads to whole-community contigs}
 
-\item{WCpileup}{A table containing contig names, coverages averaged over 100bp windows, and
-contig positions associated with mapping whole-community reads to
-whole-community contigs}
+\item{WCpileup}{A table containing contig names, coverages averaged over
+100bp windows, and contig positions associated with mapping whole-community
+reads to whole-community contigs}
 
 \item{windowSize}{The window size used to re-average read coverage datasets}
 }

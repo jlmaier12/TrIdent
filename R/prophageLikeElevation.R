@@ -18,10 +18,10 @@
 #' @keywords internal
 prophageLikeElevation <-
     function(classifSummTable,
-            prophageLikeClassifList,
-            VLPpileup,
-            WCpileup,
-            windowSize) {
+             prophageLikeClassifList,
+             VLPpileup,
+             WCpileup,
+             windowSize) {
         message(
             "Identifying highly active/abundant or heterogenously integrated
         Prophage-like elements"
@@ -59,16 +59,16 @@ prophageLikeElevation <-
                     digits = 4
                 )
             classifSummTable[which(classifSummTable[, 1] ==
-                                     contigName), 9] <<- ratio
+                contigName), 9] <<- ratio
             if (ratio > 1.15) {
                 classifSummTable[which(classifSummTable[, 1] ==
-                                         contigName), 8] <<- "Elevated"
+                    contigName), 8] <<- "Elevated"
             } else if (ratio < 0.75) {
                 classifSummTable[which(classifSummTable[, 1] ==
-                                         contigName), 8] <<- "Depressed"
+                    contigName), 8] <<- "Depressed"
             } else {
                 classifSummTable[which(classifSummTable[, 1] ==
-                                         contigName), 8] <<- "None"
+                    contigName), 8] <<- "None"
             }
         })
         return(classifSummTable)

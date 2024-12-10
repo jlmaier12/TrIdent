@@ -16,10 +16,10 @@
 #' @keywords internal
 makeSlopesWStarts <-
     function(leftOrRight,
-            viralSubset,
-            newMax,
-            minReadCov,
-            windowSize) {
+             viralSubset,
+             newMax,
+             minReadCov,
+             windowSize) {
         contigCoverage <- viralSubset[, 2]
         covSteps <- (newMax - minReadCov) / ((nrow(viralSubset) -
             ((5000 / windowSize) + 1)))

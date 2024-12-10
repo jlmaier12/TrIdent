@@ -14,10 +14,10 @@
 #' @keywords internal
 prophageLikeZoom <-
     function(viralSubset,
-            classificationPatterns,
-            i,
-            zoom,
-            windowSize) {
+             classificationPatterns,
+             i,
+             zoom,
+             windowSize) {
         startRowIdx <- classificationPatterns[[i]][[5]] * windowSize / 100
         endRowIdx <- classificationPatterns[[i]][[6]] * windowSize / 100
         zoomStartRowIdx <-

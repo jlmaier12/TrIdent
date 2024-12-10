@@ -27,27 +27,27 @@
 #' @return Large list containing two objects
 #' @export
 #' @examples
-#'   data("VLPFractionSamplePileup")
-#'   data("TrIdentSampleOutput")
+#' data("VLPFractionSamplePileup")
+#' data("TrIdentSampleOutput")
 #'
-#'   specTransduction <- specializedTransductionID(
-#'       VLPpileup = VLPFractionSamplePileup,
-#'       TrIdentResults = TrIdentSampleOutput
-#'   )
+#' specTransduction <- specializedTransductionID(
+#'     VLPpileup = VLPFractionSamplePileup,
+#'     TrIdentResults = TrIdentSampleOutput
+#' )
 #'
-#'   specTransductionNODE62 <- specializedTransductionID(
-#'      VLPpileup = VLPFractionSamplePileup,
-#'      TrIdentResults = TrIdentSampleOutput,
-#'       specificContig = "NODE_62"
-#'   )
+#' specTransductionNODE62 <- specializedTransductionID(
+#'     VLPpileup = VLPFractionSamplePileup,
+#'     TrIdentResults = TrIdentSampleOutput,
+#'     specificContig = "NODE_62"
+#' )
 specializedTransductionID <- function(VLPpileup,
-                                        TrIdentResults,
-                                        specificContig,
-                                        noReadCov = 500,
-                                        specTransLength = 2000,
-                                        matchScoreFilter,
-                                        logScale = FALSE,
-                                        SaveFilesTo) {
+                                      TrIdentResults,
+                                      specificContig,
+                                      noReadCov = 500,
+                                      specTransLength = 2000,
+                                      matchScoreFilter,
+                                      logScale = FALSE,
+                                      SaveFilesTo) {
     specTransInfo <- NULL
     TrIdentResultPatterns <- TrIdentResults[[3]]
     TrIdentResultSumm <- TrIdentResults[[1]]

@@ -17,10 +17,10 @@
 #' @keywords internal
 slopeTranslator <-
     function(viralSubset,
-            bestMatchInfo,
-            windowSize,
-            slopeChange,
-            leftOrRight) {
+             bestMatchInfo,
+             windowSize,
+             slopeChange,
+             leftOrRight) {
         pattern <- slopeChange[[1]]
         minPattern <- min(pattern)
         repeat {

@@ -18,10 +18,10 @@
 #' @keywords internal
 prophageLikeActivity <-
     function(classifSummTable,
-            prophageLikeClassifList,
-            VLPpileup,
-            WCpileup,
-            windowSize) {
+             prophageLikeClassifList,
+             VLPpileup,
+             WCpileup,
+             windowSize) {
         classifSummTable$prophageLikeRegionReadCov <-
             rep(NA, nrow(classifSummTable))
         classifSummTable$prophageLikeElevationRatio <-

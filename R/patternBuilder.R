@@ -15,9 +15,9 @@
 #' @keywords internal
 patternBuilder <-
     function(viralSubset,
-            classifList,
-            classification,
-            i) {
+             classifList,
+             classification,
+             i) {
         minReadCov <- classifList[[i]][[2]]
         maxReadCov <- classifList[[i]][[3]]
         slopingCovSteps <- classifList[[i]][[4]]
@@ -93,8 +93,8 @@ patternBuilder <-
                     )
                 )
             }
-            ##for NoPattern, min read cov = med read cov and
-            ##max read cov = contig length
+            ## for NoPattern, min read cov = med read cov and
+            ## max read cov = contig length
         } else if (classification == "HighCovNoPattern") {
             pattern <- rep(
                 minReadCov,

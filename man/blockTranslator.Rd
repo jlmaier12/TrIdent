@@ -7,14 +7,16 @@
 blockTranslator(viralSubset, bestMatchInfo, windowSize, pattern)
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
-currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to
+the contig currently being assessed}
 
-\item{bestMatchInfo}{The information associated with the current best pattern-match.}
+\item{bestMatchInfo}{The information associated with the current best
+pattern-match.}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 
-\item{pattern}{A vector containing the values associated with the block pattern}
+\item{pattern}{A vector containing the values associated with the block
+pattern}
 }
 \value{
 List

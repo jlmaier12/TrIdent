@@ -20,12 +20,13 @@ plotTrIdentResults(
 
 \item{TrIdentResults}{Output from `TrIdentClassifier()`.}
 
-\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern match-scores. A
-suggested filtering threshold is provided by `TrIdentClassifier()` if
-`suggFiltThresh=TRUE`.}
+\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern
+match-scores. A suggested filtering threshold is provided by
+`TrIdentClassifier()` if `suggFiltThresh=TRUE`.}
 
-\item{saveFilesTo}{Optional, Provide a path to the directory you wish to save output to. A
-folder will be made within  the provided directory to store results.}
+\item{saveFilesTo}{Optional, Provide a path to the directory you wish to save
+output to. A folder will be made within the provided directory to store
+results.}
 }
 \value{
 Large list containing ggplot objects
@@ -40,8 +41,8 @@ data("VLPFractionSamplePileup")
 data("WholeCommunitySamplePileup")
 data("TrIdentSampleOutput")
 patternMatches <- plotTrIdentResults(
-                  VLPpileup=VLPFractionSamplePileup,
-                  WCpileup=WholeCommunitySamplePileup,
-                  TrIdentResults=TrIdentSampleOutput
-                  )
+    VLPpileup = VLPFractionSamplePileup,
+    WCpileup = WholeCommunitySamplePileup,
+    TrIdentResults = TrIdentSampleOutput
+)
 }

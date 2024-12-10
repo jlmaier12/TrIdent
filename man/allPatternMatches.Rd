@@ -9,8 +9,8 @@ allPatternMatches(bestMatchList, classifSummTable)
 \arguments{
 \item{bestMatchList}{Classifications made with patternMatcher function.}
 
-\item{classifSummTable}{Classification summary table with whole-community:VLP-fraction read
-coverage ratios calculated.}
+\item{classifSummTable}{Classification summary table with
+whole-community:VLP-fraction read coverage ratios calculated.}
 }
 \value{
 List

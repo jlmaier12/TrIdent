@@ -16,8 +16,8 @@ leftRightBlockTranslater(
 )
 }
 \arguments{
-\item{viralSubset}{A subset of the read coverage pileup that pertains only to the contig
-currently being assessed}
+\item{viralSubset}{A subset of the read coverage pileup that pertains only to
+the contig currently being assessed}
 
 \item{pattern}{The pattern vector being translated}
 
@@ -25,14 +25,16 @@ currently being assessed}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 
-\item{minReadCov}{The baseline value used for the region outside of the block pattern (either
-0 or the minimum VLP-fraction read coverage for the contig)}
+\item{minReadCov}{The baseline value used for the region outside of the block
+pattern (either 0 or the minimum VLP-fraction read coverage for the contig)}
 
 \item{cov}{The height value currently being used for the block pattern}
 
-\item{bestMatchInfo}{The information associated with the current best pattern match.}
+\item{bestMatchInfo}{The information associated with the current best
+pattern-match.}
 
-\item{minBlockSize}{The minimum size of the Prophage-like block pattern. Default is 10,000 bp.}
+\item{minBlockSize}{The minimum size of the Prophage-like block pattern.
+Default is 10,000 bp.}
 }
 \value{
 List

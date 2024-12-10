@@ -7,16 +7,17 @@
 zeroCountSearch(startOrEnd, viralSubsetZoom, startOrEndPosRow, noReadCov)
 }
 \arguments{
-\item{startOrEnd}{searching the start (left side) or end (right side) of the prophage-like
-pattern match}
+\item{startOrEnd}{searching the start (left side) or end (right side) of the
+prophage-like pattern-match}
 
-\item{viralSubsetZoom}{viralSubset dataframe subsetted to 50,000 bp outside the pattern match
-borders}
+\item{viralSubsetZoom}{viralSubset dataframe subsetted to 50,000 bp outside
+the pattern match borders}
 
-\item{startOrEndPosRow}{The row index of the start or end position of the prophage-like pattern match}
+\item{startOrEndPosRow}{The row index of the start or end position of the
+prophage-like pattern match}
 
-\item{noReadCov}{How many bp of no read coverage are encountered before specialized
-transduction searching stops? Default is 500.}
+\item{noReadCov}{How many bp of no read coverage are encountered before
+specialized transduction searching stops? Default is 500.}
 }
 \value{
 List

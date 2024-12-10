@@ -26,10 +26,10 @@
 #'     TrIdentResults = TrIdentSampleOutput
 #' )
 plotTrIdentResults <- function(VLPpileup,
-                                WCpileup,
-                                TrIdentResults,
-                                matchScoreFilter,
-                                saveFilesTo) {
+                               WCpileup,
+                               TrIdentResults,
+                               matchScoreFilter,
+                               saveFilesTo) {
     position <- coverage <- NULL
     windowSize <- TrIdentResults[[5]]
     cleanSummaryTable <- TrIdentResults[[3]]
@@ -121,7 +121,7 @@ plotTrIdentResults <- function(VLPpileup,
                 linewidth = 1
             ) +
             labs(x = "Contig position (bp)", y = "VLP-fraction \n
-                 read coverage") +
+                                                    read coverage") +
             scale_x_continuous(expand = c(0, 0)) +
             theme(
                 panel.grid.major = element_blank(),

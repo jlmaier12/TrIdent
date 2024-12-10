@@ -15,11 +15,11 @@
 #' @keywords internal
 changeSlope <-
     function(leftOrRight,
-            slopeBottom,
-            halfToMaxReadCov,
-            cov,
-            viralSubset,
-            windowSize) {
+             slopeBottom,
+             halfToMaxReadCov,
+             cov,
+             viralSubset,
+             windowSize) {
         slopeBottom <- slopeBottom + halfToMaxReadCov
         covSteps <- (cov - slopeBottom) / ((nrow(viralSubset) - 1))
         covSteps <- ifelse(leftOrRight == "Left", -covSteps, covSteps)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/allSlopingClassifs.R
 \name{allSlopingClassifs}
 \alias{allSlopingClassifs}
-\title{Collects Sloping classification pattern-match information}
+\title{Collects Sloping classification pattern-match i nformation}
 \usage{
 allSlopingClassifs(bestMatchList)
 }

@@ -40,14 +40,14 @@
 #'     WCpileup = WholeCommunitySamplePileup
 #' )
 TrIdentClassifier <- function(VLPpileup,
-                                WCpileup,
-                                windowSize = 1000,
-                                minBlockSize = 10000,
-                                maxBlockSize = Inf,
-                                minContigLength = 30000,
-                                minSlope = 0.001,
-                                suggFiltThresh = FALSE,
-                                SaveFilesTo) {
+                              WCpileup,
+                              windowSize = 1000,
+                              minBlockSize = 10000,
+                              maxBlockSize = Inf,
+                              minContigLength = 30000,
+                              minSlope = 0.001,
+                              suggFiltThresh = FALSE,
+                              SaveFilesTo) {
     ## error catching
     if (!(windowSize %in% list(100, 200, 500, 1000))) {
         stop("windowSize must be either 100, 200, 500, or 1000 bp!")
@@ -148,7 +148,8 @@ TrIdentClassifier <- function(VLPpileup,
         ifelse(!dir.exists(paths = paste0(SaveFilesTo, "\\TrIdentOutput")),
             dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),
             stop(
-                "'TrIdentOutput' folder exists already in the provided directory"
+                "'TrIdentOutput' folder exists already
+                in the provided directory"
             )
         )
         write.table(

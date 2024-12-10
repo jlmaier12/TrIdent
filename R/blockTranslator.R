@@ -15,9 +15,9 @@
 #' @keywords internal
 blockTranslator <-
     function(viralSubset,
-            bestMatchInfo,
-            windowSize,
-            pattern) {
+             bestMatchInfo,
+             windowSize,
+             pattern) {
         minPattern <- min(pattern)
         maxPattern <- max(pattern)
         repeat {

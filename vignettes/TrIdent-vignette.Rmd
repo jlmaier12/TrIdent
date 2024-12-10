@@ -119,7 +119,8 @@ are generated using .bam files produced during read mapping.
 
 **Deep sequencing of the whole-community and VLP-fractions is needed for** 
 **transductomics! Sample preparation, sequencing procedures, and analysis** 
-**methods are detailed in [Kleiner et al.(2020)](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5).
+**methods are detailed in** 
+**[Kleiner et al.(2020)](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5).**
 
 ## Pileup files
 TrIdent detects read coverage patterns using a pattern-matching algorithm that 
@@ -130,8 +131,11 @@ pair positions across a metagenome assembly which reduces data size while
 preserving read coverage patterns. **TrIdent requires that input pileups files 
 be generated using a 100 bp window/bin size.**  
 
-Some read mappers, like [BBMap](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbmap-guide/), 
-will allow for the generation of pileup files in the [`bbmap.sh`](https://github.com/BioInfoTools/BBMap/blob/master/sh/bbmap.sh) command with the use of the `bincov` output with the `covbinsize=100` 
+Some read mappers, like 
+[BBMap](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbmap-guide/), 
+will allow for the generation of pileup files in the 
+[`bbmap.sh`](https://github.com/BioInfoTools/BBMap/blob/master/sh/bbmap.sh) 
+command with the use of the `bincov` output with the `covbinsize=100` 
 parameter/argument. **Otherwise, BBMap's** 
 **[`pileup.sh`](https://github.com/BioInfoTools/BBMap/blob/master/sh/pileup.sh)** 
 **can convert .bam files produced by any read mapper to pileup files** 
@@ -205,27 +209,28 @@ patterns, we allow users to set a minimum `minContigLength` of 25,000 bp.
 
 ### Changing pileup windowSize
 The input pileup files have 100 bp windows in which the mapped read coverage is 
-averaged over. This small window size is needed to detect read coverage patterns 
-associated with specialized transduction which may only span a few thousand 
-basepairs. However, read coverage patterns associated with other types of 
-transduction generally don't require the resolution that 100 bp windows provide. 
-While users can use the 100 bp `windowSize` for `TrIdentClassifier()`, the 
-processing time will be increased significantly and noisy data may interfere 
-with pattern-matching. We find that the default 1,000 bp `windowSize` provides 
-a nice balance between processing time and read coverage pattern resolution.  
+averaged over. This small window size is needed to detect read coverage 
+patterns associated with specialized transduction which may only span a few 
+thousand basepairs. However, read coverage patterns associated with other types 
+of transduction generally don't require the resolution that 100 bp windows 
+provide. While users can use the 100 bp `windowSize` for `TrIdentClassifier()`, 
+the processing time will be increased significantly and noisy data may 
+interfere with pattern-matching. We find that the default 1,000 bp `windowSize` 
+provides a nice balance between processing time and read coverage pattern 
+resolution.  
 
 ### Pattern-matching
 `TrIdentClassifier()` detects read coverage patterns in the VLP-fraction using 
 a pattern-matching approach. Several predefined patterns, described below, are 
 built using the specific length and read coverage values of the contig being 
-assessed. Patterns are translated across each contig in 1,000 bp sliding windows 
-and at each translation, a pattern-match score is calculated by taking the mean 
-absolute difference of the VLP-fraction read coverage and the pattern values. 
-The smaller the match-score, the better the pattern-match. After a pattern is 
-fully translated across a contig, certain aspects of the pattern are changed 
-(i.e. height, width, slope) and translation is repeated. This process of 
-translation and pattern re-scaling is repeated until a large number of pattern 
-variations are tested. After pattern-matching is complete, the pattern 
+assessed. Patterns are translated across each contig in 1,000 bp sliding 
+windows and at each translation, a pattern-match score is calculated by taking 
+the mean absolute difference of the VLP-fraction read coverage and the pattern 
+values. The smaller the match-score, the better the pattern-match. After a 
+pattern is fully translated across a contig, certain aspects of the pattern are 
+changed (i.e. height, width, slope) and translation is repeated. This process 
+of translation and pattern re-scaling is repeated until a large number of 
+pattern variations are tested. After pattern-matching is complete, the pattern 
 associated with the best match-score is used for contig classification. Contigs 
 are classified as ‘Prophage-like’, ‘Sloping’, or 'NoPattern' during 
 pattern-matching. 
@@ -423,21 +428,21 @@ plot1
 ### Highly active/abundant and heterogenously integrated/present Prophage-like 
 elements
 
-Prophage-like elements that are actively replicating or are highly abundant will 
-typically generate more sequencing reads than the rest of their host bacterium's 
-chromosome. This may create a region of elevated read coverage at the element's 
-insertion site in the whole-community fraction read coverage. Conversely, if a 
-Prophage-like element is integrated into only a portion of the host bacterial 
-population, there may be a dip or depression in read coverage at the integration 
-site in the whole-community read coverage. In order to determine the 
-whole-community read coverage elevation or depression of a Prophage-like 
-element, one must know its genomic location. While some tools rely on 
-annotation information to identify Prophage-like elements in whole-community 
-metagenomes, `TrIdentClassifier()` uses the VLP-fraction read coverage patterns. 
-The locations of Prophage-like pattern-matches are used to calculate the 
-Prophage-like:non-Prophage-like whole-community read coverage ratio. 
-Prophage-like patterns with whole-community read coverage ratios greater than 
-1.15 are labeled as 'elevated' while ratios less then 0.75 are labeled as 
+Prophage-like elements that are actively replicating or are highly abundant 
+will typically generate more sequencing reads than the rest of their host 
+bacterium's chromosome. This may create a region of elevated read coverage at 
+the element's insertion site in the whole-community fraction read coverage. 
+Conversely, if a Prophage-like element is integrated into only a portion of the 
+host bacterial population, there may be a dip or depression in read coverage at 
+the integration site in the whole-community read coverage. In order to 
+determine the whole-community read coverage elevation or depression of a 
+Prophage-like element, one must know its genomic location. While some tools 
+rely on annotation information to identify Prophage-like elements in 
+whole-community metagenomes, `TrIdentClassifier()` uses the VLP-fraction read 
+coverage patterns. The locations of Prophage-like pattern-matches are used to 
+calculate the Prophage-like:non-Prophage-like whole-community read coverage 
+ratio. Prophage-like patterns with whole-community read coverage ratios greater 
+than 1.15 are labeled as 'elevated' while ratios less then 0.75 are labeled as 
 'depressed'. 
 
 ### NoPattern classifications with high VLP-fraction:whole-community read 
@@ -506,7 +511,8 @@ pattern-matching on. Must be at least 25000. Default is 30000.
 * `suggFiltThresh`: TRUE or FALSE, Suggest a filtering threshold for TrIdent 
 classifications based on the normalized pattern-match scores. Default is FALSE.
 * `SaveFilesTo`: Optional, Provide a path to the directory you wish to save 
-output to. A folder will be made within the provided directory to store results.
+output to. A folder will be made within the provided directory to store 
+results.
 
 ## Output
 
@@ -629,12 +635,13 @@ borders of its insertion site. `specializedTransductionID()` searches contigs
 classified as Prophage-like for dense read coverage outside the borders of the 
 Prophage-like patterns that might represent specialized transduction events. 
 Because specialized transduction tends to be fairly short (a couple kbps) 
-compared to generalized, lateral or GTA transduction (tens to hundreds of kbps), 
-averaging read coverage over a 1,000 bp distance (i.e using a `windowSize=1000`) 
-can 'blur' specialized transduction patterns. This is why specialized 
-transduction is not identified in `TrIdentClassifier()`. Instead, we use the 
-locations of Prophage-like elements identified with `TrIdentClassifier()` to 
-guide our search for specialized transduction in `specializedTransductionID()`.
+compared to generalized, lateral or GTA transduction (tens to hundreds of 
+kbps), averaging read coverage over a 1,000 bp distance (i.e using a 
+`windowSize=1000`) can 'blur' specialized transduction patterns. This is why 
+specialized transduction is not identified in `TrIdentClassifier()`. Instead, 
+we use the locations of Prophage-like elements identified with 
+`TrIdentClassifier()` to guide our search for specialized transduction in 
+`specializedTransductionID()`.
 
 Note that `specializedTransductionID()` results should not be taken at face 
 value and some manual curation is needed! We recommend careful examination of 
@@ -736,10 +743,10 @@ for all contigs classified as Prophage-like in `TrIdentClassifier()`.
 2. Plots: A list of ggplot objects for all contigs classified as Prophage-like. 
 The plots are 'zoomed-in' on the Prophage-like pattern to aid with specialized 
 transduction visualization. The Prophage-like element borders identified by 
-`specializedTransductionID()` are marked on each plot with black vertical lines. 
-If `specializedTransductionID()` identifies potential specialized transduction, 
-the plot will be colored green instead of blue. The end of specialized 
-transduction will be marked with a red vertical line.
+`specializedTransductionID()` are marked on each plot with black vertical 
+lines. If `specializedTransductionID()` identifies potential specialized 
+transduction, the plot will be colored green instead of blue. The end of 
+specialized transduction will be marked with a red vertical line.
 
 Save the desired list-item to a new variable using its associated name.
 

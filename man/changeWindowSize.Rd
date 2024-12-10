@@ -7,10 +7,11 @@
 changeWindowSize(cleanPileup, windowSize)
 }
 \arguments{
-\item{cleanPileup}{A read coverage dataset that has been cleaned and reformatted.}
+\item{cleanPileup}{A read coverage dataset that has been cleaned and
+reformatted.}
 
-\item{windowSize}{The number of base pairs to average coverage values over. Options are 100,
-500, 1000, or 2000 only!}
+\item{windowSize}{The number of base pairs to average coverage values over.
+Options are 100, 500, 1000, or 2000 only!}
 }
 \value{
 Dataframe

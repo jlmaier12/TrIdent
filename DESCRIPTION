@@ -13,7 +13,7 @@ Authors@R:
            family = "Rabasco",
            role = c("aut", "ctb"),
            email = "jrabasc@ncsu.edu",
-           comment = c(ORCID = "")))
+           comment = c(ORCID = "0000-0002-6971-6678")))
 Description: 
   TrIdent automates the analysis of transductomics data by detecting,
   classifying, and characterizing read coverage patterns associated with 
