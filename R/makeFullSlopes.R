@@ -26,7 +26,6 @@ makeFullSlopes <-
         endSeq <- ifelse(leftOrRight == "Left", minReadCov, newMax)
         pattern <- seq(startSeq, endSeq, covSteps)
         diff <- mean(abs(contigCoverage - pattern))
-        slope <- (endSeq - startSeq) / (nrow(viralSubset) * windowSize)
         return(list(
             diff,
             minReadCov,
@@ -34,7 +33,6 @@ makeFullSlopes <-
             covSteps,
             1,
             length(pattern),
-            slope,
             "Sloping"
         ))
     }

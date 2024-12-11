@@ -38,11 +38,5 @@ changeSlopeWStart <-
                     rep(minReadCov, 5000 / windowSize)
                 )
             }
-        slope <- ifelse(leftOrRight == "Left",
-            (slopeBottom - cov) /
-                ((nrow(viralSubset) * windowSize) - 5000),
-            (cov - slopeBottom) /
-                ((nrow(viralSubset) * windowSize) - 5000)
-        )
-        return(list(pattern, slope, slopeBottom))
+        return(list(pattern, covSteps, slopeBottom))
     }

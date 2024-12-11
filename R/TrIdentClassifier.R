@@ -97,7 +97,8 @@ TrIdentClassifier <- function(VLPpileup,
     )
     summaryTable <- slopeSumm(
         summaryTable,
-        allSlopingClassifs(classificationSummary[[1]])
+        allSlopingClassifs(classificationSummary[[1]]),
+        windowSize
     )
     message("Finalizing output")
     summaryList <- list(
@@ -143,7 +144,7 @@ TrIdentClassifier <- function(VLPpileup,
         " of the prophage-like classifications are mixed, i.e. heterogenously
         integrated into their bacterial host population"
     )
-    plot(resultsHisto(summaryList, suggFiltThresh))
+    print(plot(resultsHisto(summaryList, suggFiltThresh)))
     if (missing(SaveFilesTo) == FALSE) {
         ifelse(!dir.exists(paths = paste0(SaveFilesTo, "\\TrIdentOutput")),
             dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),

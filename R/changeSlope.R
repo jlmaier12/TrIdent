@@ -30,11 +30,6 @@ changeSlope <-
                 (seq(slopeBottom, cov, covSteps))
             }
         diff <- mean(abs(viralSubset[, 2] - pattern))
-        slope <- ifelse(
-            leftOrRight == "Left",
-            (slopeBottom - cov) / (nrow(viralSubset) * windowSize),
-            (cov - slopeBottom) / (nrow(viralSubset) * windowSize)
-        )
         return(list(
             diff,
             slopeBottom,
@@ -42,7 +37,6 @@ changeSlope <-
             covSteps,
             1,
             length(pattern),
-            slope,
             "Sloping"
         ))
     }

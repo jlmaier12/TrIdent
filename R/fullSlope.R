@@ -45,12 +45,12 @@ fullSlope <- function(viralSubset, windowSize, minSlope) {
                         viralSubset,
                         windowSize
                     )
-                if (abs(slopeChangeInfoL[[7]]) <
-                    minSlope | slopeChangeInfoL[[7]] > 0) {
+                if (abs(slopeChangeInfoL[[4]] / windowSize) <
+                    minSlope | slopeChangeInfoL[[4]] / windowSize > 0) {
                     break
                 }
-                if (abs(slopeChangeInfoR[[7]]) <
-                    minSlope | slopeChangeInfoR[[7]] < 0) {
+                if (abs(slopeChangeInfoR[[4]] / windowSize) <
+                    minSlope | slopeChangeInfoR[[4]] / windowSize < 0) {
                     break
                 }
                 if (slopeChangeInfoL[[1]] < bestMatchInfoLR[[1]]) {

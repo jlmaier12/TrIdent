@@ -16,7 +16,7 @@ patternMatchSize <- function(classifSumm, classifList, windowSize) {
     classifSumm$startPosBp <- rep(NA, nrow(classifSumm))
     classifSumm$endPosBp <- rep(NA, nrow(classifSumm))
     lapply(seq_along(classifList), function(i) {
-        contigName <- classifList[[i]][[9]]
+        contigName <- classifList[[i]][[8]]
         startPos <- classifList[[i]][[5]]
         endPos <- classifList[[i]][[6]]
         classifSumm[which(classifSumm[, 1] == contigName), 5] <<-

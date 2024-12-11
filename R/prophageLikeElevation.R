@@ -35,19 +35,19 @@ prophageLikeElevation <-
         lapply(seq_along(prophageLikeClassifList), function(i) {
             viralSubset <- changeWindowSize(
                 VLPpileup[which(VLPpileup[, 1] ==
-                    prophageLikeClassifList[[i]][[9]]), ],
+                    prophageLikeClassifList[[i]][[8]]), ],
                 windowSize
             )
             startPos <- prophageLikeClassifList[[i]][[5]]
             endPos <- prophageLikeClassifList[[i]][[6]]
-            contigName <- prophageLikeClassifList[[i]][[9]]
+            contigName <- prophageLikeClassifList[[i]][[8]]
             blockLengthBp <- abs(endPos - startPos) * windowSize
             nonBlockLengthBp <-
                 (nrow(viralSubset) * windowSize) - blockLengthBp
             microbialSubset <-
                 changeWindowSize(
                     WCpileup[which(WCpileup[, 1] ==
-                        prophageLikeClassifList[[i]][[9]]), ],
+                        contigName), ],
                     windowSize
                 )
             prophageLikeRegion <- microbialSubset[c(startPos:endPos), 2]

@@ -9,8 +9,8 @@
 #' @param bestMatchInfo The pattern-match information associated with the
 #'   current best pattern match.
 #' @param windowSize The window size used to re-average read coverage pileups
-#' @param pattern A vector containing the values associated with the sloping
-#'   pattern
+#' @param slopeChange A list containing pattern vector, slope value, and
+#'   value of slope bottom
 #' @param leftOrRight The direction of the sloping pattern. Either "Left" for
 #'   left to right (neg) slopes or "Right" for right to left (pos) slopes.
 #' @return List
@@ -27,29 +27,25 @@ slopeTranslator <-
             if (leftOrRight == "Left") {
                 pattern <- c(
                     rep(minPattern, 1000 / windowSize),
-                    pattern[-c((length(pattern) -
-                        ((
-                            1000 / windowSize
-                        ) - 1)):length(pattern))]
+                    pattern[-c((length(pattern) - ((
+                        1000 / windowSize
+                    ) - 1)):length(pattern))]
                 )
+                slopeBottomIdx <-
+                    min(pattern[pattern != min(pattern)])
+                startRowIdx <- which(pattern == max(pattern))
+                endRowIdx <- which(pattern == slopeBottomIdx)
             }
             if (leftOrRight == "Right") {
                 pattern <- c(
                     pattern[-(seq_len(1000 / windowSize))],
                     rep(minPattern, 1000 / windowSize)
                 )
+                slopeBottomIdx <-
+                    min(pattern[pattern != min(pattern)])
+                startRowIdx <- which(pattern == slopeBottomIdx)
+                endRowIdx <- which(pattern == max(pattern))
             }
-            slopeBottomIdx <- min(pattern[pattern != min(pattern)])
-            startRowIdx <-
-                ifelse(leftOrRight == "Left",
-                    which(pattern == max(pattern)),
-                    which(pattern == slopeBottomIdx)
-                )
-            endRowIdx <-
-                ifelse(leftOrRight == "Left",
-                    which(pattern == slopeBottomIdx),
-                    which(pattern == max(pattern))
-                )
             if ((length(pattern[!(pattern %in% minPattern)]) * windowSize) <
                 20000) {
                 break
@@ -68,7 +64,6 @@ slopeTranslator <-
                         covSteps,
                         startRowIdx,
                         endRowIdx,
-                        slopeChange[[2]],
                         "Sloping"
                     )
             }

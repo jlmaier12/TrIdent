@@ -25,33 +25,27 @@ makeBlockPattern <- function(viralSubset,
             rep(cov, blockLength),
             rep(minReadCov, nonBlock)
         )
+        startPos <- (which(pattern == max(pattern))[1])
+        endPos <- which(pattern == max(pattern))[length(which(pattern ==
+            max(pattern)))]
     }
     if (fullLeftRight == "Left") {
         pattern <- c(
             rep(cov, blockLength),
             rep(minReadCov, nonBlock)
         )
+        startPos <- 1
+        endPos <- (which(pattern == min(pattern))[1]) - 1
     }
     if (fullLeftRight == "Right") {
         pattern <- c(
             rep(minReadCov, nonBlock),
             rep(cov, blockLength)
         )
+        startPos <- (which(pattern == max(pattern))[1])
+        endPos <- length(pattern)
     }
     diff <- mean(abs(viralSubset[, 2] - pattern))
-    startPos <-
-        ifelse(fullLeftRight == "Full" | fullLeftRight == "Right",
-            (which(pattern == max(pattern))[1]), 1
-        )
-    endPos <-
-        if (fullLeftRight == "Full") {
-            which(pattern == max(pattern))[length(which(pattern ==
-                max(pattern)))]
-        } else if (fullLeftRight == "Left") {
-            (which(pattern == min(pattern))[1]) - 1
-        } else {
-            length(pattern)
-        }
     return(list(
         list(
             diff,
@@ -60,7 +54,6 @@ makeBlockPattern <- function(viralSubset,
             "NA",
             startPos,
             endPos,
-            "NA",
             "Prophage-like"
         ),
         pattern

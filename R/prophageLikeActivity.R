@@ -31,14 +31,14 @@ prophageLikeActivity <-
         }
         lapply(seq_along(prophageLikeClassifList), function(i) {
             viralSubset <- changeWindowSize(VLPpileup[which(VLPpileup[, 1] ==
-                prophageLikeClassifList[[i]][[9]]), ], windowSize)
+                prophageLikeClassifList[[i]][[8]]), ], windowSize)
             startPos <- prophageLikeClassifList[[i]][[5]]
             endPos <- prophageLikeClassifList[[i]][[6]]
-            contigName <- prophageLikeClassifList[[i]][[9]]
+            contigName <- prophageLikeClassifList[[i]][[8]]
             blockLengthBp <- abs(endPos - startPos) * windowSize
             microbialSubset <-
                 changeWindowSize(WCpileup[which(WCpileup[, 1] ==
-                    prophageLikeClassifList[[i]][[9]]), ], windowSize)
+                    prophageLikeClassifList[[i]][[8]]), ], windowSize)
             prophageLikeRegion <- microbialSubset[c(startPos:endPos), 2]
             nonProphageLikeRegion <-
                 microbialSubset[which(!microbialSubset[, 2] %in%

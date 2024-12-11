@@ -70,7 +70,6 @@ blockBuilder <-
                 minReadCov,
                 startingCovs[1]
             )[[1]]
-
         lapply(seq_along(startingCovs), function(i) {
             cov <- startingCovs[[i]]
             patternFull <- makeBlockPattern(

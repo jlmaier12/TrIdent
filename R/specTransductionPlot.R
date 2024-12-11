@@ -31,7 +31,7 @@ specTransductionPlot <-
              specTransSumm,
              logScale,
              classifSumm) {
-      position <- logcoverage <- NULL
+        position <- logcoverage <- NULL
         if (classifSumm[
             which(classifSumm[, 1] == contigName),
             6

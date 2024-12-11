@@ -10,7 +10,7 @@ allSlopingClassifs <- function(bestMatchList) {
     A <- 1
     slopingClassifList <- list()
     lapply(seq_along(bestMatchList), function(i) {
-        classification <- bestMatchList[[i]][[8]]
+        classification <- bestMatchList[[i]][[7]]
         if (classification != "Sloping") {
             return(NULL)
         }

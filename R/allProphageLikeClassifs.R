@@ -10,7 +10,7 @@ allProphageLikeClassifs <- function(bestMatchList) {
     A <- 1
     prophageLikeClassifList <- list()
     lapply(seq_along(bestMatchList), function(i) {
-        classification <- bestMatchList[[i]][[8]]
+        classification <- bestMatchList[[i]][[7]]
         if (classification != "Prophage-like") {
             return(NULL)
         }

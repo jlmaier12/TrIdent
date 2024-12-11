@@ -37,11 +37,6 @@ makeSlopesWStarts <-
                 )
             }
         diff <- mean(abs(contigCoverage - pattern))
-        slope <- ifelse(
-            leftOrRight == "Left",
-            (minReadCov - newMax) / ((nrow(viralSubset) * windowSize) - 5000),
-            (newMax - minReadCov) / ((nrow(viralSubset) * windowSize) - 5000)
-        )
         startPos <- ifelse(leftOrRight == "Left",
             which(pattern == max(pattern)), 1
         )
@@ -55,7 +50,6 @@ makeSlopesWStarts <-
             covSteps,
             startPos,
             endPos,
-            slope,
             "Sloping"
         ))
     }

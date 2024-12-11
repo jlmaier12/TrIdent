@@ -48,12 +48,12 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
                     viralSubset,
                     windowSize
                 )
-                if (abs(slopeChangeLR[[2]]) < minSlope |
-                    slopeChangeLR[[2]] > 0) {
+                if (abs(slopeChangeLR[[2]] / windowSize) < minSlope |
+                    slopeChangeLR[[2]] / windowSize > 0) {
                     break
                 }
-                if (abs(slopeChangeRL[[2]]) < minSlope |
-                    slopeChangeRL[[2]] < 0) {
+                if (abs(slopeChangeRL[[2]] / windowSize) < minSlope |
+                    slopeChangeRL[[2]] / windowSize < 0) {
                     break
                 }
                 bestMatchInfoLR <<-

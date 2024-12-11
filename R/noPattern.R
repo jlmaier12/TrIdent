@@ -22,7 +22,6 @@ noPattern <- function(viralSubset) {
             "NA",
             1,
             nrow(viralSubset),
-            "NA",
             "NoPattern"
         )
     return(bestMatchInfo)

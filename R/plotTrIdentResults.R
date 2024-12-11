@@ -41,7 +41,7 @@ plotTrIdentResults <- function(VLPpileup,
     plots <- list()
     contigNames <- c()
     plots <- lapply(seq_along(cleanSummaryTable), function(i) {
-        contigName <- cleanSummaryTable[[i]][[9]]
+        contigName <- cleanSummaryTable[[i]][[8]]
         viralSubset <-
             changeWindowSize(
                 VLPpileup[which(VLPpileup[, 1] == contigName), ],
@@ -91,7 +91,7 @@ plotTrIdentResults <- function(VLPpileup,
             labs(
                 title = paste(contigName, "Classification:", classification),
                 subtitle = paste(
-                    "Matching-region size (bp):", matchLength,
+                    "Match size (bp):", matchLength,
                     subtitleInfo
                 ),
                 x = " ",
@@ -120,8 +120,10 @@ plotTrIdentResults <- function(VLPpileup,
                 color = "black",
                 linewidth = 1
             ) +
-            labs(x = "Contig position (bp)", y = "VLP-fraction \n
-                                                    read coverage") +
+            labs(
+                x = "Contig position (bp)",
+                y = "VLP-fraction \n read coverage"
+            ) +
             scale_x_continuous(expand = c(0, 0)) +
             theme(
                 panel.grid.major = element_blank(),

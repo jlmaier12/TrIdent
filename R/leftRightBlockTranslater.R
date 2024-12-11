@@ -26,31 +26,29 @@ leftRightBlockTranslater <-
              bestMatchInfo,
              minBlockSize) {
         repeat {
-            pattern <- if (leftOrRight == "Left") {
-                c(
+            if (leftOrRight == "Left") {
+                pattern <- c(
                     pattern[-(seq_len(1000 / windowSize))],
                     rep(minReadCov, (1000 / windowSize))
                 )
+                startPos <- 1
+                endPos <- (which(pattern == min(pattern))[1]) - 1
             } else {
-                c(
+                pattern <- c(
                     rep(minReadCov, (1000 / windowSize)),
                     pattern[-c(((length(pattern)) -
                         ((
                             1000 / windowSize
                         ) - 1)):length(pattern))]
                 )
+                startPos <- (which(pattern == max(pattern))[1])
+                endPos <- length(pattern)
             }
             if (length(which(pattern == cov)) <
                 (minBlockSize / windowSize) + 1) {
                 break
             }
             diff <- mean(abs(viralSubset[, 2] - pattern))
-            startPos <- ifelse(leftOrRight == "Left",
-                1, (which(pattern == max(pattern))[1])
-            )
-            endPos <- ifelse(leftOrRight == "Left",
-                (which(pattern == min(pattern))[1]) - 1, length(pattern)
-            )
             if (diff < bestMatchInfo[[1]]) {
                 bestMatchInfo <- list(
                     diff,
@@ -59,7 +57,6 @@ leftRightBlockTranslater <-
                     "NA",
                     startPos,
                     endPos,
-                    "NA",
                     "Prophage-like"
                 )
             }

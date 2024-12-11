@@ -14,9 +14,9 @@ contigClassSumm <- function(bestMatchList) {
     classifications <- rep(NA, length(bestMatchList))
     normMatchScore <- rep(NA, length(bestMatchList))
     lapply(seq_along(bestMatchList), function(i) {
-        normMatchScore[i] <<- bestMatchList[[i]][[10]]
-        contigName[i] <<- bestMatchList[[i]][[9]]
-        classifications[i] <<- bestMatchList[[i]][[8]]
+        normMatchScore[i] <<- bestMatchList[[i]][[9]]
+        contigName[i] <<- bestMatchList[[i]][[8]]
+        classifications[i] <<- bestMatchList[[i]][[7]]
     })
     classifSumm <-
         cbind.data.frame(contigName, classifications, normMatchScore)

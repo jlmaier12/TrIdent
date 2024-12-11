@@ -71,8 +71,8 @@ specializedTransductionID <- function(VLPpileup,
     plots <- list()
     J <- 1
     lapply(seq_along(TrIdentResultPatterns), function(i) {
-        classification <- TrIdentResultPatterns[[i]][[8]]
-        contigName <- TrIdentResultPatterns[[i]][[9]]
+        classification <- TrIdentResultPatterns[[i]][[7]]
+        contigName <- TrIdentResultPatterns[[i]][[8]]
         normMatchScore <-
             TrIdentResultSumm[which(TrIdentResultSumm[, 1] ==
                 contigName), 3]

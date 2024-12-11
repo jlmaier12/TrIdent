@@ -4,13 +4,15 @@
 \alias{slopeSumm}
 \title{Summarize slopes for sloping classifications}
 \usage{
-slopeSumm(classifSumm, slopingClassifList)
+slopeSumm(classifSumm, slopingClassifList, windowSize)
 }
 \arguments{
 \item{classifSumm}{Classification summary table}
 
 \item{slopingClassifList}{A list containing pattern match information
 associated with all contigs classified as sloping.}
+
+\item{windowSize}{The window size used to re-average read coverage pileups}
 }
 \value{
 dataframe

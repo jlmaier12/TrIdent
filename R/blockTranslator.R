@@ -41,7 +41,6 @@ blockTranslator <-
                     "NA",
                     startPos,
                     endPos,
-                    "NA",
                     "Prophage-like"
                 )
             }

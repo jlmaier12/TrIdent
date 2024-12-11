@@ -21,11 +21,11 @@ current best pattern match.}
 
 \item{windowSize}{The window size used to re-average read coverage pileups}
 
+\item{slopeChange}{A list containing pattern vector, slope value, and
+value of slope bottom}
+
 \item{leftOrRight}{The direction of the sloping pattern. Either "Left" for
 left to right (neg) slopes or "Right" for right to left (pos) slopes.}
-
-\item{pattern}{A vector containing the values associated with the sloping
-pattern}
 }
 \value{
 List
