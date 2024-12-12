@@ -144,7 +144,7 @@ TrIdentClassifier <- function(VLPpileup,
         " of the prophage-like classifications are mixed, i.e. heterogenously
         integrated into their bacterial host population"
     )
-    print(plot(resultsHisto(summaryList, suggFiltThresh)))
+    plot(resultsHisto(summaryList, suggFiltThresh))
     if (missing(SaveFilesTo) == FALSE) {
         ifelse(!dir.exists(paths = paste0(SaveFilesTo, "\\TrIdentOutput")),
             dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),

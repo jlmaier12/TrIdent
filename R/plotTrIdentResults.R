@@ -105,7 +105,7 @@ plotTrIdentResults <- function(VLPpileup,
                 axis.line = element_line(colour = "black"),
                 text = element_text(size = 14),
                 axis.text = element_text(size = 10),
-                plot.subtitle = element_text(size = 10),
+                plot.subtitle = element_text(size = 11),
                 plot.margin = margin(
                     t = 0,
                     r = 6,

@@ -130,6 +130,10 @@ specializedTransductionID <- function(VLPpileup,
         specTransCount,
         " contigs have potential specialized transduction"
     )
+    if (logScale == FALSE) message(
+      "We recommend that you also view the results of this search with
+      logScale=TRUE"
+      )
     names(plots) <- specTransSumm[, 1]
     specTransList <- list(summaryTable = specTransSumm, Plots = plots)
     if (missing(SaveFilesTo) == FALSE) {

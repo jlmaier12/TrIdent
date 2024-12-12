@@ -34,12 +34,12 @@ specTransductionPlot <-
         position <- logcoverage <- NULL
         if (classifSumm[
             which(classifSumm[, 1] == contigName),
-            6
+            8
         ] == "Elevated") {
             prophageLikeInfo <- "Highly active/abundant prophage-like element"
         } else if (classifSumm[
             which(classifSumm[, 1] == contigName),
-            6
+            8
         ] == "Depressed") {
             prophageLikeInfo <-
                 "Not homogenously present/integrated prophage-like element"
@@ -82,15 +82,15 @@ specTransductionPlot <-
                 theme(
                     panel.grid.major = element_blank(),
                     panel.grid.minor = element_blank(),
-                    plot.subtitle = element_text(size = 10),
+                    plot.subtitle = element_text(size = 11),
                     panel.background = element_blank(),
                     axis.line = element_line(colour = "black"),
-                    text = element_text(size = 15)
+                    text = element_text(size = 15),
+                    plot.title = element_text(size = 12)
                 ) +
                 labs(
                     title = paste(
-                        contigName, classifPatternMatches[[i]][[8]],
-                        prophageLikeInfo
+                        contigName, prophageLikeInfo
                     ),
                     subtitle = paste(
                         "Specialized transduction on left:",
