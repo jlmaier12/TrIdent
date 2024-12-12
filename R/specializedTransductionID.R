@@ -80,7 +80,7 @@ specializedTransductionID <- function(VLPpileup,
             if (classification == "Prophage-like" &
                 normMatchScore < matchScoreFilter) {
                 specTransInfo <<-
-                    specTransductionSearchAndPlot(
+                  specTransductionSearch(
                         contigName,
                         VLPpileup,
                         TrIdentResultPatterns,
@@ -101,7 +101,7 @@ specializedTransductionID <- function(VLPpileup,
         } else if (contigName == specificContig & classification ==
             "Prophage-like" &
             normMatchScore < matchScoreFilter) {
-            specTransInfo <<- specTransductionSearchAndPlot(
+            specTransInfo <<- specTransductionSearch(
                 contigName,
                 VLPpileup,
                 TrIdentResultPatterns,

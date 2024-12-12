@@ -22,27 +22,16 @@
 #'   values are plotted. Default is FALSE.
 #' @return List containing two objects
 #' @keywords internal
-specTransductionSearchAndPlot <- function(contigName,
-                                          VLPpileup,
-                                          classifPatternMatches,
-                                          classifSumm,
-                                          windowSize,
-                                          i,
-                                          noReadCov,
-                                          specTransLength,
-                                          logScale) {
-    position <- logcoverage <- NULL
+specTransductionSearch <- function(contigName,
+                                   VLPpileup,
+                                   classifPatternMatches,
+                                   classifSumm,
+                                   windowSize,
+                                   i,
+                                   noReadCov,
+                                   specTransLength,
+                                   logScale) {
     specTransSumm <- c(contigName, rep(NA, 5))
-    # if (classifSumm[which(classifSumm[, 1] == contigName),
-    #                 6] == "Elevated") {
-    #     prophageLikeInfo <- "Highly active/abundant prophage-like element"
-    # } else if (classifSumm[which(classifSumm[, 1] == contigName),
-    #                         6] == "Depressed") {
-    #     prophageLikeInfo <-
-    #         "Not homogenously present/integrated prophage-like element"
-    # } else {
-    #     prophageLikeInfo <- NULL
-    # }
     viralSubsetZoom <- prophageLikeZoom(
         VLPpileup[which(VLPpileup[, 1] ==
             contigName), ],
@@ -102,67 +91,5 @@ specTransductionSearchAndPlot <- function(contigName,
         logScale,
         classifSumm
     )
-    # fill <-
-    #     ifelse(specTransSumm[2] == "yes", "seagreen", "deepskyblue3")
-    # alphaL <- ifelse(specTransSumm[3] == "yes", 1, 0)
-    # alphaR <- ifelse(specTransSumm[4] == "yes", 1, 0)
-    # coverageType <-
-    #     if (logScale == TRUE) {
-    #         viralSubsetZoom$logcoverage
-    #     } else {
-    #         viralSubsetZoom$coverage
-    #     }
-    # plot <- (
-    #     ggplot(data = as.data.frame(viralSubsetZoom), aes(
-    #         x = position,
-    #         y = coverageType
-    #     )) +
-    #         geom_area(fill = fill) +
-    #         geom_vline(
-    #             xintercept = c(startPosBp, endPosBp),
-    #             linewidth = 1
-    #         ) +
-    #         geom_vline(
-    #             xintercept = SpecTransLeft,
-    #             color = "red",
-    #             alpha = alphaL,
-    #             linewidth = 1
-    #         ) +
-    #         geom_vline(
-    #             xintercept = specTransRight,
-    #             color = "red",
-    #             alpha = alphaR,
-    #             linewidth = 1
-    #         ) +
-    #         scale_x_continuous(expand = c(0, 0)) +
-    #         theme(
-    #             panel.grid.major = element_blank(),
-    #             panel.grid.minor = element_blank(),
-    #             plot.subtitle = element_text(size = 10),
-    #             panel.background = element_blank(),
-    #             axis.line = element_line(colour = "black"),
-    #             text = element_text(size = 15)
-    #         ) +
-    #         labs(
-    #             title = paste(
-    #                 contigName, classifPatternMatches[[i]][[8]],
-    #                 prophageLikeInfo
-    #             ),
-    #             subtitle = paste(
-    #                 "Specialized transduction on left:",
-    #                 specTransSumm[3],
-    #                 ",",
-    #                 "on right:",
-    #                 specTransSumm[4]
-    #             ),
-    #             x = "Contig Position (bp)",
-    #             y = paste(
-    #                 "VLP-Fraction Read Coverage",
-    #                 ifelse(logScale == TRUE,
-    #                     "(Log10)", ""
-    #                 )
-    #             )
-    #         )
-    # )
     return(list(specTransSumm, plot))
 }
