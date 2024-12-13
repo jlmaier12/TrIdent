@@ -5,5 +5,5 @@ test_that("default_TridentClassifer", {
         VLPpileup = VLPFractionSamplePileup,
         WCpileup = WholeCommunitySamplePileup
     )
-    expect_equal(temp_tri_results, trident_results_v1)
+    expect_equal(temp_tri_results, TrIdentOutput)
 })

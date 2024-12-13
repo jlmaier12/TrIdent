@@ -9,7 +9,7 @@ test_that("specializedTransductionID", {
         VLPpileup = VLPFractionSamplePileup,
         TrIdentResults = TrIdent_results
     )
-    copied_Specialized_transduction <- Specialized_transduction
+    copied_Specialized_transduction <- SpecTransduc
     temp_plot <- temp_Specialized_transduction$Plots$plot
     copied_plot <- copied_Specialized_transduction$Plots$plot
     expect_equal(
@@ -23,9 +23,9 @@ test_that("specializedTransductionID", {
         TrIdentResults = TrIdent_results,
         specificContig = "NODE_62"
     )
-    copied_Specialized_transduction_NODE62 <- Specialized_transduction_NODE62
+    copied_Specialized_transduction_NODE62 <- SpecTransduc_node62
     expect_equal(
-        temp_Specialized_transduction_n44$Plots$plot,
+      temp_Specialized_transduction_n62$Plots$plot,
         copied_Specialized_transduction_NODE62$Plots$plot
     )
 })
