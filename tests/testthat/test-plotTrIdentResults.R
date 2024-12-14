@@ -10,7 +10,7 @@ test_that("plotTrIdentResults", {
         WCpileup = WholeCommunitySamplePileup,
         TrIdentResults = TrIdent_results
     )
-    copied_TrIdent_patternmatches <- TrIdent_patternmatches$plot
+    copied_TrIdent_patternmatches <- TrIdentPlots$plot
     temp_patternmatcher <- temp_patternmatcher$plot
     expect_equal(copied_TrIdent_patternmatches, temp_patternmatcher)
 })
