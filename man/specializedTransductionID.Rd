@@ -25,10 +25,12 @@ specializedTransductionID(
 Prophage-like ("NODE_1").}
 
 \item{noReadCov}{Number of basepairs of zero read coverage encountered before
-specialized transduction searching stops. Default is 500.}
+specialized transduction searching stops. Default is 500. Must be at least
+100.}
 
 \item{specTransLength}{Number of basepairs of non-zero read coverage needed
-for specialized transduction to be considered. Default is 2000.}
+for specialized transduction to be considered. Default is 2000. Must be
+at least 100.}
 
 \item{matchScoreFilter}{Optional, Filter plots using the normalized pattern
 match-scores. A suggested filtering threshold is provided by

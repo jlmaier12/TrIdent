@@ -25,7 +25,7 @@ TrIdentClassifier(
 over. Options are 100, 200, 500, 1000 ONLY.  Default is 1000.}
 
 \item{minBlockSize}{The minimum size (in bp) of the Prophage-like block
-pattern. Default is 10000.}
+pattern. Default is 10000. Must be at least 1000.}
 
 \item{maxBlockSize}{The maximum size (in bp) of the Prophage-like block
 pattern. Default is NA (no maximum).}

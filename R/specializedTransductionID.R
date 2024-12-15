@@ -11,9 +11,11 @@
 #' @param VLPpileup VLP-fraction pileup file.
 #' @param TrIdentResults Output from `TrIdentClassifier()`
 #' @param noReadCov Number of basepairs of zero read coverage encountered before
-#'   specialized transduction searching stops. Default is 500.
+#'   specialized transduction searching stops. Default is 500. Must be at least
+#'   100.
 #' @param specTransLength Number of basepairs of non-zero read coverage needed
-#'   for specialized transduction to be considered. Default is 2000.
+#'   for specialized transduction to be considered. Default is 2000. Must be
+#'   at least 100.
 #' @param specificContig Optional, Search a specific contig classified as
 #'   Prophage-like ("NODE_1").
 #' @param matchScoreFilter Optional, Filter plots using the normalized pattern
@@ -48,6 +50,13 @@ specializedTransductionID <- function(VLPpileup,
                                       matchScoreFilter,
                                       logScale = FALSE,
                                       SaveFilesTo) {
+  ## error catching
+  if (noReadCov < 100) {
+    stop("noReadCov must be greater than or equal to 100!")
+  }
+  if (specTransLength < 100) {
+    stop("specTransLength must be greater than or equal to 100!")
+  }
     specTransInfo <- NULL
     TrIdentResultPatterns <- TrIdentResults[[3]]
     TrIdentResultSumm <- TrIdentResults[[1]]

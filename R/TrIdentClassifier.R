@@ -15,7 +15,7 @@
 #' @param windowSize The number of basepairs to average read coverage values
 #'   over. Options are 100, 200, 500, 1000 ONLY.  Default is 1000.
 #' @param minBlockSize The minimum size (in bp) of the Prophage-like block
-#'   pattern. Default is 10000.
+#'   pattern. Default is 10000. Must be at least 1000.
 #' @param maxBlockSize The maximum size (in bp) of the Prophage-like block
 #'   pattern. Default is NA (no maximum).
 #' @param minContigLength The minimum contig size (in bp) to perform
@@ -52,7 +52,7 @@ TrIdentClassifier <- function(VLPpileup,
     if (!(windowSize %in% list(100, 200, 500, 1000))) {
         stop("windowSize must be either 100, 200, 500, or 1000 bp!")
     }
-    if (minContigLength < 25000) {
+    if (minContigLength <= 25000) {
         stop("minContigLength must be at least 25,000 bp for pattern-matching!")
     }
     if (minBlockSize <= 1000) {
