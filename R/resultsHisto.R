@@ -59,9 +59,9 @@ resultsHisto <- function(summaryList, suggFiltThresh) {
                 plot.title = element_text(size = 16),
                 axis.text = element_text(size = 12),
                 axis.title = element_text(size = 12),
-                plot.caption = element_text(size = 11),
+                plot.caption = element_text(size = 12),
                 legend.title = element_text(size = 12),
-                legend.text = element_text(size = 11)
+                legend.text = element_text(size = 12)
             )
     } else {
         plot <- ggplot(data = cleanSummaryTable) +

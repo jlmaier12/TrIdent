@@ -1,6 +1,6 @@
 ---
 title: "TrIdent"
-author: "Jessie Maier & Jorden Rabasco"
+author: "Jessie Maier, Jorden Rabasco"
 output:
   BiocStyle::html_document:
     toc: true
@@ -17,9 +17,7 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-    fig.width = 9,
-    fig.asp = 0.8,
-    out.width = "85%",
+    out.width = "90%",
     collapse = TRUE,
     comment = "##"
 )

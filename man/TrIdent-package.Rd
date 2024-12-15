@@ -30,6 +30,7 @@ by \code{TrIdentClassifier()} for potential specialized transduction
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://github.com/jlmaier12/TrIdent}
   \item Report bugs at \url{https://github.com/jlmaier12/TrIdent/issues}
 }
 

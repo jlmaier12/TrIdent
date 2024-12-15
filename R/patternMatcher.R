@@ -44,13 +44,13 @@ patternMatcher <-
             i <- contigNames[[p]]
             viralSubset <- VLPpileup[which(VLPpileup[, 1] == i), ]
             if (B == floor(length(contigNames) / 4)) {
-                message("A quarter of the way done with pattern matching")
+                message("A quarter of the way done with pattern-matching")
             }
             if (B == floor(length(contigNames) / 2)) {
-                message("Half of the way done with pattern matching")
+                message("Half of the way done with pattern-matching")
             }
             if (B == floor((length(contigNames) * 3) / 4)) {
-                message("Almost done with pattern matching!")
+                message("Almost done with pattern-matching!")
             }
             B <<- B + 1
             if (viralSubset[nrow(viralSubset), 3] < minContigLength) {

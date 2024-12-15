@@ -30,8 +30,10 @@ LazyData: false
 Imports: graphics, utils, stats, dplyr, ggplot2, patchwork, stringr, tidyr, roll
 RoxygenNote: 7.3.2
 biocViews: Coverage, Metagenomics, PatternLogic, Classification, Sequencing
+URL: https://github.com/jlmaier12/TrIdent 
 BugReports: https://github.com/jlmaier12/TrIdent/issues 
 Suggests: 
+    BiocStyle,
     knitr,
     rmarkdown,
     kableExtra,

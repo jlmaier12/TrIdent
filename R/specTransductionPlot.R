@@ -82,11 +82,11 @@ specTransductionPlot <-
                 theme(
                     panel.grid.major = element_blank(),
                     panel.grid.minor = element_blank(),
-                    plot.subtitle = element_text(size = 11),
+                    plot.subtitle = element_text(size = 12),
                     panel.background = element_blank(),
                     axis.line = element_line(colour = "black"),
                     text = element_text(size = 15),
-                    plot.title = element_text(size = 12)
+                    plot.title = element_text(size = 14)
                 ) +
                 labs(
                     title = paste(
