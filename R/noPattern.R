@@ -14,7 +14,8 @@ noPattern <- function(viralSubset) {
     diff1 <- mean(abs(viralSubset[, 2] - pattern1))
     diff2 <- mean(abs(viralSubset[, 2] - pattern2))
     diff <- ifelse(diff1 < diff2, diff1, diff2)
-    value <- ifelse(diff1 < diff2, median(viralSubset[, 2]), mean(viralSubset[, 2]))
+    value <- ifelse(diff1 < diff2, median(viralSubset[, 2]),
+                    mean(viralSubset[, 2]))
     bestMatchInfo <-
         list(
             diff,
