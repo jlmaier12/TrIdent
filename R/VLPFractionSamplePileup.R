@@ -26,16 +26,21 @@
 #' pileup file with 100 bp windows. A subset of 10 contigs from the pileup file
 #' were selected for this sample dataset. The contigs were chosen because their
 #' associated read coverage patterns in the VLP-fraction exemplify TrIdent's
-#' pattern-matching functionality across classifications: NODE_617:
-#' Prophage-like, active/abundant, with spec transduction NODE_125:
-#' Prophage-like, off one side of contig, no spec transduction NODE_352:
-#' Sloping, left to right slope NODE_251: Sloping, right to left slope
-#' NODE_2060: Sloping, right to left slope with start NODE_1401: None, no
-#' pattern match NODE_62: Prophage-like, with spec transduction NODE_368:
-#' Prophage-like, not homogeneously integrated/present, no spec transduction
-#' NODE_560: HighCovNoPattern NODE_1165: None, filtered out To access the
-#' sequencing data used to generate this pileup file and for additional details
-#' on the assembly and mapping parameters, refer to the reference below:
+#' pattern-matching functionality across classifications:
+#' NODE_617:Prophage-like, active/abundant, with spec transduction
+#' NODE_125:Prophage-like, off one side of contig, no spec transduction
+#' NODE_352:Sloping, left to right slope
+#' NODE_251: Sloping, right to left slope
+#' NODE_2060: Sloping, right to left slope with start
+#' NODE_1401: None, no pattern match
+#' NODE_62: Prophage-like, with spec transduction
+#' NODE_368: Prophage-like, not homogeneously integrated/present, no spec
+#' transduction
+#' NODE_560: HighCovNoPattern
+#' NODE_1165: None, filtered out
+#' To access the sequencing data used to generate this pileup file and for
+#' additional details on the assembly and mapping parameters, refer to the
+#' reference below:
 #' Reference: Kleiner, M., Bushnell, B., Sanderson, K.E. et al. Transductomics:
 #' sequencing-based detection and analysis of transduced DNA in pure cultures
 #' and microbial communities. Microbiome 8, 158 (2020).

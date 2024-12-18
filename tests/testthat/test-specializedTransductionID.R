@@ -1,5 +1,5 @@
 test_that("specializedTransductionID", {
-    data("VLPFractionSamplePileup")
+  data("VLPFractionSamplePileup")
     data("WholeCommunitySamplePileup")
     TrIdent_results <- TrIdentClassifier(
         VLPpileup = VLPFractionSamplePileup,
@@ -29,10 +29,3 @@ test_that("specializedTransductionID", {
         copied_Specialized_transduction_NODE62$Plots$plot
     )
 })
-
-# test_that("SpecializedTransduction_ID_Node_44", {
-#  TrIdent_results <- TrIdentClassifier(VLP_pileup=VLPFractionSampleData, WC_pileup=WholeCommunitySamplePileup, windowsize=1000, minblocksize=10000, maxblocksize=Inf, cleanup=TRUE)
-#  temp_Specialized_transduction_n44 <- SpecializedTransduction_ID(VLP_pileup=VLPFractionSampleData, transductionclassifications=TrIdent_results, specificcontig="NODE_44", noreadcov=500, spectranslength=2000, cleanup=TRUE)
-#  copied_Specialized_transduction_NODE44 <- Specialized_transduction_NODE44
-#  expect_equal(temp_Specialized_transduction_n44$Plots$plot, copied_Specialized_transduction_NODE44$Plots$plot)
-# })

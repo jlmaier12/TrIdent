@@ -15,7 +15,7 @@ each contig classified as Prophage-like, Sloping, or HighCovNoPattern}
 
 \item{i}{The index for the contig currently being assessed}
 
-\item{windowsize}{The window size used to re-average read coverage pileups}
+\item{windowSize}{The window size used to re-average read coverage pileups}
 }
 \value{
 List
