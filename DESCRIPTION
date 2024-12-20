@@ -1,21 +1,21 @@
 Package: TrIdent
-Type: Package
-BiocType: Software 
-Title: TrIdent - Transduction Identification
-Version: 0.99.1
+Title: 
+  Detect Genetic Transduction Events in Metagenomes using Read Coverage 
+  Pattern-Matching
+Version: 0.0.0.9000
+Maintainer: Jessie Maier <jlmaier@ncsu.edu>
 Authors@R: 
   c(person(given = "Jessie",
            family = "Maier",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "jlmaier@ncsu.edu",
            comment = c(ORCID = "0009-0001-8575-5386")),
     person(given = "Jorden",
            family = "Rabasco",
            role = c("aut", "ctb"),
-           email = "jrabasc@ncsu.edu",
            comment = c(ORCID = "0000-0002-6971-6678")))
 Description: 
-  TrIdent automates the analysis of transductomics data by detecting,
+  `TrIdent` automates the analysis of transductomics data by detecting,
   classifying, and characterizing read coverage patterns associated with 
   potential transduction events. Transductomics is a DNA sequencing-based 
   method for the detection and characterization of transduction events in pure 
@@ -26,11 +26,19 @@ Description:
   origin creating read coverage patterns indicative of ongoing transduction.
 License: GPL-2
 Encoding: UTF-8
-LazyData: false
-Imports: graphics, utils, stats, dplyr, ggplot2, patchwork, stringr, tidyr, roll
+LazyData: true
+Imports: 
+  graphics, 
+  utils, 
+  stats, 
+  dplyr, 
+  ggplot2, 
+  patchwork, 
+  stringr, 
+  tidyr, 
+  roll
 RoxygenNote: 7.3.2
-biocViews: Coverage, Metagenomics, PatternLogic, Classification, Sequencing
-URL: https://github.com/jlmaier12/TrIdent 
+URL: https://github.com/jlmaier12/TrIdent, https://jlmaier12.github.io/TrIdent/
 BugReports: https://github.com/jlmaier12/TrIdent/issues 
 Suggests: 
     BiocStyle,

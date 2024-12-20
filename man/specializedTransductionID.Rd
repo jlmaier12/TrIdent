@@ -55,17 +55,14 @@ results. If the plot is green, it has been identified as having potential
 specialized transduction.
 }
 \examples{
-data("VLPFractionSamplePileup")
-data("TrIdentSampleOutput")
-
 specTransduction <- specializedTransductionID(
-    VLPpileup = VLPFractionSamplePileup,
-    TrIdentResults = TrIdentSampleOutput
+  VLPpileup = VLPFractionSamplePileup,
+  TrIdentResults = TrIdentSampleOutput
 )
 
 specTransductionNODE62 <- specializedTransductionID(
-    VLPpileup = VLPFractionSamplePileup,
-    TrIdentResults = TrIdentSampleOutput,
-    specificContig = "NODE_62"
+  VLPpileup = VLPFractionSamplePileup,
+  TrIdentResults = TrIdentSampleOutput,
+  specificContig = "NODE_62"
 )
 }

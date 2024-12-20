@@ -33,11 +33,9 @@
 #' @export
 #'
 #' @examples
-#' data("VLPFractionSamplePileup")
-#' data("WholeCommunitySamplePileup")
 #' TrIdent_results <- TrIdentClassifier(
-#'     VLPpileup = VLPFractionSamplePileup,
-#'     WCpileup = WholeCommunitySamplePileup
+#'   VLPpileup = VLPFractionSamplePileup,
+#'   WCpileup = WholeCommunitySamplePileup
 #' )
 TrIdentClassifier <- function(VLPpileup,
                               WCpileup,
@@ -48,155 +46,155 @@ TrIdentClassifier <- function(VLPpileup,
                               minSlope = 0.001,
                               suggFiltThresh = FALSE,
                               SaveFilesTo) {
-    ## error catching
-    if (!(windowSize %in% list(100, 200, 500, 1000))) {
-        stop("windowSize must be either 100, 200, 500, or 1000 bp!")
-    }
-    if (minContigLength <= 25000) {
-        stop("minContigLength must be at least 25,000 bp for pattern-matching!")
-    }
-    if (minBlockSize <= 1000) {
-        stop("minBlockSize must be greater than 1000 bp!")
-    }
-    if (nrow(VLPpileup) != nrow(WCpileup)) {
-        stop("VLP and WC pileup files have differing row numbers")
-    }
-    if (abs(VLPpileup[1, 3] - VLPpileup[2, 3]) != 100 |
-        abs(WCpileup[1, 3] - WCpileup[2, 3]) != 100) {
-        stop("pileup files MUST have a windowSize/binsize of 100!")
-    }
-    ## main algorithm start
-    startTime <- Sys.time()
-    message("Reformatting pileup files")
-    VLPpileup <- pileupFormatter(VLPpileup)
-    WCpileup <- pileupFormatter(WCpileup)
-    message("Starting pattern-matching...")
-    classificationSummary <-
-        patternMatcher(
-            VLPpileup,
-            WCpileup,
-            windowSize,
-            minBlockSize,
-            maxBlockSize,
-            minContigLength,
-            minSlope
-        )
-    summaryTable <- contigClassSumm(classificationSummary[[1]])
-    summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup)
-    summaryTable <-
-        patternMatchSize(
-            summaryTable, classificationSummary[[1]],
-            windowSize
-        )
-    summaryTable <- prophageLikeElevation(
-        summaryTable,
-        allProphageLikeClassifs(classificationSummary[[1]]),
-        VLPpileup,
-        WCpileup,
-        windowSize
+  ## error catching
+  if (!(windowSize %in% list(100, 200, 500, 1000))) {
+    stop("windowSize must be either 100, 200, 500, or 1000 bp!")
+  }
+  if (minContigLength <= 25000) {
+    stop("minContigLength must be at least 25,000 bp for pattern-matching!")
+  }
+  if (minBlockSize <= 1000) {
+    stop("minBlockSize must be greater than 1000 bp!")
+  }
+  if (nrow(VLPpileup) != nrow(WCpileup)) {
+    stop("VLP and WC pileup files have differing row numbers")
+  }
+  if (abs(VLPpileup[1, 3] - VLPpileup[2, 3]) != 100 |
+    abs(WCpileup[1, 3] - WCpileup[2, 3]) != 100) {
+    stop("pileup files MUST have a windowSize/binsize of 100!")
+  }
+  ## main algorithm start
+  startTime <- Sys.time()
+  message("Reformatting pileup files")
+  VLPpileup <- pileupFormatter(VLPpileup)
+  WCpileup <- pileupFormatter(WCpileup)
+  message("Starting pattern-matching...")
+  classificationSummary <-
+    patternMatcher(
+      VLPpileup,
+      WCpileup,
+      windowSize,
+      minBlockSize,
+      maxBlockSize,
+      minContigLength,
+      minSlope
     )
-    summaryTable <- slopeSumm(
-        summaryTable,
-        allSlopingClassifs(classificationSummary[[1]]),
-        windowSize
+  summaryTable <- contigClassSumm(classificationSummary[[1]])
+  summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup)
+  summaryTable <-
+    patternMatchSize(
+      summaryTable, classificationSummary[[1]],
+      windowSize
     )
-    message("Finalizing output")
-    summaryList <- list(
-        SummaryTable = summaryTable,
-        CleanedSummaryTable = summaryTable[which(
-            summaryTable[, 2] ==
-                "Prophage-like" |
-                summaryTable[, 2] ==
-                    "Sloping" |
-                summaryTable[, 2] ==
-                    "HighCovNoPattern"
-        ), ],
-        PatternMatchInfo = allPatternMatches(
-            classificationSummary[[1]],
-            summaryTable
-        ),
-        FilteredOutContigTable = classificationSummary[[2]],
-        windowSize = windowSize
-    )
-    endTime <- Sys.time()
-    duration <- difftime(endTime, startTime)
-    message("Execution time: ", round(duration[[1]], 2), units(duration))
-    message(
-        length(which(
-            classificationSummary[[2]][, 2] == "Low VLP-fraction read cov"
-        )),
-        " contigs were filtered out based on low read coverage"
-    )
-    message(
-        length(which(
-            classificationSummary[[2]][, 2] == "Contig length too small"
-        )),
-        " contigs were filtered out based on length"
-    )
-    table <- (table(summaryList[[1]][, 2]))
-    message(paste0(capture.output(table), collapse = "\n"))
-    message(
-        length(which(summaryList[[1]][, 8] == "Elevated")),
-        " of the prophage-like classifications are highly active or abundant"
-    )
-    message(
-        length(which(summaryList[[1]][, 8] == "Depressed")),
-        " of the prophage-like classifications are mixed, i.e. heterogenously
+  summaryTable <- prophageLikeElevation(
+    summaryTable,
+    allProphageLikeClassifs(classificationSummary[[1]]),
+    VLPpileup,
+    WCpileup,
+    windowSize
+  )
+  summaryTable <- slopeSumm(
+    summaryTable,
+    allSlopingClassifs(classificationSummary[[1]]),
+    windowSize
+  )
+  message("Finalizing output")
+  summaryList <- list(
+    SummaryTable = summaryTable,
+    CleanedSummaryTable = summaryTable[which(
+      summaryTable[, 2] ==
+        "Prophage-like" |
+        summaryTable[, 2] ==
+          "Sloping" |
+        summaryTable[, 2] ==
+          "HighCovNoPattern"
+    ), ],
+    PatternMatchInfo = allPatternMatches(
+      classificationSummary[[1]],
+      summaryTable
+    ),
+    FilteredOutContigTable = classificationSummary[[2]],
+    windowSize = windowSize
+  )
+  endTime <- Sys.time()
+  duration <- difftime(endTime, startTime)
+  message("Execution time: ", round(duration[[1]], 2), units(duration))
+  message(
+    length(which(
+      classificationSummary[[2]][, 2] == "Low VLP-fraction read cov"
+    )),
+    " contigs were filtered out based on low read coverage"
+  )
+  message(
+    length(which(
+      classificationSummary[[2]][, 2] == "Contig length too small"
+    )),
+    " contigs were filtered out based on length"
+  )
+  table <- (table(summaryList[[1]][, 2]))
+  message(paste0(capture.output(table), collapse = "\n"))
+  message(
+    length(which(summaryList[[1]][, 8] == "Elevated")),
+    " of the prophage-like classifications are highly active or abundant"
+  )
+  message(
+    length(which(summaryList[[1]][, 8] == "Depressed")),
+    " of the prophage-like classifications are mixed, i.e. heterogenously
         integrated into their bacterial host population"
-    )
-    plot(resultsHisto(summaryList, suggFiltThresh))
-    if (missing(SaveFilesTo) == FALSE) {
-        ifelse(!dir.exists(paths = paste0(SaveFilesTo, "\\TrIdentOutput")),
-            dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),
-            stop(
-                "'TrIdentOutput' folder exists already
+  )
+  plot(resultsHisto(summaryList, suggFiltThresh))
+  if (missing(SaveFilesTo) == FALSE) {
+    ifelse(!dir.exists(paths = paste0(SaveFilesTo, "\\TrIdentOutput")),
+      dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),
+      stop(
+        "'TrIdentOutput' folder exists already
                 in the provided directory"
-            )
-        )
-        write.table(
-            summaryTable,
-            file = paste0(
-                SaveFilesTo,
-                "\\TrIdentOutput\\TrIdentSummaryTable.csv"
-            ),
-            sep = ",",
-            row.names = FALSE
-        )
-        write.table(
-            summaryTable[which(
-                summaryTable[, 2] ==
-                    "Prophage-like" |
-                    summaryTable[, 2] ==
-                        "Sloping" | summaryTable[, 2] ==
-                    "HighCovNoPattern"
-            ), ],
-            file = paste0(
-                SaveFilesTo,
-                "\\TrIdentOutput\\TrIdentSummaryTableCleaned.csv"
-            ),
-            sep = ",",
-            row.names = FALSE
-        )
-        write.table(
-            classificationSummary[[2]],
-            file = paste0(
-                SaveFilesTo,
-                "\\TrIdentOutput\\TrIdentFilteredOutContigs.csv"
-            ),
-            sep = ",",
-            row.names = FALSE
-        )
-        ggsave(
-            filename = paste0(
-                SaveFilesTo,
-                "\\TrIdentOutput\\MatchScoreDensityPlot.png"
-            ),
-            plot = plot,
-            width = 4,
-            height = 4
-        )
-        return(summaryList)
-    } else {
-        return(summaryList)
-    }
+      )
+    )
+    write.table(
+      summaryTable,
+      file = paste0(
+        SaveFilesTo,
+        "\\TrIdentOutput\\TrIdentSummaryTable.csv"
+      ),
+      sep = ",",
+      row.names = FALSE
+    )
+    write.table(
+      summaryTable[which(
+        summaryTable[, 2] ==
+          "Prophage-like" |
+          summaryTable[, 2] ==
+            "Sloping" | summaryTable[, 2] ==
+          "HighCovNoPattern"
+      ), ],
+      file = paste0(
+        SaveFilesTo,
+        "\\TrIdentOutput\\TrIdentSummaryTableCleaned.csv"
+      ),
+      sep = ",",
+      row.names = FALSE
+    )
+    write.table(
+      classificationSummary[[2]],
+      file = paste0(
+        SaveFilesTo,
+        "\\TrIdentOutput\\TrIdentFilteredOutContigs.csv"
+      ),
+      sep = ",",
+      row.names = FALSE
+    )
+    ggsave(
+      filename = paste0(
+        SaveFilesTo,
+        "\\TrIdentOutput\\MatchScoreDensityPlot.png"
+      ),
+      plot = plot,
+      width = 4,
+      height = 4
+    )
+    return(summaryList)
+  } else {
+    return(summaryList)
+  }
 }

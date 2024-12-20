@@ -59,10 +59,8 @@ containing the contigs that were filtered out prior to pattern-matching. The
 fifth item is the windowSize used for the search.
 }
 \examples{
-data("VLPFractionSamplePileup")
-data("WholeCommunitySamplePileup")
 TrIdent_results <- TrIdentClassifier(
-    VLPpileup = VLPFractionSamplePileup,
-    WCpileup = WholeCommunitySamplePileup
+  VLPpileup = VLPFractionSamplePileup,
+  WCpileup = WholeCommunitySamplePileup
 )
 }

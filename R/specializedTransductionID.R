@@ -29,18 +29,15 @@
 #' @return Large list containing two objects
 #' @export
 #' @examples
-#' data("VLPFractionSamplePileup")
-#' data("TrIdentSampleOutput")
-#'
 #' specTransduction <- specializedTransductionID(
-#'     VLPpileup = VLPFractionSamplePileup,
-#'     TrIdentResults = TrIdentSampleOutput
+#'   VLPpileup = VLPFractionSamplePileup,
+#'   TrIdentResults = TrIdentSampleOutput
 #' )
 #'
 #' specTransductionNODE62 <- specializedTransductionID(
-#'     VLPpileup = VLPFractionSamplePileup,
-#'     TrIdentResults = TrIdentSampleOutput,
-#'     specificContig = "NODE_62"
+#'   VLPpileup = VLPFractionSamplePileup,
+#'   TrIdentResults = TrIdentSampleOutput,
+#'   specificContig = "NODE_62"
 #' )
 specializedTransductionID <- function(VLPpileup,
                                       TrIdentResults,
@@ -57,132 +54,134 @@ specializedTransductionID <- function(VLPpileup,
   if (specTransLength < 100) {
     stop("specTransLength must be greater than or equal to 100!")
   }
-    specTransInfo <- NULL
-    TrIdentResultPatterns <- TrIdentResults[[3]]
-    TrIdentResultSumm <- TrIdentResults[[1]]
-    windowSize <- TrIdentResults[[5]]
-    specTransSumm <- data.frame(matrix(ncol = 6, nrow = 0))
-    colnames(specTransSumm) <-
-        c(
-            "contigName",
-            "specTransduc",
-            "left",
-            "right",
-            "lengthLeft",
-            "lengthRight"
-        )
-    matchScoreFilter <-
-        ifelse(missing(matchScoreFilter), Inf, matchScoreFilter)
-    VLPpileup <- pileupFormatter(VLPpileup)
-    specificContig <-
-        ifelse(missing(specificContig), NA, specificContig)
-    specTransCount <- 0
-    plots <- list()
-    J <- 1
-    lapply(seq_along(TrIdentResultPatterns), function(i) {
-        classification <- TrIdentResultPatterns[[i]][[7]]
-        contigName <- TrIdentResultPatterns[[i]][[8]]
-        normMatchScore <-
-            TrIdentResultSumm[which(TrIdentResultSumm[, 1] ==
-                contigName), 3]
-        if (is.na(specificContig)) {
-            if (classification == "Prophage-like" &
-                normMatchScore < matchScoreFilter) {
-                specTransInfo <<-
-                  specTransductionSearch(
-                        contigName,
-                        VLPpileup,
-                        TrIdentResultPatterns,
-                        TrIdentResultSumm,
-                        windowSize,
-                        i,
-                        noReadCov,
-                        specTransLength,
-                        logScale
-                    )
-                if (specTransInfo[[1]][[2]] == "yes") {
-                    specTransCount <<- specTransCount + 1
-                }
-                specTransSumm[J, seq_len(6)] <<- specTransInfo[[1]]
-                plots[[J]] <<- specTransInfo[[2]]
-                J <<- J + 1
-            }
-        } else if (contigName == specificContig & classification ==
-            "Prophage-like" &
-            normMatchScore < matchScoreFilter) {
-            specTransInfo <<- specTransductionSearch(
-                contigName,
-                VLPpileup,
-                TrIdentResultPatterns,
-                TrIdentResultSumm,
-                windowSize,
-                i,
-                noReadCov,
-                specTransLength,
-                logScale
-            )
-            if (specTransInfo[[1]][[2]] == "yes") {
-                specTransCount <<- specTransCount + 1
-            }
-            specTransSumm[J, seq_len(6)] <<- specTransInfo[[1]]
-            plots[[J]] <<- specTransInfo[[2]]
-            J <<- J + 1
-        }
-    })
-    if (specTransCount == 0) {
-        stop(
-            "Selected contig is either not prophage-like, spelled incorrectly
-            or has a match score below the chosen matchScoreFilter"
-        )
-    }
-    message(
-        specTransCount,
-        " contigs have potential specialized transduction"
+  specTransInfo <- NULL
+  TrIdentResultPatterns <- TrIdentResults[[3]]
+  TrIdentResultSumm <- TrIdentResults[[1]]
+  windowSize <- TrIdentResults[[5]]
+  specTransSumm <- data.frame(matrix(ncol = 6, nrow = 0))
+  colnames(specTransSumm) <-
+    c(
+      "contigName",
+      "specTransduc",
+      "left",
+      "right",
+      "lengthLeft",
+      "lengthRight"
     )
-    if (logScale == FALSE) message(
+  matchScoreFilter <-
+    ifelse(missing(matchScoreFilter), Inf, matchScoreFilter)
+  VLPpileup <- pileupFormatter(VLPpileup)
+  specificContig <-
+    ifelse(missing(specificContig), NA, specificContig)
+  specTransCount <- 0
+  plots <- list()
+  J <- 1
+  lapply(seq_along(TrIdentResultPatterns), function(i) {
+    classification <- TrIdentResultPatterns[[i]][[7]]
+    contigName <- TrIdentResultPatterns[[i]][[8]]
+    normMatchScore <-
+      TrIdentResultSumm[which(TrIdentResultSumm[, 1] ==
+        contigName), 3]
+    if (is.na(specificContig)) {
+      if (classification == "Prophage-like" &
+        normMatchScore < matchScoreFilter) {
+        specTransInfo <<-
+          specTransductionSearch(
+            contigName,
+            VLPpileup,
+            TrIdentResultPatterns,
+            TrIdentResultSumm,
+            windowSize,
+            i,
+            noReadCov,
+            specTransLength,
+            logScale
+          )
+        if (specTransInfo[[1]][[2]] == "yes") {
+          specTransCount <<- specTransCount + 1
+        }
+        specTransSumm[J, seq_len(6)] <<- specTransInfo[[1]]
+        plots[[J]] <<- specTransInfo[[2]]
+        J <<- J + 1
+      }
+    } else if (contigName == specificContig & classification ==
+      "Prophage-like" &
+      normMatchScore < matchScoreFilter) {
+      specTransInfo <<- specTransductionSearch(
+        contigName,
+        VLPpileup,
+        TrIdentResultPatterns,
+        TrIdentResultSumm,
+        windowSize,
+        i,
+        noReadCov,
+        specTransLength,
+        logScale
+      )
+      if (specTransInfo[[1]][[2]] == "yes") {
+        specTransCount <<- specTransCount + 1
+      }
+      specTransSumm[J, seq_len(6)] <<- specTransInfo[[1]]
+      plots[[J]] <<- specTransInfo[[2]]
+      J <<- J + 1
+    }
+  })
+  if (specTransCount == 0) {
+    stop(
+      "Selected contig is either not prophage-like, spelled incorrectly
+            or has a match score below the chosen matchScoreFilter"
+    )
+  }
+  message(
+    specTransCount,
+    " contigs have potential specialized transduction"
+  )
+  if (logScale == FALSE) {
+    message(
       "We recommend that you also view the results of this search with
       logScale=TRUE"
-      )
-    names(plots) <- specTransSumm[, 1]
-    specTransList <- list(summaryTable = specTransSumm, Plots = plots)
-    if (missing(SaveFilesTo) == FALSE) {
-        ifelse(!dir.exists(paths = paste0(
-            SaveFilesTo,
-            "\\TrIdentSpecTransduction"
-        )),
-        dir.create(paste0(
-            SaveFilesTo, "\\TrIdentSpecTransduction"
-        )),
-        stop(
-            "'TrIdentSpecTransduction' folder exists already in the provided
+    )
+  }
+  names(plots) <- specTransSumm[, 1]
+  specTransList <- list(summaryTable = specTransSumm, Plots = plots)
+  if (missing(SaveFilesTo) == FALSE) {
+    ifelse(!dir.exists(paths = paste0(
+      SaveFilesTo,
+      "\\TrIdentSpecTransduction"
+    )),
+    dir.create(paste0(
+      SaveFilesTo, "\\TrIdentSpecTransduction"
+    )),
+    stop(
+      "'TrIdentSpecTransduction' folder exists already in the provided
             directory"
+    )
+    )
+    lapply(
+      names(plots),
+      function(X) {
+        ggsave(
+          filename = paste0(
+            SaveFilesTo,
+            "\\TrIdentSpecTransduction\\", X, ".png"
+          ),
+          plot = plots[[X]],
+          width = 8,
+          height = 4
         )
-        )
-        lapply(
-            names(plots),
-            function(X) {
-                ggsave(
-                    filename = paste0(
-                        SaveFilesTo,
-                        "\\TrIdentSpecTransduction\\", X, ".png"
-                    ),
-                    plot = plots[[X]],
-                    width = 8,
-                    height = 4
-                )
-            }
-        )
-        write.table(
-            specTransSumm,
-            file = paste0(
-                SaveFilesTo,
-                "\\TrIdentSpecTransduction\\SpecTransducSummaryTable.csv"
-            ),
-            sep = ",",
-            row.names = FALSE
-        )
-        return(specTransList)
-    } else {
-        return(specTransList)
-    }
+      }
+    )
+    write.table(
+      specTransSumm,
+      file = paste0(
+        SaveFilesTo,
+        "\\TrIdentSpecTransduction\\SpecTransducSummaryTable.csv"
+      ),
+      sep = ",",
+      row.names = FALSE
+    )
+    return(specTransList)
+  } else {
+    return(specTransList)
+  }
 }
