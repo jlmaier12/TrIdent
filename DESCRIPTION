@@ -13,7 +13,19 @@ Authors@R:
     person(given = "Jorden",
            family = "Rabasco",
            role = c("aut", "ctb"),
-           comment = c(ORCID = "0000-0002-6971-6678")))
+           comment = c(ORCID = "0000-0002-6971-6678")),
+    person(given="Craig",
+           family="Gin",
+           role=c("aut"),
+           comment=c(ORCID= "0000-0002-7447-663X")),
+    person(given="Benjamin",
+           family="Callahan",
+           role=c("aut"),
+           comment=c(ORCID= "0000-0002-8752-117X")),
+    person(given="Manuel",
+           family="Kleiner",
+           role=c("aut","ths"),
+           comment=c(ORCID= "0000-0001-6904-0287")))
 Description: 
   `TrIdent` automates the analysis of transductomics data by detecting,
   classifying, and characterizing read coverage patterns associated with 

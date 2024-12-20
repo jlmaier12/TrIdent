@@ -11,18 +11,20 @@
 
 TrIdent automates the analysis of transductomics data by detecting,
 classifying, and characterizing read coverage patterns associated with
-potential transduction events. Transductomics, developed by Kleiner et
-al. (2020), is a DNA sequencing-based method for the detection and
-characterization of transduction events in pure cultures and complex
-communities. Transductomics relies on mapping sequencing reads from a
-viral-like particle (VLP)-fraction of a sample to contigs assembled from
-the metagenome (whole-community) of the same sample. Reads from
-bacterial DNA carried by VLPs will map back to the bacterial contigs of
-origin creating read coverage patterns indicative of ongoing
-transduction. **The read coverage patterns detected represent DNA being
-actively carried or transduced by VLPs. The read coverage patterns do
-not represent complete transduction events (i.e integration of
-transduced DNA into new bacterial chromosomes).**
+potential transduction events.
+
+Transductomics, developed by Kleiner et al. (2020), is a DNA
+sequencing-based method for the detection and characterization of
+transduction events in pure cultures and complex communities.
+Transductomics relies on mapping sequencing reads from a viral-like
+particle (VLP)-fraction of a sample to contigs assembled from the
+metagenome (whole-community) of the same sample. Reads from bacterial
+DNA carried by VLPs will map back to the bacterial contigs of origin
+creating read coverage patterns indicative of ongoing transduction.
+**The read coverage patterns detected represent DNA being actively
+carried or transduced by VLPs. The read coverage patterns do not
+represent complete transduction events (i.e integration of transduced
+DNA into new bacterial chromosomes).**
 
 To obtain the data needed for transductomics, a microbiome sample of
 interest is split to prepare two sub-sample types: - Whole-community:
@@ -111,7 +113,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>         Prophage-like elements
 #> Finalizing output
-#> Execution time: 21.39secs
+#> Execution time: 14.56secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
