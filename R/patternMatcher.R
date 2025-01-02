@@ -40,7 +40,7 @@ patternMatcher <-
     A <- 1
     B <- 1
     C <- 1
-    lapply(seq_along(contigNames), function(p) {
+    for(p in seq_along(contigNames)){
       i <- contigNames[[p]]
       viralSubset <- VLPpileup[which(VLPpileup[, 1] == i), ]
       if (B == floor(length(contigNames) / 4)) {
@@ -52,20 +52,20 @@ patternMatcher <-
       if (B == floor((length(contigNames) * 3) / 4)) {
         message("Almost done with pattern-matching!")
       }
-      B <<- B + 1
+      B <- B + 1
       if (viralSubset[nrow(viralSubset), 3] < minContigLength) {
-        filteredOutContigs[C] <<- i
-        reason[C] <<- "Contig length too small"
-        C <<- C + 1
-        return(NULL)
+        filteredOutContigs[C] <- i
+        reason[C] <- "Contig length too small"
+        C <- C + 1
+        next
       } else if (viralSubset[(order(viralSubset[, 2],
         decreasing = TRUE
       ))[minBlockSize /
         100], 2] <= 10) {
-        filteredOutContigs[C] <<- i
-        reason[C] <<- "Low VLP-fraction read cov"
-        C <<- C + 1
-        return(NULL)
+        filteredOutContigs[C] <- i
+        reason[C] <- "Low VLP-fraction read cov"
+        C <- C + 1
+        next
       }
       viralSubset <- changeWindowSize(viralSubset, windowSize)
       if (length(unique(viralSubset[, 2])) != 1) {
@@ -108,13 +108,13 @@ patternMatcher <-
       }
       bestMatch <- bestMatchSumm[[which(bestMatchScoreSumm ==
         min(bestMatchScoreSumm))[1]]]
-      bestMatchList[[A]] <<- c(bestMatch, i, bestMatch[[1]] /
+      bestMatchList[[A]] <- c(bestMatch, i, bestMatch[[1]] /
         mean(viralSubset$coverage))
-      normMatchScore[A] <<-
+      normMatchScore[A] <-
         bestMatch[[1]] / mean(viralSubset$coverage)
-      refs[A] <<- i
-      A <<- A + 1
-    })
+      refs[A] <- i
+      A <- A + 1
+    }
     filteredOutContigs <- filteredOutContigs[!is.na(filteredOutContigs)]
     reason <- reason[!is.na(reason)]
     normMatchScore <- normMatchScore[!is.na(normMatchScore)]

@@ -70,7 +70,7 @@ blockBuilder <-
         minReadCov,
         startingCovs[1]
       )[[1]]
-    lapply(seq_along(startingCovs), function(i) {
+    for(i in seq_along(startingCovs)) {
       cov <- startingCovs[[i]]
       patternFull <- makeBlockPattern(
         viralSubset,
@@ -100,7 +100,7 @@ blockBuilder <-
         minReadCov,
         cov
       )[[2]]
-      bestMatchInfoLeft <<-
+      bestMatchInfoLeft <-
         leftRightBlockTranslater(
           viralSubset,
           patternLeft,
@@ -111,7 +111,7 @@ blockBuilder <-
           bestMatchInfoLeft,
           minBlockSize
         )
-      bestMatchInfoRight <<-
+      bestMatchInfoRight <-
         leftRightBlockTranslater(
           viralSubset,
           patternRight,
@@ -123,7 +123,7 @@ blockBuilder <-
           minBlockSize
         )
       repeat {
-        bestMatchInfoFull <<-
+        bestMatchInfoFull <-
           blockTranslator(
             viralSubset, bestMatchInfoFull,
             windowSize, patternFull
@@ -138,7 +138,7 @@ blockBuilder <-
           rep(minReadCov, 1000 / windowSize)
         )
       }
-    })
+    }
     return(list(bestMatchInfoLeft, bestMatchInfoRight, bestMatchInfoFull))
   }
 

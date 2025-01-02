@@ -10,14 +10,12 @@ contigClassSumm <- function(bestMatchList) {
   if (length(bestMatchList) == 0) {
     stop("NO TRANSDUCTION EVENTS FOUND")
   }
-  contigName <- rep(NA, length(bestMatchList))
-  classifications <- rep(NA, length(bestMatchList))
-  normMatchScore <- rep(NA, length(bestMatchList))
-  lapply(seq_along(bestMatchList), function(i) {
-    normMatchScore[i] <<- bestMatchList[[i]][[9]]
-    contigName[i] <<- bestMatchList[[i]][[8]]
-    classifications[i] <<- bestMatchList[[i]][[7]]
-  })
+  classifications <- vapply(seq_along(bestMatchList), function(i) {
+                                    bestMatchList[[i]][[7]]}, character(1))
+  contigName <- vapply(seq_along(bestMatchList), function(i) {
+                                    bestMatchList[[i]][[8]]}, character(1))
+  normMatchScore <- vapply(seq_along(bestMatchList), function(i) {
+                                    bestMatchList[[i]][[9]]}, numeric(1))
   classifSumm <-
     cbind.data.frame(contigName, classifications, normMatchScore)
   return(classifSumm)
@@ -39,11 +37,11 @@ slopeSumm <- function(classifSumm, slopingClassifList, windowSize) {
   if (length(slopingClassifList) == 0) {
     return(classifSumm)
   }
-  lapply(seq_along(slopingClassifList), function(i) {
+  for(i in seq_along(slopingClassifList)) {
     classifSumm[which(classifSumm[, 1] ==
-      slopingClassifList[[i]][[8]]), 10] <<-
+      slopingClassifList[[i]][[8]]), 10] <-
       round(slopingClassifList[[i]][[4]] / windowSize, digits = 4)
-  })
+  }
   return(classifSumm)
 }
 
@@ -56,25 +54,27 @@ slopeSumm <- function(classifSumm, slopingClassifList, windowSize) {
 #' @param classifList A list containing pattern match information associated
 #'   with all contig classifications
 #' @param windowSize The window size used to re-average read coverage pileups
+#' @param verbose TRUE or FALSE. Print progress messages to console. Default is
+#' TRUE.
 #' @return dataframe
 #' @keywords internal
-patternMatchSize <- function(classifSumm, classifList, windowSize) {
-  message("Determining sizes (bp) of pattern matches")
+patternMatchSize <- function(classifSumm, classifList, windowSize, verbose) {
+  if(verbose == TRUE){message("Determining sizes (bp) of pattern matches")}
   classifSumm <- as.data.frame(classifSumm)
   classifSumm$matchSize <- rep(NA, nrow(classifSumm))
   classifSumm$startPosBp <- rep(NA, nrow(classifSumm))
   classifSumm$endPosBp <- rep(NA, nrow(classifSumm))
-  lapply(seq_along(classifList), function(i) {
+  for (i in seq_along(classifList)){
     contigName <- classifList[[i]][[8]]
     startPos <- classifList[[i]][[5]]
     endPos <- classifList[[i]][[6]]
-    classifSumm[which(classifSumm[, 1] == contigName), 5] <<-
+    classifSumm[which(classifSumm[, 1] == contigName), 5] <-
       (length(c(startPos:endPos)) - 1) * windowSize
-    classifSumm[which(classifSumm[, 1] == contigName), 6] <<-
+    classifSumm[which(classifSumm[, 1] == contigName), 6] <-
       startPos * windowSize
-    classifSumm[which(classifSumm[, 1] == contigName), 7] <<-
+    classifSumm[which(classifSumm[, 1] == contigName), 7] <-
       endPos * windowSize
-  })
+  }
   return(classifSumm)
 }
 
@@ -101,7 +101,7 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup) {
   if (length(noneClassifIdxs) == 0) {
     return(classifSumm)
   }
-  lapply(seq_along(noneClassifIdxs), function(p) {
+  for(p in seq_along(noneClassifIdxs)){
     i <- noneClassifIdxs[[p]]
     contigName <- classifSumm[i, 1]
     viralSubset <- VLPpileup[which(VLPpileup[, 1] == contigName), ]
@@ -113,10 +113,10 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup) {
       round(median(viralSubset[, 2] / median(microbialSubset[, 2])),
         digits = 4
       )
-    classifSumm[i, 2] <<-
+    classifSumm[i, 2] <-
       ifelse(VLPtoWCratio > 2, "HighCovNoPattern", "NoPattern")
-    classifSumm[i, 4] <<- VLPtoWCratio
-  })
+    classifSumm[i, 4] <- VLPtoWCratio
+  }
   return(classifSumm)
 }
 
@@ -137,6 +137,8 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup) {
 #'   bp windows, and contig positions associated with mapping whole-community
 #'   reads to whole-community contigs
 #' @param windowSize The window size used to re-average read coverage pileups
+#' @param verbose TRUE or FALSE. Print progress messages to console. Default is
+#' TRUE.
 #' @return dataframe
 #' @keywords internal
 prophageLikeElevation <-
@@ -144,18 +146,19 @@ prophageLikeElevation <-
            prophageLikeClassifList,
            VLPpileup,
            WCpileup,
-           windowSize) {
-    message(
+           windowSize,
+           verbose) {
+    if(verbose == TRUE){message(
       "Identifying highly active/abundant or heterogenously integrated
-        Prophage-like elements"
-    )
+      Prophage-like elements"
+    )}
     classifSummTable$proLikeWCReadCov <- rep(NA, nrow(classifSummTable))
     classifSummTable$proLikeWCReadCovRatio <-
       rep(NA, nrow(classifSummTable))
     if (length(prophageLikeClassifList) == 0) {
       return(classifSummTable)
     }
-    lapply(seq_along(prophageLikeClassifList), function(i) {
+    for(i in seq_along(prophageLikeClassifList)) {
       viralSubset <- changeWindowSize(
         VLPpileup[which(VLPpileup[, 1] ==
           prophageLikeClassifList[[i]][[8]]), ],
@@ -182,17 +185,17 @@ prophageLikeElevation <-
           digits = 4
         )
       classifSummTable[which(classifSummTable[, 1] ==
-        contigName), 9] <<- ratio
+        contigName), 9] <- ratio
       if (ratio > 1.15) {
         classifSummTable[which(classifSummTable[, 1] ==
-          contigName), 8] <<- "Elevated"
+          contigName), 8] <- "Elevated"
       } else if (ratio < 0.75) {
         classifSummTable[which(classifSummTable[, 1] ==
-          contigName), 8] <<- "Depressed"
+          contigName), 8] <- "Depressed"
       } else {
         classifSummTable[which(classifSummTable[, 1] ==
-          contigName), 8] <<- "None"
+          contigName), 8] <- "None"
       }
-    })
+    }
     return(classifSummTable)
   }

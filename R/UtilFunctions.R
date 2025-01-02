@@ -45,10 +45,7 @@ changeWindowSize <- function(cleanPileup, windowSize) {
 #' @return dataframe
 #' @keywords internal
 pileupFormatter <- function(pileup) {
-  colClasses <-
-    lapply(seq_along(pileup), function(i) {
-      class(pileup[, i])
-    })
+  colClasses <- vapply(pileup, class, character(1))
   for (i in c(which(colClasses == "integer"))) {
     if (length(which(pileup[, i] == 100)) > 1) {
       posColIdx <- i
@@ -64,7 +61,6 @@ pileupFormatter <- function(pileup) {
   cleanPileup$contigName <- gsub("\\s.*", "", cleanPileup$contigName)
   return(cleanPileup)
 }
-
 
 #' NA remover
 #'

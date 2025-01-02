@@ -9,17 +9,14 @@
 #' @return List
 #' @keywords internal
 allPatternMatches <- function(bestMatchList, classifSummTable) {
-  A <- 1
-  patternMatchList <- list()
-  lapply(seq_along(bestMatchList), function(i) {
+  lys <- lapply(seq_along(bestMatchList), function(i) {
     if (classifSummTable[which(classifSummTable[, 1] ==
-      bestMatchList[[i]][[8]]), 2] == "NoPattern") {
+                               bestMatchList[[i]][[8]]), 2] == "NoPattern") {
       return(NULL)
     }
-    patternMatchList[[A]] <<- bestMatchList[[i]]
-    A <<- A + 1
+    bestMatchList[[i]]
   })
-  return(patternMatchList)
+  return(lys[!vapply(lys, is.null, logical(1))])
 }
 
 
@@ -32,17 +29,13 @@ allPatternMatches <- function(bestMatchList, classifSummTable) {
 #' @return List
 #' @keywords internal
 allProphageLikeClassifs <- function(bestMatchList) {
-  A <- 1
-  prophageLikeClassifList <- list()
-  lapply(seq_along(bestMatchList), function(i) {
-    classification <- bestMatchList[[i]][[7]]
-    if (classification != "Prophage-like") {
+  lys <- lapply(seq_along(bestMatchList), function(i) {
+    if (bestMatchList[[i]][[7]] != "Prophage-like") {
       return(NULL)
     }
-    prophageLikeClassifList[[A]] <<- bestMatchList[[i]]
-    A <<- A + 1
+    bestMatchList[[i]]
   })
-  return(prophageLikeClassifList)
+  return(lys[!vapply(lys, is.null, logical(1))])
 }
 
 #' Collects Sloping classification pattern-match i nformation
@@ -54,15 +47,11 @@ allProphageLikeClassifs <- function(bestMatchList) {
 #' @return List
 #' @keywords internal
 allSlopingClassifs <- function(bestMatchList) {
-  A <- 1
-  slopingClassifList <- list()
-  lapply(seq_along(bestMatchList), function(i) {
-    classification <- bestMatchList[[i]][[7]]
-    if (classification != "Sloping") {
+  lys <- lapply(seq_along(bestMatchList), function(i) {
+    if (bestMatchList[[i]][[7]] != "Sloping") {
       return(NULL)
     }
-    slopingClassifList[[A]] <<- bestMatchList[[i]]
-    A <<- A + 1
+    bestMatchList[[i]]
   })
-  return(slopingClassifList)
+  return(lys[!vapply(lys, is.null, logical(1))])
 }

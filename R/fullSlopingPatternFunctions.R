@@ -22,9 +22,7 @@ fullSlope <- function(viralSubset, windowSize, minSlope) {
     makeFullSlopes("Left", viralSubset, newmax, minReadCov, windowSize)
   bestMatchInfoRL <-
     makeFullSlopes("Right", viralSubset, newmax, minReadCov, windowSize)
-  lapply(
-    seq(newmax, (minReadCov + halfReadCov), -halfToMaxReadCov),
-    function(cov) {
+  for(cov in seq(newmax, (minReadCov + halfReadCov), -halfToMaxReadCov)){
       slopeBottom <- minReadCov
       repeat {
         slopeChangeInfoL <-
@@ -54,16 +52,15 @@ fullSlope <- function(viralSubset, windowSize, minSlope) {
           break
         }
         if (slopeChangeInfoL[[1]] < bestMatchInfoLR[[1]]) {
-          bestMatchInfoLR <<- slopeChangeInfoL
+          bestMatchInfoLR <- slopeChangeInfoL
         }
         if (slopeChangeInfoR[[1]] < bestMatchInfoRL[[1]]) {
-          bestMatchInfoRL <<- slopeChangeInfoR
+          bestMatchInfoRL <- slopeChangeInfoR
         }
         slopeBottom <- slopeChangeInfoL[[2]]
         slopeBottom <- slopeChangeInfoL[[2]]
       }
     }
-  )
   return(list(bestMatchInfoLR, bestMatchInfoRL))
 }
 

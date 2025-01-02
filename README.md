@@ -3,15 +3,12 @@
 
 # TrIdent
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 **TrIdent - Transduction Identification**
 <a href="https://jlmaier12.github.io/TrIdent/"><img src="man/figures/logo.png" align="right" height="139" alt="TrIdent website" /></a>
 
-TrIdent automates the analysis of transductomics data by detecting,
+**TrIdent automates the analysis of transductomics data by detecting,
 classifying, and characterizing read coverage patterns associated with
-potential transduction events.
+potential transduction events.**
 
 Transductomics, developed by Kleiner et al. (2020), is a DNA
 sequencing-based method for the detection and characterization of
@@ -86,20 +83,37 @@ al. (2020)](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168
 
 ## Installation
 
-You can install the development version of TrIdent from
-[GitHub](https://github.com/) with:
+Install TrIdent with BiocManager:
 
 ``` r
-# install.packages("pak")
-pak::pak("jlmaier12/TrIdent")
+if (!require("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+
+BiocManager::install("TrIdent")
+library(TrIdent)
+```
+
+Install the development version of TrIdent through Github with
+BiocManager:
+
+``` r
+BiocManager::install("jlmaier12/TrIdent")
+library(TrIdent)
 ```
 
 ## Quick Start
 
 ``` r
+## Load TrIdent
 library(TrIdent)
 
-## Run first
+## Load sample datasets
+data("VLPFractionSamplePileup")
+data("WholeCommunitySamplePileup")
+
+## Run TrIdent:
+## Run first:
 TrIdentOutput <- TrIdentClassifier(
   VLPpileup = VLPFractionSamplePileup,
   WCpileup = WholeCommunitySamplePileup
@@ -111,7 +125,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Almost done with pattern-matching!
 #> Determining sizes (bp) of pattern matches
 #> Identifying highly active/abundant or heterogenously integrated
-#>         Prophage-like elements
+#>       Prophage-like elements
 #> Finalizing output
 #> Execution time: 14.56secs
 #> 1 contigs were filtered out based on low read coverage
@@ -122,25 +136,87 @@ TrIdentOutput <- TrIdentClassifier(
 #> 3 of the prophage-like classifications are highly active or abundant
 #> 1 of the prophage-like classifications are mixed, i.e. heterogenously
 #>         integrated into their bacterial host population
-```
 
-<img src="man/figures/README-example-1.png" width="100%" />
-
-``` r
-
-## Run second
-TrIdentPlots <- plotTrIdentResults(
+## Run second:
+plotTrIdentResults(
   VLPpileup = VLPFractionSamplePileup,
   WCpileup = WholeCommunitySamplePileup,
   TrIdentResults = TrIdentOutput
 )
+#> $NODE_62
+```
 
-## Run third
-SpecTransduc <- specializedTransductionID(
+<img src="man/figures/README-example-1.png" width="100%" />
+
+    #> 
+    #> $NODE_135
+
+<img src="man/figures/README-example-2.png" width="100%" />
+
+    #> 
+    #> $NODE_1088
+
+<img src="man/figures/README-example-3.png" width="100%" />
+
+    #> 
+    #> $NODE_352
+
+<img src="man/figures/README-example-4.png" width="100%" />
+
+    #> 
+    #> $NODE_368
+
+<img src="man/figures/README-example-5.png" width="100%" />
+
+    #> 
+    #> $NODE_560
+
+<img src="man/figures/README-example-6.png" width="100%" />
+
+    #> 
+    #> $NODE_617
+
+<img src="man/figures/README-example-7.png" width="100%" />
+
+    #> 
+    #> $NODE_2060
+
+<img src="man/figures/README-example-8.png" width="100%" />
+
+``` r
+
+## Run third:
+specializedTransductionID(
   VLPpileup = VLPFractionSamplePileup,
   TrIdentResults = TrIdentOutput
 )
 #> 2 contigs have potential specialized transduction
 #> We recommend that you also view the results of this search with
 #>       logScale=TRUE
+#> $summaryTable
+#>   contigName specTransduc left right lengthLeft lengthRight
+#> 1    NODE_62          yes  yes    no      45400        <NA>
+#> 2   NODE_135           no   no    no       <NA>        <NA>
+#> 3   NODE_368           no   no    no       <NA>        <NA>
+#> 4   NODE_617          yes  yes   yes      33300        9800
+#> 
+#> $Plots
+#> $Plots$NODE_62
 ```
+
+<img src="man/figures/README-example-9.png" width="100%" />
+
+    #> 
+    #> $Plots$NODE_135
+
+<img src="man/figures/README-example-10.png" width="100%" />
+
+    #> 
+    #> $Plots$NODE_368
+
+<img src="man/figures/README-example-11.png" width="100%" />
+
+    #> 
+    #> $Plots$NODE_617
+
+<img src="man/figures/README-example-12.png" width="100%" />

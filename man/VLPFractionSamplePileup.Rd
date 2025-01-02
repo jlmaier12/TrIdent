@@ -42,7 +42,7 @@ pattern-matching functionality across classifications:
 NODE_617:Prophage-like, active/abundant, with spec transduction
 NODE_135:Prophage-like, off one side of contig, no spec transduction
 NODE_352:Sloping, left to right slope
-NODE_251: Sloping, right to left slope
+NODE_1088: Sloping, right to left slope
 NODE_2060: Sloping, right to left slope with start
 NODE_1401: None, no pattern match
 NODE_62: Prophage-like, with spec transduction

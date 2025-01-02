@@ -20,12 +20,12 @@ resultsHisto <- function(summaryList, suggFiltThresh) {
     max(cleanSummaryTable$normMatchScore),
     length.out = 40
   )
-  histogram <-
-    hist(cleanSummaryTable$normMatchScore,
-      breaks = brks,
-      plot = FALSE
-    )
   if (suggFiltThresh == TRUE) {
+    histogram <-
+      hist(cleanSummaryTable$normMatchScore,
+           breaks = brks,
+           plot = FALSE
+      )
     max <- which.max(histogram$counts)
     SD <- sd(histogram$counts) * 2
     ST <- histogram$breaks[0:1 + (max + SD)][[1]]
@@ -89,5 +89,5 @@ resultsHisto <- function(summaryList, suggFiltThresh) {
         legend.text = element_text(size = 11)
       )
   }
-  return(plot)
+  return(list(plot))
 }

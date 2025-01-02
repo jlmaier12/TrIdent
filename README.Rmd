@@ -15,12 +15,9 @@ knitr::opts_chunk$set(
 
 # TrIdent
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 **TrIdent - Transduction Identification** <a href="https://jlmaier12.github.io/TrIdent/"><img src="man/figures/logo.png" align="right" height="139" alt="TrIdent website" /></a>
 
-TrIdent automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events. 
+**TrIdent automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events.** 
 
 Transductomics, developed by Kleiner et al. (2020), is a DNA sequencing-based method for the detection and characterization of transduction events in pure cultures and complex communities. Transductomics relies on mapping sequencing reads from a viral-like particle (VLP)-fraction of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by VLPs will map back to the bacterial contigs of origin creating read coverage patterns indicative of ongoing transduction. **The read coverage patterns detected represent DNA being actively carried or transduced by VLPs. The read coverage patterns do not represent complete transduction events (i.e integration of transduced DNA into new bacterial chromosomes).** 
 
@@ -51,33 +48,48 @@ Transductomics sample preparation, sequencing procedures, and analysis methods a
 
 ## Installation
 
-You can install the development version of TrIdent from [GitHub](https://github.com/) with:
-
+Install TrIdent with BiocManager:
 ``` r
-# install.packages("pak")
-pak::pak("jlmaier12/TrIdent")
+if (!require("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+
+BiocManager::install("TrIdent")
+library(TrIdent)
+```
+
+Install the development version of TrIdent through Github with BiocManager:
+``` r
+BiocManager::install("jlmaier12/TrIdent")
+library(TrIdent)
 ```
 
 ## Quick Start
 
 ```{r example}
+## Load TrIdent
 library(TrIdent)
 
-## Run first
+## Load sample datasets
+data("VLPFractionSamplePileup")
+data("WholeCommunitySamplePileup")
+
+## Run TrIdent:
+## Run first:
 TrIdentOutput <- TrIdentClassifier(
   VLPpileup = VLPFractionSamplePileup,
   WCpileup = WholeCommunitySamplePileup
 )
 
-## Run second
-TrIdentPlots <- plotTrIdentResults(
+## Run second:
+plotTrIdentResults(
   VLPpileup = VLPFractionSamplePileup,
   WCpileup = WholeCommunitySamplePileup,
   TrIdentResults = TrIdentOutput
 )
 
-## Run third
-SpecTransduc <- specializedTransductionID(
+## Run third:
+specializedTransductionID(
   VLPpileup = VLPFractionSamplePileup,
   TrIdentResults = TrIdentOutput
 )

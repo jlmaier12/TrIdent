@@ -26,9 +26,7 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
     "Right", viralSubset, newMax,
     minReadCov, windowSize
   )
-  lapply(
-    seq(newMax, (minReadCov + halfReadCov), -halfToMaxReadCov),
-    function(cov) {
+  for(cov in seq(newMax, (minReadCov + halfReadCov), -halfToMaxReadCov)){
       slopeBottom <- minReadCov
       slopeBottomChange <- (cov - minReadCov) / 10
       repeat {
@@ -56,7 +54,7 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
           slopeChangeRL[[2]] / windowSize < 0) {
           break
         }
-        bestMatchInfoLR <<-
+        bestMatchInfoLR <-
           slopeTranslator(
             viralSubset,
             bestMatchInfoLR,
@@ -64,7 +62,7 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
             slopeChangeLR,
             "Left"
           )
-        bestMatchInfoRL <<-
+        bestMatchInfoRL <-
           slopeTranslator(
             viralSubset,
             bestMatchInfoRL,
@@ -75,7 +73,6 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
         slopeBottom <- slopeChangeLR[[3]]
       }
     }
-  )
   return(list(bestMatchInfoLR, bestMatchInfoRL))
 }
 
