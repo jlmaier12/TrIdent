@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Detect Genetic Transduction Events in Metagenomes using Read Coverage Pattern-Matching • TrIdent</title>
+<title>TrIdent - Transduction Identification • TrIdent</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -16,9 +16,9 @@
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Detect Genetic Transduction Events in Metagenomes using Read Coverage Pattern-Matching">
-<meta name="description" content="`TrIdent` automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events. Transductomics is a DNA sequencing-based method for the detection and characterization of transduction events in pure cultures and complex communities. Transductomics relies on mapping sequencing reads from a viral-like particle (VLP)-fraction of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by VLPs will map back to the bacterial contigs of origin creating read coverage patterns indicative of ongoing transduction.">
-<meta property="og:description" content="`TrIdent` automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events. Transductomics is a DNA sequencing-based method for the detection and characterization of transduction events in pure cultures and complex communities. Transductomics relies on mapping sequencing reads from a viral-like particle (VLP)-fraction of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by VLPs will map back to the bacterial contigs of origin creating read coverage patterns indicative of ongoing transduction.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="TrIdent - Transduction Identification">
+<meta name="description" content="The `TrIdent` R package automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events. Transductomics is a DNA sequencing-based method for the detection and characterization of transduction events in pure cultures and complex communities. Transductomics relies on mapping sequencing reads from a viral-like particle (VLP)-fraction of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by VLPs will map back to the bacterial contigs of origin creating read coverage patterns indicative of ongoing transduction.">
+<meta property="og:description" content="The `TrIdent` R package automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events. Transductomics is a DNA sequencing-based method for the detection and characterization of transduction events in pure cultures and complex communities. Transductomics relies on mapping sequencing reads from a viral-like particle (VLP)-fraction of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by VLPs will map back to the bacterial contigs of origin creating read coverage patterns indicative of ongoing transduction.">
 <meta property="og:image" content="https://jlmaier12.github.io/TrIdent/logo.png">
 </head>
 <body>
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,10 +64,8 @@
 <img src="logo.png" class="logo" alt=""><h1 id="trident">TrIdent<a class="anchor" aria-label="anchor" href="#trident"></a>
 </h1>
 </div>
-<!-- badges: start -->
-<!-- badges: end -->
-
-<p>TrIdent automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events.</p>
+<p><strong>TrIdent - Transduction Identification</strong> <a href="https://jlmaier12.github.io/TrIdent/"><img src="reference/figures/logo.png" align="right" height="139" alt="TrIdent website"></a></p>
+<p><strong>TrIdent automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events.</strong></p>
 <p>Transductomics, developed by Kleiner et al. (2020), is a DNA sequencing-based method for the detection and characterization of transduction events in pure cultures and complex communities. Transductomics relies on mapping sequencing reads from a viral-like particle (VLP)-fraction of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by VLPs will map back to the bacterial contigs of origin creating read coverage patterns indicative of ongoing transduction. <strong>The read coverage patterns detected represent DNA being actively carried or transduced by VLPs. The read coverage patterns do not represent complete transduction events (i.e integration of transduced DNA into new bacterial chromosomes).</strong></p>
 <p>To obtain the data needed for transductomics, a microbiome sample of interest is split to prepare two sub-sample types: - Whole-community: Represents the ‘whole-community’ (all bacteria, fungi, virus, etc) in the microbiome of interest - VLP-fraction: Represents only the virus and ‘viral-like particles’ associated with the microbiome of interest - The VLP-fraction must be obtained by an appropriate ultra-purification protocol for your sample type to remove bacterial cells and contaminating free bacterial DNA.</p>
 <p>With transductomics and TrIdent, a researcher can obtain information about the phage-host pairs involved in transduction, the types of transduction occuring, and the region of the host genome that is potentially transduced, which allows exploration of transferred genes.</p>
@@ -88,18 +86,32 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of TrIdent from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>Install TrIdent with BiocManager:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu">pak</span><span class="op">(</span><span class="st">"jlmaier12/TrIdent"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"TrIdent"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jlmaier12/TrIdent" class="external-link">TrIdent</a></span><span class="op">)</span></span></code></pre></div>
+<p>Install the development version of TrIdent through Github with BiocManager:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"jlmaier12/TrIdent"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jlmaier12/TrIdent" class="external-link">TrIdent</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jlmaier12/TrIdent" class="external-link">TrIdent</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Load TrIdent</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jlmaier12/TrIdent" class="external-link">TrIdent</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Run first</span></span>
+<span><span class="co">## Load sample datasets</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"VLPFractionSamplePileup"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"WholeCommunitySamplePileup"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Run TrIdent:</span></span>
+<span><span class="co">## Run first:</span></span>
 <span><span class="va">TrIdentOutput</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/TrIdentClassifier.html">TrIdentClassifier</a></span><span class="op">(</span></span>
 <span>  VLPpileup <span class="op">=</span> <span class="va">VLPFractionSamplePileup</span>,</span>
 <span>  WCpileup <span class="op">=</span> <span class="va">WholeCommunitySamplePileup</span></span>
@@ -111,7 +123,7 @@
 <span><span class="co">#&gt; Almost done with pattern-matching!</span></span>
 <span><span class="co">#&gt; Determining sizes (bp) of pattern matches</span></span>
 <span><span class="co">#&gt; Identifying highly active/abundant or heterogenously integrated</span></span>
-<span><span class="co">#&gt;         Prophage-like elements</span></span>
+<span><span class="co">#&gt;       Prophage-like elements</span></span>
 <span><span class="co">#&gt; Finalizing output</span></span>
 <span><span class="co">#&gt; Execution time: 14.56secs</span></span>
 <span><span class="co">#&gt; 1 contigs were filtered out based on low read coverage</span></span>
@@ -121,25 +133,66 @@
 <span><span class="co">#&gt;                1                1                4                3</span></span>
 <span><span class="co">#&gt; 3 of the prophage-like classifications are highly active or abundant</span></span>
 <span><span class="co">#&gt; 1 of the prophage-like classifications are mixed, i.e. heterogenously</span></span>
-<span><span class="co">#&gt;         integrated into their bacterial host population</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-1.png" width="100%"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co">## Run second</span></span>
-<span><span class="va">TrIdentPlots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotTrIdentResults.html">plotTrIdentResults</a></span><span class="op">(</span></span>
+<span><span class="co">#&gt;         integrated into their bacterial host population</span></span>
+<span></span>
+<span><span class="co">## Run second:</span></span>
+<span><span class="fu"><a href="reference/plotTrIdentResults.html">plotTrIdentResults</a></span><span class="op">(</span></span>
 <span>  VLPpileup <span class="op">=</span> <span class="va">VLPFractionSamplePileup</span>,</span>
 <span>  WCpileup <span class="op">=</span> <span class="va">WholeCommunitySamplePileup</span>,</span>
 <span>  TrIdentResults <span class="op">=</span> <span class="va">TrIdentOutput</span></span>
 <span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Run third</span></span>
-<span><span class="va">SpecTransduc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/specializedTransductionID.html">specializedTransductionID</a></span><span class="op">(</span></span>
+<span><span class="co">#&gt; $NODE_62</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-1.png" width="100%"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; $NODE_135</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-2.png" width="100%"></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; $NODE_1088</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-3.png" width="100%"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; $NODE_352</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-4.png" width="100%"></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; $NODE_368</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-5.png" width="100%"></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; $NODE_560</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-6.png" width="100%"></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; $NODE_617</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-7.png" width="100%"></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; $NODE_2060</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-8.png" width="100%"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">## Run third:</span></span>
+<span><span class="fu"><a href="reference/specializedTransductionID.html">specializedTransductionID</a></span><span class="op">(</span></span>
 <span>  VLPpileup <span class="op">=</span> <span class="va">VLPFractionSamplePileup</span>,</span>
 <span>  TrIdentResults <span class="op">=</span> <span class="va">TrIdentOutput</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; 2 contigs have potential specialized transduction</span></span>
 <span><span class="co">#&gt; We recommend that you also view the results of this search with</span></span>
-<span><span class="co">#&gt;       logScale=TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt;       logScale=TRUE</span></span>
+<span><span class="co">#&gt; $summaryTable</span></span>
+<span><span class="co">#&gt;   contigName specTransduc left right lengthLeft lengthRight</span></span>
+<span><span class="co">#&gt; 1    NODE_62          yes  yes    no      45400        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2   NODE_135           no   no    no       &lt;NA&gt;        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 3   NODE_368           no   no    no       &lt;NA&gt;        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4   NODE_617          yes  yes   yes      33300        9800</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Plots</span></span>
+<span><span class="co">#&gt; $Plots$NODE_62</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-9.png" width="100%"></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; $Plots$NODE_135</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-10.png" width="100%"></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; $Plots$NODE_368</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-11.png" width="100%"></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; $Plots$NODE_617</span></span></code></pre></div>
+<p><img src="reference/figures/README-example-12.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -168,7 +221,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Jessie Maier <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0009-0001-8575-5386" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jessie Maier <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0001-8575-5386" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Jorden Rabasco <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-6971-6678" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Craig Gin <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7447-663X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Benjamin Callahan <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8752-117X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
@@ -176,12 +229,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://jlmaier12.github.io/TrIdent/"><img src="reference/figures/logo.png" align="right" height="139" alt="TrIdent website"></a></li>
-</ul>
-</div>
+
 
   </aside>
 </div>
