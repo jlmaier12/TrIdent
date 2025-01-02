@@ -466,7 +466,6 @@ TrIdentOutput <- TrIdentClassifier(
   VLPpileup = VLPFractionSamplePileup,
   WCpileup = WholeCommunitySamplePileup
 )
-
 ```
 
 ## Arguments/Parameters

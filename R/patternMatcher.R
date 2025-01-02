@@ -40,7 +40,7 @@ patternMatcher <-
     A <- 1
     B <- 1
     C <- 1
-    for(p in seq_along(contigNames)){
+    for (p in seq_along(contigNames)) {
       i <- contigNames[[p]]
       viralSubset <- VLPpileup[which(VLPpileup[, 1] == i), ]
       if (B == floor(length(contigNames) / 4)) {

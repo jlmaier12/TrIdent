@@ -11,11 +11,14 @@ contigClassSumm <- function(bestMatchList) {
     stop("NO TRANSDUCTION EVENTS FOUND")
   }
   classifications <- vapply(seq_along(bestMatchList), function(i) {
-                                    bestMatchList[[i]][[7]]}, character(1))
+    bestMatchList[[i]][[7]]
+  }, character(1))
   contigName <- vapply(seq_along(bestMatchList), function(i) {
-                                    bestMatchList[[i]][[8]]}, character(1))
+    bestMatchList[[i]][[8]]
+  }, character(1))
   normMatchScore <- vapply(seq_along(bestMatchList), function(i) {
-                                    bestMatchList[[i]][[9]]}, numeric(1))
+    bestMatchList[[i]][[9]]
+  }, numeric(1))
   classifSumm <-
     cbind.data.frame(contigName, classifications, normMatchScore)
   return(classifSumm)
@@ -37,7 +40,7 @@ slopeSumm <- function(classifSumm, slopingClassifList, windowSize) {
   if (length(slopingClassifList) == 0) {
     return(classifSumm)
   }
-  for(i in seq_along(slopingClassifList)) {
+  for (i in seq_along(slopingClassifList)) {
     classifSumm[which(classifSumm[, 1] ==
       slopingClassifList[[i]][[8]]), 10] <-
       round(slopingClassifList[[i]][[4]] / windowSize, digits = 4)
@@ -59,12 +62,14 @@ slopeSumm <- function(classifSumm, slopingClassifList, windowSize) {
 #' @return dataframe
 #' @keywords internal
 patternMatchSize <- function(classifSumm, classifList, windowSize, verbose) {
-  if(verbose == TRUE){message("Determining sizes (bp) of pattern matches")}
+  if (verbose == TRUE) {
+    message("Determining sizes (bp) of pattern matches")
+  }
   classifSumm <- as.data.frame(classifSumm)
   classifSumm$matchSize <- rep(NA, nrow(classifSumm))
   classifSumm$startPosBp <- rep(NA, nrow(classifSumm))
   classifSumm$endPosBp <- rep(NA, nrow(classifSumm))
-  for (i in seq_along(classifList)){
+  for (i in seq_along(classifList)) {
     contigName <- classifList[[i]][[8]]
     startPos <- classifList[[i]][[5]]
     endPos <- classifList[[i]][[6]]
@@ -101,7 +106,7 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup) {
   if (length(noneClassifIdxs) == 0) {
     return(classifSumm)
   }
-  for(p in seq_along(noneClassifIdxs)){
+  for (p in seq_along(noneClassifIdxs)) {
     i <- noneClassifIdxs[[p]]
     contigName <- classifSumm[i, 1]
     viralSubset <- VLPpileup[which(VLPpileup[, 1] == contigName), ]
@@ -148,17 +153,19 @@ prophageLikeElevation <-
            WCpileup,
            windowSize,
            verbose) {
-    if(verbose == TRUE){message(
-      "Identifying highly active/abundant or heterogenously integrated
+    if (verbose == TRUE) {
+      message(
+        "Identifying highly active/abundant or heterogenously integrated
       Prophage-like elements"
-    )}
+      )
+    }
     classifSummTable$proLikeWCReadCov <- rep(NA, nrow(classifSummTable))
     classifSummTable$proLikeWCReadCovRatio <-
       rep(NA, nrow(classifSummTable))
     if (length(prophageLikeClassifList) == 0) {
       return(classifSummTable)
     }
-    for(i in seq_along(prophageLikeClassifList)) {
+    for (i in seq_along(prophageLikeClassifList)) {
       viralSubset <- changeWindowSize(
         VLPpileup[which(VLPpileup[, 1] ==
           prophageLikeClassifList[[i]][[8]]), ],

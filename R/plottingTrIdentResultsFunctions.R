@@ -52,10 +52,10 @@ plotTrIdentResults <- function(VLPpileup,
     stop("VLP and WC pileup files have differing row numbers")
   }
   if (abs(VLPpileup[1, 3] - VLPpileup[2, 3]) != 100 |
-      abs(WCpileup[1, 3] - WCpileup[2, 3]) != 100) {
+    abs(WCpileup[1, 3] - WCpileup[2, 3]) != 100) {
     stop("pileup files MUST have a windowSize/binsize of 100!")
   }
-  if (all(VLPpileup[,1] == WCpileup[,1]) == FALSE){
+  if (all(VLPpileup[, 1] == WCpileup[, 1]) == FALSE) {
     stop("The first column of the VLP and WC pileup file should be identical if
          mapping was performed correctly...")
   }
@@ -172,7 +172,8 @@ plotTrIdentResults <- function(VLPpileup,
   })
   plots <- Filter(Negate(is.null), plots)
   contigNames <- vapply(seq_along(cleanSummaryTable), function(i) {
-    cleanSummaryTable[[i]][[8]]}, character(1))
+    cleanSummaryTable[[i]][[8]]
+  }, character(1))
   names(plots) <- contigNames
   if (missing(saveFilesTo) == FALSE) {
     ifelse(!dir.exists(paths = paste0(saveFilesTo, "\\TrIdentOutput")),

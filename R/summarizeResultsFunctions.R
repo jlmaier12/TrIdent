@@ -11,7 +11,7 @@
 allPatternMatches <- function(bestMatchList, classifSummTable) {
   lys <- lapply(seq_along(bestMatchList), function(i) {
     if (classifSummTable[which(classifSummTable[, 1] ==
-                               bestMatchList[[i]][[8]]), 2] == "NoPattern") {
+      bestMatchList[[i]][[8]]), 2] == "NoPattern") {
       return(NULL)
     }
     bestMatchList[[i]]

@@ -23,8 +23,8 @@ resultsHisto <- function(summaryList, suggFiltThresh) {
   if (suggFiltThresh == TRUE) {
     histogram <-
       hist(cleanSummaryTable$normMatchScore,
-           breaks = brks,
-           plot = FALSE
+        breaks = brks,
+        plot = FALSE
       )
     max <- which.max(histogram$counts)
     SD <- sd(histogram$counts) * 2

@@ -26,53 +26,53 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
     "Right", viralSubset, newMax,
     minReadCov, windowSize
   )
-  for(cov in seq(newMax, (minReadCov + halfReadCov), -halfToMaxReadCov)){
-      slopeBottom <- minReadCov
-      slopeBottomChange <- (cov - minReadCov) / 10
-      repeat {
-        slopeChangeLR <- changeSlopeWStart(
-          "Left",
-          slopeBottom,
-          slopeBottomChange,
-          cov,
-          viralSubset,
-          windowSize
-        )
-        slopeChangeRL <- changeSlopeWStart(
-          "Right",
-          slopeBottom,
-          slopeBottomChange,
-          cov,
-          viralSubset,
-          windowSize
-        )
-        if (abs(slopeChangeLR[[2]] / windowSize) < minSlope |
-          slopeChangeLR[[2]] / windowSize > 0) {
-          break
-        }
-        if (abs(slopeChangeRL[[2]] / windowSize) < minSlope |
-          slopeChangeRL[[2]] / windowSize < 0) {
-          break
-        }
-        bestMatchInfoLR <-
-          slopeTranslator(
-            viralSubset,
-            bestMatchInfoLR,
-            windowSize,
-            slopeChangeLR,
-            "Left"
-          )
-        bestMatchInfoRL <-
-          slopeTranslator(
-            viralSubset,
-            bestMatchInfoRL,
-            windowSize,
-            slopeChangeRL,
-            "Right"
-          )
-        slopeBottom <- slopeChangeLR[[3]]
+  for (cov in seq(newMax, (minReadCov + halfReadCov), -halfToMaxReadCov)) {
+    slopeBottom <- minReadCov
+    slopeBottomChange <- (cov - minReadCov) / 10
+    repeat {
+      slopeChangeLR <- changeSlopeWStart(
+        "Left",
+        slopeBottom,
+        slopeBottomChange,
+        cov,
+        viralSubset,
+        windowSize
+      )
+      slopeChangeRL <- changeSlopeWStart(
+        "Right",
+        slopeBottom,
+        slopeBottomChange,
+        cov,
+        viralSubset,
+        windowSize
+      )
+      if (abs(slopeChangeLR[[2]] / windowSize) < minSlope |
+        slopeChangeLR[[2]] / windowSize > 0) {
+        break
       }
+      if (abs(slopeChangeRL[[2]] / windowSize) < minSlope |
+        slopeChangeRL[[2]] / windowSize < 0) {
+        break
+      }
+      bestMatchInfoLR <-
+        slopeTranslator(
+          viralSubset,
+          bestMatchInfoLR,
+          windowSize,
+          slopeChangeLR,
+          "Left"
+        )
+      bestMatchInfoRL <-
+        slopeTranslator(
+          viralSubset,
+          bestMatchInfoRL,
+          windowSize,
+          slopeChangeRL,
+          "Right"
+        )
+      slopeBottom <- slopeChangeLR[[3]]
     }
+  }
   return(list(bestMatchInfoLR, bestMatchInfoRL))
 }
 

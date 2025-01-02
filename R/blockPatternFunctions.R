@@ -70,7 +70,7 @@ blockBuilder <-
         minReadCov,
         startingCovs[1]
       )[[1]]
-    for(i in seq_along(startingCovs)) {
+    for (i in seq_along(startingCovs)) {
       cov <- startingCovs[[i]]
       patternFull <- makeBlockPattern(
         viralSubset,

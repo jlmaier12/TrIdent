@@ -22,45 +22,45 @@ fullSlope <- function(viralSubset, windowSize, minSlope) {
     makeFullSlopes("Left", viralSubset, newmax, minReadCov, windowSize)
   bestMatchInfoRL <-
     makeFullSlopes("Right", viralSubset, newmax, minReadCov, windowSize)
-  for(cov in seq(newmax, (minReadCov + halfReadCov), -halfToMaxReadCov)){
-      slopeBottom <- minReadCov
-      repeat {
-        slopeChangeInfoL <-
-          changeSlope(
-            "Left",
-            slopeBottom,
-            halfToMaxReadCov,
-            cov,
-            viralSubset,
-            windowSize
-          )
-        slopeChangeInfoR <-
-          changeSlope(
-            "Right",
-            slopeBottom,
-            halfToMaxReadCov,
-            cov,
-            viralSubset,
-            windowSize
-          )
-        if (abs(slopeChangeInfoL[[4]] / windowSize) <
-          minSlope | slopeChangeInfoL[[4]] / windowSize > 0) {
-          break
-        }
-        if (abs(slopeChangeInfoR[[4]] / windowSize) <
-          minSlope | slopeChangeInfoR[[4]] / windowSize < 0) {
-          break
-        }
-        if (slopeChangeInfoL[[1]] < bestMatchInfoLR[[1]]) {
-          bestMatchInfoLR <- slopeChangeInfoL
-        }
-        if (slopeChangeInfoR[[1]] < bestMatchInfoRL[[1]]) {
-          bestMatchInfoRL <- slopeChangeInfoR
-        }
-        slopeBottom <- slopeChangeInfoL[[2]]
-        slopeBottom <- slopeChangeInfoL[[2]]
+  for (cov in seq(newmax, (minReadCov + halfReadCov), -halfToMaxReadCov)) {
+    slopeBottom <- minReadCov
+    repeat {
+      slopeChangeInfoL <-
+        changeSlope(
+          "Left",
+          slopeBottom,
+          halfToMaxReadCov,
+          cov,
+          viralSubset,
+          windowSize
+        )
+      slopeChangeInfoR <-
+        changeSlope(
+          "Right",
+          slopeBottom,
+          halfToMaxReadCov,
+          cov,
+          viralSubset,
+          windowSize
+        )
+      if (abs(slopeChangeInfoL[[4]] / windowSize) <
+        minSlope | slopeChangeInfoL[[4]] / windowSize > 0) {
+        break
       }
+      if (abs(slopeChangeInfoR[[4]] / windowSize) <
+        minSlope | slopeChangeInfoR[[4]] / windowSize < 0) {
+        break
+      }
+      if (slopeChangeInfoL[[1]] < bestMatchInfoLR[[1]]) {
+        bestMatchInfoLR <- slopeChangeInfoL
+      }
+      if (slopeChangeInfoR[[1]] < bestMatchInfoRL[[1]]) {
+        bestMatchInfoRL <- slopeChangeInfoR
+      }
+      slopeBottom <- slopeChangeInfoL[[2]]
+      slopeBottom <- slopeChangeInfoL[[2]]
     }
+  }
   return(list(bestMatchInfoLR, bestMatchInfoRL))
 }
 

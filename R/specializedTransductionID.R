@@ -91,7 +91,7 @@ specializedTransductionID <- function(VLPpileup,
   specificContig <-
     ifelse(missing(specificContig), NA, specificContig)
   specTransCount <- 0
-  plots <- vector(mode='list', length=length(TrIdentResultPatterns))
+  plots <- vector(mode = "list", length = length(TrIdentResultPatterns))
   J <- 1
   for (i in seq_along(TrIdentResultPatterns)) {
     classification <- TrIdentResultPatterns[[i]][[7]]
@@ -150,15 +150,19 @@ specializedTransductionID <- function(VLPpileup,
       or has a match score below the chosen matchScoreFilter"
     )
   }
-  if(verbose == TRUE) {message(
-    specTransCount,
-    " contigs have potential specialized transduction"
-  )}
+  if (verbose == TRUE) {
+    message(
+      specTransCount,
+      " contigs have potential specialized transduction"
+    )
+  }
   if (logScale == FALSE) {
-    if(verbose == TRUE) {message(
-      "We recommend that you also view the results of this search with
+    if (verbose == TRUE) {
+      message(
+        "We recommend that you also view the results of this search with
       logScale=TRUE"
-    )}
+      )
+    }
   }
   names(plots) <- specTransSumm[, 1]
   specTransList <- list(summaryTable = specTransSumm, Plots = plots)

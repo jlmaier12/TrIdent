@@ -81,19 +81,23 @@ TrIdentClassifier <- function(VLPpileup,
     stop("VLP and WC pileup files have differing row numbers")
   }
   if (abs(VLPpileup[1, 3] - VLPpileup[2, 3]) != 100 |
-      abs(WCpileup[1, 3] - WCpileup[2, 3]) != 100) {
+    abs(WCpileup[1, 3] - WCpileup[2, 3]) != 100) {
     stop("pileup files MUST have a windowSize/binsize of 100!")
   }
-  if (all(VLPpileup[,1] == WCpileup[,1]) == FALSE){
+  if (all(VLPpileup[, 1] == WCpileup[, 1]) == FALSE) {
     stop("The first column of the VLP and WC pileup file should be identical if
          mapping was performed correctly...")
   }
   ## main algorithm start
   startTime <- Sys.time()
-  if(verbose == TRUE) {message("Reformatting pileup files")}
+  if (verbose == TRUE) {
+    message("Reformatting pileup files")
+  }
   VLPpileup <- pileupFormatter(VLPpileup)
   WCpileup <- pileupFormatter(WCpileup)
-  if(verbose == TRUE) {message("Starting pattern-matching...")}
+  if (verbose == TRUE) {
+    message("Starting pattern-matching...")
+  }
   classificationSummary <-
     patternMatcher(
       VLPpileup,
@@ -125,7 +129,9 @@ TrIdentClassifier <- function(VLPpileup,
     allSlopingClassifs(classificationSummary[[1]]),
     windowSize
   )
-  if(verbose == TRUE) {message("Finalizing output")}
+  if (verbose == TRUE) {
+    message("Finalizing output")
+  }
   summaryList <- list(
     SummaryTable = summaryTable,
     CleanedSummaryTable = summaryTable[which(
@@ -147,31 +153,45 @@ TrIdentClassifier <- function(VLPpileup,
   summaryList <- c(summaryList, ResultHistogram = plot)
   endTime <- Sys.time()
   duration <- difftime(endTime, startTime)
-  if(verbose == TRUE) {message("Execution time: ", round(duration[[1]], 2),
-                               units(duration))}
-  if(verbose == TRUE) {message(
-    length(which(
-      classificationSummary[[2]][, 2] == "Low VLP-fraction read cov"
-    )),
-    " contigs were filtered out based on low read coverage"
-  )}
-  if(verbose == TRUE) {message(
-    length(which(
-      classificationSummary[[2]][, 2] == "Contig length too small"
-    )),
-    " contigs were filtered out based on length"
-  )}
+  if (verbose == TRUE) {
+    message(
+      "Execution time: ", round(duration[[1]], 2),
+      units(duration)
+    )
+  }
+  if (verbose == TRUE) {
+    message(
+      length(which(
+        classificationSummary[[2]][, 2] == "Low VLP-fraction read cov"
+      )),
+      " contigs were filtered out based on low read coverage"
+    )
+  }
+  if (verbose == TRUE) {
+    message(
+      length(which(
+        classificationSummary[[2]][, 2] == "Contig length too small"
+      )),
+      " contigs were filtered out based on length"
+    )
+  }
   table <- (table(summaryList[[1]][, 2]))
-  if(verbose == TRUE) {message(paste0(capture.output(table), collapse = "\n"))}
-  if(verbose == TRUE) {message(
-    length(which(summaryList[[1]][, 8] == "Elevated")),
-    " of the prophage-like classifications are highly active or abundant"
-  )}
-  if(verbose == TRUE) {message(
-    length(which(summaryList[[1]][, 8] == "Depressed")),
-    " of the prophage-like classifications are mixed, i.e. heterogenously
+  if (verbose == TRUE) {
+    message(paste0(capture.output(table), collapse = "\n"))
+  }
+  if (verbose == TRUE) {
+    message(
+      length(which(summaryList[[1]][, 8] == "Elevated")),
+      " of the prophage-like classifications are highly active or abundant"
+    )
+  }
+  if (verbose == TRUE) {
+    message(
+      length(which(summaryList[[1]][, 8] == "Depressed")),
+      " of the prophage-like classifications are mixed, i.e. heterogenously
         integrated into their bacterial host population"
-  )}
+    )
+  }
   if (missing(SaveFilesTo) == FALSE) {
     ifelse(!dir.exists(paths = paste0(SaveFilesTo, "\\TrIdentOutput")),
       dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),
