@@ -1,25 +1,25 @@
 ---
 title: "TrIdent"
 author: "Jessie Maier, Jorden Rabasco"
-output:
+output: 
   BiocStyle::html_document:
     toc: true
-    toc_depth: 2
+    toc_depth: 3
 description: >
   TrIdent (Transduction Identification) is a reference-independent tool for the 
   automated detection, classification and characterization of read coverage 
   patterns in transductomics datasets. 
 vignette: >
-  %\VignetteIndexEntry{Using TrIdent}
+  %\VignetteIndexEntry{TrIdent}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-    out.width = "90%",
-    collapse = TRUE,
-    comment = "##"
+  out.width = "100%",
+  collapse = TRUE,
+  comment = "#>"
 )
 ```
 
@@ -65,23 +65,12 @@ Transductomics: sequencing-based detection and analysis of transduced DNA in
 pure cultures and microbial communities. Microbiome 8, 158 (2020). 
 <https://doi.org/10.1186/s40168-020-00935-5>
 
-# Acknowledgments
-TrIdent is the result of the combined effort and brain power of many 
-individuals. Specifically, we would like to thank Dr. Manuel Kleiner, 
-Dr. Ben Callahan, Dr. Breck Duerkop and Dr. Craig Gin for their individual 
-expertise and overall support!
+## Installation
 
-# Funding
-The development of TrIdent was supported by a seed grant from the North 
-Carolina State University Data Science Academy and by the National Institutes 
-of Health under Award Numbers R35GM138362 and R01Al171046.
-
-# Installation
-
-## BioConductor install
+## Bioconductor install
 ```{r, eval=FALSE}
 if (!require("BiocManager", quietly = TRUE)) {
-    install.packages("BiocManager")
+  install.packages("BiocManager")
 }
 
 BiocManager::install("TrIdent")
@@ -90,11 +79,7 @@ library(TrIdent)
 
 ## GitHub install
 ```{r, eval=FALSE}
-if (!require("devtools", quietly = TRUE)) {
-    install.packages("devtools")
-}
-
-devtools::install_github("jlmaier12/TrIdent")
+BiocManager::install("jlmaier12/TrIdent")
 library(TrIdent)
 ```
 
@@ -162,10 +147,10 @@ start of each new contig.
 start of each new contig.
 
 ```{r echo=FALSE}
-data(WholeCommunitySamplePileup)
-data(VLPFractionSamplePileup)
+data("WholeCommunitySamplePileup")
+data("VLPFractionSamplePileup")
 kable(head(VLPFractionSamplePileup), row.names = FALSE) %>%
-    kable_styling(latex_options = "HOLD_position")
+  kable_styling(latex_options = "HOLD_position")
 ```
 
 # TrIdentClassifier()
@@ -257,62 +242,62 @@ changed on patterns 1 and 2.
 dataframe <- cbind.data.frame(c(1:100), c(seq(1, 100, 1)))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot1 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    labs(x = NULL, y = NULL, title = "Pattern 1") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  labs(x = NULL, y = NULL, title = "Pattern 1") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 
 dataframe <- cbind.data.frame(c(1:100), c(seq(100, 1, -1)))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot2 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    labs(x = NULL, y = NULL, title = "Pattern 2") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  labs(x = NULL, y = NULL, title = "Pattern 2") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 
 dataframe <- cbind.data.frame(c(1:100), c(rep(0, 20), seq(80, 1, -1)))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot3 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    labs(x = NULL, y = NULL, title = "Pattern 3") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  labs(x = NULL, y = NULL, title = "Pattern 3") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 
 dataframe <- cbind.data.frame(c(1:100), c(seq(1, 80, 1), rep(0, 20)))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot4 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    labs(x = NULL, y = NULL, title = "Pattern 4") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  labs(x = NULL, y = NULL, title = "Pattern 4") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 
 plot1 + plot2 + plot3 + plot4
 ```
@@ -343,47 +328,47 @@ events associated with Prophage-like classifications.
 dataframe <- cbind.data.frame(c(1:100), c(rep(0, 20), rep(100, 60), rep(0, 20)))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot1 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    labs(x = NULL, y = NULL, title = "Pattern 2") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  labs(x = NULL, y = NULL, title = "Pattern 2") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 
 dataframe <- cbind.data.frame(c(1:100), c(rep(0, 60), rep(100, 40)))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot2 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    labs(x = NULL, y = NULL, title = "Pattern 3") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  labs(x = NULL, y = NULL, title = "Pattern 3") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 
 dataframe <- cbind.data.frame(c(1:100), c(rep(100, 40), rep(0, 60)))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot3 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    labs(x = NULL, y = NULL, title = "Pattern 1") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  labs(x = NULL, y = NULL, title = "Pattern 1") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 
 plot3 + plot1 + plot2
 ```
@@ -407,18 +392,18 @@ having ‘no transduction’, we instead label them as having 'no pattern'.
 dataframe <- cbind.data.frame(c(1:100), rep(10, 100))
 colnames(dataframe) <- c("mockpos", "mockcov")
 plot1 <- ggplot(dataframe, aes(x = mockpos, y = mockcov)) +
-    geom_line(linewidth = 1) +
-    ylim(0, 100) +
-    labs(x = NULL, y = NULL, title = "Pattern 1") +
-    theme_classic() +
-    ggplot2::theme(
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        plot.title = element_text(size = 10),
-        panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
-    )
+  geom_line(linewidth = 1) +
+  ylim(0, 100) +
+  labs(x = NULL, y = NULL, title = "Pattern 1") +
+  theme_classic() +
+  ggplot2::theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(size = 10),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 2)
+  )
 plot1
 ```
 
@@ -478,17 +463,17 @@ DNA sequences carried by Streptomyces coelicolor membrane vesicles. Sci Rep 12,
 Default arguments:
 ```{r}
 TrIdentOutput <- TrIdentClassifier(
-    VLPpileup = VLPFractionSamplePileup,
-    WCpileup = WholeCommunitySamplePileup
+  VLPpileup = VLPFractionSamplePileup,
+  WCpileup = WholeCommunitySamplePileup
 )
 ```
 
 ## Arguments/Parameters
 ```{r eval=FALSE}
 TrIdentClassifier(VLPpileup, WCpileup,
-    windowSize = 1000, minBlockSize = 10000,
-    maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001,
-    suggFiltThresh = FALSE, SaveFilesTo
+  windowSize = 1000, minBlockSize = 10000,
+  maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001,
+  suggFiltThresh = FALSE, verbose = TRUE, SaveFilesTo
 )
 ```
 
@@ -506,18 +491,12 @@ pattern-matching on. Must be at least 25000. Default is 30000.
 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).
 * `suggFiltThresh`: TRUE or FALSE, Suggest a filtering threshold for TrIdent 
 classifications based on the normalized pattern-match scores. Default is FALSE.
+* `verbose`: TRUE or FALSE. Print progress messages to console. Default is TRUE.
 * `SaveFilesTo`: Optional, Provide a path to the directory you wish to save 
 output to. A folder will be made within the provided directory to store 
 results.
 
 ## Output
-
-`TrIdentClassifier()` outputs a histogram displaying the overall abundance and 
-quality of pattern-matches in addition to the composition of classifications. 
-The displayed pattern-match scores are normalized by dividing each score by its 
-associated contig length. The scores are normalized to visualize the overall 
-quality of pattern-matching for the entire dataset. Remember, smaller 
-pattern-match scores correspond to better pattern-matches. 
 
 The output of `TrIdentClassifier()` is a list containing five objects:
 
@@ -531,6 +510,12 @@ functions in TrIdent.
 4.  FilteredOutContigTable: A table containing contigs that were filtered out 
 and the reason why (low read coverage or too short).
 5.  windowSize: The `windowSize` used.
+6.  ResultHistogram: a histogram displaying the overall abundance and 
+quality of pattern-matches in addition to the composition of classifications. 
+The displayed pattern-match scores are normalized by dividing each score by its 
+associated contig length. The scores are normalized to visualize the overall 
+quality of pattern-matching for the entire dataset. Remember, smaller 
+pattern-match scores correspond to better pattern-matches. 
 
 Save the desired list-item to a new variable using its associated name.
 
@@ -541,7 +526,7 @@ TrIdentSummaryTable <- TrIdentOutput$SummaryTable
 
 ```{r, echo=FALSE}
 kable(TrIdentSummaryTable) %>%
-    kable_styling(latex_options = "HOLD_position")
+  kable_styling(latex_options = "HOLD_position")
 ```
 
 # plotTrIdentResults()
@@ -570,17 +555,17 @@ elevated or depressed Prophage-like region read coverage.
 Default arguments:
 ```{r}
 TrIdentPlots <- plotTrIdentResults(
-    VLPpileup = VLPFractionSamplePileup,
-    WCpileup = WholeCommunitySamplePileup,
-    TrIdentResults = TrIdentOutput
+  VLPpileup = VLPFractionSamplePileup,
+  WCpileup = WholeCommunitySamplePileup,
+  TrIdentResults = TrIdentOutput
 )
 ```
 
 ## Arguments/Parameters
 ```{r eval=FALSE}
 plotTrIdentResults(
-    VLPpileup, WCpileup, TrIdentResults, matchScoreFilter,
-    saveFilesTo
+  VLPpileup, WCpileup, TrIdentResults, matchScoreFilter,
+  saveFilesTo
 )
 ```
 
@@ -703,17 +688,17 @@ instead of blue.
 Default arguments:
 ```{r}
 SpecTransduc <- specializedTransductionID(
-    VLPpileup = VLPFractionSamplePileup,
-    TrIdentResults = TrIdentOutput
+  VLPpileup = VLPFractionSamplePileup,
+  TrIdentResults = TrIdentOutput
 )
 ```
 
 ## Arguments/Parameters
 ```{r eval=FALSE}
 specializedTransductionID(VLPpileup, TrIdentResults,
-    noReadCov = 500, specTransLength = 2000,
-    logScale = FALSE, matchScoreFilter,
-    SaveFilesTo, specificContig
+  noReadCov = 500, specTransLength = 2000,
+  logScale = FALSE, verbose = TRUE, matchScoreFilter,
+  SaveFilesTo, specificContig
 )
 ```
 
@@ -722,13 +707,13 @@ specializedTransductionID(VLPpileup, TrIdentResults,
 * `noReadCov`:  Number of basepairs of zero read coverage encountered before 
 specialized transduction searching stops. Default is 500. Must be at least 100.
 * `specTransLength`: Number of basepairs of non-zero read coverage needed for 
-specialized transduction to be considered. Default is 2000. Must be at least 
-100.
+specialized transduction to be considered. Default is 2000. Must be at least 100.
 * `logScale`: TRUE or FALSE, display VLP-fraction read coverage in log10 scale. 
 Default is FALSE.
 * `matchScoreFilter`: Optional, Filter plots using the normalized pattern 
 match-scores. A suggested filtering threshold is provided by 
 `TrIdentClassifier()` if `suggFiltThresh=TRUE`. 
+* `verbose`: TRUE or FALSE. Print progress messages to console. Default is TRUE.
 * `SaveFilesTo`: Optional, Provide a path to the directory you wish to save 
 output to. A folder will be made within the provided directory to store results.
 * `specificContig`: Optional, Search a specific contig classified as 
@@ -757,7 +742,7 @@ SpecializedTransducSummaryTable <- SpecTransduc$summaryTable
 
 ```{r, echo=FALSE}
 kable(head(SpecializedTransducSummaryTable), format = "html") %>%
-    kable_styling(latex_options = "HOLD_position")
+  kable_styling(latex_options = "HOLD_position")
 ```
 
 View all plots:
@@ -783,17 +768,30 @@ If you'd like to combine the summary tables produced by `TrIdentClassifier()`
 and `specializedTransductionID()`, try the following:
 ```{r}
 FinalTrIdentSummaryTable <- merge(TrIdentSummaryTable,
-    SpecializedTransducSummaryTable,
-    by = "contigName", all.x = TRUE
+  SpecializedTransducSummaryTable,
+  by = "contigName", all.x = TRUE
 )
 ```
 
 ```{r echo=FALSE}
 kable(FinalTrIdentSummaryTable) %>%
-    kable_styling(latex_options = "HOLD_position")
+  kable_styling(latex_options = "HOLD_position")
 ```
 
-# Session Information
+# Supplemental information
+
+## Acknowledgments
+TrIdent is the result of the combined effort and brain power of many 
+individuals. Specifically, we would like to thank Dr. Manuel Kleiner, 
+Dr. Ben Callahan, Dr. Breck Duerkop and Dr. Craig Gin for their individual 
+expertise and overall support!
+
+## Funding
+The development of TrIdent was supported by a seed grant from the North 
+Carolina State University Data Science Academy and by the National Institutes 
+of Health under Award Numbers R35GM138362 and R01Al171046.
+
+## Session Information
 ```{r}
 sessionInfo()
 ```

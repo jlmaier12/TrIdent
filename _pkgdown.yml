@@ -1,0 +1,10 @@
+url: https://jlmaier12.github.io/TrIdent/
+template:
+  bootstrap: 5
+
+reference:
+- title: All Functions
+- contents:
+  - TrIdentClassifier
+  - plotTrIdentResults
+  - specializedTransductionID

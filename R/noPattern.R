@@ -9,21 +9,23 @@
 #' @return List
 #' @keywords internal
 noPattern <- function(viralSubset) {
-    pattern1 <- rep(median(viralSubset[, 2]), nrow(viralSubset))
-    pattern2 <- rep(mean(viralSubset[, 2]), nrow(viralSubset))
-    diff1 <- mean(abs(viralSubset[, 2] - pattern1))
-    diff2 <- mean(abs(viralSubset[, 2] - pattern2))
-    diff <- ifelse(diff1 < diff2, diff1, diff2)
-    value <- ifelse(diff1 < diff2, median(viralSubset[, 2]), mean(viralSubset[, 2]))
-    bestMatchInfo <-
-        list(
-            diff,
-            value,
-            nrow(viralSubset),
-            "NA",
-            1,
-            nrow(viralSubset),
-            "NoPattern"
-        )
-    return(bestMatchInfo)
+  pattern1 <- rep(median(viralSubset[, 2]), nrow(viralSubset))
+  pattern2 <- rep(mean(viralSubset[, 2]), nrow(viralSubset))
+  diff1 <- mean(abs(viralSubset[, 2] - pattern1))
+  diff2 <- mean(abs(viralSubset[, 2] - pattern2))
+  diff <- ifelse(diff1 < diff2, diff1, diff2)
+  value <- ifelse(diff1 < diff2, median(viralSubset[, 2]),
+    mean(viralSubset[, 2])
+  )
+  bestMatchInfo <-
+    list(
+      diff,
+      value,
+      nrow(viralSubset),
+      "NA",
+      1,
+      nrow(viralSubset),
+      "NoPattern"
+    )
+  return(bestMatchInfo)
 }

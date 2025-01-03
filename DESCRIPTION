@@ -2,7 +2,7 @@ Package: TrIdent
 Type: Package
 BiocType: Software 
 Title: TrIdent - Transduction Identification
-Version: 0.99.0
+Version: 0.99.2
 Authors@R: 
   c(person(given = "Jessie",
            family = "Maier",
@@ -12,10 +12,21 @@ Authors@R:
     person(given = "Jorden",
            family = "Rabasco",
            role = c("aut", "ctb"),
-           email = "jrabasc@ncsu.edu",
-           comment = c(ORCID = "0000-0002-6971-6678")))
+           comment = c(ORCID = "0000-0002-6971-6678")),
+    person(given="Craig",
+           family="Gin",
+           role=c("aut"),
+           comment=c(ORCID= "0000-0002-7447-663X")),
+    person(given="Benjamin",
+           family="Callahan",
+           role=c("aut"),
+           comment=c(ORCID= "0000-0002-8752-117X")),
+    person(given="Manuel",
+           family="Kleiner",
+           role=c("aut","ths"),
+           comment=c(ORCID= "0000-0001-6904-0287")))
 Description: 
-  TrIdent automates the analysis of transductomics data by detecting,
+  The `TrIdent` R package automates the analysis of transductomics data by detecting,
   classifying, and characterizing read coverage patterns associated with 
   potential transduction events. Transductomics is a DNA sequencing-based 
   method for the detection and characterization of transduction events in pure 
@@ -27,10 +38,19 @@ Description:
 License: GPL-2
 Encoding: UTF-8
 LazyData: false
-Imports: graphics, utils, stats, dplyr, ggplot2, patchwork, stringr, tidyr, roll
-RoxygenNote: 7.3.2
+Imports: 
+  graphics, 
+  utils, 
+  stats, 
+  dplyr, 
+  ggplot2, 
+  patchwork, 
+  stringr, 
+  tidyr, 
+  roll
 biocViews: Coverage, Metagenomics, PatternLogic, Classification, Sequencing
-URL: https://github.com/jlmaier12/TrIdent 
+RoxygenNote: 7.3.2
+URL: https://github.com/jlmaier12/TrIdent, https://jlmaier12.github.io/TrIdent/
 BugReports: https://github.com/jlmaier12/TrIdent/issues 
 Suggests: 
     BiocStyle,
