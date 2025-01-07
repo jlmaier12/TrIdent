@@ -11,7 +11,8 @@ patternMatcher(
   minBlockSize,
   maxBlockSize,
   minContigLength,
-  minSlope
+  minSlope,
+  verbose
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ Default is NA}
 pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.}
 
 \item{minSlope}{The minimum slope value to test for sloping patterns}
+
+\item{verbose}{TRUE or FALSE. Print progress messages to console. Default is TRUE.}
 }
 \value{
 List containing three objects.

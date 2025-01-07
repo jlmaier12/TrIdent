@@ -90,14 +90,10 @@ TrIdentClassifier <- function(VLPpileup,
   }
   ## main algorithm start
   startTime <- Sys.time()
-  if (verbose == TRUE) {
-    message("Reformatting pileup files")
-  }
+  if (verbose) {message("Reformatting pileup files")}
   VLPpileup <- pileupFormatter(VLPpileup)
   WCpileup <- pileupFormatter(WCpileup)
-  if (verbose == TRUE) {
-    message("Starting pattern-matching...")
-  }
+  if (verbose) {message("Starting pattern-matching...")}
   classificationSummary <-
     patternMatcher(
       VLPpileup,
@@ -106,7 +102,8 @@ TrIdentClassifier <- function(VLPpileup,
       minBlockSize,
       maxBlockSize,
       minContigLength,
-      minSlope
+      minSlope,
+      verbose
     )
   summaryTable <- contigClassSumm(classificationSummary[[1]])
   summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup)
@@ -129,9 +126,7 @@ TrIdentClassifier <- function(VLPpileup,
     allSlopingClassifs(classificationSummary[[1]]),
     windowSize
   )
-  if (verbose == TRUE) {
-    message("Finalizing output")
-  }
+  if (verbose) {message("Finalizing output")}
   summaryList <- list(
     SummaryTable = summaryTable,
     CleanedSummaryTable = summaryTable[which(
@@ -153,21 +148,18 @@ TrIdentClassifier <- function(VLPpileup,
   summaryList <- c(summaryList, ResultHistogram = plot)
   endTime <- Sys.time()
   duration <- difftime(endTime, startTime)
-  if (verbose == TRUE) {
-    message(
-      "Execution time: ", round(duration[[1]], 2),
-      units(duration)
-    )
-  }
-  if (verbose == TRUE) {
-    message(
-      length(which(
-        classificationSummary[[2]][, 2] == "Low VLP-fraction read cov"
+  if (verbose) {
+      message(
+          "Execution time: ", round(duration[[1]], 2), units(duration))}
+  if (verbose) {
+      message(
+          length(which(
+              classificationSummary[[2]][, 2] == "Low VLP-fraction read cov"
       )),
       " contigs were filtered out based on low read coverage"
     )
   }
-  if (verbose == TRUE) {
+  if (verbose) {
     message(
       length(which(
         classificationSummary[[2]][, 2] == "Contig length too small"
@@ -176,16 +168,16 @@ TrIdentClassifier <- function(VLPpileup,
     )
   }
   table <- (table(summaryList[[1]][, 2]))
-  if (verbose == TRUE) {
+  if (verbose) {
     message(paste0(capture.output(table), collapse = "\n"))
   }
-  if (verbose == TRUE) {
+  if (verbose) {
     message(
       length(which(summaryList[[1]][, 8] == "Elevated")),
       " of the prophage-like classifications are highly active or abundant"
     )
   }
-  if (verbose == TRUE) {
+  if (verbose) {
     message(
       length(which(summaryList[[1]][, 8] == "Depressed")),
       " of the prophage-like classifications are mixed, i.e. heterogenously

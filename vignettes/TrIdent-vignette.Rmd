@@ -590,25 +590,12 @@ recommend that users also view plots using `logScale=TRUE` as some specialized
 transduction patterns occur at such low frequencies they can only be visualized
 using log scaled read coverage values.** 
 
-View all plots:
-```{r eval=FALSE}
-TrIdentPlots
-```
 
-```{r echo=FALSE}
-TrIdentPlots$NODE_62
-TrIdentPlots$NODE_135
-TrIdentPlots$NODE_1088
-TrIdentPlots$NODE_352
-TrIdentPlots$NODE_368
-TrIdentPlots$NODE_560
-TrIdentPlots$NODE_617
-TrIdentPlots$NODE_2060
-```
-
-View one plot:
+View select plots:
 ```{r}
 TrIdentPlots$NODE_62
+TrIdentPlots$NODE_368
+TrIdentPlots$NODE_352
 ```
 
 # specializedTransductionID()
@@ -745,21 +732,10 @@ kable(head(SpecializedTransducSummaryTable), format = "html") %>%
   kable_styling(latex_options = "HOLD_position")
 ```
 
-View all plots:
-```{r eval=FALSE}
-SpecTransduc$Plots
-```
-
-```{r echo=FALSE}
-SpecTransduc$Plots$NODE_368
-SpecTransduc$Plots$NODE_135
-SpecTransduc$Plots$NODE_62
-SpecTransduc$Plots$NODE_617
-```
-
-View a specific plot:
+View select plots:
 ```{r}
 SpecTransduc$Plots$NODE_62
+SpecTransduc$Plots$NODE_135
 ```
 
 # Generate final TrIdent summary table

@@ -150,14 +150,14 @@ specializedTransductionID <- function(VLPpileup,
       or has a match score below the chosen matchScoreFilter"
     )
   }
-  if (verbose == TRUE) {
+  if (verbose) {
     message(
       specTransCount,
       " contigs have potential specialized transduction"
     )
   }
   if (logScale == FALSE) {
-    if (verbose == TRUE) {
+    if (verbose) {
       message(
         "We recommend that you also view the results of this search with
       logScale=TRUE"

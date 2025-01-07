@@ -1,0 +1,87 @@
+To generate the WCFractionSamplePileup and VLPFractionSamplePileup datasets used for the examples, vignette and README in TrIdent, follow these instructions:
+
+1. Go to European Nucleotide Archive (ENA) study PRJEB33536
+2. Download the fastq files associated with:
+	- VLP-fraction raw reads: SAMEA5795757 and SAMEA5778183 (205_2P_75bp.fastq.gz, 205_2P.R1.fastq.gz, 205_2P.R2.fastq.gz)
+	- Whole-community raw reads: SAMEA5795756 and SAMEA5778182 (205_2M_75bp.fastq.gz, 205_2M.R1.fastq.gz, 205_2M.R2.fastq.gz)
+
+   and the fasta file associated with the whole-community assembly (filtered for contigs greater than 40,000bp):
+	- Assembly: ERZ1273841 (205_2M.Spades3_contigs_larger40kb.fa.gz)
+
+The methods used to generate the sequencing data above are detailed in "Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities"
+(https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00935-5#availability-of-data-and-materials). 
+	
+3. On the command line:
+
+- You will need to install BBMap (https://github.com/BioInfoTools/BBMap) to run the following bash scripts (reformat.sh, bbmap.sh and pileup.sh): 
+
+	- Append raw reads for mapping:
+	## Whole-community reads
+	$ cp 205_2M_75bp.fastq.gz WCFraction_allRaw.fastq.gz
+	$ reformat.sh app=t in=205_2M.R1.fastq.gz out=WCFraction_allRaw.fastq.gz
+	$ reformat.sh app=t in=205_2M.R2.fastq.gz out=WCFraction_allRaw.fastq.gz
+
+	## VLP-fraction reads
+	$ cp 205_2P_75bp.fastq.gz VLPFraction_allRaw.fastq.gz
+	$ reformat.sh app=t in=205_2P.R1.fastq.gz out=VLPFraction_allRaw.fastq.gz
+	$ reformat.sh app=t in=205_2P.R2.fastq.gz out=VLPFraction_allRaw.fastq.gz
+
+	- Map appended whole-communtiy and VLP-fraction reads to whole-community assembly:
+	$ bbmap.sh ambiguous=random qtrim=lr minid=0.97 nodisk=t ref=205_2M.Spades3_contigs_larger40kb.fa.gz in1=WCFraction_allRaw.fastq.gz outm=WholeCommMapping.bam
+	$ bbmap.sh ambiguous=random qtrim=lr minid=0.97 nodisk=t ref=205_2M.Spades3_contigs_larger40kb.fa.gz in1=VLPFraction_allRaw.fastq.gz outm=VLPFractionMapping.bam 
+
+	- Create pileup files for VLP-fraction and whole-community:
+	$ pileup.sh in=VLPFractionMapping.bam bincov=VLPFraction.bincov100 binsize=100 stdev=t
+  	$ pileup.sh in=WholeCommMapping.bam bincov=WholeComm.bincov100 binsize=100 stdev=t
+
+
+4. In R, create pileup subsets used for sample data:
+
+	- Load pileup files into R:
+	WholeCommFullPileup <- read.delim("Q:/PATH/TO/FILE/WholeComm.bincov100", header=FALSE, comment.char="#")
+	VLPFractionFullPileup <- read.delim("Q:/PATH/TO/FILE/VLPFraction.bincov100", header=FALSE, comment.char="#")
+
+	- Load the following `pileupFormatter` function:
+	pileupFormatter <- function(pileup) {
+  			   colClasses <- vapply(pileup, class, character(1))
+  			   for (i in c(which(colClasses == "integer"))) {
+    				if (length(which(pileup[, i] == 100)) > 1) {
+      				posColIdx <- i
+    				}
+  			   }
+  			   cleanPileup <-
+    				cbind.data.frame(
+      				pileup[, which(colClasses == "character")],
+      				pileup[, which(colClasses == "numeric")],
+      				pileup[, posColIdx]
+    				)
+  			   colnames(cleanPileup) <- c("contigName", "coverage", "position")
+  		           cleanPileup$contigName <- gsub("\\s.*", "", cleanPileup$contigName)
+  		           return(cleanPileup)
+}
+
+	- Reformat/clean the pileup file for easier row indexing: 
+	VLPFractionFullPileup_clean <- pileupFormatter(VLPFractionFullPileup) 
+
+	- Determine row indexes of rows pertaining to specific contigs in pileup files (row indexes for specific contigs should be the same between the whole-communtiy and VLP-fraction pileups):
+	NODE_617 <- which(VLPFractionFullPileup_clean[,1] == "NODE_617") #Prophage-like, active/abundant, with spec transduction
+	NODE_135 <- which(VLPFractionFullPileup_clean[,1] == "NODE_135") #prophage-like, off one side of contig, no spec transduction
+	NODE_352 <- which(VLPFractionFullPileup_clean[,1] == "NODE_352") #Sloping, left to right slope
+	NODE_1088 <- which(VLPFractionFullPileup_clean[,1] == "NODE_1088") #Sloping, right to left slope
+	NODE_2060 <- which(VLPFractionFullPileup_clean[,1] == "NODE_2060") #Sloping, right to left slope with start
+	NODE_1401 <- which(VLPFractionFullPileup_clean[,1] == "NODE_1401") #None, no pattern match
+	NODE_62 <- which(VLPFractionFullPileup_clean[,1] == "NODE_62") #Prophage-like, with spec transduction
+	NODE_368 <- which(VLPFractionFullPileup_clean[,1] == "NODE_368") #Prophage-like, not homogeneously integrated/present, no spec transduction
+	NODE_560 <- which(VLPFractionFullPileup_clean[,1] == "NODE_560") #HighCovNoPattern
+	NODE_1165 <- which(VLPFractionFullPileup_clean[,1] == "NODE_1165") #None, filtered out
+
+	- Create final pileup subsets:
+	VLPFractionSamplePileup <- VLPFractionFullPileup[c(NODE_62, NODE_135, NODE_251,
+                                   		NODE_352, NODE_368, NODE_560,
+                                   	        NODE_617, NODE_1165, NODE_1401,
+                                           	NODE_2060),]
+
+	WholeCommunitySamplePileup <- WholeCommFullPileup[c(NODE_62, NODE_135, NODE_1088,
+                                              NODE_352, NODE_368, NODE_560,
+                                              NODE_617, NODE_1165, NODE_1401,
+                                              NODE_2060),]

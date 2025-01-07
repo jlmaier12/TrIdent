@@ -62,9 +62,7 @@ slopeSumm <- function(classifSumm, slopingClassifList, windowSize) {
 #' @return dataframe
 #' @keywords internal
 patternMatchSize <- function(classifSumm, classifList, windowSize, verbose) {
-  if (verbose == TRUE) {
-    message("Determining sizes (bp) of pattern matches")
-  }
+  if (verbose) {message("Determining sizes (bp) of pattern matches")}
   classifSumm <- as.data.frame(classifSumm)
   classifSumm$matchSize <- rep(NA, nrow(classifSumm))
   classifSumm$startPosBp <- rep(NA, nrow(classifSumm))
@@ -153,7 +151,7 @@ prophageLikeElevation <-
            WCpileup,
            windowSize,
            verbose) {
-    if (verbose == TRUE) {
+    if (verbose) {
       message(
         "Identifying highly active/abundant or heterogenously integrated
       Prophage-like elements"
