@@ -1,3 +1,14 @@
+## Changes in 0.99.3
+
++ Updated vignette to print a select few plots rather than all the output 
+plots
++ Added a text document to the inst/script/ directory with specific code and 
+instructions for generating the sample pileup files used in the examples, vignette
+and README
++ Fixed bug with verbose argument where verbose=FALSE still printed messages to 
+the console
++ Updated use of 'if(verbose == TRUE)' to 'if(verbose)'
+
 ## Changes in 0.99.2
 
 + Updated vignette and README with BiocManager installation instructions
