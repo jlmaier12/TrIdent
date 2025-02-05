@@ -64,7 +64,7 @@ plotTrIdentResults <- function(VLPpileup,
   cleanSummaryTable <- TrIdentResults[[3]]
   summaryTable <- TrIdentResults[[1]]
   MSF <-
-    ifelse(missing(matchScoreFilter) == TRUE, 0, matchScoreFilter)
+    ifelse(missing(matchScoreFilter), 0, matchScoreFilter)
   VLPpileup <- pileupFormatter(VLPpileup)
   WCpileup <- pileupFormatter(WCpileup)
   plots <- lapply(seq_along(cleanSummaryTable), function(i) {
@@ -88,10 +88,8 @@ plotTrIdentResults <- function(VLPpileup,
     matchLength <- patternMatchInfo[, 5]
     matchscoreQC <-
       (cleanSummaryTable[[i]][[1]]) / mean(viralSubset$coverage)
-    if (MSF != 0) {
-      if (matchscoreQC > MSF) {
-        return()
-      }
+    if (MSF != 0 & matchscoreQC > MSF) {
+        return(NULL)
     }
     if (classification == "Sloping") {
       subtitleInfo <- paste(
@@ -106,8 +104,7 @@ plotTrIdentResults <- function(VLPpileup,
       } else if (patternMatchInfo[8] == "Elevated") {
         subtitleInfo <- "Active/highly abundant Prophage-like element"
       } else if (patternMatchInfo[8] == "Depressed") {
-        subtitleInfo <- "Not homogenously integrated Prophage-like
-                element"
+        subtitleInfo <- "Not homogenously integrated Prophage-like element"
       } else {
         subtitleInfo <- NULL
       }
@@ -172,8 +169,20 @@ plotTrIdentResults <- function(VLPpileup,
   })
   plots <- Filter(Negate(is.null), plots)
   contigNames <- vapply(seq_along(cleanSummaryTable), function(i) {
-    cleanSummaryTable[[i]][[8]]
+      contigName <- cleanSummaryTable[[i]][[8]]
+      viralSubset <-
+          changeWindowSize(
+              VLPpileup[which(VLPpileup[, 1] == contigName), ],
+              windowSize
+          )
+      matchscoreQC <-
+          (cleanSummaryTable[[i]][[1]]) / mean(viralSubset$coverage)
+      if (MSF != 0 & matchscoreQC > MSF) {
+          return(NULL)
+      }
+      contigName
   }, character(1))
+  contigNames <- (contigNames[!vapply(contigNames, is.null, logical(1))])
   names(plots) <- contigNames
   if (missing(saveFilesTo) == FALSE) {
     ifelse(!dir.exists(paths = paste0(saveFilesTo, "\\TrIdentOutput")),
