@@ -24,13 +24,15 @@ represent complete transduction events (i.e integration of transduced
 DNA into new bacterial chromosomes).**
 
 To obtain the data needed for transductomics, a microbiome sample of
-interest is split to prepare two sub-sample types: - Whole-community:
-Represents the ‘whole-community’ (all bacteria, fungi, virus, etc) in
-the microbiome of interest - VLP-fraction: Represents only the virus and
-‘viral-like particles’ associated with the microbiome of interest - The
-VLP-fraction must be obtained by an appropriate ultra-purification
-protocol for your sample type to remove bacterial cells and
-contaminating free bacterial DNA.
+interest is split to prepare two sub-sample types:
+
+- Whole-community: Represents the ‘whole-community’ (all bacteria,
+  fungi, virus, etc) in the microbiome of interest
+- VLP-fraction: Represents only the virus and ‘viral-like particles’
+  associated with the microbiome of interest
+  - The VLP-fraction must be obtained by an appropriate
+    ultra-purification protocol for your sample type to remove bacterial
+    cells and contaminating free bacterial DNA.
 
 With transductomics and TrIdent, a researcher can obtain information
 about the phage-host pairs involved in transduction, the types of
@@ -127,7 +129,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 14.56secs
+#> Execution time: 19.78secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
