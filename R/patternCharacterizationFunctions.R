@@ -113,11 +113,13 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup) {
       WCpileup[which(WCpileup[, 1] == contigName), ]
     microbialSubset[NARemover(microbialSubset)] <- 0
     VLPtoWCratio <-
-      round(median(viralSubset[, 2] / median(microbialSubset[, 2])),
+      round(median(viralSubset[, 2]) / median(microbialSubset[, 2]),
         digits = 4
       )
+    if(is.na(VLPtoWCratio)) VLPtoWCratio <- median(viralSubset[, 2])
     classifSumm[i, 2] <-
       ifelse(VLPtoWCratio > 2, "HighCovNoPattern", "NoPattern")
+    
     classifSumm[i, 4] <- VLPtoWCratio
   }
   return(classifSumm)

@@ -1,3 +1,8 @@
+## Changes in 0.99.4
+
++ Fixed bug where contigs in which the median whole-community read coverage 
+value was 0 caused an error with VLP:WC read coverage ratio calculation
+
 ## Changes in 0.99.3
 
 + Updated vignette to print a select few plots rather than all the output 
