@@ -292,7 +292,7 @@ specTransductionPlot <-
     alphaL <- ifelse(specTransSumm[3] == "yes", 1, 0)
     alphaR <- ifelse(specTransSumm[4] == "yes", 1, 0)
     coverageType <-
-      if (logScale == TRUE) {
+      if (logScale) {
         viralSubsetZoom$logcoverage
       } else {
         viralSubsetZoom$coverage
@@ -343,7 +343,7 @@ specTransductionPlot <-
           x = "Contig Position (bp)",
           y = paste(
             "VLP-Fraction Read Coverage",
-            ifelse(logScale == TRUE,
+            ifelse(logScale,
               "(Log10)", ""
             )
           )

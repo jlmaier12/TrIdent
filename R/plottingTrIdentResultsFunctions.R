@@ -24,12 +24,13 @@
 #' * V4: Starting position (bp) of each 100 bp window. Does NOT restart at the
 #' start of each new contig.
 #' @param TrIdentResults Output from `TrIdentClassifier()`.
-#' @param matchScoreFilter Optional, Filter plots using the normalized pattern
-#'   match-scores. A suggested filtering threshold is provided by
-#'   `TrIdentClassifier()` if `suggFiltThresh=TRUE`.
+#' @param onlyPlot Optional, use to 'only plot' the contigs classified as either 
+#' "Prophage-like", "Sloping", or "HighCovNoPattern".
+#' @param logScale TRUE or FALSE, display VLP-fraction read coverage in log10
+#'   scale. Default is FALSE.
 #' @param saveFilesTo Optional, Provide a path to the directory you wish to save
 #'   output to. A folder will be made within the provided directory to store
-#'   results.
+#'   results. 
 #' @return Large list containing ggplot objects
 #' @export
 #' @examples
@@ -45,7 +46,8 @@
 plotTrIdentResults <- function(VLPpileup,
                                WCpileup,
                                TrIdentResults,
-                               matchScoreFilter,
+                               onlyPlot,
+                               logScale = FALSE,
                                saveFilesTo) {
   ## input validation
   if (nrow(VLPpileup) != nrow(WCpileup)) {
@@ -61,14 +63,29 @@ plotTrIdentResults <- function(VLPpileup,
   }
   position <- coverage <- NULL
   windowSize <- TrIdentResults[[5]]
-  cleanSummaryTable <- TrIdentResults[[3]]
-  summaryTable <- TrIdentResults[[1]]
-  MSF <-
-    ifelse(missing(matchScoreFilter), 0, matchScoreFilter)
+  summaryTable <- TrIdentResults[[2]]
+  summaryTable$rowIndexes <- seq(1,nrow(summaryTable))
+  classifList <- TrIdentResults[[3]]
   VLPpileup <- pileupFormatter(VLPpileup)
   WCpileup <- pileupFormatter(WCpileup)
-  plots <- lapply(seq_along(cleanSummaryTable), function(i) {
-    contigName <- cleanSummaryTable[[i]][[8]]
+  summaryTable <- 
+      if (missing(onlyPlot)){
+          summaryTable
+          } else { 
+          summaryTable[grep(onlyPlot, summaryTable[,2], 
+                            ignore.case=TRUE),]}
+  if (nrow(summaryTable) == 0){
+      stop("There are no contigs classified as the provided `onlyPlot` 
+    parameter. Is the classification name spelled correctly? The options 
+    are either 'Prophage-like', 'Sloping', or 'HighCovNoPattern'.")
+  }
+  plots <- lapply(seq_len(nrow(summaryTable)), function(i) {
+    rowIndex <- summaryTable$rowIndexes[[i]]
+    contigName <- summaryTable[i,1]
+    patternMatchInfo <-
+        summaryTable[which(summaryTable[, 1] == contigName), ]
+    classification <- patternMatchInfo[, 2]
+    matchLength <- patternMatchInfo[, 5]
     viralSubset <-
       changeWindowSize(
         VLPpileup[which(VLPpileup[, 1] == contigName), ],
@@ -79,18 +96,21 @@ plotTrIdentResults <- function(VLPpileup,
         WCpileup[which(WCpileup[, 1] == contigName), ],
         windowSize
       )
-    patternMatchInfo <-
-      summaryTable[which(summaryTable[, 1] == contigName), ]
-    classification <- patternMatchInfo[, 2]
-    pattern <-
-      patternBuilder(viralSubset, cleanSummaryTable, classification, i)
-    patternMatch <- cbind(viralSubset, pattern)
-    matchLength <- patternMatchInfo[, 5]
-    matchscoreQC <-
-      (cleanSummaryTable[[i]][[1]]) / mean(viralSubset$coverage)
-    if (MSF != 0 & matchscoreQC > MSF) {
-        return(NULL)
+    if (logScale) {
+        viralSubset$logcoverage <- abs(log10(viralSubset[, 2]))
+        viralSubset[viralSubset == Inf] <- 0
+        microbialSubset$logcoverage <- abs(log10(microbialSubset[, 2]))
+        microbialSubset[microbialSubset == Inf] <- 0
+        coverageTypeViral <- viralSubset$logcoverage
+        coverageTypeMicrobial <- microbialSubset$logcoverage
+        pattern <- rep(0, nrow(viralSubset))
+    } else {
+        coverageTypeViral <- viralSubset$coverage
+        coverageTypeMicrobial <- microbialSubset$coverage
+        pattern <-
+            patternBuilder(viralSubset, classifList, classification, rowIndex)
     }
+    viralSubset <- cbind.data.frame(viralSubset, pattern)
     if (classification == "Sloping") {
       subtitleInfo <- paste(
         "Slope:",
@@ -99,7 +119,7 @@ plotTrIdentResults <- function(VLPpileup,
     } else if (classification == "HighCovNoPattern") {
       subtitleInfo <- paste("VLP:WC ratio:", patternMatchInfo[4])
     } else if (classification == "Prophage-like") {
-      if (is.na(patternMatchInfo[8]) == TRUE) {
+      if (is.na(patternMatchInfo[8])) {
         subtitleInfo <- NULL
       } else if (patternMatchInfo[8] == "Elevated") {
         subtitleInfo <- "Active/highly abundant Prophage-like element"
@@ -110,7 +130,7 @@ plotTrIdentResults <- function(VLPpileup,
       }
     }
     wholecomm_plot <-
-      ggplot(data = microbialSubset, aes(x = position, y = coverage)) +
+      ggplot(data = microbialSubset, aes(x = position, y = coverageTypeMicrobial)) +
       geom_area(fill = "deepskyblue3") +
       labs(
         title = paste(contigName, "Classification:", classification),
@@ -119,7 +139,10 @@ plotTrIdentResults <- function(VLPpileup,
           subtitleInfo
         ),
         x = " ",
-        y = "Whole-community \n read coverage"
+        y = paste(
+            "Whole-community \n read coverage",
+            ifelse(logScale,
+                   "\n (Log10)", ""))
       ) +
       scale_x_continuous(expand = c(0, 0)) +
       theme(
@@ -139,7 +162,7 @@ plotTrIdentResults <- function(VLPpileup,
         )
       )
     Overlay_plot <-
-      ggplot(data = patternMatch, aes(x = position, y = coverage)) +
+      ggplot(data = viralSubset, aes(x = position, y = coverageTypeViral)) +
       geom_area(fill = "deepskyblue3") +
       geom_line(aes(y = pattern),
         color = "black",
@@ -147,7 +170,10 @@ plotTrIdentResults <- function(VLPpileup,
       ) +
       labs(
         x = "Contig position (bp)",
-        y = "VLP-fraction \n read coverage"
+        y = paste(
+            "VLP-fraction \n read coverage",
+            ifelse(logScale,
+                   "\n (Log10)", ""))
       ) +
       scale_x_continuous(expand = c(0, 0)) +
       theme(
@@ -168,18 +194,13 @@ plotTrIdentResults <- function(VLPpileup,
     combined_plot
   })
   plots <- Filter(Negate(is.null), plots)
-  contigNames <- vapply(seq_along(cleanSummaryTable), function(i) {
-      contigName <- cleanSummaryTable[[i]][[8]]
+  contigNames <- vapply(seq_len(nrow(summaryTable)), function(i) {
+      contigName <- summaryTable[i,1]
       viralSubset <-
           changeWindowSize(
               VLPpileup[which(VLPpileup[, 1] == contigName), ],
               windowSize
           )
-      matchscoreQC <-
-          (cleanSummaryTable[[i]][[1]]) / mean(viralSubset$coverage)
-      if (MSF != 0 & matchscoreQC > MSF) {
-          return(NULL)
-      }
       contigName
   }, character(1))
   contigNames <- (contigNames[!vapply(contigNames, is.null, logical(1))])
@@ -188,8 +209,7 @@ plotTrIdentResults <- function(VLPpileup,
     ifelse(!dir.exists(paths = paste0(saveFilesTo, "\\TrIdentOutput")),
       dir.create(paste0(saveFilesTo, "\\TrIdentOutput")),
       stop(
-        "'TrIdentOutput' folder exists already in the provided
-                directory"
+        "'TrIdentOutput' folder exists already in the provided directory"
       )
     )
     lapply(
@@ -221,7 +241,7 @@ plotTrIdentResults <- function(VLPpileup,
 #'   the contig currently being assessed
 #' @param classifList A list containing pattern match information associated
 #'   with all classified contigs.
-#' @param i The list index associated with each contig's pattern-match
+#' @param rowIndex The list index associated with each contig's pattern-match
 #'   information
 #' @param classification The contig's classification assigned by the
 #'   TrIdentClassifier function
@@ -231,12 +251,12 @@ patternBuilder <-
   function(viralSubset,
            classifList,
            classification,
-           i) {
-    minReadCov <- classifList[[i]][[2]]
-    maxReadCov <- classifList[[i]][[3]]
-    slopingCovSteps <- classifList[[i]][[4]]
-    startPos <- classifList[[i]][[5]]
-    endPos <- classifList[[i]][[6]]
+           rowIndex) {
+    minReadCov <- classifList[[rowIndex]][[2]]
+    maxReadCov <- classifList[[rowIndex]][[3]]
+    slopingCovSteps <- classifList[[rowIndex]][[4]]
+    startPos <- classifList[[rowIndex]][[5]]
+    endPos <- classifList[[rowIndex]][[6]]
     if (classification == "Prophage-like") {
       if (startPos == 1) {
         pattern <- c(

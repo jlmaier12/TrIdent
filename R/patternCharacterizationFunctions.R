@@ -188,12 +188,15 @@ prophageLikeElevation <-
         microbialSubset[which(!microbialSubset[, 2] %in%
           prophageLikeRegion), 2]
       ratio <-
-        round(mean(prophageLikeRegion) / mean(nonProphageLikeRegion),
+        round(median(prophageLikeRegion) / median(nonProphageLikeRegion),
           digits = 4
         )
       classifSummTable[which(classifSummTable[, 1] ==
         contigName), 9] <- ratio
-      if (ratio > 1.15) {
+      if (is.na(ratio)) {
+          classifSummTable[which(classifSummTable[, 1] ==
+          contigName), 8] <- NA
+      } else if (ratio > 1.15) {
         classifSummTable[which(classifSummTable[, 1] ==
           contigName), 8] <- "Elevated"
       } else if (ratio < 0.75) {

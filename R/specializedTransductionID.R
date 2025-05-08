@@ -26,9 +26,6 @@
 #'   at least 100.
 #' @param specificContig Optional, Search a specific contig classified as
 #'   Prophage-like ("NODE_1").
-#' @param matchScoreFilter Optional, Filter plots using the normalized pattern
-#'   match-scores. A suggested filtering threshold is provided by
-#'   `TrIdentClassifier()` if `suggFiltThresh=TRUE`.
 #' @param logScale TRUE or FALSE, display VLP-fraction read coverage in log10
 #'   scale. Default is FALSE.
 #' @param verbose TRUE or FALSE. Print progress messages to console. Default is TRUE.
@@ -56,7 +53,6 @@ specializedTransductionID <- function(VLPpileup,
                                       specificContig,
                                       noReadCov = 500,
                                       specTransLength = 2000,
-                                      matchScoreFilter,
                                       logScale = FALSE,
                                       verbose = TRUE,
                                       SaveFilesTo) {
@@ -85,8 +81,6 @@ specializedTransductionID <- function(VLPpileup,
       "lengthLeft",
       "lengthRight"
     )
-  matchScoreFilter <-
-    ifelse(missing(matchScoreFilter), Inf, matchScoreFilter)
   VLPpileup <- pileupFormatter(VLPpileup)
   specificContig <-
     ifelse(missing(specificContig), NA, specificContig)
@@ -96,12 +90,8 @@ specializedTransductionID <- function(VLPpileup,
   for (i in seq_along(TrIdentResultPatterns)) {
     classification <- TrIdentResultPatterns[[i]][[7]]
     contigName <- TrIdentResultPatterns[[i]][[8]]
-    normMatchScore <-
-      TrIdentResultSumm[which(TrIdentResultSumm[, 1] ==
-        contigName), 3]
     if (is.na(specificContig)) {
-      if (classification == "Prophage-like" &
-        normMatchScore < matchScoreFilter) {
+      if (classification == "Prophage-like") {
         specTransInfo <-
           specTransductionSearch(
             contigName,
@@ -122,8 +112,7 @@ specializedTransductionID <- function(VLPpileup,
         J <- J + 1
       }
     } else if (contigName == specificContig & classification ==
-      "Prophage-like" &
-      normMatchScore < matchScoreFilter) {
+      "Prophage-like") {
       specTransInfo <- specTransductionSearch(
         contigName,
         VLPpileup,
@@ -146,8 +135,7 @@ specializedTransductionID <- function(VLPpileup,
   plots <- plots[!vapply(plots, is.null, logical(1))]
   if (specTransCount == 0) {
     stop(
-      "Selected contig is either not prophage-like, spelled incorrectly
-      or has a match score below the chosen matchScoreFilter"
+      "Selected contig is either not prophage-like or is spelled incorrectly."
     )
   }
   if (verbose) {

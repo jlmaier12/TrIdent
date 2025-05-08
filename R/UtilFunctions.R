@@ -28,9 +28,7 @@ changeWindowSize <- function(cleanPileup, windowSize) {
     seq(windowSize, length(coverage) * windowSize, windowSize)
   contigName <- rep(cleanPileup[1, 1], length(position))
   newWindowSizePileup <- cbind.data.frame(
-    contigName, coverage,
-    position
-  ) %>% as.data.frame()
+    contigName, coverage, position)
   newWindowSizePileup[NARemover(newWindowSizePileup)] <- 0
   return(newWindowSizePileup)
 }

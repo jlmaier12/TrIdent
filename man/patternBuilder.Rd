@@ -4,7 +4,7 @@
 \alias{patternBuilder}
 \title{Pattern-builder}
 \usage{
-patternBuilder(viralSubset, classifList, classification, i)
+patternBuilder(viralSubset, classifList, classification, rowIndex)
 }
 \arguments{
 \item{viralSubset}{A subset of the read coverage pileup that pertains only to
@@ -16,7 +16,7 @@ with all classified contigs.}
 \item{classification}{The contig's classification assigned by the
 TrIdentClassifier function}
 
-\item{i}{The list index associated with each contig's pattern-match
+\item{rowIndex}{The list index associated with each contig's pattern-match
 information}
 }
 \value{

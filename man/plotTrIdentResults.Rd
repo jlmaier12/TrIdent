@@ -9,7 +9,8 @@ plotTrIdentResults(
   VLPpileup,
   WCpileup,
   TrIdentResults,
-  matchScoreFilter,
+  onlyPlot,
+  logScale = FALSE,
   saveFilesTo
 )
 }
@@ -36,9 +37,11 @@ start of each new contig.}
 
 \item{TrIdentResults}{Output from `TrIdentClassifier()`.}
 
-\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern
-match-scores. A suggested filtering threshold is provided by
-`TrIdentClassifier()` if `suggFiltThresh=TRUE`.}
+\item{onlyPlot}{Optional, use to 'only plot' the contigs classified as either 
+"Prophage-like", "Sloping", or "HighCovNoPattern".}
+
+\item{logScale}{TRUE or FALSE, display VLP-fraction read coverage in log10
+scale. Default is FALSE.}
 
 \item{saveFilesTo}{Optional, Provide a path to the directory you wish to save
 output to. A folder will be made within the provided directory to store

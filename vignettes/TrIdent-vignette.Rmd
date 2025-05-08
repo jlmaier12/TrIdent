@@ -316,13 +316,17 @@ contig. The block pattern widths never get smaller than 10,000 bp by default,
 however this can be changed with the `minBlockSize` parameter. Pattern 1 
 represents a Prophage-like element that is entirely on the contig while 
 patterns 2 and 3 represent Prophage-like elements that trail off the right or 
-left side of the contig, respectively. While a Prophage-like classification is 
-not an example of transduction by itself, there may be transduction associated 
-with Prophage-like classifications. The improper excision of Prophage-like 
-elements may lead to the specialized transduction of genes neighboring the 
-element's integration site. TrIdent's `specializedTransductionID()` function 
-(explained in detail below) will attempt to detect specialized transduction 
-events associated with Prophage-like classifications. 
+left side of the contig, respectively. The Prophage-like pattern makes the 
+assumption that there is little to no read coverage on the contig outside
+the prophage borders. Contigs which have a prophage-like read coverage pattern
+*and* low-level read coverage across the entire contig may be miss-classified. 
+While a Prophage-like classification is not an example of transduction by 
+itself, there may be transduction associated with Prophage-like classifications. 
+The improper excision of Prophage-like elements may lead to the specialized 
+transduction of genes neighboring the element's integration site. TrIdent's 
+`specializedTransductionID()` function (explained in detail below) will attempt 
+to detect specialized transduction events associated with Prophage-like 
+classifications. 
 
 ```{r echo=FALSE, fig.width=4,fig.height=2}
 dataframe <- cbind.data.frame(c(1:100), c(rep(0, 20), rep(100, 60), rep(0, 20)))
@@ -425,7 +429,8 @@ uses the VLP-fraction read coverage patterns. The locations of Prophage-like
 pattern-matches are used to calculate the Prophage-like:non-Prophage-like 
 whole-community read coverage ratio. Prophage-like patterns with 
 whole-community read coverage ratios greater than 1.15 are labeled as 'elevated' 
-while ratios less then 0.75 are labeled as 'depressed'. 
+while ratios less then 0.75 are labeled as 'depressed'. The ratio will be NA if 
+it cannot be calculated due to 0 values in the non-Prophage-like region.
 
 ### NoPattern classifications with high VLP-fraction:whole-community read coverage ratios
 
@@ -473,7 +478,7 @@ TrIdentOutput <- TrIdentClassifier(
 TrIdentClassifier(VLPpileup, WCpileup,
   windowSize = 1000, minBlockSize = 10000,
   maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001,
-  suggFiltThresh = FALSE, verbose = TRUE, SaveFilesTo
+  verbose = TRUE, SaveFilesTo
 )
 ```
 
@@ -489,8 +494,6 @@ Default is NA (no maximum).
 pattern-matching on. Must be at least 25000. Default is 30000.
 * `minSlope`: The minimum slope value to test for sloping patterns. Default is 
 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).
-* `suggFiltThresh`: TRUE or FALSE, Suggest a filtering threshold for TrIdent 
-classifications based on the normalized pattern-match scores. Default is FALSE.
 * `verbose`: TRUE or FALSE. Print progress messages to console. Default is TRUE.
 * `SaveFilesTo`: Optional, Provide a path to the directory you wish to save 
 output to. A folder will be made within the provided directory to store 
@@ -510,7 +513,7 @@ functions in TrIdent.
 4.  FilteredOutContigTable: A table containing contigs that were filtered out 
 and the reason why (low read coverage or too short).
 5.  windowSize: The `windowSize` used.
-6.  ResultHistogram: a histogram displaying the overall abundance and 
+6.  ResultHistogram: A histogram displaying the overall abundance and 
 quality of pattern-matches in addition to the composition of classifications. 
 The displayed pattern-match scores are normalized by dividing each score by its 
 associated contig length. The scores are normalized to visualize the overall 
@@ -564,7 +567,11 @@ TrIdentPlots <- plotTrIdentResults(
 ## Arguments/Parameters
 ```{r eval=FALSE}
 plotTrIdentResults(
-  VLPpileup, WCpileup, TrIdentResults, matchScoreFilter,
+  VLPpileup, 
+  WCpileup, 
+  TrIdentResults, 
+  onlyPlot,
+  logScale = FALSE,
   saveFilesTo
 )
 ```
@@ -572,9 +579,10 @@ plotTrIdentResults(
 * `VLPpileup`: VLP-fraction pileup file.
 * `WCpileup`: Whole-community pileup file.
 * `TrIdentResults`: The output from `TrIdentClassifier()`
-* `matchScoreFilter`: Optional, Filter plots using the normalized pattern 
-match-scores. A suggested filtering threshold is provided by 
-`TrIdentClassifier()` if `suggFiltThresh=TRUE`.
+* `onlyPlot`: Optional, use to 'only plot' the contigs classified as either 
+"Prophage-like", "Sloping", or "HighCovNoPattern".
+* `logScale`: TRUE or FALSE, display read coverage in log10 scale. Default is 
+FALSE.
 * `saveFilesTo`: Optional, Provide a path to the directory you wish to save 
 output to. A folder will be made within the provided directory to store 
 results.
@@ -586,9 +594,11 @@ list contains all read coverage plots for contigs classified as Sloping,
 Prophage-like, or HighCovNoPattern and their respective pattern-matches.
 
 **By default, the plots are displayed with raw read coverage values. We 
-recommend that users also view plots using `logScale=TRUE` as some specialized 
-transduction patterns occur at such low frequencies they can only be visualized
-using log scaled read coverage values.** 
+recommend that users also view plots using `logScale=TRUE` as some transduction 
+patterns occur at such low frequencies they can only be visualized
+using log scaled read coverage values. When using `logScale=TRUE`, the 
+associated pattern-match will be hidden as the read coverage is on a different 
+scale.** 
 
 
 View select plots:
@@ -682,9 +692,10 @@ SpecTransduc <- specializedTransductionID(
 
 ## Arguments/Parameters
 ```{r eval=FALSE}
-specializedTransductionID(VLPpileup, TrIdentResults,
+specializedTransductionID(VLPpileup, 
+                          TrIdentResults,
   noReadCov = 500, specTransLength = 2000,
-  logScale = FALSE, verbose = TRUE, matchScoreFilter,
+  logScale = FALSE, verbose = TRUE, 
   SaveFilesTo, specificContig
 )
 ```
@@ -697,9 +708,6 @@ specialized transduction searching stops. Default is 500. Must be at least 100.
 specialized transduction to be considered. Default is 2000. Must be at least 100.
 * `logScale`: TRUE or FALSE, display VLP-fraction read coverage in log10 scale. 
 Default is FALSE.
-* `matchScoreFilter`: Optional, Filter plots using the normalized pattern 
-match-scores. A suggested filtering threshold is provided by 
-`TrIdentClassifier()` if `suggFiltThresh=TRUE`. 
 * `verbose`: TRUE or FALSE. Print progress messages to console. Default is TRUE.
 * `SaveFilesTo`: Optional, Provide a path to the directory you wish to save 
 output to. A folder will be made within the provided directory to store results.

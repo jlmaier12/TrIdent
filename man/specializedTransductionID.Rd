@@ -11,7 +11,6 @@ specializedTransductionID(
   specificContig,
   noReadCov = 500,
   specTransLength = 2000,
-  matchScoreFilter,
   logScale = FALSE,
   verbose = TRUE,
   SaveFilesTo
@@ -40,10 +39,6 @@ specialized transduction searching stops. Default is 500. Must be at least
 \item{specTransLength}{Number of basepairs of non-zero read coverage needed
 for specialized transduction to be considered. Default is 2000. Must be
 at least 100.}
-
-\item{matchScoreFilter}{Optional, Filter plots using the normalized pattern
-match-scores. A suggested filtering threshold is provided by
-`TrIdentClassifier()` if `suggFiltThresh=TRUE`.}
 
 \item{logScale}{TRUE or FALSE, display VLP-fraction read coverage in log10
 scale. Default is FALSE.}

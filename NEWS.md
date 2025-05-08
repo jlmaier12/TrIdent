@@ -1,7 +1,18 @@
-## Changes in 0.99.4
+## Changes in 1.1.2 
 
-+ Fixed bug where contigs in which the median whole-community read coverage 
-value was 0 caused an error with VLP:WC read coverage ratio calculation
++ Fixed bug where an error was caused when calculating a ratio with contigs in 
+which the median whole-community non-prophage-like read coverage value was 0.
++ Added 'onlyPlot' parameter in plotTrIdentResults() function.
++ Added 'logScale' option in plotTrIdentResults() function.
++ Removed 'suggested filtering threshold' feature.
+
+## Changes in 1.1.1
+
++ Fixed bug where an error was caused when calculating VLP:WC read coverage 
+ratio with contigs in which the median whole-community read coverage value was 
+0.
+
+## Official release of TrIdent V1 on Bioconductor 3.21!
 
 ## Changes in 0.99.3
 
