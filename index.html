@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>TrIdent - Transduction Identification • TrIdent</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -29,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +66,15 @@
 <p><strong>TrIdent - Transduction Identification</strong> <a href="https://jlmaier12.github.io/TrIdent/"><img src="reference/figures/logo.png" align="right" height="139" alt="TrIdent website"></a></p>
 <p><strong>TrIdent automates the analysis of transductomics data by detecting, classifying, and characterizing read coverage patterns associated with potential transduction events.</strong></p>
 <p>Transductomics, developed by Kleiner et al. (2020), is a DNA sequencing-based method for the detection and characterization of transduction events in pure cultures and complex communities. Transductomics relies on mapping sequencing reads from a viral-like particle (VLP)-fraction of a sample to contigs assembled from the metagenome (whole-community) of the same sample. Reads from bacterial DNA carried by VLPs will map back to the bacterial contigs of origin creating read coverage patterns indicative of ongoing transduction. <strong>The read coverage patterns detected represent DNA being actively carried or transduced by VLPs. The read coverage patterns do not represent complete transduction events (i.e integration of transduced DNA into new bacterial chromosomes).</strong></p>
-<p>To obtain the data needed for transductomics, a microbiome sample of interest is split to prepare two sub-sample types: - Whole-community: Represents the ‘whole-community’ (all bacteria, fungi, virus, etc) in the microbiome of interest - VLP-fraction: Represents only the virus and ‘viral-like particles’ associated with the microbiome of interest - The VLP-fraction must be obtained by an appropriate ultra-purification protocol for your sample type to remove bacterial cells and contaminating free bacterial DNA.</p>
+<p>To obtain the data needed for transductomics, a microbiome sample of interest is split to prepare two sub-sample types:</p>
+<ul>
+<li>Whole-community: Represents the ‘whole-community’ (all bacteria, fungi, virus, etc) in the microbiome of interest</li>
+<li>VLP-fraction: Represents only the virus and ‘viral-like particles’ associated with the microbiome of interest
+<ul>
+<li>The VLP-fraction must be obtained by an appropriate ultra-purification protocol for your sample type to remove bacterial cells and contaminating free bacterial DNA.</li>
+</ul>
+</li>
+</ul>
 <p>With transductomics and TrIdent, a researcher can obtain information about the phage-host pairs involved in transduction, the types of transduction occuring, and the region of the host genome that is potentially transduced, which allows exploration of transferred genes.</p>
 <p><strong>Reference:</strong> Kleiner, M., Bushnell, B., Sanderson, K.E. et al. Transductomics: sequencing-based detection and analysis of transduced DNA in pure cultures and microbial communities. Microbiome 8, 158 (2020). <a href="https://doi.org/10.1186/s40168-020-00935-5" class="external-link uri">https://doi.org/10.1186/s40168-020-00935-5</a></p>
 <div class="section level3">
@@ -125,7 +132,7 @@
 <span><span class="co">#&gt; Identifying highly active/abundant or heterogenously integrated</span></span>
 <span><span class="co">#&gt;       Prophage-like elements</span></span>
 <span><span class="co">#&gt; Finalizing output</span></span>
-<span><span class="co">#&gt; Execution time: 14.56secs</span></span>
+<span><span class="co">#&gt; Execution time: 15.26secs</span></span>
 <span><span class="co">#&gt; 1 contigs were filtered out based on low read coverage</span></span>
 <span><span class="co">#&gt; 0 contigs were filtered out based on length</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -198,6 +205,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://www.bioconductor.org/packages/TrIdent" class="external-link">View on Bioconductor</a></li>
 <li><a href="https://github.com/jlmaier12/TrIdent/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/jlmaier12/TrIdent/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -221,11 +229,11 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Jessie Maier <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0001-8575-5386" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Jorden Rabasco <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-6971-6678" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Craig Gin <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7447-663X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Benjamin Callahan <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8752-117X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Manuel Kleiner <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0001-6904-0287" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jessie Maier <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0001-8575-5386" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Jorden Rabasco <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-6971-6678" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Craig Gin <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7447-663X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Benjamin Callahan <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8752-117X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Manuel Kleiner <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0001-6904-0287" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 </ul>
 </div>
 
@@ -240,7 +248,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
