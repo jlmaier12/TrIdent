@@ -3,7 +3,7 @@ pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   TrIdent-vignette: TrIdent-vignette.html
-last_built: 2025-05-08T16:30Z
+last_built: 2025-06-11T17:01Z
 urls:
   reference: https://jlmaier12.github.io/TrIdent/reference
   article: https://jlmaier12.github.io/TrIdent/articles

@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -522,6 +522,15 @@ VLP-fraction:Whole-community read coverage ratios greater than 2, in
 other words contigs where the median VLP-fraction read coverage value is
 2x the whole-community median read coverage value, are re-classified as
 HighCovNoPattern.</p>
+<p>While optional, users are encouraged to provide
+<code><a href="../reference/TrIdentClassifier.html">TrIdentClassifier()</a></code> with the number of VLP-fraction
+(<code>VLPReads</code>) and whole-community (<code>WCReads</code>) reads
+used for mapping and creation of the two input pileup files. If
+provided, the VLP-fraction:whole-community ratio will be normalized to
+the respective sizes of the VLP-fraction and whole community read sets.
+Normalization is important since large differences in read number
+between the VLP-fraction and whole-community may lead to false positive
+and negative HighCovNoPattern classifications.</p>
 <p><strong>Reference:</strong> Faddetta, T., Vassallo, A., Del Duca, S.
 et al. Unravelling the DNA sequences carried by Streptomyces coelicolor
 membrane vesicles. Sci Rep 12, 16651 (2022). <a href="https://doi.org/10.1038/s41598-022-21002-z" class="external-link uri">https://doi.org/10.1038/s41598-022-21002-z</a></p>
@@ -545,7 +554,7 @@ membrane vesicles. Sci Rep 12, 16651 (2022). <a href="https://doi.org/10.1038/s4
 <span><span class="co">#&gt; Identifying highly active/abundant or heterogenously integrated</span></span>
 <span><span class="co">#&gt;       Prophage-like elements</span></span>
 <span><span class="co">#&gt; Finalizing output</span></span>
-<span><span class="co">#&gt; Execution time: 18.74secs</span></span>
+<span><span class="co">#&gt; Execution time: 15.1secs</span></span>
 <span><span class="co">#&gt; 1 contigs were filtered out based on low read coverage</span></span>
 <span><span class="co">#&gt; 0 contigs were filtered out based on length</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -588,6 +597,12 @@ perform pattern-matching on. Must be at least 25000. Default is
 <code>minSlope</code>: The minimum slope value to test for sloping
 patterns. Default is 0.001 (i.e minimum change of 10x read coverage over
 100,000 bp).</li>
+<li>
+<code>VLPReads</code>: Optional, the number of VLP-fraction reads
+used for mapping and creation of pileup.</li>
+<li>
+<code>WCReads</code>: Optional, the number of whole-community reads
+used for mapping and creation of pileup.</li>
 <li>
 <code>verbose</code>: TRUE or FALSE. Print progress messages to
 console. Default is TRUE.</li>
@@ -1154,7 +1169,7 @@ transduction are colored green instead of blue.</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; 2 contigs have potential specialized transduction</span></span>
 <span><span class="co">#&gt; We recommend that you also view the results of this search with</span></span>
-<span><span class="co">#&gt;       logScale=TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt; logScale=TRUE</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="argumentsparameters-2">Arguments/Parameters<a class="anchor" aria-label="anchor" href="#argumentsparameters-2"></a>
@@ -1860,7 +1875,7 @@ R01Al171046.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
 <span><span class="co">#&gt; [1] kableExtra_1.4.0 ggplot2_3.5.2    patchwork_1.3.0  knitr_1.50      </span></span>
-<span><span class="co">#&gt; [5] TrIdent_1.1.2    BiocStyle_2.26.0</span></span>
+<span><span class="co">#&gt; [5] TrIdent_1.1.4    BiocStyle_2.26.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] Rcpp_1.0.14         RColorBrewer_1.1-3  bslib_0.9.0        </span></span>

@@ -23,7 +23,7 @@ fifth item is the windowSize used for the search."><meta property="og:image" con
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,6 +74,8 @@ fifth item is the windowSize used for the search.</p>
 <span>  maxBlockSize <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  minContigLength <span class="op">=</span> <span class="fl">30000</span>,</span>
 <span>  minSlope <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  <span class="va">VLPReads</span>,</span>
+<span>  <span class="va">WCReads</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">SaveFilesTo</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -132,6 +134,16 @@ pattern-matching on. Must be at least 25000. Default is 30000.</p></dd>
 is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).</p></dd>
 
 
+<dt id="arg-vlpreads">VLPReads<a class="anchor" aria-label="anchor" href="#arg-vlpreads"></a></dt>
+<dd><p>Optional, the number of VLP-fraction reads used for mapping
+and creation of pileup.</p></dd>
+
+
+<dt id="arg-wcreads">WCReads<a class="anchor" aria-label="anchor" href="#arg-wcreads"></a></dt>
+<dd><p>Optional, the number of WC reads used for mapping and
+creation of pileup.</p></dd>
+
+
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>TRUE or FALSE. Print progress messages to console. Default is TRUE.</p></dd>
 
@@ -165,7 +177,7 @@ results.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Identifying highly active/abundant or heterogenously integrated</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>       Prophage-like elements</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Finalizing output</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Execution time: 22.64secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Execution time: 15.03secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 contigs were filtered out based on low read coverage</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 0 contigs were filtered out based on length</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>

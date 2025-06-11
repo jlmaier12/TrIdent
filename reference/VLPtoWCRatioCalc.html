@@ -3,11 +3,15 @@
 contig using the median read coverage values. If the ratio is greater than 2
 (i.e VLP-fraction read coverage is, on average, at least double the
 whole-community read coverage), then the contig is classified as
-HighCovNoPattern"><meta property="og:description" content="Calculate the VLP-fraction:whole-community read coverage ratio for every
+HighCovNoPattern. If the number of VLP-fraction and whole-community reads
+used for mapping are provided, then the VLP/WC ratio value will be normalized
+to the sizes of the VLP and WC read sets."><meta property="og:description" content="Calculate the VLP-fraction:whole-community read coverage ratio for every
 contig using the median read coverage values. If the ratio is greater than 2
 (i.e VLP-fraction read coverage is, on average, at least double the
 whole-community read coverage), then the contig is classified as
-HighCovNoPattern"><meta property="og:image" content="https://jlmaier12.github.io/TrIdent/logo.png"></head><body>
+HighCovNoPattern. If the number of VLP-fraction and whole-community reads
+used for mapping are provided, then the VLP/WC ratio value will be normalized
+to the sizes of the VLP and WC read sets."><meta property="og:image" content="https://jlmaier12.github.io/TrIdent/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +19,7 @@ HighCovNoPattern"><meta property="og:image" content="https://jlmaier12.github.io
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,12 +53,14 @@ HighCovNoPattern"><meta property="og:image" content="https://jlmaier12.github.io
 contig using the median read coverage values. If the ratio is greater than 2
 (i.e VLP-fraction read coverage is, on average, at least double the
 whole-community read coverage), then the contig is classified as
-HighCovNoPattern</p>
+HighCovNoPattern. If the number of VLP-fraction and whole-community reads
+used for mapping are provided, then the VLP/WC ratio value will be normalized
+to the sizes of the VLP and WC read sets.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">VLPtoWCRatioCalc</span><span class="op">(</span><span class="va">classifSumm</span>, <span class="va">WCpileup</span>, <span class="va">VLPpileup</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">VLPtoWCRatioCalc</span><span class="op">(</span><span class="va">classifSumm</span>, <span class="va">WCpileup</span>, <span class="va">VLPpileup</span>, <span class="va">VLPReads</span>, <span class="va">WCReads</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,6 +81,16 @@ reads to whole-community contigs</p></dd>
 <dd><p>A table containing contig names, coverages averaged over 100
 bp windows, and contig positions associated with mapping VLP-fraction reads
 to whole-community contigs</p></dd>
+
+
+<dt id="arg-vlpreads">VLPReads<a class="anchor" aria-label="anchor" href="#arg-vlpreads"></a></dt>
+<dd><p>The number of VLP-fraction reads used for mapping
+and creation of pileup.</p></dd>
+
+
+<dt id="arg-wcreads">WCReads<a class="anchor" aria-label="anchor" href="#arg-wcreads"></a></dt>
+<dd><p>The number of WC reads used for mapping and
+creation of pileup.</p></dd>
 
 </dl></div>
     <div class="section level2">
