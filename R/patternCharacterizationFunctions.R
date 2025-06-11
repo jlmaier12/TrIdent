@@ -87,7 +87,9 @@ patternMatchSize <- function(classifSumm, classifList, windowSize, verbose) {
 #' contig using the median read coverage values. If the ratio is greater than 2
 #' (i.e VLP-fraction read coverage is, on average, at least double the
 #' whole-community read coverage), then the contig is classified as
-#' HighCovNoPattern
+#' HighCovNoPattern. If the number of VLP-fraction and whole-community reads 
+#' used for mapping are provided, then the VLP/WC ratio value will be normalized
+#' to the sizes of the VLP and WC read sets. 
 #'
 #' @param classifSumm Classification summary table
 #' @param WCpileup A table containing contig names, coverages averaged over 100
@@ -96,9 +98,13 @@ patternMatchSize <- function(classifSumm, classifList, windowSize, verbose) {
 #' @param VLPpileup A table containing contig names, coverages averaged over 100
 #'   bp windows, and contig positions associated with mapping VLP-fraction reads
 #'   to whole-community contigs
+#' @param VLPReads The number of VLP-fraction reads used for mapping 
+#'   and creation of pileup.
+#' @param WCReads The number of WC reads used for mapping and 
+#'   creation of pileup.
 #' @return dataframe
 #' @keywords internal
-VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup) {
+VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup, VLPReads, WCReads) {
   classifSumm$VLPWCRatio <- rep(NA, nrow(classifSumm))
   noneClassifIdxs <- which(classifSumm[, 2] == "NoPattern")
   if (length(noneClassifIdxs) == 0) {
@@ -117,6 +123,7 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup) {
         digits = 4
       )
     if(is.na(VLPtoWCratio)) VLPtoWCratio <- median(viralSubset[, 2])
+    VLPtoWCratio <- VLPtoWCratio * (WCReads / VLPReads)
     classifSumm[i, 2] <-
       ifelse(VLPtoWCratio > 2, "HighCovNoPattern", "NoPattern")
     

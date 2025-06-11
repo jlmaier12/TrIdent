@@ -12,6 +12,8 @@ TrIdentClassifier(
   maxBlockSize = Inf,
   minContigLength = 30000,
   minSlope = 0.001,
+  VLPReads,
+  WCReads,
   verbose = TRUE,
   SaveFilesTo
 )
@@ -51,6 +53,12 @@ pattern-matching on. Must be at least 25000. Default is 30000.}
 
 \item{minSlope}{The minimum slope value to test for sloping patterns. Default
 is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).}
+
+\item{VLPReads}{Optional, the number of VLP-fraction reads used for mapping 
+and creation of pileup.}
+
+\item{WCReads}{Optional, the number of WC reads used for mapping and 
+creation of pileup.}
 
 \item{verbose}{TRUE or FALSE. Print progress messages to console. Default is TRUE.}
 

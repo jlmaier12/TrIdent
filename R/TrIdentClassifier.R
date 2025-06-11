@@ -38,6 +38,10 @@
 #'   pattern-matching on. Must be at least 25000. Default is 30000.
 #' @param minSlope The minimum slope value to test for sloping patterns. Default
 #'   is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).
+#' @param VLPReads Optional, the number of VLP-fraction reads used for mapping 
+#'   and creation of pileup.
+#' @param WCReads Optional, the number of WC reads used for mapping and 
+#'   creation of pileup.
 #' @param SaveFilesTo Optional, Provide a path to the directory you wish to save
 #'   output to. A folder will be made within the provided directory to store
 #'   results.
@@ -60,6 +64,8 @@ TrIdentClassifier <- function(VLPpileup,
                               maxBlockSize = Inf,
                               minContigLength = 30000,
                               minSlope = 0.001,
+                              VLPReads,
+                              WCReads,
                               verbose = TRUE,
                               SaveFilesTo) {
   ## error catching
@@ -84,6 +90,11 @@ TrIdentClassifier <- function(VLPpileup,
     stop("The first column of the VLP and WC pileup file should be identical if
          mapping was performed correctly...")
   }
+  if (missing(VLPReads) & missing(WCReads) == FALSE |
+      missing(VLPReads) == FALSE & missing(WCReads)) {
+      stop("Both the WC and VLP-fraction read coverage values must be supplied.
+           You can not supply one without the other.")
+  }
   ## main algorithm start
   startTime <- Sys.time()
   if (verbose) {message("Reformatting pileup files")}
@@ -101,8 +112,10 @@ TrIdentClassifier <- function(VLPpileup,
       minSlope,
       verbose
     )
+  VLPReads <- ifelse(missing(VLPReads), 1, VLPReads)
+  WCReads <- ifelse(missing(WCReads), 1, WCReads)
   summaryTable <- contigClassSumm(classificationSummary[[1]])
-  summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup)
+  summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup, VLPReads, WCReads)
   summaryTable <-
     patternMatchSize(
       summaryTable, classificationSummary[[1]],

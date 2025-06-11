@@ -130,13 +130,15 @@ specializedTransductionID <- function(VLPpileup,
       specTransSumm[J, seq_len(6)] <- specTransInfo[[1]]
       plots[[J]] <- specTransInfo[[2]]
       J <- J + 1
-    }
+    } else if (contigName == specificContig & classification != 
+        "Prophage-like") {
+        stop("Selected contig is not prophage-like.")
+        }
   }
   plots <- plots[!vapply(plots, is.null, logical(1))]
-  if (specTransCount == 0) {
-    stop(
-      "Selected contig is either not prophage-like or is spelled incorrectly."
-    )
+  if (length(plots) == 0){
+      stop("No prophage-like events found. If you used the 'specificContig'
+parameter, check to see if the contig name is spelled correctly.")
   }
   if (verbose) {
     message(
@@ -148,7 +150,7 @@ specializedTransductionID <- function(VLPpileup,
     if (verbose) {
       message(
         "We recommend that you also view the results of this search with
-      logScale=TRUE"
+logScale=TRUE"
       )
     }
   }
@@ -164,7 +166,7 @@ specializedTransductionID <- function(VLPpileup,
     )),
     stop(
       "'TrIdentSpecTransduction' folder exists already in the provided
-            directory"
+directory"
     )
     )
     lapply(

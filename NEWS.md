@@ -1,3 +1,13 @@
+## Changes in 1.1.4
+
++ Fixed bug caused by using the 'specificContig' parameter in the 
+specializedTransductionID function.
+
+## Changes in 1.1.3
+
++ Added ability to normalize VLP-fraction:whole-community read coverage ratio
+by the number of reads in both the VLP-fraction and whole-community. 
+
 ## Changes in 1.1.2 
 
 + Fixed bug where an error was caused when calculating a ratio with contigs in 

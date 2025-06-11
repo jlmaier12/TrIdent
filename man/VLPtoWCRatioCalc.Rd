@@ -4,7 +4,7 @@
 \alias{VLPtoWCRatioCalc}
 \title{VLP-fraction:whole-community read coverage ratio calculator}
 \usage{
-VLPtoWCRatioCalc(classifSumm, WCpileup, VLPpileup)
+VLPtoWCRatioCalc(classifSumm, WCpileup, VLPpileup, VLPReads, WCReads)
 }
 \arguments{
 \item{classifSumm}{Classification summary table}
@@ -16,6 +16,12 @@ reads to whole-community contigs}
 \item{VLPpileup}{A table containing contig names, coverages averaged over 100
 bp windows, and contig positions associated with mapping VLP-fraction reads
 to whole-community contigs}
+
+\item{VLPReads}{The number of VLP-fraction reads used for mapping 
+and creation of pileup.}
+
+\item{WCReads}{The number of WC reads used for mapping and 
+creation of pileup.}
 }
 \value{
 dataframe
@@ -25,6 +31,8 @@ Calculate the VLP-fraction:whole-community read coverage ratio for every
 contig using the median read coverage values. If the ratio is greater than 2
 (i.e VLP-fraction read coverage is, on average, at least double the
 whole-community read coverage), then the contig is classified as
-HighCovNoPattern
+HighCovNoPattern. If the number of VLP-fraction and whole-community reads 
+used for mapping are provided, then the VLP/WC ratio value will be normalized
+to the sizes of the VLP and WC read sets.
 }
 \keyword{internal}
