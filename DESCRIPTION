@@ -2,7 +2,7 @@ Package: TrIdent
 Type: Package
 BiocType: Software 
 Title: TrIdent - Transduction Identification
-Version: 1.1.4
+Version: 1.1.5
 Authors@R: 
   c(person(given = "Jessie",
            family = "Maier",
