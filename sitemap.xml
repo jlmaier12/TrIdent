@@ -1,10 +1,17 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://jlmaier12.github.io/TrIdent/404.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/articles/index.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/articles/TrIdent-vignette.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/articles/index.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/authors.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/index.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/news/index.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/NARemover.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/TrIdent-package.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/TrIdentSampleOutput.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/VLPFractionSamplePileup.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/VLPtoWCRatioCalc.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/WholeCommunitySamplePileup.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/allPatternMatches.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/allProphageLikeClassifs.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/allSlopingClassifs.html</loc></url>
@@ -20,11 +27,10 @@
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/makeBlockPattern.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/makeFullSlopes.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/makeSlopesWStarts.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/NARemover.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/noPattern.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/patternBuilder.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/patternMatcher.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/patternMatchSize.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/patternMatcher.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/pileupFormatter.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/plotTrIdentResults.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/prophageLikeBorders.html</loc></url>
@@ -34,15 +40,9 @@
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/slopeSumm.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/slopeTranslator.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/slopeWithStart.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/specializedTransductionID.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/specTransductionPlot.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/specTransductionSearch.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/TrIdent-package.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/TrIdentSampleOutput.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/VLPFractionSamplePileup.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/VLPtoWCRatioCalc.html</loc></url>
-<url><loc>https://jlmaier12.github.io/TrIdent/reference/WholeCommunitySamplePileup.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/specializedTransductionID.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/zeroCountSearch.html</loc></url>
 </urlset>
 
