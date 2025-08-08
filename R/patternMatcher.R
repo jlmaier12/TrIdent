@@ -114,6 +114,8 @@ patternMatcher <-
         min(bestMatchScoreSumm))[1]]]
       bestMatchList[[A]] <- c(bestMatch, i, bestMatch[[1]] /
         mean(viralSubset$coverage))
+      names(bestMatchList)[A] <- i
+      names(bestMatchList[[A]])[1:9] <- c("match_score", "min_cov", "max_cov", "slope", "start_pos", "end_pos", "classif.", "contig", "norm_match_score")
       normMatchScore[A] <-
         bestMatch[[1]] / mean(viralSubset$coverage)
       refs[A] <- i

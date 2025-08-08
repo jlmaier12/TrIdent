@@ -428,7 +428,7 @@ Prophage-like elements in whole-community metagenomes, `TrIdentClassifier()`
 uses the VLP-fraction read coverage patterns. The locations of Prophage-like 
 pattern-matches are used to calculate the Prophage-like:non-Prophage-like 
 whole-community read coverage ratio. Prophage-like patterns with 
-whole-community read coverage ratios greater than 1.15 are labeled as 'elevated' 
+whole-community read coverage ratios greater than 1.25 are labeled as 'elevated' 
 while ratios less then 0.75 are labeled as 'depressed'. The ratio will be NA if 
 it cannot be calculated due to 0 values in the non-Prophage-like region.
 
@@ -544,6 +544,33 @@ TrIdentSummaryTable <- TrIdentOutput$SummaryTable
 kable(TrIdentSummaryTable) %>%
   kable_styling(latex_options = "HOLD_position")
 ```
+
+* **contigName**: The contig reference name.
+* **classifications**: The classification given by TrIdent.
+* **normMatchScore**: The pattern-match score normalized by the size of the dataset
+(pattern-match scores from different contigs are not directly comparable to 
+one another as they are relative to the characteristics of the contig they
+were calculated for.).
+* **VLPWCRatio**: For HighCovNoPattern classifications only. The ratio between 
+the median VLP-fraction and WC read coverage values. The ratio is normalized by 
+the number of VLP-fraction and WC reads, respectively, if the read counts
+are provided are input in `TrIdentClassifier()`.
+* **matchSize**: The size (in base pairs) of the TrIdent pattern-match.
+* **startPosBp**: The start position (in basepairs) of the TrIdent pattern-match.
+* **endPosBp**: The end position (in basepairs) of the TrIdent pattern-match.
+* **prolikeWCReadCov**: For Prophage-like classifications only. Elevated = the read
+coverage in the WC is elevated at the location of the Prophage-like element 
+compared to the neighboring 'non-prophage-like' regions. Depressed = the read
+coverage in the WC is elevated at the location of the Prophage-like element 
+compared to the neighboring 'non-prophage-like' regions. None = no elevation or
+depression in WC read coverage at the location of the Prophage-like element.
+* **proLikeWCReadCovRatio**: For Prophage-like classifications only. The ratio
+between the median WC read coverage value in the Prophage-like 
+pattern-match region and the median WC read coverage value in the 
+non-Prophage-like pattern-match region.   
+* **slope**: For Sloping classifications only. The slope value of the 
+pattern-match. Positive values indicate an increase in read coverage across the
+contig while negative values indicate a decrease.
 
 # plotTrIdentResults()
 
@@ -753,27 +780,22 @@ kable(head(SpecializedTransducSummaryTable), format = "html") %>%
   kable_styling(latex_options = "HOLD_position")
 ```
 
+* **contigName**: The contig reference name.
+* **specTransduc**: Yes/No for if a signal for specialized transduction was 
+detected.
+* **location**: If specialized transduction signal was detected on the left, 
+right, or left+right sides.
+* **lengthLeft**: Length of signal (in basepairs) on left side of Prophage-like
+element.
+* **lengthRight**: Length of signal (in basepairs) on right side of Prophage-like
+element.
+
 View select plots:
 ```{r}
 SpecTransduc$Plots$NODE_62
 SpecTransduc$Plots$NODE_135
 ```
 
-# Generate final TrIdent summary table
-
-If you'd like to combine the summary tables produced by `TrIdentClassifier()` 
-and `specializedTransductionID()`, try the following:
-```{r}
-FinalTrIdentSummaryTable <- merge(TrIdentSummaryTable,
-  SpecializedTransducSummaryTable,
-  by = "contigName", all.x = TRUE
-)
-```
-
-```{r echo=FALSE}
-kable(FinalTrIdentSummaryTable) %>%
-  kable_styling(latex_options = "HOLD_position")
-```
 
 # Supplemental information
 

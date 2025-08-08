@@ -71,13 +71,12 @@ specializedTransductionID <- function(VLPpileup,
   TrIdentResultPatterns <- TrIdentResults[[3]]
   TrIdentResultSumm <- TrIdentResults[[1]]
   windowSize <- TrIdentResults[[5]]
-  specTransSumm <- data.frame(matrix(ncol = 6, nrow = 0))
+  specTransSumm <- data.frame(matrix(ncol = 5, nrow = 0))
   colnames(specTransSumm) <-
     c(
       "contigName",
       "specTransduc",
-      "left",
-      "right",
+      "location",
       "lengthLeft",
       "lengthRight"
     )
@@ -107,7 +106,7 @@ specializedTransductionID <- function(VLPpileup,
         if (specTransInfo[[1]][[2]] == "yes") {
           specTransCount <- specTransCount + 1
         }
-        specTransSumm[J, seq_len(6)] <- specTransInfo[[1]]
+        specTransSumm[J, seq_len(5)] <- specTransInfo[[1]]
         plots[[J]] <- specTransInfo[[2]]
         J <- J + 1
       }
@@ -127,7 +126,7 @@ specializedTransductionID <- function(VLPpileup,
       if (specTransInfo[[1]][[2]] == "yes") {
         specTransCount <- specTransCount + 1
       }
-      specTransSumm[J, seq_len(6)] <- specTransInfo[[1]]
+      specTransSumm[J, seq_len(5)] <- specTransInfo[[1]]
       plots[[J]] <- specTransInfo[[2]]
       J <- J + 1
     } else if (contigName == specificContig & classification != 

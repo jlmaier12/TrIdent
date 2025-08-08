@@ -154,12 +154,8 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup, VLPReads, WCReads
 #' @return dataframe
 #' @keywords internal
 prophageLikeElevation <-
-  function(classifSummTable,
-           prophageLikeClassifList,
-           VLPpileup,
-           WCpileup,
-           windowSize,
-           verbose) {
+  function(classifSummTable, prophageLikeClassifList, VLPpileup, WCpileup,
+           windowSize,verbose) {
     if (verbose) {
       message(
         "Identifying highly active/abundant or heterogenously integrated
@@ -203,7 +199,7 @@ prophageLikeElevation <-
       if (is.na(ratio)) {
           classifSummTable[which(classifSummTable[, 1] ==
           contigName), 8] <- NA
-      } else if (ratio > 1.15) {
+      } else if (ratio > 1.25) {
         classifSummTable[which(classifSummTable[, 1] ==
           contigName), 8] <- "Elevated"
       } else if (ratio < 0.75) {

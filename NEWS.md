@@ -1,3 +1,12 @@
+## Changes in 1.1.5
+
++ Added names to list items in pattern matching results.
++ Fixed bug that caused an error when there were no "Prophage-like", "Sloping" 
+and "HighCovNoPattern" classifications made.
++ Added verbose for when there are no "Prophage-like", "Sloping" 
+and "HighCovNoPattern" classifications made.
++ Cleaned specializedTransductionID() output table. 
+
 ## Changes in 1.1.4
 
 + Fixed bug caused by using the 'specificContig' parameter in the 

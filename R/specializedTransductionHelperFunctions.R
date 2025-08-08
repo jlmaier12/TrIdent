@@ -31,7 +31,7 @@ specTransductionSearch <- function(contigName,
                                    noReadCov,
                                    specTransLength,
                                    logScale) {
-  specTransSumm <- c(contigName, rep(NA, 5))
+  specTransSumm <- c(contigName, rep(NA, 4))
   viralSubsetZoom <- prophageLikeZoom(
     VLPpileup[which(VLPpileup[, 1] ==
       contigName), ],
@@ -55,20 +55,24 @@ specTransductionSearch <- function(contigName,
   if (startSearch[[2]] - startSearch[[1]] >= specTransLength / 100) {
     SpecTransLeft <- viralSubsetZoom[startPosRow - (startSearch[[2]] -
       startSearch[[1]]), 3]
-    specTransSumm[c(3, 5)] <- c("yes", (startSearch[[2]] -
+    specTransSumm[c(3, 4)] <- c("left", (startSearch[[2]] -
       startSearch[[1]]) * 100)
   } else {
     SpecTransLeft <- startPosBp
-    specTransSumm[c(3, 5)] <- c("no", NA)
+    specTransSumm[c(3, 4)] <- c("none", NA)
   }
   if (endSearch[[2]] - endSearch[[1]] >= specTransLength / 100) {
     specTransRight <- viralSubsetZoom[endPosRow + (endSearch[[2]] -
       endSearch[[1]]), 3]
-    specTransSumm[c(4, 6)] <-
-      c("yes", (endSearch[[2]] - endSearch[[1]]) * 100)
+    if (specTransSumm[[3]] == "left") {
+        specTransSumm[c(3, 5)] <-
+            c("left+right", (endSearch[[2]] - endSearch[[1]]) * 100)
+    } else {
+    specTransSumm[c(3, 5)] <-
+      c("right", (endSearch[[2]] - endSearch[[1]]) * 100) }
   } else {
     specTransRight <- endPosBp
-    specTransSumm[c(4, 6)] <- c("no", NA)
+    specTransSumm[c(3, 5)] <- c("none", NA)
   }
   specTransSumm[2] <-
     ifelse((
@@ -289,8 +293,8 @@ specTransductionPlot <-
     }
     fill <-
       ifelse(specTransSumm[2] == "yes", "seagreen", "deepskyblue3")
-    alphaL <- ifelse(specTransSumm[3] == "yes", 1, 0)
-    alphaR <- ifelse(specTransSumm[4] == "yes", 1, 0)
+    alphaL <- ifelse(specTransSumm[3] == "left" | specTransSumm[3] == "left+right", 1, 0)
+    alphaR <- ifelse(specTransSumm[3] == "right" | specTransSumm[3] == "left+right", 1, 0)
     coverageType <-
       if (logScale) {
         viralSubsetZoom$logcoverage
@@ -334,12 +338,8 @@ specTransductionPlot <-
             contigName, prophageLikeInfo
           ),
           subtitle = paste(
-            "Specialized transduction on left:",
-            specTransSumm[3],
-            ",",
-            "on right:",
-            specTransSumm[4]
-          ),
+            "Specialized transduction on:",
+            specTransSumm[3]),
           x = "Contig Position (bp)",
           y = paste(
             "VLP-Fraction Read Coverage",

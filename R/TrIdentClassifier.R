@@ -135,17 +135,22 @@ TrIdentClassifier <- function(VLPpileup,
     allSlopingClassifs(classificationSummary[[1]]),
     windowSize
   )
+  
+  CleanedSummaryTable <- summaryTable[which(
+      summaryTable[, 2] ==
+          "Prophage-like" |
+          summaryTable[, 2] ==
+          "Sloping" |
+          summaryTable[, 2] ==
+          "HighCovNoPattern"
+  ), ]
+  if (nrow(CleanedSummaryTable) == 0){
+      CleanedSummaryTable <- NULL
+  } 
   if (verbose) {message("Finalizing output")}
   summaryList <- list(
     SummaryTable = summaryTable,
-    CleanedSummaryTable = summaryTable[which(
-      summaryTable[, 2] ==
-        "Prophage-like" |
-        summaryTable[, 2] ==
-          "Sloping" |
-        summaryTable[, 2] ==
-          "HighCovNoPattern"
-    ), ],
+    CleanedSummaryTable = CleanedSummaryTable,
     PatternMatchInfo = allPatternMatches(
       classificationSummary[[1]],
       summaryTable
@@ -159,46 +164,42 @@ TrIdentClassifier <- function(VLPpileup,
   duration <- difftime(endTime, startTime)
   if (verbose) {
       message(
-          "Execution time: ", round(duration[[1]], 2), units(duration))}
-  if (verbose) {
+          "Execution time: ", round(duration[[1]], 2), units(duration))
       message(
           length(which(
               classificationSummary[[2]][, 2] == "Low VLP-fraction read cov"
       )),
       " contigs were filtered out based on low read coverage"
     )
-  }
-  if (verbose) {
     message(
       length(which(
         classificationSummary[[2]][, 2] == "Contig length too small"
       )),
       " contigs were filtered out based on length"
     )
+  if(!("Prophage-like" %in% summaryList[[1]][, 2] | 
+       "Sloping"  %in% summaryList[[1]][, 2] | 
+       "HighCovNoPattern"  %in% summaryList[[1]][, 2])){
+      message("No transduction events identified!")
+  } else {
+      table <- (table(summaryList[[1]][, 2]))
+      message(paste0(capture.output(table), collapse = "\n"))
   }
-  table <- (table(summaryList[[1]][, 2]))
-  if (verbose) {
-    message(paste0(capture.output(table), collapse = "\n"))
-  }
-  if (verbose) {
     message(
       length(which(summaryList[[1]][, 8] == "Elevated")),
       " of the prophage-like classifications are highly active or abundant"
     )
-  }
-  if (verbose) {
     message(
       length(which(summaryList[[1]][, 8] == "Depressed")),
       " of the prophage-like classifications are mixed, i.e. heterogenously
-        integrated into their bacterial host population"
+integrated into their bacterial host population"
     )
-  }
+}
   if (missing(SaveFilesTo) == FALSE) {
     ifelse(!dir.exists(paths = paste0(SaveFilesTo, "\\TrIdentOutput")),
       dir.create(paste0(SaveFilesTo, "\\TrIdentOutput")),
       stop(
-        "'TrIdentOutput' folder exists already
-                in the provided directory"
+        "'TrIdentOutput' folder exists already in the provided directory"
       )
     )
     write.table(
