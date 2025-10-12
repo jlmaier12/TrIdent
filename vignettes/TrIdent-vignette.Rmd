@@ -796,8 +796,18 @@ SpecTransduc$Plots$NODE_62
 SpecTransduc$Plots$NODE_135
 ```
 
-
 # Supplemental information
+
+## Usage Note
+
+TrIdent’s analysis time depends on available computer resources and as such, 
+processing time will slow if other computer applications are in-use and/or if 
+memory usage in R is high. For most efficient usage of TrIdent, we recommend 
+clearing the R environment prior to importing large WC and VLP-fraction pileups 
+for a single sample and running TrIdent. After TrIdent is run, the output 
+should be saved and the environment cleared in preparation for the next sample 
+or replicate. The TrIdent output for all the samples can then be loaded into the 
+R environment as R objects for inspection, comparison. and further analysis. 
 
 ## Acknowledgments
 TrIdent is the result of the combined effort and brain power of many 
