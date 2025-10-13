@@ -59,7 +59,7 @@ specTransductionSearch <- function(contigName,
       startSearch[[1]]) * 100)
   } else {
     SpecTransLeft <- startPosBp
-    specTransSumm[c(3, 4)] <- c("none", NA)
+    specTransSumm[c(3, 4)] <- c("not detected", NA)
   }
   if (endSearch[[2]] - endSearch[[1]] >= specTransLength / 100) {
     specTransRight <- viralSubsetZoom[endPosRow + (endSearch[[2]] -
@@ -72,7 +72,7 @@ specTransductionSearch <- function(contigName,
       c("right", (endSearch[[2]] - endSearch[[1]]) * 100) }
   } else {
     specTransRight <- endPosBp
-    specTransSumm[c(3, 5)] <- c("none", NA)
+    specTransSumm[[5]]<- NA
   }
   specTransSumm[2] <-
     ifelse((
