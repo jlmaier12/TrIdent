@@ -4,7 +4,14 @@
 \alias{VLPtoWCRatioCalc}
 \title{VLP-fraction:whole-community read coverage ratio calculator}
 \usage{
-VLPtoWCRatioCalc(classifSumm, WCpileup, VLPpileup, VLPReads, WCReads)
+VLPtoWCRatioCalc(
+  classifSumm,
+  WCpileup,
+  VLPpileup,
+  VLPReads,
+  WCReads,
+  minHCNPRatio
+)
 }
 \arguments{
 \item{classifSumm}{Classification summary table}
@@ -22,6 +29,10 @@ and creation of pileup.}
 
 \item{WCReads}{The number of WC reads used for mapping and 
 creation of pileup.}
+
+\item{minHCNPRatio}{The minimum VLP:WC ratio value used for HighCovNoPattern 
+classifications. Default is 2. (i.e the median VLP-fraction coverage must be
+at least 2x the median WC read coverage to be classified as HighCovNoPattern).}
 }
 \value{
 dataframe

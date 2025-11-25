@@ -38,6 +38,9 @@
 #'   pattern-matching on. Must be at least 25000. Default is 30000.
 #' @param minSlope The minimum slope value to test for sloping patterns. Default
 #'   is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).
+#' @param minHCNPRatio The minimum VLP:WC ratio value used for HighCovNoPattern 
+#' classifications. Default is 2. (i.e the median VLP-fraction coverage must be
+#' at least 2x the median WC read coverage to be classified as HighCovNoPattern).
 #' @param VLPReads Optional, the number of VLP-fraction reads used for mapping 
 #'   and creation of pileup.
 #' @param WCReads Optional, the number of WC reads used for mapping and 
@@ -64,6 +67,7 @@ TrIdentClassifier <- function(VLPpileup,
                               maxBlockSize = Inf,
                               minContigLength = 30000,
                               minSlope = 0.001,
+                              minHCNPRatio = 2,
                               VLPReads,
                               WCReads,
                               verbose = TRUE,
@@ -77,6 +81,9 @@ TrIdentClassifier <- function(VLPpileup,
   }
   if (minBlockSize <= 1000) {
     stop("minBlockSize must be greater than 1000 bp!")
+  }
+  if (minHCNPRatio <= 0) {
+    stop("minHCNPRatio must be greater than 0!")
   }
   ## input validation
   if (nrow(VLPpileup) != nrow(WCpileup)) {
@@ -115,7 +122,7 @@ TrIdentClassifier <- function(VLPpileup,
   VLPReads <- ifelse(missing(VLPReads), 1, VLPReads)
   WCReads <- ifelse(missing(WCReads), 1, WCReads)
   summaryTable <- contigClassSumm(classificationSummary[[1]])
-  summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup, VLPReads, WCReads)
+  summaryTable <- VLPtoWCRatioCalc(summaryTable, WCpileup, VLPpileup, VLPReads, WCReads, minHCNPRatio)
   summaryTable <-
     patternMatchSize(
       summaryTable, classificationSummary[[1]],

@@ -486,8 +486,8 @@ TrIdentOutput <- TrIdentClassifier(
 ```{r eval=FALSE}
 TrIdentClassifier(VLPpileup, WCpileup,
   windowSize = 1000, minBlockSize = 10000,
-  maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001,
-  verbose = TRUE, SaveFilesTo
+  maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001, 
+  minHCNPRatio=2, verbose = TRUE, SaveFilesTo
 )
 ```
 
@@ -503,10 +503,13 @@ Default is NA (no maximum).
 pattern-matching on. Must be at least 25000. Default is 30000.
 * `minSlope`: The minimum slope value to test for sloping patterns. Default is 
 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).
+* `minHCNPRatio`: The minimum VLP:WC ratio value used for HighCovNoPattern 
+classifications. Default is 2. (i.e the median VLP-fraction coverage must be
+at least 2x the median WC read coverage to be classified as HighCovNoPattern).
 * `VLPReads`: Optional, the number of VLP-fraction reads used for mapping 
 and creation of pileup.
 * `WCReads`: Optional, the number of whole-community reads used for mapping 
-and creation of pileup.
+and creation of pileup. 
 * `verbose`: TRUE or FALSE. Print progress messages to console. Default is TRUE.
 * `SaveFilesTo`: Optional, Provide a path to the directory you wish to save 
 output to. A folder will be made within the provided directory to store 

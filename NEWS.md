@@ -1,7 +1,14 @@
+## Changes in 1.3.1
+
++ Make the median VLP:WC minimum ratio for HighCovNoPattern classifications a 
+variable in TrIdentClassifier() ('minHCNPRatio').
+
+## TrIdent V1.2 on Bioconductor 3.22!
+
 ## Changes in 1.1.5
 
 + Added names to list items in pattern matching results.
-+ Fixed bug that caused an error when there were no "Prophage-like", "Sloping" 
++ Fixed bug that caused an error when there were no "Prophage-like", "Sloping"  
 and "HighCovNoPattern" classifications made.
 + Added verbose for when there are no "Prophage-like", "Sloping" 
 and "HighCovNoPattern" classifications made.

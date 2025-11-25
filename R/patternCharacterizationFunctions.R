@@ -102,9 +102,12 @@ patternMatchSize <- function(classifSumm, classifList, windowSize, verbose) {
 #'   and creation of pileup.
 #' @param WCReads The number of WC reads used for mapping and 
 #'   creation of pileup.
-#' @return dataframe
+#' @param minHCNPRatio The minimum VLP:WC ratio value used for HighCovNoPattern 
+#' classifications. Default is 2. (i.e the median VLP-fraction coverage must be
+#' at least 2x the median WC read coverage to be classified as HighCovNoPattern).
+#' @return dataframe 
 #' @keywords internal
-VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup, VLPReads, WCReads) {
+VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup, VLPReads, WCReads, minHCNPRatio) {
   classifSumm$VLPWCRatio <- rep(NA, nrow(classifSumm))
   noneClassifIdxs <- which(classifSumm[, 2] == "NoPattern")
   if (length(noneClassifIdxs) == 0) {
@@ -125,7 +128,7 @@ VLPtoWCRatioCalc <- function(classifSumm, WCpileup, VLPpileup, VLPReads, WCReads
     if(is.na(VLPtoWCratio)) VLPtoWCratio <- median(viralSubset[, 2])
     VLPtoWCratio <- VLPtoWCratio * (WCReads / VLPReads)
     classifSumm[i, 2] <-
-      ifelse(VLPtoWCratio > 2, "HighCovNoPattern", "NoPattern")
+      ifelse(VLPtoWCratio > minHCNPRatio, "HighCovNoPattern", "NoPattern")
     
     classifSumm[i, 4] <- VLPtoWCratio
   }
