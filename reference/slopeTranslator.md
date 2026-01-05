@@ -12,7 +12,8 @@ slopeTranslator(
   bestMatchInfo,
   windowSize,
   slopeChange,
-  leftOrRight
+  leftOrRight,
+  minSlopeSize
 )
 ```
 
@@ -41,6 +42,10 @@ slopeTranslator(
 
   The direction of the sloping pattern. Either "Left" for left to right
   (neg) slopes or "Right" for right to left (pos) slopes.
+
+- minSlopeSize:
+
+  The minimum width of sloping patterns.
 
 ## Value
 

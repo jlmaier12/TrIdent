@@ -19,6 +19,7 @@ patternMatcher(
   maxBlockSize,
   minContigLength,
   minSlope,
+  minSlopeSize,
   verbose
 )
 ```
@@ -58,6 +59,10 @@ patternMatcher(
 - minSlope:
 
   The minimum slope value to test for sloping patterns
+
+- minSlopeSize:
+
+  The minimum width of sloping patterns.
 
 - verbose:
 

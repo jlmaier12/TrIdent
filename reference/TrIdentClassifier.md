@@ -22,6 +22,7 @@ TrIdentClassifier(
   maxBlockSize = Inf,
   minContigLength = 30000,
   minSlope = 0.001,
+  minSlopeSize = 20000,
   minHCNPRatio = 2,
   VLPReads,
   WCReads,
@@ -79,6 +80,11 @@ TrIdentClassifier(
   The minimum slope value to test for sloping patterns. Default is 0.001
   (i.e minimum change of 10x read coverage over 100,000 bp).
 
+- minSlopeSize:
+
+  The minimum width of sloping patterns.Default and absolute minimum is
+  20,000 bp.
+
 - minHCNPRatio:
 
   The minimum VLP:WC ratio value used for HighCovNoPattern
@@ -128,7 +134,7 @@ TrIdent_results <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.98secs
+#> Execution time: 17.44secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 

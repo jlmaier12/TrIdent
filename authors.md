@@ -21,14 +21,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/jlmaier12/TrIdent/blob/main/DESCRIPTION)
 
-Maier J, Rabasco J, Gin C, Callahan B, Kleiner M (2025). *TrIdent:
-TrIdent - Transduction Identification*. R package version 1.3.1,
+Maier J, Rabasco J, Gin C, Callahan B, Kleiner M (2026). *TrIdent:
+TrIdent - Transduction Identification*. R package version 1.3.2,
 <https://github.com/jlmaier12/TrIdent>.
 
     @Manual{,
       title = {TrIdent: TrIdent - Transduction Identification},
       author = {Jessie Maier and Jorden Rabasco and Craig Gin and Benjamin Callahan and Manuel Kleiner},
-      year = {2025},
-      note = {R package version 1.3.1},
+      year = {2026},
+      note = {R package version 1.3.2},
       url = {https://github.com/jlmaier12/TrIdent},
     }

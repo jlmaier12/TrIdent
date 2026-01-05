@@ -5,7 +5,7 @@ Build, translate, and change slope of sloping pattern with slope start
 ## Usage
 
 ``` r
-slopeWithStart(viralSubset, windowSize, minSlope)
+slopeWithStart(viralSubset, windowSize, minSlope, minSlopeSize)
 ```
 
 ## Arguments
@@ -22,6 +22,10 @@ slopeWithStart(viralSubset, windowSize, minSlope)
 - minSlope:
 
   The minimum slope value to test for sloping patterns
+
+- minSlopeSize:
+
+  The minimum width of sloping patterns.
 
 ## Value
 

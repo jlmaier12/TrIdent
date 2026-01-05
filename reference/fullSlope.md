@@ -8,7 +8,7 @@ contig.
 ## Usage
 
 ``` r
-fullSlope(viralSubset, windowSize, minSlope)
+fullSlope(viralSubset, windowSize, minSlope, minSlopeSize)
 ```
 
 ## Arguments
@@ -25,6 +25,10 @@ fullSlope(viralSubset, windowSize, minSlope)
 - minSlope:
 
   The minimum slope value to test for sloping patterns
+
+- minSlopeSize:
+
+  The minimum width of sloping patterns.
 
 ## Value
 

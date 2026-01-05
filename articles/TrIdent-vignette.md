@@ -380,7 +380,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.78secs
+#> Execution time: 17.39secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
@@ -397,7 +397,7 @@ TrIdentOutput <- TrIdentClassifier(
 TrIdentClassifier(VLPpileup, WCpileup,
   windowSize = 1000, minBlockSize = 10000,
   maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001, 
-  minHCNPRatio=2, verbose = TRUE, SaveFilesTo
+  minSlopeSize = 20000, minHCNPRatio=2, verbose = TRUE, SaveFilesTo
 )
 ```
 
@@ -414,6 +414,8 @@ TrIdentClassifier(VLPpileup, WCpileup,
 - `minSlope`: The minimum slope value to test for sloping patterns.
   Default is 0.001 (i.e minimum change of 10x read coverage over 100,000
   bp).
+- `minSlopeSize`: The minimum width of sloping patterns. Default and
+  absolute minimum is 20,000 bp.
 - `minHCNPRatio`: The minimum VLP:WC ratio value used for
   HighCovNoPattern classifications. Default is 2. (i.e the median
   VLP-fraction coverage must be at least 2x the median WC read coverage
@@ -853,26 +855,26 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] kableExtra_1.4.0 ggplot2_4.0.1    patchwork_1.3.2  knitr_1.50      
-#> [5] TrIdent_1.3.1    BiocStyle_2.38.0
+#> [1] kableExtra_1.4.0 ggplot2_4.0.1    patchwork_1.3.2  knitr_1.51      
+#> [5] TrIdent_1.3.2    BiocStyle_2.38.0
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] roll_1.2.0            sass_0.4.10           generics_0.1.4       
-#>  [4] tidyr_1.3.1           xml2_1.5.0            stringi_1.8.7        
+#>  [4] tidyr_1.3.2           xml2_1.5.1            stringi_1.8.7        
 #>  [7] digest_0.6.39         magrittr_2.0.4        evaluate_1.0.5       
-#> [10] grid_4.5.2            RColorBrewer_1.1-3    bookdown_0.45        
+#> [10] grid_4.5.2            RColorBrewer_1.1-3    bookdown_0.46        
 #> [13] fastmap_1.2.0         jsonlite_2.0.0        BiocManager_1.30.27  
 #> [16] purrr_1.2.0           viridisLite_0.4.2     scales_1.4.0         
 #> [19] textshaping_1.0.4     jquerylib_0.1.4       cli_3.6.5            
 #> [22] rlang_1.1.6           withr_3.0.2           cachem_1.1.0         
-#> [25] yaml_2.3.10           tools_4.5.2           dplyr_1.1.4          
+#> [25] yaml_2.3.12           tools_4.5.2           dplyr_1.1.4          
 #> [28] vctrs_0.6.5           R6_2.6.1              lifecycle_1.0.4      
 #> [31] stringr_1.6.0         fs_1.6.6              ragg_1.5.0           
 #> [34] pkgconfig_2.0.3       desc_1.4.3            pkgdown_2.2.0        
 #> [37] RcppParallel_5.1.11-1 pillar_1.11.1         bslib_0.9.0          
 #> [40] gtable_0.3.6          glue_1.8.0            Rcpp_1.1.0           
-#> [43] systemfonts_1.3.1     xfun_0.54             tibble_3.3.0         
+#> [43] systemfonts_1.3.1     xfun_0.55             tibble_3.3.0         
 #> [46] tidyselect_1.2.1      rstudioapi_0.17.1     farver_2.1.2         
-#> [49] htmltools_0.5.8.1     labeling_0.4.3        rmarkdown_2.30       
+#> [49] htmltools_0.5.9       labeling_0.4.3        rmarkdown_2.30       
 #> [52] svglite_2.2.2         compiler_4.5.2        S7_0.2.1
 ```
