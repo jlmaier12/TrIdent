@@ -38,6 +38,8 @@
 #'   pattern-matching on. Must be at least 25000. Default is 30000.
 #' @param minSlope The minimum slope value to test for sloping patterns. Default
 #'   is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).
+#' @param minSlopeSize The minimum width of sloping patterns.Default and 
+#' absolute minimum is 20,000 bp.
 #' @param minHCNPRatio The minimum VLP:WC ratio value used for HighCovNoPattern 
 #' classifications. Default is 2. (i.e the median VLP-fraction coverage must be
 #' at least 2x the median WC read coverage to be classified as HighCovNoPattern).
@@ -67,6 +69,7 @@ TrIdentClassifier <- function(VLPpileup,
                               maxBlockSize = Inf,
                               minContigLength = 30000,
                               minSlope = 0.001,
+                              minSlopeSize = 20000,
                               minHCNPRatio = 2,
                               VLPReads,
                               WCReads,
@@ -76,15 +79,18 @@ TrIdentClassifier <- function(VLPpileup,
   if (!(windowSize %in% list(100, 200, 500, 1000))) {
     stop("windowSize must be either 100, 200, 500, or 1000 bp!")
   }
-  if (minContigLength <= 25000) {
-    stop("minContigLength must be at least 25,000 bp for pattern-matching!")
+  if (minContigLength < 25000) {
+    stop("minContigLength cannot be less than 25,000 bp for pattern-matching!")
   }
-  if (minBlockSize <= 1000) {
-    stop("minBlockSize must be greater than 1000 bp!")
+  if (minBlockSize < 1000) {
+    stop("minBlockSize cannot be less than 1000 bp!")
   }
   if (minHCNPRatio <= 0) {
     stop("minHCNPRatio must be greater than 0!")
   }
+  if (minSlopeSize < 20000) {
+        stop("minSlopeSize cannot be less than 20000 bp!")
+    }
   ## input validation
   if (nrow(VLPpileup) != nrow(WCpileup)) {
     stop("VLP and WC pileup files have differing row numbers")
@@ -117,6 +123,7 @@ TrIdentClassifier <- function(VLPpileup,
       maxBlockSize,
       minContigLength,
       minSlope,
+      minSlopeSize,
       verbose
     )
   VLPReads <- ifelse(missing(VLPReads), 1, VLPReads)

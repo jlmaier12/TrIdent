@@ -17,6 +17,20 @@ blockBuilder <-
            windowSize,
            minBlockSize,
            maxBlockSize) {
+    if (nrow(viralSubset)-5000/windowSize < minBlockSize/windowSize) { 
+        bestMatchInfoLeft <-
+            list(
+                diff,
+                NA,
+                nrow(viralSubset),
+                "NA",
+                1,
+                nrow(viralSubset),
+                "NoPattern"
+            )
+        bestMatchInfoRight <- bestMatchInfoLeft
+        bestMatchInfoFull <- bestMatchInfoLeft
+        } else {
     maxReadCov <- max(viralSubset[, 2])
     minReadCov <- min(viralSubset[, 2])
     if (minReadCov > (maxReadCov * 0.2)) {
@@ -138,6 +152,7 @@ blockBuilder <-
           rep(minReadCov, 1000 / windowSize)
         )
       }
+    }
     }
     return(list(bestMatchInfoLeft, bestMatchInfoRight, bestMatchInfoFull))
   }

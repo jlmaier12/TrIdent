@@ -8,9 +8,23 @@
 #'   the contig currently being assessed
 #' @param windowSize The window size used to re-average read coverage pileup
 #' @param minSlope The minimum slope value to test for sloping patterns
+#' @param minSlopeSize The minimum width of sloping patterns. 
 #' @return List containing two objects
 #' @keywords internal
-fullSlope <- function(viralSubset, windowSize, minSlope) {
+fullSlope <- function(viralSubset, windowSize, minSlope, minSlopeSize) {
+    if (nrow(viralSubset) < minSlopeSize/windowSize) {
+        bestMatchInfoLR <-
+            list(
+                diff,
+                NA,
+                nrow(viralSubset),
+                "NA",
+                1,
+                nrow(viralSubset),
+                "NoPattern"
+            )
+        bestMatchInfoRL <- bestMatchInfoLR
+    } else {
   maxReadCov <- max(viralSubset[, 2])
   minReadCov <- min(viralSubset[, 2])
   halfReadCov <- abs(maxReadCov - minReadCov) / 2
@@ -60,6 +74,7 @@ fullSlope <- function(viralSubset, windowSize, minSlope) {
       slopeBottom <- slopeChangeInfoL[[2]]
       slopeBottom <- slopeChangeInfoL[[2]]
     }
+  }
   }
   return(list(bestMatchInfoLR, bestMatchInfoRL))
 }

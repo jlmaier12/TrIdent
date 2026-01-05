@@ -4,7 +4,7 @@
 \alias{fullSlope}
 \title{Sloping pattern builder}
 \usage{
-fullSlope(viralSubset, windowSize, minSlope)
+fullSlope(viralSubset, windowSize, minSlope, minSlopeSize)
 }
 \arguments{
 \item{viralSubset}{A subset of the read coverage pileup that pertains only to
@@ -13,6 +13,8 @@ the contig currently being assessed}
 \item{windowSize}{The window size used to re-average read coverage pileup}
 
 \item{minSlope}{The minimum slope value to test for sloping patterns}
+
+\item{minSlopeSize}{The minimum width of sloping patterns.}
 }
 \value{
 List containing two objects

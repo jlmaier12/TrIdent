@@ -1,3 +1,10 @@
+## Changes in 1.3.2
+
++ Make the minimum sloping pattern widths a variable in TrIdentClassifier() 
+('minSlopeSize').
++ Fixed minor bug where contigs smaller than a minimum pattern width would 
+still allow one pattern variation to be tested.
+
 ## Changes in 1.3.1
 
 + Make the median VLP:WC minimum ratio for HighCovNoPattern classifications a 

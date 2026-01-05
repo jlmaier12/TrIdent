@@ -12,6 +12,7 @@ TrIdentClassifier(
   maxBlockSize = Inf,
   minContigLength = 30000,
   minSlope = 0.001,
+  minSlopeSize = 20000,
   minHCNPRatio = 2,
   VLPReads,
   WCReads,
@@ -54,6 +55,9 @@ pattern-matching on. Must be at least 25000. Default is 30000.}
 
 \item{minSlope}{The minimum slope value to test for sloping patterns. Default
 is 0.001 (i.e minimum change of 10x read coverage over 100,000 bp).}
+
+\item{minSlopeSize}{The minimum width of sloping patterns.Default and 
+absolute minimum is 20,000 bp.}
 
 \item{minHCNPRatio}{The minimum VLP:WC ratio value used for HighCovNoPattern 
 classifications. Default is 2. (i.e the median VLP-fraction coverage must be

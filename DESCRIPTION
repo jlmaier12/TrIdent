@@ -2,7 +2,7 @@ Package: TrIdent
 Type: Package
 BiocType: Software 
 Title: TrIdent - Transduction Identification
-Version: 1.3.1
+Version: 1.3.2
 Authors@R: 
   c(person(given = "Jessie",
            family = "Maier",
@@ -56,8 +56,7 @@ Suggests:
     BiocStyle,
     knitr,
     rmarkdown,
-    kableExtra,
-    testthat (>= 3.0.0)
+    kableExtra
 VignetteBuilder: knitr
 Depends: 
     R (>= 4.2.0)

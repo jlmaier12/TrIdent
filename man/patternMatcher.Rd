@@ -12,6 +12,7 @@ patternMatcher(
   maxBlockSize,
   minContigLength,
   minSlope,
+  minSlopeSize,
   verbose
 )
 }
@@ -36,6 +37,8 @@ Default is NA}
 pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.}
 
 \item{minSlope}{The minimum slope value to test for sloping patterns}
+
+\item{minSlopeSize}{The minimum width of sloping patterns.}
 
 \item{verbose}{TRUE or FALSE. Print progress messages to console. Default is TRUE.}
 }

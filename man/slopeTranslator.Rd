@@ -9,7 +9,8 @@ slopeTranslator(
   bestMatchInfo,
   windowSize,
   slopeChange,
-  leftOrRight
+  leftOrRight,
+  minSlopeSize
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ value of slope bottom}
 
 \item{leftOrRight}{The direction of the sloping pattern. Either "Left" for
 left to right (neg) slopes or "Right" for right to left (pos) slopes.}
+
+\item{minSlopeSize}{The minimum width of sloping patterns.}
 }
 \value{
 List

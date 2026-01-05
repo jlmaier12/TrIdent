@@ -6,9 +6,23 @@
 #'   the contig currently being assessed
 #' @param windowSize The window size used to re-average read coverage pileups
 #' @param minSlope The minimum slope value to test for sloping patterns
+#' @param minSlopeSize The minimum width of sloping patterns. 
 #' @return List containing two objects
 #' @keywords internal
-slopeWithStart <- function(viralSubset, windowSize, minSlope) {
+slopeWithStart <- function(viralSubset, windowSize, minSlope, minSlopeSize) {
+    if (nrow(viralSubset)-(5000/windowSize) < minSlopeSize/windowSize) {
+        bestMatchInfoLR <-
+            list(
+                diff,
+                NA,
+                nrow(viralSubset),
+                "NA",
+                1,
+                nrow(viralSubset),
+                "NoPattern"
+            )
+        bestMatchInfoRL <- bestMatchInfoLR
+    } else {
   maxReadCov <- max(viralSubset[, 2])
   minReadCov <- min(viralSubset[, 2])
   halfReadCov <- abs((maxReadCov - minReadCov)) / 2
@@ -60,7 +74,8 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
           bestMatchInfoLR,
           windowSize,
           slopeChangeLR,
-          "Left"
+          "Left",
+          minSlopeSize
         )
       bestMatchInfoRL <-
         slopeTranslator(
@@ -68,10 +83,12 @@ slopeWithStart <- function(viralSubset, windowSize, minSlope) {
           bestMatchInfoRL,
           windowSize,
           slopeChangeRL,
-          "Right"
+          "Right",
+          minSlopeSize
         )
       slopeBottom <- slopeChangeLR[[3]]
     }
+  }
   }
   return(list(bestMatchInfoLR, bestMatchInfoRL))
 }
@@ -193,6 +210,7 @@ changeSlopeWStart <-
 #'   value of slope bottom
 #' @param leftOrRight The direction of the sloping pattern. Either "Left" for
 #'   left to right (neg) slopes or "Right" for right to left (pos) slopes.
+#' @param minSlopeSize The minimum width of sloping patterns. 
 #' @return List
 #' @keywords internal
 slopeTranslator <-
@@ -200,7 +218,8 @@ slopeTranslator <-
            bestMatchInfo,
            windowSize,
            slopeChange,
-           leftOrRight) {
+           leftOrRight,
+           minSlopeSize) {
     pattern <- slopeChange[[1]]
     minPattern <- min(pattern)
     repeat {
@@ -227,7 +246,7 @@ slopeTranslator <-
         endRowIdx <- which(pattern == max(pattern))
       }
       if ((length(pattern[!(pattern %in% minPattern)]) * windowSize) <
-        20000) {
+          minSlopeSize) {
         break
       }
       diff <- mean(abs(viralSubset[, 2] - pattern))

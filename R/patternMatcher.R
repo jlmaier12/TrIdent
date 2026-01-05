@@ -21,6 +21,7 @@
 #' @param minContigLength The minimum contig size (in bp) to perform
 #'  pattern-matching on. Must be at least 20,000 bp. Default is 30,000 bp.
 #' @param minSlope The minimum slope value to test for sloping patterns
+#' @param minSlopeSize The minimum width of sloping patterns. 
 #' @param verbose TRUE or FALSE. Print progress messages to console. Default is TRUE.
 #' @return List containing three objects.
 #' @keywords internal
@@ -32,6 +33,7 @@ patternMatcher <-
            maxBlockSize,
            minContigLength,
            minSlope,
+           minSlopeSize,
            verbose) {
     contigNames <- unique(VLPpileup[, 1])
     bestMatchList <- list()
@@ -85,9 +87,9 @@ patternMatcher <-
         bestMatchScoreSumm <-
           c(bestMatchSumm[[1]][[1]]) %>% as.numeric()
       } else {
-        slopeList <- slopeWithStart(viralSubset, windowSize, minSlope)
+        slopeList <- slopeWithStart(viralSubset, windowSize, minSlope, minSlopeSize)
         slopeListNoStart <-
-          fullSlope(viralSubset, windowSize, minSlope)
+          fullSlope(viralSubset, windowSize, minSlope, minSlopeSize)
         bestMatchSumm <- list(
           noPattern(viralSubset),
           blocksList[[1]],
