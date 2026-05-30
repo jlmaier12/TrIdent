@@ -8,7 +8,14 @@ contig.
 ## Usage
 
 ``` r
-fullSlope(viralSubset, windowSize, minSlope, minSlopeSize)
+fullSlope(
+  viralSubset,
+  windowSize,
+  minSlope,
+  minSlopeSize,
+  searchMethod,
+  DirectMaxEval
+)
 ```
 
 ## Arguments
@@ -29,6 +36,15 @@ fullSlope(viralSubset, windowSize, minSlope, minSlopeSize)
 - minSlopeSize:
 
   The minimum width of sloping patterns.
+
+- searchMethod:
+
+  Search method to use. Either "grid" for the original grid search or
+  "direct" for DIRECT global optimization.
+
+- DirectMaxEval:
+
+  Maximum number of DIRECT evaluations to make.
 
 ## Value
 

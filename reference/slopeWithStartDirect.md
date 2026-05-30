@@ -1,17 +1,18 @@
 # Sloping pattern with an initial jump-up in read coverage
 
 Build, translate, and change slope of sloping pattern with slope start
+using DIRECT dimensions
 
 ## Usage
 
 ``` r
-slopeWithStart(
+slopeWithStartDirect(
   viralSubset,
   windowSize,
   minSlope,
   minSlopeSize,
-  searchMethod,
-  DirectMaxEval
+  leftOrRight,
+  dims
 )
 ```
 
@@ -34,15 +35,15 @@ slopeWithStart(
 
   The minimum width of sloping patterns.
 
-- searchMethod:
+- leftOrRight:
 
-  Search method to use. Either "grid" for the original grid search or
-  "direct" for DIRECT global optimization.
+  Generate pattern for negative slope (left to right, i.e. 'Left') or
+  positive slope (right to left, i.e. 'Right')
 
-- DirectMaxEval:
+- dims:
 
-  Maximum number of DIRECT evaluations to make.
+  Slope top, bottom, and start position
 
 ## Value
 
-List containing two objects
+List object

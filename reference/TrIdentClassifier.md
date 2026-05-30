@@ -27,6 +27,8 @@ TrIdentClassifier(
   VLPReads,
   WCReads,
   verbose = TRUE,
+  searchMethod = "grid",
+  DirectMaxEval = 100,
   SaveFilesTo
 )
 ```
@@ -106,6 +108,16 @@ TrIdentClassifier(
 
   TRUE or FALSE. Print progress messages to console. Default is TRUE.
 
+- searchMethod:
+
+  Search method to use. Either "grid" for the original grid search or
+  "direct" for DIRECT global optimization.
+
+- DirectMaxEval:
+
+  Maximum number of DIRECT evaluations to make. Default is 100. Default
+  is 100.
+
 - SaveFilesTo:
 
   Optional, Provide a path to the directory you wish to save output to.
@@ -134,7 +146,7 @@ TrIdent_results <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.78secs
+#> Execution time: 16.53secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 

@@ -6,7 +6,14 @@ and full length of the contig.
 ## Usage
 
 ``` r
-blockBuilder(viralSubset, windowSize, minBlockSize, maxBlockSize)
+blockBuilder(
+  viralSubset,
+  windowSize,
+  minBlockSize,
+  maxBlockSize,
+  searchMethod,
+  DirectMaxEval
+)
 ```
 
 ## Arguments
@@ -28,6 +35,15 @@ blockBuilder(viralSubset, windowSize, minBlockSize, maxBlockSize)
 - maxBlockSize:
 
   The maximum size of the prophage-like block pattern. Default is NA.
+
+- searchMethod:
+
+  Search method to use. Either "grid" for the original grid search or
+  "direct" for DIRECT global optimization.
+
+- DirectMaxEval:
+
+  Maximum number of DIRECT evaluations to make. Default is 100.
 
 ## Value
 

@@ -21,13 +21,18 @@
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/changeSlopeWStart.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/changeWindowSize.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/contigClassSumm.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/directBlockBuilder.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/fullSlope.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/index.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/leftRightBlockTranslater.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/makeBlockPattern.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/makeFullSlopes.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/makeFullSlopesDirect.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/makeSlopesWStarts.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/noPattern.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/optimNoPattern.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/optimSlopeFull.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/optimSlopeWithStart.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/patternBuilder.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/patternMatchSize.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/patternMatcher.html</loc></url>
@@ -40,6 +45,7 @@
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/slopeSumm.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/slopeTranslator.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/slopeWithStart.html</loc></url>
+<url><loc>https://jlmaier12.github.io/TrIdent/reference/slopeWithStartDirect.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/specTransductionPlot.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/specTransductionSearch.html</loc></url>
 <url><loc>https://jlmaier12.github.io/TrIdent/reference/specializedTransductionID.html</loc></url>

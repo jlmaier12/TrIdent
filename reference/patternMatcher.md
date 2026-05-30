@@ -20,7 +20,9 @@ patternMatcher(
   minContigLength,
   minSlope,
   minSlopeSize,
-  verbose
+  verbose,
+  searchMethod,
+  DirectMaxEval
 )
 ```
 
@@ -67,6 +69,15 @@ patternMatcher(
 - verbose:
 
   TRUE or FALSE. Print progress messages to console. Default is TRUE.
+
+- searchMethod:
+
+  Search method to use. Either "grid" for the original grid search or
+  "direct" for DIRECT global optimization.
+
+- DirectMaxEval:
+
+  Maximum number of DIRECT evaluations to make.
 
 ## Value
 

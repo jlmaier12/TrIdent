@@ -44,6 +44,7 @@ DNA in pure cultures and microbial communities. Microbiome 8, 158
 ### Bioconductor install
 
 ``` r
+
 if (!require("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
 }
@@ -55,6 +56,7 @@ library(TrIdent)
 ### GitHub install
 
 ``` r
+
 BiocManager::install("jlmaier12/TrIdent")
 library(TrIdent)
 ```
@@ -367,6 +369,7 @@ membrane vesicles. Sci Rep 12, 16651 (2022).
 Default arguments:
 
 ``` r
+
 TrIdentOutput <- TrIdentClassifier(
   VLPpileup = VLPFractionSamplePileup,
   WCpileup = WholeCommunitySamplePileup
@@ -380,7 +383,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.66secs
+#> Execution time: 16.53secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
@@ -394,10 +397,12 @@ TrIdentOutput <- TrIdentClassifier(
 ### Arguments/Parameters
 
 ``` r
+
 TrIdentClassifier(VLPpileup, WCpileup,
   windowSize = 1000, minBlockSize = 10000,
   maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001, 
-  minSlopeSize = 20000, minHCNPRatio=2, verbose = TRUE, SaveFilesTo
+  minSlopeSize = 20000, minHCNPRatio=2, verbose = TRUE, searchMethod= "grid",
+  DirectMaxEval = 100, SaveFilesTo
 )
 ```
 
@@ -426,6 +431,11 @@ TrIdentClassifier(VLPpileup, WCpileup,
   mapping and creation of pileup.
 - `verbose`: TRUE or FALSE. Print progress messages to console. Default
   is TRUE.
+- `searchMethod`: Search method to use during pattern-matching. Either
+  “grid” for the original grid search or “direct” for DIRECT global
+  optimization. Default is “grid”.
+- `DirectMaxEval`: Maximum number of DIRECT evaluations to make. Default
+  is 100.
 - `SaveFilesTo`: Optional, Provide a path to the directory you wish to
   save output to. A folder will be made within the provided directory to
   store results.
@@ -459,20 +469,21 @@ Save the desired list-item to a new variable using its associated name.
 Summary table:
 
 ``` r
+
 TrIdentSummaryTable <- TrIdentOutput$SummaryTable
 ```
 
-| contigName | classifications  | normMatchScore | VLPWCRatio | matchSize | startPosBp | endPosBp | proLikeWCReadCov | proLikeWCReadCovRatio |   slope |
-|:-----------|:-----------------|---------------:|-----------:|----------:|-----------:|---------:|:-----------------|----------------------:|--------:|
-| NODE_62    | Prophage-like    |      0.1428571 |         NA |    171000 |      62000 |   233000 | Elevated         |                1.5103 |      NA |
-| NODE_135   | Prophage-like    |      0.2737766 |         NA |     32000 |     149000 |   181000 | Elevated         |                1.3122 |      NA |
-| NODE_1088  | Sloping          |      0.0802549 |         NA |     63000 |       1000 |    64000 | NA               |                    NA |  0.0024 |
-| NODE_352   | Sloping          |      0.1829770 |         NA |    121000 |       1000 |   122000 | NA               |                    NA | -0.0001 |
-| NODE_368   | Prophage-like    |      0.1530534 |         NA |     30000 |      26000 |    56000 | Depressed        |                0.3994 |      NA |
-| NODE_560   | HighCovNoPattern |      0.0694395 |    16.6016 |     95000 |       1000 |    96000 | NA               |                    NA |      NA |
-| NODE_617   | Prophage-like    |      0.1613141 |         NA |     48000 |      34000 |    82000 | Elevated         |                1.8243 |      NA |
-| NODE_1401  | NoPattern        |      0.1006696 |     0.0192 |     54000 |       1000 |    55000 | NA               |                    NA |      NA |
-| NODE_2060  | Sloping          |      0.1037661 |         NA |     27000 |       1000 |    28000 | NA               |                    NA |  0.0275 |
+| contigName | classifications | normMatchScore | VLPWCRatio | matchSize | startPosBp | endPosBp | proLikeWCReadCov | proLikeWCReadCovRatio | slope |
+|:---|:---|---:|---:|---:|---:|---:|:---|---:|---:|
+| NODE_62 | Prophage-like | 0.1428571 | NA | 171000 | 62000 | 233000 | Elevated | 1.5103 | NA |
+| NODE_135 | Prophage-like | 0.2737766 | NA | 32000 | 149000 | 181000 | Elevated | 1.3122 | NA |
+| NODE_1088 | Sloping | 0.0802549 | NA | 63000 | 1000 | 64000 | NA | NA | 0.0024 |
+| NODE_352 | Sloping | 0.1829770 | NA | 121000 | 1000 | 122000 | NA | NA | -0.0001 |
+| NODE_368 | Prophage-like | 0.1530534 | NA | 30000 | 26000 | 56000 | Depressed | 0.3994 | NA |
+| NODE_560 | HighCovNoPattern | 0.0694395 | 16.6016 | 95000 | 1000 | 96000 | NA | NA | NA |
+| NODE_617 | Prophage-like | 0.1613141 | NA | 48000 | 34000 | 82000 | Elevated | 1.8243 | NA |
+| NODE_1401 | NoPattern | 0.1006696 | 0.0192 | 54000 | 1000 | 55000 | NA | NA | NA |
+| NODE_2060 | Sloping | 0.1037661 | NA | 27000 | 1000 | 28000 | NA | NA | 0.0275 |
 
 - **contigName**: The contig reference name.
 - **classifications**: The classification given by TrIdent.
@@ -539,6 +550,7 @@ region read coverage.
 Default arguments:
 
 ``` r
+
 TrIdentPlots <- plotTrIdentResults(
   VLPpileup = VLPFractionSamplePileup,
   WCpileup = WholeCommunitySamplePileup,
@@ -549,6 +561,7 @@ TrIdentPlots <- plotTrIdentResults(
 ### Arguments/Parameters
 
 ``` r
+
 plotTrIdentResults(
   VLPpileup, 
   WCpileup, 
@@ -589,18 +602,21 @@ coverage is on a different scale.**
 View select plots:
 
 ``` r
+
 TrIdentPlots$NODE_62
 ```
 
 ![](TrIdent-vignette_files/figure-html/unnamed-chunk-14-1.png)
 
 ``` r
+
 TrIdentPlots$NODE_368
 ```
 
 ![](TrIdent-vignette_files/figure-html/unnamed-chunk-14-2.png)
 
 ``` r
+
 TrIdentPlots$NODE_352
 ```
 
@@ -703,6 +719,7 @@ specialized transduction are colored green instead of blue.
 Default arguments:
 
 ``` r
+
 SpecTransduc <- specializedTransductionID(
   VLPpileup = VLPFractionSamplePileup,
   TrIdentResults = TrIdentOutput
@@ -715,6 +732,7 @@ SpecTransduc <- specializedTransductionID(
 ### Arguments/Parameters
 
 ``` r
+
 specializedTransductionID(VLPpileup, 
                           TrIdentResults,
   noReadCov = 500, specTransLength = 2000,
@@ -768,6 +786,7 @@ Save the desired list-item to a new variable using its associated name.
 Summary table:
 
 ``` r
+
 SpecializedTransducSummaryTable <- SpecTransduc$summaryTable
 ```
 
@@ -791,12 +810,14 @@ SpecializedTransducSummaryTable <- SpecTransduc$summaryTable
 View select plots:
 
 ``` r
+
 SpecTransduc$Plots$NODE_62
 ```
 
 ![](TrIdent-vignette_files/figure-html/unnamed-chunk-19-1.png)
 
 ``` r
+
 SpecTransduc$Plots$NODE_135
 ```
 
@@ -833,10 +854,11 @@ Institutes of Health under Award Numbers R35GM138362 and R01Al171046.
 ### Session Information
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.2 (2025-10-31)
+#> R version 4.6.0 (2026-04-24)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.3 LTS
+#> Running under: Ubuntu 24.04.4 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -855,26 +877,26 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] kableExtra_1.4.0 ggplot2_4.0.1    patchwork_1.3.2  knitr_1.51      
-#> [5] TrIdent_1.3.2    BiocStyle_2.38.0
+#> [1] kableExtra_1.4.0 ggplot2_4.0.3    patchwork_1.3.2  knitr_1.51      
+#> [5] TrIdent_1.5.1    BiocStyle_2.40.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] roll_1.2.0            sass_0.4.10           generics_0.1.4       
-#>  [4] tidyr_1.3.2           xml2_1.5.1            stringi_1.8.7        
-#>  [7] digest_0.6.39         magrittr_2.0.4        evaluate_1.0.5       
-#> [10] grid_4.5.2            RColorBrewer_1.1-3    bookdown_0.46        
+#>  [1] roll_1.2.1            sass_0.4.10           generics_0.1.4       
+#>  [4] tidyr_1.3.2           xml2_1.5.2            stringi_1.8.7        
+#>  [7] digest_0.6.39         magrittr_2.0.5        evaluate_1.0.5       
+#> [10] grid_4.6.0            RColorBrewer_1.1-3    bookdown_0.46        
 #> [13] fastmap_1.2.0         jsonlite_2.0.0        BiocManager_1.30.27  
-#> [16] purrr_1.2.0           viridisLite_0.4.2     scales_1.4.0         
-#> [19] textshaping_1.0.4     jquerylib_0.1.4       cli_3.6.5            
-#> [22] rlang_1.1.6           withr_3.0.2           cachem_1.1.0         
-#> [25] yaml_2.3.12           tools_4.5.2           dplyr_1.1.4          
-#> [28] vctrs_0.6.5           R6_2.6.1              lifecycle_1.0.4      
-#> [31] stringr_1.6.0         fs_1.6.6              ragg_1.5.0           
+#> [16] purrr_1.2.2           viridisLite_0.4.3     scales_1.4.0         
+#> [19] textshaping_1.0.5     jquerylib_0.1.4       cli_3.6.6            
+#> [22] rlang_1.2.0           withr_3.0.2           cachem_1.1.0         
+#> [25] yaml_2.3.12           tools_4.6.0           dplyr_1.2.1          
+#> [28] vctrs_0.7.3           R6_2.6.1              lifecycle_1.0.5      
+#> [31] stringr_1.6.0         fs_2.1.0              ragg_1.5.2           
 #> [34] pkgconfig_2.0.3       desc_1.4.3            pkgdown_2.2.0        
-#> [37] RcppParallel_5.1.11-1 pillar_1.11.1         bslib_0.9.0          
-#> [40] gtable_0.3.6          glue_1.8.0            Rcpp_1.1.0           
-#> [43] systemfonts_1.3.1     xfun_0.55             tibble_3.3.0         
-#> [46] tidyselect_1.2.1      rstudioapi_0.17.1     farver_2.1.2         
-#> [49] htmltools_0.5.9       labeling_0.4.3        rmarkdown_2.30       
-#> [52] svglite_2.2.2         compiler_4.5.2        S7_0.2.1
+#> [37] RcppParallel_5.1.11-2 pillar_1.11.1         bslib_0.11.0         
+#> [40] gtable_0.3.6          glue_1.8.1            Rcpp_1.1.1-1.1       
+#> [43] systemfonts_1.3.2     xfun_0.57             tibble_3.3.1         
+#> [46] tidyselect_1.2.1      rstudioapi_0.18.0     farver_2.1.2         
+#> [49] htmltools_0.5.9       labeling_0.4.3        rmarkdown_2.31       
+#> [52] svglite_2.2.2         compiler_4.6.0        S7_0.2.2
 ```

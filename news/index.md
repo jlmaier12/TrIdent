@@ -1,5 +1,13 @@
 # Changelog
 
+## Changes in 1.5.1
+
+- Implement DIRECT search algorithm during pattern-matching. Major speed
+  increases with minor changes to resulting classifications. Use DIRECT
+  by setting `searchMethod`=“direct”. For now, the original “grid”
+  search method remains the default.
+- Minor bug fixes and documentation updates
+
 ## Changes in 1.3.2
 
 - Make the minimum sloping pattern widths a variable in
@@ -11,8 +19,6 @@
 
 - Make the median VLP:WC minimum ratio for HighCovNoPattern
   classifications a variable in TrIdentClassifier() (‘minHCNPRatio’).
-
-## TrIdent V1.2 on Bioconductor 3.22!
 
 ## Changes in 1.1.5
 

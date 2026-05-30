@@ -85,6 +85,7 @@ al. (2020)](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168
 Install TrIdent with BiocManager:
 
 ``` r
+
 if (!require("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
 }
@@ -97,6 +98,7 @@ Install the development version of TrIdent through Github with
 BiocManager:
 
 ``` r
+
 BiocManager::install("jlmaier12/TrIdent")
 library(TrIdent)
 ```
@@ -104,6 +106,7 @@ library(TrIdent)
 ## Quick Start
 
 ``` r
+
 ## Load TrIdent
 library(TrIdent)
 
@@ -197,6 +200,7 @@ plotTrIdentResults(
 ![](reference/figures/README-example-8.png)
 
 ``` r
+
 
 ## Run third:
 specializedTransductionID(

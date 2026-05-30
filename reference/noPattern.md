@@ -7,7 +7,7 @@ patterns
 ## Usage
 
 ``` r
-noPattern(viralSubset)
+noPattern(viralSubset, searchMethod, DirectMaxEval)
 ```
 
 ## Arguments
@@ -16,6 +16,15 @@ noPattern(viralSubset)
 
   A subset of the read coverage pileup that pertains only to the contig
   currently being assessed
+
+- searchMethod:
+
+  Search method to use. Either "grid" for the original grid search or
+  "direct" for DIRECT global optimization.
+
+- DirectMaxEval:
+
+  Maximum number of DIRECT evaluations to make.
 
 ## Value
 
