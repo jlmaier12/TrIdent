@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,8 +81,8 @@ Maier</h4>
 </h2>
 <p><strong>TrIdent</strong>- <strong>Tr</strong>ansduction
 <strong>Ident</strong>ification</p>
-<p>TrIdent consists of three main functions which should be run in the
-following order:</p>
+<p>TrIdent consists of four main functions which should be run in the
+following order (Steps 3 and 4 can be interchanged):</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong><code><a href="../reference/TrIdentClassifier.html">TrIdentClassifier()</a></code></strong>: Classifies
@@ -95,6 +95,10 @@ pattern-matching results of <code><a href="../reference/TrIdentClassifier.html">
 <strong><code><a href="../reference/specializedTransductionID.html">specializedTransductionID()</a></code></strong>: Searches
 contigs classified as Prophage-like by <code><a href="../reference/TrIdentClassifier.html">TrIdentClassifier()</a></code>
 for associated specialized transduction events.</li>
+<li>
+<strong><code><a href="../reference/geneSearch.html">geneSearch()</a></code></strong>: Searches for genes or
+gene annotations of interest on contigs positively classified by
+<code><a href="../reference/TrIdentClassifier.html">TrIdentClassifier()</a></code>.</li>
 </ol>
 <p>TrIdent automates the analysis of transductomics data by detecting,
 classifying, and characterizing read coverage patterns associated with
@@ -554,7 +558,7 @@ membrane vesicles. Sci Rep 12, 16651 (2022). <a href="https://doi.org/10.1038/s4
 <span><span class="co">#&gt; Identifying highly active/abundant or heterogenously integrated</span></span>
 <span><span class="co">#&gt;       Prophage-like elements</span></span>
 <span><span class="co">#&gt; Finalizing output</span></span>
-<span><span class="co">#&gt; Execution time: 16.81secs</span></span>
+<span><span class="co">#&gt; Execution time: 17.18secs</span></span>
 <span><span class="co">#&gt; 1 contigs were filtered out based on low read coverage</span></span>
 <span><span class="co">#&gt; 0 contigs were filtered out based on length</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -572,7 +576,7 @@ membrane vesicles. Sci Rep 12, 16651 (2022). <a href="https://doi.org/10.1038/s4
 <span>  windowSize <span class="op">=</span> <span class="fl">1000</span>, minBlockSize <span class="op">=</span> <span class="fl">10000</span>,</span>
 <span>  maxBlockSize <span class="op">=</span> <span class="cn">Inf</span>, minContigLength <span class="op">=</span> <span class="fl">30000</span>, minSlope <span class="op">=</span> <span class="fl">0.001</span>, </span>
 <span>  minSlopeSize <span class="op">=</span> <span class="fl">20000</span>, minHCNPRatio<span class="op">=</span><span class="fl">2</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, searchMethod<span class="op">=</span> <span class="st">"grid"</span>,</span>
-<span>  DirectMaxEval <span class="op">=</span> <span class="fl">100</span>, <span class="va">SaveFilesTo</span></span>
+<span>  DirectMaxEval <span class="op">=</span> <span class="fl">100</span>, globalLocal<span class="op">=</span><span class="st">"local"</span>, <span class="va">SaveFilesTo</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>
@@ -622,6 +626,10 @@ for DIRECT global optimization. Default is “grid”.</li>
 <li>
 <code>DirectMaxEval</code>: Maximum number of DIRECT evaluations to
 make. Default is 100.</li>
+<li>
+<code>globalLocal</code>: Use global or local DIRECT search. Local
+search makes the DIRECT algorithm more efficient for contigs without
+multiple potential read coverage patterns. Default is local.</li>
 <li>
 <code>SaveFilesTo</code>: Optional, Provide a path to the directory
 you wish to save output to. A folder will be made within the provided
@@ -1412,6 +1420,142 @@ right side of Prophage-like element.</li>
 </div>
 </div>
 <div class="section level2">
+<h2 id="genesearch">geneSearch()<a class="anchor" aria-label="anchor" href="#genesearch"></a>
+</h2>
+<p><code><a href="../reference/geneSearch.html">geneSearch()</a></code> helps users explore gene annotations of
+interest in and around read coverage pattern-matches.</p>
+<div class="section level3">
+<h3 id="function-components-3">Function components<a class="anchor" aria-label="anchor" href="#function-components-3"></a>
+</h3>
+<div class="section level4">
+<h4 id="search-for-gene-annotations">Search for gene annotations<a class="anchor" aria-label="anchor" href="#search-for-gene-annotations"></a>
+</h4>
+<p><code><a href="../reference/geneSearch.html">geneSearch()</a></code> utilizes a .gff file and the
+pattern-matching results from <code><a href="../reference/TrIdentClassifier.html">TrIdentClassifier()</a></code> to locate
+gene annotations that match provided <code>keyWords</code>. The .gff
+file should be a S4Vectors::DataFrame object imported into R using the
+Bioc.gff package. First, the information associated with the gene or
+gene product (depending on what the user selects for the
+<code>geneOrProduct</code> parameter) is extracted from the attributes
+column of the .gff file. Then, the .gff file is subset to include only
+the annotations associated with the contig being assessed. From here,
+the search can vary quite a bit depending on the parameters the user
+selects for the <code>inPatMat</code> and <code>bpRange</code>
+parameters. If <code>inPatMat = FALSE</code> (the default), then gene
+annotations located anywhere on the contig that match one or more of the
+provided <code>keyWords</code> will be visualized. If
+<code>inPatMat = TRUE</code>, then only gene annotations within the
+region of the pattern-match willbe searched for matches to the provided
+<code>keyWords</code>. The <code>bpRange</code> parameter can be used if
+<code>inPatMat = TRUE</code> and allows the search range to be extended
+a specified numberof base pairs to the left and right of the
+pattern-match borders. Gene annotationare included in the search if the
+end of the open reading frame (defined by the ‘end’ values in the .gff
+file) falls within the search region.</p>
+</div>
+<div class="section level4">
+<h4 id="plot-gene-annotation-locations">Plot gene annotation locations<a class="anchor" aria-label="anchor" href="#plot-gene-annotation-locations"></a>
+</h4>
+<p>The read coverage and locations of gene annotations that match the
+provided <code>keyWords</code> are visualized for each contig with
+matches. The borders of the pattern-matchdetected by
+<code><a href="../reference/TrIdentClassifier.html">TrIdentClassifier()</a></code> are marked on the plot with orange
+vertical lines. If <code>inPatMat = TRUE</code> and <code>bpRange</code>
+is set to a non-zero value, then the extended searchrange outside the
+pattern-match borders are marked on the plot with orange dashed
+verticallines. The matching gene annotation locations are marked on the
+plot withblack vertical lines at the start position of the associated
+open reading frames.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a>
+</h3>
+<p><strong>Default arguments:</strong></p>
+<p>With defaults, all contigs classified as “Prophage-like”, “Sloping”
+and “HighCovNoPattern” are searched for gene annotations that match any
+of the provided keywords. <em>The entire contig is searched, not just
+the pattern-match region.</em></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">GeneMatches</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/geneSearch.html">geneSearch</a></span><span class="op">(</span></span>
+<span>                TrIdentResults <span class="op">=</span> <span class="va">TrIdentOutput</span>, </span>
+<span>                VLPpileup <span class="op">=</span> <span class="va">VLPFractionSamplePileup</span>, </span>
+<span>                gff <span class="op">=</span> <span class="va">gffSample</span>, </span>
+<span>                searchCol <span class="op">=</span> <span class="st">"pfam_desc"</span>, </span>
+<span>                keyWords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phage"</span>, <span class="st">"spike"</span>, <span class="st">"holin"</span>, <span class="st">"capsid"</span>, <span class="st">"tail"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Cleaning pileup file...</span></span>
+<span><span class="co">#&gt; Searching for matching annotations...</span></span>
+<span><span class="co">#&gt; 7 contigs have gene annotations that match one or more of the provided keyWords</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="argumentsparameters-3">Arguments/parameters<a class="anchor" aria-label="anchor" href="#argumentsparameters-3"></a>
+</h3>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/geneSearch.html">geneSearch</a></span><span class="op">(</span></span>
+<span>  <span class="va">TrIdentResults</span>, </span>
+<span>  <span class="va">VLPpileup</span>, </span>
+<span>  <span class="va">gff</span>,</span>
+<span>  <span class="va">searchCol</span>, </span>
+<span>  <span class="va">keyWords</span>, </span>
+<span>  inPatMat <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  bpRange <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>  <span class="va">saveFilesTo</span>, </span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> </span></code></pre></div>
+<ul>
+<li>
+<strong><code>TrIdentResults</code></strong>: The output from
+<code><a href="../reference/TrIdentClassifier.html">TrIdentClassifier()</a></code>.</li>
+<li>
+<strong><code>VLPpileup</code></strong>: A .txt file containing
+mapped sequencing read coverages averaged over 100 bp windows/bins.</li>
+<li>
+<strong><code>gff</code></strong>: A .gff file containing gene
+annotations associated with the whole-community contigs. Imported into R
+using Bioc.gff::readGFF function.</li>
+<li>
+<strong><code>searchCol</code></strong>: The exact column name (in
+quotes) in the gff file that you’d like to search for specific
+<code>keyWords</code>. Commonly annotation, product, gene, or acc
+columns, for example, however the specific name may change based on
+annotation tool used. For example: “pfam_desc”.</li>
+<li>
+<strong><code>keyWords</code></strong>: The keyWord(s) to search
+for. Case independent. Searches will return the string that contains the
+matching keyWord. KeyWord(s) must be in quotes, comma-separated, and
+surrounded by c() i.e( c(“antibiotic”, “resistance”, “drug”) )</li>
+<li>
+<strong><code>inPatMat</code></strong>: TRUE or FALSE. If TRUE, only
+search for gene-annotations in the pattern-match region. Default is
+FALSE (i.e search the entire contig for the gene annotation
+key-words)</li>
+<li>
+<strong><code>bpRange</code></strong>: If
+<code>inPatMat = TRUE</code>, the user may specify the region (in base
+pairs) that should be searched to the left and right of the
+pattern-match region. Default is 0.</li>
+<li>
+<strong><code>saveFilesTo</code></strong>: Optional, Provide a path
+to the directory you wish to save output to. A folder will be made
+within the provided directory to store results.</li>
+<li>
+<strong><code>verbose</code></strong>: TRUE or FALSE. Print progress
+messages to console. Default is TRUE.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="output-3">Output<a class="anchor" aria-label="anchor" href="#output-3"></a>
+</h3>
+<p>The output of <code><a href="../reference/geneSearch.html">geneSearch()</a></code> is a list of ggplot
+objects.</p>
+<p>View select plots:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">GeneMatches</span><span class="op">$</span><span class="va">NODE_617</span></span></code></pre></div>
+<p><img src="TrIdent-vignette_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="100%"></p>
+</div>
+</div>
+<div class="section level2">
 <h2 id="supplemental-information">Supplemental information<a class="anchor" aria-label="anchor" href="#supplemental-information"></a>
 </h2>
 <div class="section level3">
@@ -1447,9 +1591,9 @@ R01Al171046.</p>
 <div class="section level3">
 <h3 id="session-information">Session Information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.6.0 (2026-04-24)</span></span>
+<span><span class="co">#&gt; R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1470,28 +1614,30 @@ R01Al171046.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] kableExtra_1.4.0 ggplot2_4.0.3    patchwork_1.3.2  knitr_1.51      </span></span>
-<span><span class="co">#&gt; [5] TrIdent_1.5.1    BiocStyle_2.40.0</span></span>
+<span><span class="co">#&gt; [1] kableExtra_1.4.1 ggplot2_4.0.3    patchwork_1.3.2  knitr_1.51      </span></span>
+<span><span class="co">#&gt; [5] TrIdent_1.5.2    BiocStyle_2.40.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] roll_1.2.1            sass_0.4.10           generics_0.1.4       </span></span>
-<span><span class="co">#&gt;  [4] tidyr_1.3.2           xml2_1.5.2            stringi_1.8.7        </span></span>
-<span><span class="co">#&gt;  [7] digest_0.6.39         magrittr_2.0.5        evaluate_1.0.5       </span></span>
-<span><span class="co">#&gt; [10] grid_4.6.0            RColorBrewer_1.1-3    bookdown_0.46        </span></span>
-<span><span class="co">#&gt; [13] fastmap_1.2.0         jsonlite_2.0.0        BiocManager_1.30.27  </span></span>
-<span><span class="co">#&gt; [16] purrr_1.2.2           viridisLite_0.4.3     scales_1.4.0         </span></span>
-<span><span class="co">#&gt; [19] textshaping_1.0.5     jquerylib_0.1.4       cli_3.6.6            </span></span>
-<span><span class="co">#&gt; [22] rlang_1.2.0           withr_3.0.2           cachem_1.1.0         </span></span>
-<span><span class="co">#&gt; [25] yaml_2.3.12           tools_4.6.0           dplyr_1.2.1          </span></span>
-<span><span class="co">#&gt; [28] vctrs_0.7.3           R6_2.6.1              lifecycle_1.0.5      </span></span>
-<span><span class="co">#&gt; [31] stringr_1.6.0         fs_2.1.0              ragg_1.5.2           </span></span>
-<span><span class="co">#&gt; [34] pkgconfig_2.0.3       desc_1.4.3            pkgdown_2.2.0        </span></span>
-<span><span class="co">#&gt; [37] RcppParallel_5.1.11-2 pillar_1.11.1         bslib_0.11.0         </span></span>
-<span><span class="co">#&gt; [40] gtable_0.3.6          glue_1.8.1            Rcpp_1.1.1-1.1       </span></span>
-<span><span class="co">#&gt; [43] systemfonts_1.3.2     xfun_0.57             tibble_3.3.1         </span></span>
-<span><span class="co">#&gt; [46] tidyselect_1.2.1      rstudioapi_0.18.0     farver_2.1.2         </span></span>
-<span><span class="co">#&gt; [49] htmltools_0.5.9       labeling_0.4.3        rmarkdown_2.31       </span></span>
-<span><span class="co">#&gt; [52] svglite_2.2.2         compiler_4.6.0        S7_0.2.2</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] roll_1.2.1          sass_0.4.10         generics_0.1.4     </span></span>
+<span><span class="co">#&gt;  [4] tidyr_1.3.2         xml2_1.6.0          stringi_1.8.9      </span></span>
+<span><span class="co">#&gt;  [7] digest_0.6.39       magrittr_2.0.5      evaluate_1.0.5     </span></span>
+<span><span class="co">#&gt; [10] grid_4.6.1          RColorBrewer_1.1-3  bookdown_0.47      </span></span>
+<span><span class="co">#&gt; [13] fastmap_1.2.0       jsonlite_2.0.0      BiocManager_1.30.27</span></span>
+<span><span class="co">#&gt; [16] purrr_1.2.2         viridisLite_0.4.3   scales_1.4.0       </span></span>
+<span><span class="co">#&gt; [19] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          </span></span>
+<span><span class="co">#&gt; [22] rlang_1.3.0         withr_3.0.3         cachem_1.1.0       </span></span>
+<span><span class="co">#&gt; [25] yaml_2.3.12         otel_0.2.0          tools_4.6.1        </span></span>
+<span><span class="co">#&gt; [28] dplyr_1.2.1         BiocGenerics_0.58.1 vctrs_0.7.3        </span></span>
+<span><span class="co">#&gt; [31] R6_2.6.1            stats4_4.6.1        lifecycle_1.0.5    </span></span>
+<span><span class="co">#&gt; [34] stringr_1.6.0       S4Vectors_0.50.1    fs_2.1.0           </span></span>
+<span><span class="co">#&gt; [37] ragg_1.5.2          pkgconfig_2.0.3     desc_1.4.3         </span></span>
+<span><span class="co">#&gt; [40] pkgdown_2.2.1       RcppParallel_6.2.0  pillar_1.11.1      </span></span>
+<span><span class="co">#&gt; [43] bslib_0.12.0        gtable_0.3.6        glue_1.8.1         </span></span>
+<span><span class="co">#&gt; [46] Rcpp_1.1.2          systemfonts_1.3.2   xfun_0.60          </span></span>
+<span><span class="co">#&gt; [49] tibble_3.3.1        tidyselect_1.2.1    rstudioapi_0.19.0  </span></span>
+<span><span class="co">#&gt; [52] farver_2.1.2        htmltools_0.5.9     labeling_0.4.3     </span></span>
+<span><span class="co">#&gt; [55] svglite_2.2.2       rmarkdown_2.31      compiler_4.6.1     </span></span>
+<span><span class="co">#&gt; [58] S7_0.2.2</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -1505,7 +1651,7 @@ R01Al171046.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

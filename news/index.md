@@ -1,5 +1,13 @@
 # Changelog
 
+## Changes in 1.5.2
+
+- Add option to use local or global DIRECT search with `globalLocal`
+  parameter. The default is local.
+- Add `geneSearch` function! This new function allows users to search
+  for genes or gene annotations of interest on positively classified
+  contigs using a gff file imported into R with the Bioc.gff package.
+
 ## Changes in 1.5.1
 
 - Implement DIRECT search algorithm during pattern-matching. Major speed

@@ -29,6 +29,7 @@ TrIdentClassifier(
   verbose = TRUE,
   searchMethod = "grid",
   DirectMaxEval = 100,
+  globalLocal = "local",
   SaveFilesTo
 )
 ```
@@ -118,6 +119,12 @@ TrIdentClassifier(
   Maximum number of DIRECT evaluations to make. Default is 100. Default
   is 100.
 
+- globalLocal:
+
+  Use global or local DIRECT search. Local search makes the DIRECT
+  algorithm more efficient for contigs without multiple potential read
+  coverage patterns. Default is local.
+
 - SaveFilesTo:
 
   Optional, Provide a path to the directory you wish to save output to.
@@ -146,7 +153,7 @@ TrIdent_results <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.72secs
+#> Execution time: 17.14secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 

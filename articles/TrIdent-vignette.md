@@ -4,8 +4,8 @@
 
 **TrIdent**- **Tr**ansduction **Ident**ification
 
-TrIdent consists of three main functions which should be run in the
-following order:
+TrIdent consists of four main functions which should be run in the
+following order (Steps 3 and 4 can be interchanged):
 
 1.  **[`TrIdentClassifier()`](https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.md)**:
     Classifies contigs as ‘Prophage-like’, ‘Sloping’,
@@ -18,6 +18,10 @@ following order:
     Searches contigs classified as Prophage-like by
     [`TrIdentClassifier()`](https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.md)
     for associated specialized transduction events.
+4.  **[`geneSearch()`](https://jlmaier12.github.io/TrIdent/reference/geneSearch.md)**:
+    Searches for genes or gene annotations of interest on contigs
+    positively classified by
+    [`TrIdentClassifier()`](https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.md).
 
 TrIdent automates the analysis of transductomics data by detecting,
 classifying, and characterizing read coverage patterns associated with
@@ -383,7 +387,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.81secs
+#> Execution time: 17.18secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
@@ -402,7 +406,7 @@ TrIdentClassifier(VLPpileup, WCpileup,
   windowSize = 1000, minBlockSize = 10000,
   maxBlockSize = Inf, minContigLength = 30000, minSlope = 0.001, 
   minSlopeSize = 20000, minHCNPRatio=2, verbose = TRUE, searchMethod= "grid",
-  DirectMaxEval = 100, SaveFilesTo
+  DirectMaxEval = 100, globalLocal="local", SaveFilesTo
 )
 ```
 
@@ -436,6 +440,9 @@ TrIdentClassifier(VLPpileup, WCpileup,
   optimization. Default is “grid”.
 - `DirectMaxEval`: Maximum number of DIRECT evaluations to make. Default
   is 100.
+- `globalLocal`: Use global or local DIRECT search. Local search makes
+  the DIRECT algorithm more efficient for contigs without multiple
+  potential read coverage patterns. Default is local.
 - `SaveFilesTo`: Optional, Provide a path to the directory you wish to
   save output to. A folder will be made within the provided directory to
   store results.
@@ -823,6 +830,134 @@ SpecTransduc$Plots$NODE_135
 
 ![](TrIdent-vignette_files/figure-html/unnamed-chunk-19-2.png)
 
+## geneSearch()
+
+[`geneSearch()`](https://jlmaier12.github.io/TrIdent/reference/geneSearch.md)
+helps users explore gene annotations of interest in and around read
+coverage pattern-matches.
+
+### Function components
+
+#### Search for gene annotations
+
+[`geneSearch()`](https://jlmaier12.github.io/TrIdent/reference/geneSearch.md)
+utilizes a .gff file and the pattern-matching results from
+[`TrIdentClassifier()`](https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.md)
+to locate gene annotations that match provided `keyWords`. The .gff file
+should be a S4Vectors::DataFrame object imported into R using the
+Bioc.gff package. First, the information associated with the gene or
+gene product (depending on what the user selects for the `geneOrProduct`
+parameter) is extracted from the attributes column of the .gff file.
+Then, the .gff file is subset to include only the annotations associated
+with the contig being assessed. From here, the search can vary quite a
+bit depending on the parameters the user selects for the `inPatMat` and
+`bpRange` parameters. If `inPatMat = FALSE` (the default), then gene
+annotations located anywhere on the contig that match one or more of the
+provided `keyWords` will be visualized. If `inPatMat = TRUE`, then only
+gene annotations within the region of the pattern-match willbe searched
+for matches to the provided `keyWords`. The `bpRange` parameter can be
+used if `inPatMat = TRUE` and allows the search range to be extended a
+specified numberof base pairs to the left and right of the pattern-match
+borders. Gene annotationare included in the search if the end of the
+open reading frame (defined by the ‘end’ values in the .gff file) falls
+within the search region.
+
+#### Plot gene annotation locations
+
+The read coverage and locations of gene annotations that match the
+provided `keyWords` are visualized for each contig with matches. The
+borders of the pattern-matchdetected by
+[`TrIdentClassifier()`](https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.md)
+are marked on the plot with orange vertical lines. If `inPatMat = TRUE`
+and `bpRange` is set to a non-zero value, then the extended searchrange
+outside the pattern-match borders are marked on the plot with orange
+dashed verticallines. The matching gene annotation locations are marked
+on the plot withblack vertical lines at the start position of the
+associated open reading frames.
+
+### Usage
+
+**Default arguments:**
+
+With defaults, all contigs classified as “Prophage-like”, “Sloping” and
+“HighCovNoPattern” are searched for gene annotations that match any of
+the provided keywords. *The entire contig is searched, not just the
+pattern-match region.*
+
+``` r
+
+GeneMatches <- geneSearch(
+                TrIdentResults = TrIdentOutput, 
+                VLPpileup = VLPFractionSamplePileup, 
+                gff = gffSample, 
+                searchCol = "pfam_desc", 
+                keyWords = c("phage", "spike", "holin", "capsid", "tail")
+  )
+#> Cleaning pileup file...
+#> Searching for matching annotations...
+#> 7 contigs have gene annotations that match one or more of the provided keyWords
+```
+
+### Arguments/parameters
+
+``` r
+
+geneSearch(
+  TrIdentResults, 
+  VLPpileup, 
+  gff,
+  searchCol, 
+  keyWords, 
+  inPatMat = FALSE,
+  bpRange = 0, 
+  saveFilesTo, 
+  verbose = TRUE
+  ) 
+```
+
+- **`TrIdentResults`**: The output from
+  [`TrIdentClassifier()`](https://jlmaier12.github.io/TrIdent/reference/TrIdentClassifier.md).
+- **`VLPpileup`**: A .txt file containing mapped sequencing read
+  coverages averaged over 100 bp windows/bins.
+- **`gff`**: A .gff file containing gene annotations associated with the
+  whole-community contigs. Imported into R using Bioc.gff::readGFF
+  function.
+- **`searchCol`**: The exact column name (in quotes) in the gff file
+  that you’d like to search for specific `keyWords`. Commonly
+  annotation, product, gene, or acc columns, for example, however the
+  specific name may change based on annotation tool used. For example:
+  “pfam_desc”.
+- **`keyWords`**: The keyWord(s) to search for. Case independent.
+  Searches will return the string that contains the matching keyWord.
+  KeyWord(s) must be in quotes, comma-separated, and surrounded by c()
+  i.e( c(“antibiotic”, “resistance”, “drug”) )
+- **`inPatMat`**: TRUE or FALSE. If TRUE, only search for
+  gene-annotations in the pattern-match region. Default is FALSE (i.e
+  search the entire contig for the gene annotation key-words)
+- **`bpRange`**: If `inPatMat = TRUE`, the user may specify the region
+  (in base pairs) that should be searched to the left and right of the
+  pattern-match region. Default is 0.
+- **`saveFilesTo`**: Optional, Provide a path to the directory you wish
+  to save output to. A folder will be made within the provided directory
+  to store results.
+- **`verbose`**: TRUE or FALSE. Print progress messages to console.
+  Default is TRUE.
+
+### Output
+
+The output of
+[`geneSearch()`](https://jlmaier12.github.io/TrIdent/reference/geneSearch.md)
+is a list of ggplot objects.
+
+View select plots:
+
+``` r
+
+GeneMatches$NODE_617
+```
+
+![](TrIdent-vignette_files/figure-html/unnamed-chunk-22-1.png)
+
 ## Supplemental information
 
 ### Usage Note
@@ -856,7 +991,7 @@ Institutes of Health under Award Numbers R35GM138362 and R01Al171046.
 ``` r
 
 sessionInfo()
-#> R version 4.6.0 (2026-04-24)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -877,26 +1012,28 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] kableExtra_1.4.0 ggplot2_4.0.3    patchwork_1.3.2  knitr_1.51      
-#> [5] TrIdent_1.5.1    BiocStyle_2.40.0
+#> [1] kableExtra_1.4.1 ggplot2_4.0.3    patchwork_1.3.2  knitr_1.51      
+#> [5] TrIdent_1.5.2    BiocStyle_2.40.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] roll_1.2.1            sass_0.4.10           generics_0.1.4       
-#>  [4] tidyr_1.3.2           xml2_1.5.2            stringi_1.8.7        
-#>  [7] digest_0.6.39         magrittr_2.0.5        evaluate_1.0.5       
-#> [10] grid_4.6.0            RColorBrewer_1.1-3    bookdown_0.46        
-#> [13] fastmap_1.2.0         jsonlite_2.0.0        BiocManager_1.30.27  
-#> [16] purrr_1.2.2           viridisLite_0.4.3     scales_1.4.0         
-#> [19] textshaping_1.0.5     jquerylib_0.1.4       cli_3.6.6            
-#> [22] rlang_1.2.0           withr_3.0.2           cachem_1.1.0         
-#> [25] yaml_2.3.12           tools_4.6.0           dplyr_1.2.1          
-#> [28] vctrs_0.7.3           R6_2.6.1              lifecycle_1.0.5      
-#> [31] stringr_1.6.0         fs_2.1.0              ragg_1.5.2           
-#> [34] pkgconfig_2.0.3       desc_1.4.3            pkgdown_2.2.0        
-#> [37] RcppParallel_5.1.11-2 pillar_1.11.1         bslib_0.11.0         
-#> [40] gtable_0.3.6          glue_1.8.1            Rcpp_1.1.1-1.1       
-#> [43] systemfonts_1.3.2     xfun_0.57             tibble_3.3.1         
-#> [46] tidyselect_1.2.1      rstudioapi_0.18.0     farver_2.1.2         
-#> [49] htmltools_0.5.9       labeling_0.4.3        rmarkdown_2.31       
-#> [52] svglite_2.2.2         compiler_4.6.0        S7_0.2.2
+#>  [1] roll_1.2.1          sass_0.4.10         generics_0.1.4     
+#>  [4] tidyr_1.3.2         xml2_1.6.0          stringi_1.8.9      
+#>  [7] digest_0.6.39       magrittr_2.0.5      evaluate_1.0.5     
+#> [10] grid_4.6.1          RColorBrewer_1.1-3  bookdown_0.47      
+#> [13] fastmap_1.2.0       jsonlite_2.0.0      BiocManager_1.30.27
+#> [16] purrr_1.2.2         viridisLite_0.4.3   scales_1.4.0       
+#> [19] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          
+#> [22] rlang_1.3.0         withr_3.0.3         cachem_1.1.0       
+#> [25] yaml_2.3.12         otel_0.2.0          tools_4.6.1        
+#> [28] dplyr_1.2.1         BiocGenerics_0.58.1 vctrs_0.7.3        
+#> [31] R6_2.6.1            stats4_4.6.1        lifecycle_1.0.5    
+#> [34] stringr_1.6.0       S4Vectors_0.50.1    fs_2.1.0           
+#> [37] ragg_1.5.2          pkgconfig_2.0.3     desc_1.4.3         
+#> [40] pkgdown_2.2.1       RcppParallel_6.2.0  pillar_1.11.1      
+#> [43] bslib_0.12.0        gtable_0.3.6        glue_1.8.1         
+#> [46] Rcpp_1.1.2          systemfonts_1.3.2   xfun_0.60          
+#> [49] tibble_3.3.1        tidyselect_1.2.1    rstudioapi_0.19.0  
+#> [52] farver_2.1.2        htmltools_0.5.9     labeling_0.4.3     
+#> [55] svglite_2.2.2       rmarkdown_2.31      compiler_4.6.1     
+#> [58] S7_0.2.2
 ```

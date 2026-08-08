@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,11 @@
       <small>Source: <a href="https://github.com/jlmaier12/TrIdent/blob/devel/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.2" id="changes-in-152">Changes in 1.5.2<a class="anchor" aria-label="anchor" href="#changes-in-152"></a></h2>
+<ul><li>Add option to use local or global DIRECT search with <code>globalLocal</code> parameter. The default is local.</li>
+<li>Add <code>geneSearch</code> function! This new function allows users to search for genes or gene annotations of interest on positively classified contigs using a gff file imported into R with the Bioc.gff package.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.5.1" id="changes-in-151">Changes in 1.5.1<a class="anchor" aria-label="anchor" href="#changes-in-151"></a></h2>
 <ul><li>Implement DIRECT search algorithm during pattern-matching. Major speed increases with minor changes to resulting classifications. Use DIRECT by setting <code>searchMethod</code>=“direct”. For now, the original “grid” search method remains the default.</li>
@@ -116,7 +121,7 @@ and “HighCovNoPattern” classifications made.</li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

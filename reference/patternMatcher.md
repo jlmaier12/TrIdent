@@ -22,7 +22,8 @@ patternMatcher(
   minSlopeSize,
   verbose,
   searchMethod,
-  DirectMaxEval
+  DirectMaxEval,
+  globalLocal
 )
 ```
 
@@ -78,6 +79,10 @@ patternMatcher(
 - DirectMaxEval:
 
   Maximum number of DIRECT evaluations to make.
+
+- globalLocal:
+
+  Use global or local DIRECT search. Default is local.
 
 ## Value
 

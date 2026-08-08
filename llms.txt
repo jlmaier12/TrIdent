@@ -113,6 +113,7 @@ library(TrIdent)
 ## Load sample datasets
 data("VLPFractionSamplePileup")
 data("WholeCommunitySamplePileup")
+data("gffSample")
 
 ## Run TrIdent:
 ## Run first:
@@ -129,7 +130,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.49secs
+#> Execution time: 15.49secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
@@ -137,7 +138,7 @@ TrIdentOutput <- TrIdentClassifier(
 #>                1                1                4                3
 #> 3 of the prophage-like classifications are highly active or abundant
 #> 1 of the prophage-like classifications are mixed, i.e. heterogenously
-#>         integrated into their bacterial host population
+#> integrated into their bacterial host population
 
 ## Run second:
 plotTrIdentResults(
@@ -202,20 +203,20 @@ plotTrIdentResults(
 ``` r
 
 
-## Run third:
+## Run third/fourth:
 specializedTransductionID(
   VLPpileup = VLPFractionSamplePileup,
   TrIdentResults = TrIdentOutput
 ) 
 #> 2 contigs have potential specialized transduction
 #> We recommend that you also view the results of this search with
-#>       logScale=TRUE
+#> logScale=TRUE
 #> $summaryTable
-#>   contigName specTransduc left right lengthLeft lengthRight
-#> 1    NODE_62          yes  yes    no      45400        <NA>
-#> 2   NODE_135           no   no    no       <NA>        <NA>
-#> 3   NODE_368           no   no    no       <NA>        <NA>
-#> 4   NODE_617          yes  yes   yes      33300        9800
+#>   contigName specTransduc     location lengthLeft lengthRight
+#> 1    NODE_62          yes         left      45400        <NA>
+#> 2   NODE_135           no not detected       <NA>        <NA>
+#> 3   NODE_368           no not detected       <NA>        <NA>
+#> 4   NODE_617          yes   left+right      33300        9800
 #> 
 #> $Plots
 #> $Plots$NODE_62
@@ -244,6 +245,67 @@ specializedTransductionID(
 
 ![](reference/figures/README-example-12.png)
 
+``` r
+
+
+## Run third/fourth
+geneSearch(
+   TrIdentResults = TrIdentOutput,
+   VLPpileup = VLPFractionSamplePileup,
+   gff = gffSample,
+   searchCol="pfam_desc",
+   keyWords=c("toxin", "drug", "resistance", "phage")
+ ) 
+#> Cleaning pileup file...
+#> Searching for matching annotations...
+#> 7 contigs have gene annotations that match one or more of the provided keyWords
+#> $NODE_62
+```
+
+![](reference/figures/README-example-13.png)
+
+``` R
+#> 
+#> $NODE_135
+```
+
+![](reference/figures/README-example-14.png)
+
+``` R
+#> 
+#> $NODE_352
+```
+
+![](reference/figures/README-example-15.png)
+
+``` R
+#> 
+#> $NODE_368
+```
+
+![](reference/figures/README-example-16.png)
+
+``` R
+#> 
+#> $NODE_560
+```
+
+![](reference/figures/README-example-17.png)
+
+``` R
+#> 
+#> $NODE_617
+```
+
+![](reference/figures/README-example-18.png)
+
+``` R
+#> 
+#> $NODE_2060
+```
+
+![](reference/figures/README-example-19.png)
+
 # Package index
 
 ## All Functions
@@ -257,6 +319,8 @@ specializedTransductionID(
 - [`specializedTransductionID()`](https://jlmaier12.github.io/TrIdent/reference/specializedTransductionID.md)
   : Identify potential specialized transduction events on contigs
   classified as Prophage-like
+- [`geneSearch()`](https://jlmaier12.github.io/TrIdent/reference/geneSearch.md)
+  : Search for gene annotations on positively classified contigs
 
 # Articles
 

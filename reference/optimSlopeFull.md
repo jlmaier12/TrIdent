@@ -6,7 +6,14 @@ bottom
 ## Usage
 
 ``` r
-optimSlopeFull(minSlope, viralSubset, windowSize, leftOrRight, DirectMaxEval)
+optimSlopeFull(
+  minSlope,
+  viralSubset,
+  windowSize,
+  leftOrRight,
+  DirectMaxEval,
+  globalLocal
+)
 ```
 
 ## Arguments
@@ -32,6 +39,10 @@ optimSlopeFull(minSlope, viralSubset, windowSize, leftOrRight, DirectMaxEval)
 - DirectMaxEval:
 
   Maximum number of DIRECT evaluations to make.
+
+- globalLocal:
+
+  Use global or local DIRECT search. Default is local.
 
 ## Value
 

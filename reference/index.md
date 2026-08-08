@@ -11,3 +11,5 @@
 - [`specializedTransductionID()`](https://jlmaier12.github.io/TrIdent/reference/specializedTransductionID.md)
   : Identify potential specialized transduction events on contigs
   classified as Prophage-like
+- [`geneSearch()`](https://jlmaier12.github.io/TrIdent/reference/geneSearch.md)
+  : Search for gene annotations on positively classified contigs

@@ -23,7 +23,7 @@ fifth item is the windowSize used for the search."><meta property="og:image" con
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +81,7 @@ fifth item is the windowSize used for the search.</p>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  searchMethod <span class="op">=</span> <span class="st">"grid"</span>,</span>
 <span>  DirectMaxEval <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  globalLocal <span class="op">=</span> <span class="st">"local"</span>,</span>
 <span>  <span class="va">SaveFilesTo</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -173,6 +174,12 @@ search or "direct" for DIRECT global optimization.</p></dd>
 Default is 100.</p></dd>
 
 
+<dt id="arg-globallocal">globalLocal<a class="anchor" aria-label="anchor" href="#arg-globallocal"></a></dt>
+<dd><p>Use global or local DIRECT search. Local search makes the
+DIRECT algorithm more efficient for contigs without multiple potential read
+coverage patterns. Default is local.</p></dd>
+
+
 <dt id="arg-savefilesto">SaveFilesTo<a class="anchor" aria-label="anchor" href="#arg-savefilesto"></a></dt>
 <dd><p>Optional, Provide a path to the directory you wish to save
 output to. A folder will be made within the provided directory to store
@@ -202,7 +209,7 @@ results.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Identifying highly active/abundant or heterogenously integrated</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>       Prophage-like elements</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Finalizing output</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Execution time: 16.72secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Execution time: 17.14secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1 contigs were filtered out based on low read coverage</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 0 contigs were filtered out based on length</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -222,7 +229,7 @@ results.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -12,7 +12,8 @@ blockBuilder(
   minBlockSize,
   maxBlockSize,
   searchMethod,
-  DirectMaxEval
+  DirectMaxEval,
+  globalLocal
 )
 ```
 
@@ -43,7 +44,11 @@ blockBuilder(
 
 - DirectMaxEval:
 
-  Maximum number of DIRECT evaluations to make. Default is 100.
+  Maximum number of DIRECT evaluations to make.
+
+- globalLocal:
+
+  Use global or local DIRECT search. Default is local. Default is 100.
 
 ## Value
 

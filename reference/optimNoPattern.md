@@ -6,7 +6,7 @@ pattern
 ## Usage
 
 ``` r
-optimNoPattern(viralSubset, DirectMaxEval)
+optimNoPattern(viralSubset, DirectMaxEval, globalLocal)
 ```
 
 ## Arguments
@@ -19,6 +19,10 @@ optimNoPattern(viralSubset, DirectMaxEval)
 - DirectMaxEval:
 
   Maximum number of DIRECT evaluations to make.
+
+- globalLocal:
+
+  Use global or local DIRECT search. Default is local.
 
 ## Value
 

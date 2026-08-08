@@ -14,7 +14,8 @@ directBlockBuilder(
   minReadCov,
   maxReadCov,
   startingCovs,
-  DirectMaxEval
+  DirectMaxEval,
+  globalLocal
 )
 ```
 
@@ -56,6 +57,10 @@ directBlockBuilder(
 - DirectMaxEval:
 
   Maximum number of DIRECT evaluations to make. Default is 100.
+
+- globalLocal:
+
+  Use global or local DIRECT search. Default is local.
 
 ## Value
 

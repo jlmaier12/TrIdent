@@ -12,7 +12,8 @@ optimSlopeWithStart(
   viralSubset,
   windowSize,
   leftOrRight,
-  DirectMaxEval
+  DirectMaxEval,
+  globalLocal
 )
 ```
 
@@ -43,6 +44,10 @@ optimSlopeWithStart(
 - DirectMaxEval:
 
   Maximum number of DIRECT evaluations to make.
+
+- globalLocal:
+
+  Use global or local DIRECT search. Default is local.
 
 ## Value
 
