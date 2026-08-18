@@ -130,7 +130,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 15.49secs
+#> Execution time: 15.13secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
@@ -249,6 +249,8 @@ specializedTransductionID(
 
 
 ## Run third/fourth
+
+#
 geneSearch(
    TrIdentResults = TrIdentOutput,
    VLPpileup = VLPFractionSamplePileup,

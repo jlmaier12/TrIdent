@@ -387,7 +387,7 @@ TrIdentOutput <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>       Prophage-like elements
 #> Finalizing output
-#> Execution time: 17.18secs
+#> Execution time: 16.84secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
@@ -950,6 +950,11 @@ The output of
 is a list of ggplot objects.
 
 View select plots:
+
+Red vertical lines indicate boundaries of the associated TrIdent
+pattern-match. If `inPatMat`=TRUE and a `bpRange` is set, red dotted
+vertical lines will indicate the search region beyond the pattern-match
+borders.
 
 ``` r
 

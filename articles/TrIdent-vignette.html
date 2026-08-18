@@ -558,7 +558,7 @@ membrane vesicles. Sci Rep 12, 16651 (2022). <a href="https://doi.org/10.1038/s4
 <span><span class="co">#&gt; Identifying highly active/abundant or heterogenously integrated</span></span>
 <span><span class="co">#&gt;       Prophage-like elements</span></span>
 <span><span class="co">#&gt; Finalizing output</span></span>
-<span><span class="co">#&gt; Execution time: 17.18secs</span></span>
+<span><span class="co">#&gt; Execution time: 16.84secs</span></span>
 <span><span class="co">#&gt; 1 contigs were filtered out based on low read coverage</span></span>
 <span><span class="co">#&gt; 0 contigs were filtered out based on length</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1550,6 +1550,10 @@ messages to console. Default is TRUE.</li>
 <p>The output of <code><a href="../reference/geneSearch.html">geneSearch()</a></code> is a list of ggplot
 objects.</p>
 <p>View select plots:</p>
+<p>Red vertical lines indicate boundaries of the associated TrIdent
+pattern-match. If <code>inPatMat</code>=TRUE and a <code>bpRange</code>
+is set, red dotted vertical lines will indicate the search region beyond
+the pattern-match borders.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GeneMatches</span><span class="op">$</span><span class="va">NODE_617</span></span></code></pre></div>
 <p><img src="TrIdent-vignette_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="100%"></p>
