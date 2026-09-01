@@ -11,7 +11,7 @@ of ggplot objects."><meta property="og:image" content="https://jlmaier12.github.
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@ of ggplot objects.</p>
 <span>  <span class="va">TrIdentResults</span>,</span>
 <span>  <span class="va">onlyPlot</span>,</span>
 <span>  logScale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  allPlots <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">saveFilesTo</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -98,6 +99,12 @@ start of each new contig.</p></dd>
 <dt id="arg-logscale">logScale<a class="anchor" aria-label="anchor" href="#arg-logscale"></a></dt>
 <dd><p>TRUE or FALSE, display VLP-fraction read coverage in log10
 scale. Default is FALSE.</p></dd>
+
+
+<dt id="arg-allplots">allPlots<a class="anchor" aria-label="anchor" href="#arg-allplots"></a></dt>
+<dd><p>TRUE or FALSE. Display read coverage patterns for all contigs
+greater than the length cutoff (default 30 kbp). Default is FALSE. *Warning* This may
+produce a lot of plots and a very large list object!</p></dd>
 
 
 <dt id="arg-savefilesto">saveFilesTo<a class="anchor" aria-label="anchor" href="#arg-savefilesto"></a></dt>

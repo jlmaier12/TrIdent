@@ -385,16 +385,16 @@ TrIdentOutput <- TrIdentClassifier(
 #> Almost done with pattern-matching!
 #> Determining sizes (bp) of pattern matches
 #> Identifying highly active/abundant or heterogenously integrated
-#>       Prophage-like elements
+#>          Prophage-like elements
 #> Finalizing output
-#> Execution time: 16.84secs
+#> Execution time: 14.03secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
 #> HighCovNoPattern        NoPattern    Prophage-like          Sloping 
 #>                1                1                4                3
-#> 3 of the prophage-like classifications are highly active or abundant
-#> 1 of the prophage-like classifications are mixed, i.e. heterogenously
+#> 0 of the prophage-like classifications are highly active or abundant
+#> 0 of the prophage-like classifications are mixed, i.e. heterogenously
 #> integrated into their bacterial host population
 ```
 
@@ -463,13 +463,6 @@ is a list containing five objects:
 4.  FilteredOutContigTable: A table containing contigs that were
     filtered out and the reason why (low read coverage or too short).
 5.  windowSize: The `windowSize` used.
-6.  ResultHistogram: A histogram displaying the overall abundance and
-    quality of pattern-matches in addition to the composition of
-    classifications. The displayed pattern-match scores are normalized
-    by dividing each score by its associated contig length. The scores
-    are normalized to visualize the overall quality of pattern-matching
-    for the entire dataset. Remember, smaller pattern-match scores
-    correspond to better pattern-matches.
 
 Save the desired list-item to a new variable using its associated name.
 
@@ -480,24 +473,20 @@ Summary table:
 TrIdentSummaryTable <- TrIdentOutput$SummaryTable
 ```
 
-| contigName | classifications | normMatchScore | VLPWCRatio | matchSize | startPosBp | endPosBp | proLikeWCReadCov | proLikeWCReadCovRatio | slope |
-|:---|:---|---:|---:|---:|---:|---:|:---|---:|---:|
-| NODE_62 | Prophage-like | 0.1428571 | NA | 171000 | 62000 | 233000 | Elevated | 1.5103 | NA |
-| NODE_135 | Prophage-like | 0.2737766 | NA | 32000 | 149000 | 181000 | Elevated | 1.3122 | NA |
-| NODE_1088 | Sloping | 0.0802549 | NA | 63000 | 1000 | 64000 | NA | NA | 0.0024 |
-| NODE_352 | Sloping | 0.1829770 | NA | 121000 | 1000 | 122000 | NA | NA | -0.0001 |
-| NODE_368 | Prophage-like | 0.1530534 | NA | 30000 | 26000 | 56000 | Depressed | 0.3994 | NA |
-| NODE_560 | HighCovNoPattern | 0.0694395 | 16.6016 | 95000 | 1000 | 96000 | NA | NA | NA |
-| NODE_617 | Prophage-like | 0.1613141 | NA | 48000 | 34000 | 82000 | Elevated | 1.8243 | NA |
-| NODE_1401 | NoPattern | 0.1006696 | 0.0192 | 54000 | 1000 | 55000 | NA | NA | NA |
-| NODE_2060 | Sloping | 0.1037661 | NA | 27000 | 1000 | 28000 | NA | NA | 0.0275 |
+| contigName | classifications | VLPWCRatio | matchSize | startPosBp | endPosBp | proLikeWCReadCov | proLikeWCReadCovRatio | slope |
+|:---|:---|---:|---:|---:|---:|:---|---:|---:|
+| NODE_62 | Prophage-like | NA | 171000 | 62000 | 233000 | Elevated | 1.5103 | NA |
+| NODE_135 | Prophage-like | NA | 32000 | 149000 | 181000 | Elevated | 1.3122 | NA |
+| NODE_1088 | Sloping | NA | 63000 | 1000 | 64000 | NA | NA | 0.0024 |
+| NODE_352 | Sloping | NA | 121000 | 1000 | 122000 | NA | NA | -0.0001 |
+| NODE_368 | Prophage-like | NA | 30000 | 26000 | 56000 | Depressed | 0.3994 | NA |
+| NODE_560 | HighCovNoPattern | 16.6016 | 95000 | 1000 | 96000 | NA | NA | NA |
+| NODE_617 | Prophage-like | NA | 48000 | 34000 | 82000 | Elevated | 1.8243 | NA |
+| NODE_1401 | NoPattern | 0.0192 | 54000 | 1000 | 55000 | NA | NA | NA |
+| NODE_2060 | Sloping | NA | 27000 | 1000 | 28000 | NA | NA | 0.0275 |
 
 - **contigName**: The contig reference name.
 - **classifications**: The classification given by TrIdent.
-- **normMatchScore**: The pattern-match score normalized by the size of
-  the dataset (pattern-match scores from different contigs are not
-  directly comparable to one another as they are relative to the
-  characteristics of the contig they were calculated for.).
 - **VLPWCRatio**: For HighCovNoPattern classifications only. The ratio
   between the median VLP-fraction and WC read coverage values. The ratio
   is normalized by the number of VLP-fraction and WC reads,
@@ -575,6 +564,7 @@ plotTrIdentResults(
   TrIdentResults, 
   onlyPlot,
   logScale = FALSE,
+  allPlots=FALSE,
   saveFilesTo
 )
 ```
@@ -587,6 +577,12 @@ plotTrIdentResults(
   either “Prophage-like”, “Sloping”, or “HighCovNoPattern”.
 - `logScale`: TRUE or FALSE, display read coverage in log10 scale.
   Default is FALSE.
+- `allPlots`: TRUE or FALSE. Display read coverage patterns for all
+  contigs greater than the length cutoff (default 30 kbp). Default is
+  FALSE. *Warning* This may produce a lot of plots and a very large list
+  object! This is useful if you are interested in viewing coverage
+  patterns of any contig regardless of associated TrIdent
+  classification.
 - `saveFilesTo`: Optional, Provide a path to the directory you wish to
   save output to. A folder will be made within the provided directory to
   store results.
@@ -1018,13 +1014,13 @@ sessionInfo()
 #> 
 #> other attached packages:
 #> [1] kableExtra_1.4.1 ggplot2_4.0.3    patchwork_1.3.2  knitr_1.51      
-#> [5] TrIdent_1.5.2    BiocStyle_2.40.0
+#> [5] TrIdent_1.5.3    BiocStyle_2.40.0
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] roll_1.2.1          sass_0.4.10         generics_0.1.4     
 #>  [4] tidyr_1.3.2         xml2_1.6.0          stringi_1.8.9      
 #>  [7] digest_0.6.39       magrittr_2.0.5      evaluate_1.0.5     
-#> [10] grid_4.6.1          RColorBrewer_1.1-3  bookdown_0.47      
+#> [10] grid_4.6.1          RColorBrewer_1.1-3  bookdown_0.48      
 #> [13] fastmap_1.2.0       jsonlite_2.0.0      BiocManager_1.30.27
 #> [16] purrr_1.2.2         viridisLite_0.4.3   scales_1.4.0       
 #> [19] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          
@@ -1032,9 +1028,9 @@ sessionInfo()
 #> [25] yaml_2.3.12         otel_0.2.0          tools_4.6.1        
 #> [28] dplyr_1.2.1         BiocGenerics_0.58.1 vctrs_0.7.3        
 #> [31] R6_2.6.1            stats4_4.6.1        lifecycle_1.0.5    
-#> [34] stringr_1.6.0       S4Vectors_0.50.1    fs_2.1.0           
+#> [34] stringr_1.6.0       S4Vectors_0.50.2    fs_2.1.0           
 #> [37] ragg_1.5.2          pkgconfig_2.0.3     desc_1.4.3         
-#> [40] pkgdown_2.2.1       RcppParallel_6.2.0  pillar_1.11.1      
+#> [40] pkgdown_2.2.1       RcppParallel_6.2.1  pillar_1.11.1      
 #> [43] bslib_0.12.0        gtable_0.3.6        glue_1.8.1         
 #> [46] Rcpp_1.1.2          systemfonts_1.3.2   xfun_0.60          
 #> [49] tibble_3.3.1        tidyselect_1.2.1    rstudioapi_0.19.0  

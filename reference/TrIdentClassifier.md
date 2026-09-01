@@ -151,15 +151,15 @@ TrIdent_results <- TrIdentClassifier(
 #> Almost done with pattern-matching!
 #> Determining sizes (bp) of pattern matches
 #> Identifying highly active/abundant or heterogenously integrated
-#>       Prophage-like elements
+#>          Prophage-like elements
 #> Finalizing output
-#> Execution time: 17.12secs
+#> Execution time: 14.02secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 
 #> HighCovNoPattern        NoPattern    Prophage-like          Sloping 
 #>                1                1                4                3 
-#> 3 of the prophage-like classifications are highly active or abundant
-#> 1 of the prophage-like classifications are mixed, i.e. heterogenously
+#> 0 of the prophage-like classifications are highly active or abundant
+#> 0 of the prophage-like classifications are mixed, i.e. heterogenously
 #> integrated into their bacterial host population
 ```

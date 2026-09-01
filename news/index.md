@@ -1,5 +1,12 @@
 # Changelog
 
+## Changes in 1.5.3
+
+- Add option to plot all contigs’ read coverages, regardless of TrIdent
+  classification
+- Remove normalized pattern-match scores from results. It is an
+  unnecessary and over complicated metric.
+
 ## Changes in 1.5.2
 
 - Add option to use local or global DIRECT search with `globalLocal`

@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TrIdent</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -556,16 +556,16 @@ membrane vesicles. Sci Rep 12, 16651 (2022). <a href="https://doi.org/10.1038/s4
 <span><span class="co">#&gt; Almost done with pattern-matching!</span></span>
 <span><span class="co">#&gt; Determining sizes (bp) of pattern matches</span></span>
 <span><span class="co">#&gt; Identifying highly active/abundant or heterogenously integrated</span></span>
-<span><span class="co">#&gt;       Prophage-like elements</span></span>
+<span><span class="co">#&gt;          Prophage-like elements</span></span>
 <span><span class="co">#&gt; Finalizing output</span></span>
-<span><span class="co">#&gt; Execution time: 16.84secs</span></span>
+<span><span class="co">#&gt; Execution time: 14.03secs</span></span>
 <span><span class="co">#&gt; 1 contigs were filtered out based on low read coverage</span></span>
 <span><span class="co">#&gt; 0 contigs were filtered out based on length</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; HighCovNoPattern        NoPattern    Prophage-like          Sloping </span></span>
 <span><span class="co">#&gt;                1                1                4                3</span></span>
-<span><span class="co">#&gt; 3 of the prophage-like classifications are highly active or abundant</span></span>
-<span><span class="co">#&gt; 1 of the prophage-like classifications are mixed, i.e. heterogenously</span></span>
+<span><span class="co">#&gt; 0 of the prophage-like classifications are highly active or abundant</span></span>
+<span><span class="co">#&gt; 0 of the prophage-like classifications are mixed, i.e. heterogenously</span></span>
 <span><span class="co">#&gt; integrated into their bacterial host population</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -652,13 +652,6 @@ by other functions in TrIdent.</li>
 <li>FilteredOutContigTable: A table containing contigs that were
 filtered out and the reason why (low read coverage or too short).</li>
 <li>windowSize: The <code>windowSize</code> used.</li>
-<li>ResultHistogram: A histogram displaying the overall abundance and
-quality of pattern-matches in addition to the composition of
-classifications. The displayed pattern-match scores are normalized by
-dividing each score by its associated contig length. The scores are
-normalized to visualize the overall quality of pattern-matching for the
-entire dataset. Remember, smaller pattern-match scores correspond to
-better pattern-matches.</li>
 </ol>
 <p>Save the desired list-item to a new variable using its associated
 name.</p>
@@ -672,9 +665,6 @@ contigName
 </th>
 <th style="text-align:left;">
 classifications
-</th>
-<th style="text-align:right;">
-normMatchScore
 </th>
 <th style="text-align:right;">
 VLPWCRatio
@@ -707,9 +697,6 @@ NODE_62
 Prophage-like
 </td>
 <td style="text-align:right;">
-0.1428571
-</td>
-<td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
@@ -737,9 +724,6 @@ NODE_135
 </td>
 <td style="text-align:left;">
 Prophage-like
-</td>
-<td style="text-align:right;">
-0.2737766
 </td>
 <td style="text-align:right;">
 NA
@@ -771,9 +755,6 @@ NODE_1088
 Sloping
 </td>
 <td style="text-align:right;">
-0.0802549
-</td>
-<td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
@@ -801,9 +782,6 @@ NODE_352
 </td>
 <td style="text-align:left;">
 Sloping
-</td>
-<td style="text-align:right;">
-0.1829770
 </td>
 <td style="text-align:right;">
 NA
@@ -835,9 +813,6 @@ NODE_368
 Prophage-like
 </td>
 <td style="text-align:right;">
-0.1530534
-</td>
-<td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
@@ -865,9 +840,6 @@ NODE_560
 </td>
 <td style="text-align:left;">
 HighCovNoPattern
-</td>
-<td style="text-align:right;">
-0.0694395
 </td>
 <td style="text-align:right;">
 16.6016
@@ -899,9 +871,6 @@ NODE_617
 Prophage-like
 </td>
 <td style="text-align:right;">
-0.1613141
-</td>
-<td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
@@ -929,9 +898,6 @@ NODE_1401
 </td>
 <td style="text-align:left;">
 NoPattern
-</td>
-<td style="text-align:right;">
-0.1006696
 </td>
 <td style="text-align:right;">
 0.0192
@@ -963,9 +929,6 @@ NODE_2060
 Sloping
 </td>
 <td style="text-align:right;">
-0.1037661
-</td>
-<td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
@@ -995,11 +958,6 @@ NA
 <li>
 <strong>classifications</strong>: The classification given by
 TrIdent.</li>
-<li>
-<strong>normMatchScore</strong>: The pattern-match score normalized
-by the size of the dataset (pattern-match scores from different contigs
-are not directly comparable to one another as they are relative to the
-characteristics of the contig they were calculated for.).</li>
 <li>
 <strong>VLPWCRatio</strong>: For HighCovNoPattern classifications
 only. The ratio between the median VLP-fraction and WC read coverage
@@ -1089,6 +1047,7 @@ region read coverage.</p>
 <span>  <span class="va">TrIdentResults</span>, </span>
 <span>  <span class="va">onlyPlot</span>,</span>
 <span>  logScale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  allPlots<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>  <span class="va">saveFilesTo</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <ul>
@@ -1107,6 +1066,13 @@ classified as either “Prophage-like”, “Sloping”, or
 <li>
 <code>logScale</code>: TRUE or FALSE, display read coverage in log10
 scale. Default is FALSE.</li>
+<li>
+<code>allPlots</code>: TRUE or FALSE. Display read coverage patterns
+for all contigs greater than the length cutoff (default 30 kbp). Default
+is FALSE. <em>Warning</em> This may produce a lot of plots and a very
+large list object! This is useful if you are interested in viewing
+coverage patterns of any contig regardless of associated TrIdent
+classification.</li>
 <li>
 <code>saveFilesTo</code>: Optional, Provide a path to the directory
 you wish to save output to. A folder will be made within the provided
@@ -1619,13 +1585,13 @@ R01Al171046.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
 <span><span class="co">#&gt; [1] kableExtra_1.4.1 ggplot2_4.0.3    patchwork_1.3.2  knitr_1.51      </span></span>
-<span><span class="co">#&gt; [5] TrIdent_1.5.2    BiocStyle_2.40.0</span></span>
+<span><span class="co">#&gt; [5] TrIdent_1.5.3    BiocStyle_2.40.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] roll_1.2.1          sass_0.4.10         generics_0.1.4     </span></span>
 <span><span class="co">#&gt;  [4] tidyr_1.3.2         xml2_1.6.0          stringi_1.8.9      </span></span>
 <span><span class="co">#&gt;  [7] digest_0.6.39       magrittr_2.0.5      evaluate_1.0.5     </span></span>
-<span><span class="co">#&gt; [10] grid_4.6.1          RColorBrewer_1.1-3  bookdown_0.47      </span></span>
+<span><span class="co">#&gt; [10] grid_4.6.1          RColorBrewer_1.1-3  bookdown_0.48      </span></span>
 <span><span class="co">#&gt; [13] fastmap_1.2.0       jsonlite_2.0.0      BiocManager_1.30.27</span></span>
 <span><span class="co">#&gt; [16] purrr_1.2.2         viridisLite_0.4.3   scales_1.4.0       </span></span>
 <span><span class="co">#&gt; [19] textshaping_1.0.5   jquerylib_0.1.4     cli_3.6.6          </span></span>
@@ -1633,9 +1599,9 @@ R01Al171046.</p>
 <span><span class="co">#&gt; [25] yaml_2.3.12         otel_0.2.0          tools_4.6.1        </span></span>
 <span><span class="co">#&gt; [28] dplyr_1.2.1         BiocGenerics_0.58.1 vctrs_0.7.3        </span></span>
 <span><span class="co">#&gt; [31] R6_2.6.1            stats4_4.6.1        lifecycle_1.0.5    </span></span>
-<span><span class="co">#&gt; [34] stringr_1.6.0       S4Vectors_0.50.1    fs_2.1.0           </span></span>
+<span><span class="co">#&gt; [34] stringr_1.6.0       S4Vectors_0.50.2    fs_2.1.0           </span></span>
 <span><span class="co">#&gt; [37] ragg_1.5.2          pkgconfig_2.0.3     desc_1.4.3         </span></span>
-<span><span class="co">#&gt; [40] pkgdown_2.2.1       RcppParallel_6.2.0  pillar_1.11.1      </span></span>
+<span><span class="co">#&gt; [40] pkgdown_2.2.1       RcppParallel_6.2.1  pillar_1.11.1      </span></span>
 <span><span class="co">#&gt; [43] bslib_0.12.0        gtable_0.3.6        glue_1.8.1         </span></span>
 <span><span class="co">#&gt; [46] Rcpp_1.1.2          systemfonts_1.3.2   xfun_0.60          </span></span>
 <span><span class="co">#&gt; [49] tibble_3.3.1        tidyselect_1.2.1    rstudioapi_0.19.0  </span></span>

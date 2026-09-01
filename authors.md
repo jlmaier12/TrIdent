@@ -26,12 +26,12 @@ Source:
 
 Maier J, Yang Y, Rabasco J, Gin C, Callahan B, Kleiner M (2026).
 *TrIdent: TrIdent - Transduction Identification*. R package version
-1.5.2, <https://github.com/jlmaier12/TrIdent>.
+1.5.3, <https://github.com/jlmaier12/TrIdent>.
 
     @Manual{,
       title = {TrIdent: TrIdent - Transduction Identification},
       author = {Jessie Maier and Yixuan Yang and Jorden Rabasco and Craig Gin and Benjamin Callahan and Manuel Kleiner},
       year = {2026},
-      note = {R package version 1.5.2},
+      note = {R package version 1.5.3},
       url = {https://github.com/jlmaier12/TrIdent},
     }

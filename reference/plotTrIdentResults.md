@@ -13,6 +13,7 @@ plotTrIdentResults(
   TrIdentResults,
   onlyPlot,
   logScale = FALSE,
+  allPlots = FALSE,
   saveFilesTo
 )
 ```
@@ -54,6 +55,12 @@ plotTrIdentResults(
 
   TRUE or FALSE, display VLP-fraction read coverage in log10 scale.
   Default is FALSE.
+
+- allPlots:
+
+  TRUE or FALSE. Display read coverage patterns for all contigs greater
+  than the length cutoff (default 30 kbp). Default is FALSE. \*Warning\*
+  This may produce a lot of plots and a very large list object!
 
 - saveFilesTo:
 
