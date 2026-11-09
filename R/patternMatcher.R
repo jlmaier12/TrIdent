@@ -46,7 +46,6 @@ patternMatcher <-
     bestMatchList <- list()
     filteredOutContigs <- rep(NA, length(contigNames))
     reason <- rep(NA, length(contigNames))
-    #normMatchScore <- rep(NA, length(contigNames))
     refs <- rep(NA, length(contigNames))
     A <- 1
     B <- 1
@@ -72,9 +71,7 @@ patternMatcher <-
         C <- C + 1
         next
       } else if (viralSubset[(order(viralSubset[, 2],
-        decreasing = TRUE
-      ))[minBlockSize /
-        100], 2] <= 10) {
+        decreasing = TRUE))[minBlockSize / 100], 2] <= 5) {
         filteredOutContigs[C] <- i
         reason[C] <- "Low VLP-fraction read cov"
         C <- C + 1
@@ -124,8 +121,16 @@ patternMatcher <-
             bestMatchSumm[[8]][[1]]
           ) %>% as.numeric()
       }
+      #
+      # diffVec <- abs(bestMatchScoreSumm[1] - bestMatchScoreSumm[c(2:8)])
+      # diffVecNorm <- (diffVec-min(diffVec))/(max(diffVec)-min(diffVec))*100
       bestMatch <- bestMatchSumm[[which(bestMatchScoreSumm ==
-        min(bestMatchScoreSumm))[1]]]
+                   min(bestMatchScoreSumm))[1]]]
+      # if(bestMatch[[7]]=="NoPattern" & any(diffVecNorm<=0.5) ) {
+      #     newMatch <- min(which(diffVecNorm<=0.5))[[1]]
+      #     bestMatch <- bestMatchSumm[[newMatch]]
+      # }
+      #
       bestMatchList[[A]] <- c(bestMatch, i)
       names(bestMatchList)[A] <- i
       names(bestMatchList[[A]])[1:8] <- c("match_score", "min_cov", "max_cov", "slope", "start_pos", "end_pos", "classif.", "contig")
