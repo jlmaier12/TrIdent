@@ -153,7 +153,7 @@ TrIdent_results <- TrIdentClassifier(
 #> Identifying highly active/abundant or heterogenously integrated
 #>          Prophage-like elements
 #> Finalizing output
-#> Execution time: 14.02secs
+#> Execution time: 14.53secs
 #> 1 contigs were filtered out based on low read coverage
 #> 0 contigs were filtered out based on length
 #> 

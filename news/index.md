@@ -1,5 +1,10 @@
 # Changelog
 
+## Changes in 1.5.4
+
+- Reduce minimum read coverage requirements in VLP-fraction from 10x to
+  5x for pattern-matching
+
 ## Changes in 1.5.3
 
 - Add option to plot all contigs’ read coverages, regardless of TrIdent
